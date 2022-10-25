@@ -1,0 +1,12 @@
+.filledData{
+    margin-top: 100px;
+}
+.sections{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.sections div{
+margin: 5px 10px;
+}

@@ -1,0 +1,60 @@
+/* .formdetails{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* max-width: 1200px; */
+/* } */ 
+/* .formItem{
+background-color: lightgreen;
+border-radius: 25px;
+padding: 5px;
+gap: 1rem;
+margin: 10px 20px;
+} */
+/* .formItem:hover{
+    background-color: wheat;
+}
+@media (min-width: 600px) {
+    .formdetails{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 900px) {
+    .formdetails{ grid-template-columns: repeat(2, 1fr); }
+  } */
+  /* @media (min-width: 100px) {
+    .formdetails{ grid-template-columns: repeat(1, 1fr); }
+  } */
+
+  {/* <div style={{margin:'20px 40px'}} className='formItem'>
+<PersonalDetails formId={myIdentifier}/>
+</div>
+<div style={{margin:'20px 40px'}} className='formItem'>
+<Vehicledetails formId={myIdentifier}/>
+</div >
+<div style={{margin:'20px 40px'}} className='formItem'>
+<Driverdetails formId={myIdentifier}/>
+</div>
+<div  style={{margin:'20px 40px'}} className='formItem'>
+<Accidentdetails formId={myIdentifier}/>
+</div>
+<div style={{margin:'20px 40px'}} className='formItem'>
+  <Damagesdetails formId={myIdentifier}/>
+</div> */}
+    {/* <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" style={{ background: '#009100' }}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="primary"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            {/* <MenuIcon /> */}
+            /* </IconButton>
+            <Typography variant="h6" component="div" 
+            sx={{ flexGrow: 1 }}>
+         FORM DETAILS
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box> */

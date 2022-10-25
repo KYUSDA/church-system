@@ -1,0 +1,43 @@
+*
+{
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.navbar{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    padding: 5px;
+}
+.navlinks{
+    font-size: large;
+    text-decoration: none;
+    padding:10px;
+    cursor: pointer;
+    transition: ease-in-out;
+}
+.navlinks:hover{
+    background-color: aqua;
+}
+.banner{
+   text-align: center;
+   background-image: url('../../assets/pexels-pixabay-164634.jpg');
+   background-size: cover;
+   background-position: center;
+   height:100vh;
+}
+.content{
+    background-color: rgb(209, 214, 202);
+    width: 300px;
+    border-radius: 25px;
+    padding: 20px;
+    position: relative;
+    margin: 20px auto;
+    align-items: center;
+}
+.content h3{
+    font-size: 26px;
+}
