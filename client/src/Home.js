@@ -44,7 +44,7 @@ const Home = ()=>{
     <Route path='/departmentDetails/prayer' element={<Prayer />}></Route>
     <Route path='/departmentDeatils/religiousliberty' element={<Religious />}></Route>
     <Route path='/departmentDetails/patrionship' element={<Patrionship />}></Route>
-    <Route path='/departmentDeatils/PersonalMinistry' element={<Personalministry />}></Route>
+    <Route path='/departmentDetails/PersonalMinistry' element={<Personalministry />}></Route>
     <Route path='/departmentDetails/development' element={<Development />}></Route>
     <Route path='/departmentDetails/NRT' element={<Nurture />}></Route>
     <Route path='/departmentDetails/chaplaincy' element={<Chaplaincy />}></Route>
