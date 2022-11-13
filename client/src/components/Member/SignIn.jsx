@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageSide from '../../assets/kyusdachurch.jpg'
 import {useState} from 'react'
+import {useLogin} from '../../hooks/userLoginhook'
+import {useAuthContext} from '../../context/useAuthcontext'
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -32,24 +34,14 @@ const theme = createTheme();
 const SignInSide = ()=>{
   const [email,setemail] = useState();
   const [password,setpassword] = useState();
+  const {user} = useAuthContext()
+  // console.log(user.email);
+const {login,error,loading} = useLogin();
   const handleSubmit = async(event) => {
     setemail('');
     setpassword('')
     event.preventDefault();
- console.log(email,password)
- const url = `http://localhost:8000/kyusda/v1/member/signIn`;
- const resp = await fetch(url,{
-  method:'POST',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({email,password}),
-  credentials:'include',
-  withCredentials:true
- })
- const data = await resp.json();
- console.log(data);
- if(data.status === 'success'){
-  alert(`Logged in successfully`)
- }
+ await login(email,password)
   };
 
   return (

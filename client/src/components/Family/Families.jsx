@@ -22,12 +22,10 @@ const   Families = () => {
       <h2 className="head-text">Our <span>
         Families</span> Section</h2>
       <motion.div
-
         animate={animateCard}
         transition={{ duration: 0.5, delayChildren: 0.5 }}
         className="app__work-portfolio"
       >
-
         {Families.map((family, index) => (
           <div className="app__work-item app__flex"
            key={index}>
@@ -36,16 +34,14 @@ const   Families = () => {
             >
               <img src={urlFor(family.imgUrl)}
                alt={family.title} />
-
               <motion.div
                 whileHover={{ opacity: [0, 1] }}
                 transition={{ duration: 0.25, ease: 'easeInOut', 
                 staggerChildren: 0.5 }}
                 className="app__work-hover app__flex"
               >
-                <a href="#family"
+                <a href={`${family.link}`}
                 target="_blank" rel="noreferrer">
-
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
                     whileHover={{ scale: [1, 0.90] }}

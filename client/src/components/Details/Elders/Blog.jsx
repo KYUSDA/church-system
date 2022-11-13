@@ -1,0 +1,94 @@
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import { BsYoutube } from 'react-icons/bs';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Header from './Header';
+import MainFeaturedPost from './MainFeaturedPost';
+import FeaturedPost from './FeaturedPost';
+import Main from './Main';
+import Sidebar from './Sidebar';
+import Footer from './Footer';
+
+const sections = [
+  { title: 'Home', url: '/' },
+  { title: 'About Us', url: '/' },
+  { title: 'Families', url: '/' },
+  { title: 'Departments', url: '/' },
+  { title: 'Gallery', url: '/gallery' }
+];
+
+const mainFeaturedPost = {
+  title: 'Welcome to Elders Department',
+  description:
+    "An elder, like any other church officer, is a ministering servant of God. An oversear of church",
+  image: 'https://source.unsplash.com/random',
+  imageText: 'main image description',
+  linkText: '',
+};
+
+const featuredPosts = [
+  {
+    title: 'About Us ',
+    description:
+      'Elders perform various duties at the local church including the following Visitation, Reviews worship services ,Preaching , A spiritual Mentor and Church Administration ',
+  },
+  {
+    title: 'Church Elders',
+    description:
+      'The Church is comprised of 4 church Elders and 1 ALO leader that is. Eld Samuel Omweri, Eld Ibrahim Kimwecha , Eld Christopher Salaton , Eld Joshua Hamisi and Hannah Njoki the ALO Leader'
+  },
+];
+
+const posts = ["efadsfasd","wrfwrf", "wfwsfs"];
+
+const sidebar = {
+  title: 'Project',
+  description:
+    'The department has started a online cyber known as Neptune connects',
+  archives: [
+    { title: 'Religious Liberty Week', url: '#' },
+  ],
+  social: [
+    { name: 'Kyusda Youtube', icon: BsYoutube },
+    { name: 'Kyusda Facebook', icon: FacebookIcon },
+  ],
+};
+
+const theme = createTheme();
+
+export default function Blog() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <Header  sections={sections} />
+        <main>
+          <MainFeaturedPost post={mainFeaturedPost} />
+          <Grid container spacing={4}>
+            {featuredPosts.map((post) => (
+              <FeaturedPost key={post.title} post={post} />
+            ))}
+          </Grid>
+          <Grid container spacing={5} sx={{ mt: 3 }}>
+            <Main title="Depatment Gallery" posts={posts} />
+            <Sidebar
+              title={sidebar.title}
+              description={sidebar.description}
+              archives={sidebar.archives}
+              social={sidebar.social}
+            />
+          </Grid>
+        </main>
+      </Container>
+      <Footer
+        title=""
+        description=""
+      />
+    </ThemeProvider>
+  );
+}

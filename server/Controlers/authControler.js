@@ -2,14 +2,29 @@
 const memberAuth = require('../Models/authModel');
 const sendEmail = require('../utilities/email')
 const crypto = require('crypto');
+const jsonwebtoken = require('jsonwebtoken');
+
+
+let maxAge = 3*24*60*60
+const createjwt = (id)=>{
+    return jsonwebtoken.sign({id},process.env.SECRET,{
+        expiresIn:maxAge
+    })
+ };
+
 const memberSignUp = async(req,resp)=>{
 try {
     // const data = await 
     console.log(req.body);
     const memberRegestered = await memberAuth.create(req.body);
+    const id = memberRegestered._id;
+    //generate token and pass the cookie inside.
+    const tk = createjwt(id);
+    resp.cookie("kyusdamember",tk,{httpOnly:true,maxAge: maxAge* 1000});
     resp.status(200).json({
         status:'success',
-        memberRegestered
+        email:memberRegestered.email,
+        tk
     })
     console.log(memberRegestered);
 } catch (error) {
@@ -26,19 +41,21 @@ const memberSignin = async(req,resp)=>{
 const {email,password} = req.body;
 const loggedMember = await memberAuth.login(email,password);
 console.log(loggedMember);
+const id = loggedMember._id;
+const tk = createjwt(id);
+resp.cookie("kyusdamember",tk,{httpOnly:true,maxAge: maxAge* 1000});
 resp.status(200).json({
     status:'success',
-    loggedMember
+    email:loggedMember.email,
+    tk
 })
-    }catch(err){
+}catch(err){
 resp.status(404).json({
     status:'failure',
     err
 })
     }
 }
-
-
 const memberResetToken = async(req,resp)=>{
 try
 {
@@ -67,7 +84,10 @@ const message =
     message
 })
 }catch(err){
-console.log(err)
+    resp.status(404).json({
+        status:'failure',
+        err
+    })
 }
 }
 

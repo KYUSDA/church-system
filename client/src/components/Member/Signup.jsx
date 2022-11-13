@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState} from 'react'
 import { UNSAFE_DataRouterStateContext } from 'react-router-dom';
-
+import { useSignup } from '../../hooks/userSignuphook';
 function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -38,6 +38,8 @@ const SignUp = ()=>{
     const [year,setyear] = useState();
     const [password,setpassword] = useState();
     const [passwordConfirm,setpasswordConfirm] = useState();
+
+    const {signup,loading,error} = useSignup();
     const handleSubmit = async(event) => {
         event.preventDefault();
         setfirstName('');
@@ -48,20 +50,9 @@ const SignUp = ()=>{
         setyear('');
         setpassword('');
     setpasswordConfirm('');
-        console.log(firstName,lastName,registration,email,course
-            ,year,password,
-            passwordConfirm);
-        const url = `http://localhost:8000/kyusda/v1/member/signUp`;
-        const resp = await fetch(url,{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({firstName,lastName,registration,
-        email,course,year,password,passwordConfirm}),
-            credentials:'include',
-            withCredentials:true
-        })
-        const data = await resp.json();
-        console.log(data)
+    await signup(firstName,lastName,registration,email,course
+      ,year,password,
+      passwordConfirm)
       };
 return(
     <ThemeProvider theme={theme}>
@@ -187,6 +178,7 @@ return(
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
               Sign Up
             </Button>
@@ -201,6 +193,7 @@ return(
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      {error && <div>{error}</div>}
     </ThemeProvider>
 )
 }

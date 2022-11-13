@@ -7,11 +7,13 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import {useState,useEffect} from 'react';
 import Cookies from 'universal-cookie';
-
+import { AuthContextProvider } from './context/authcontext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  <BrowserRouter>
-    <Home />
+ <AuthContextProvider>
+ <Home />
+ </AuthContextProvider>
   </BrowserRouter>
 );
 

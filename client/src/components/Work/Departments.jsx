@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { motion } from 'framer-motion';
+import {Link} from 'react-router-dom'
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
@@ -42,9 +43,9 @@ const Departments = () => {
                 staggerChildren: 0.5 }}
                 className="app__work-hover app__flex"
               >
-                <a href="#department"
-                target="_blank" rel="noreferrer">
-
+        <Link to={`departmentDetails/${department.link}`} 
+        rel="noreferrer"
+        >
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
                     whileHover={{ scale: [1, 0.90] }}
@@ -53,7 +54,7 @@ const Departments = () => {
                   >
                     <AiFillEye />
                   </motion.div>
-                </a>
+                </Link>
               </motion.div>
             </div>
 

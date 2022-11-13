@@ -9,15 +9,6 @@ const Home = ()=>{
 <div className='home'>
 <Navbar />
 <div className='banner'>
-{/* <div className='content'> */}
-{/* <h3>Welcome to MayFair Insurance</h3>
-<p>Best and trusted Insurance company in kenya</p>
-<p>
-Kindly Regster yourself to get the automated form,
- to claim
-your vehicle insurance
-</p> */}
-{/* </div> */}
     </div>
     <div className='footer'>
     <Footer />

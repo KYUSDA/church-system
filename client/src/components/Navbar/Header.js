@@ -13,21 +13,16 @@ import {
   import React, { useState, useEffect } from "react";
   import { Link as RouterLink } from "react-router-dom";
   import Cookies from 'universal-cookie';
+  import { useLogout } from "../../hooks/userLogouthook";
+  import { useAuthContext } from "../../context/useAuthcontext";
   //get the jwt 
   //check for the validity ,pass via link
+ 
   const headersData = [
     {
       label: "Home",
-      href: "/home",
+      href: "/",
     },
-    // {
-    //   label: "Announcements",
-    //   href: "/announcements",
-    // },
-    // {
-    //   label: "Events",
-    //   href: "/events",
-    // },
     {
       label: "Member",
       href: "/signin",
@@ -62,14 +57,28 @@ import {
     drawerContainer: {
       padding: "20px 30px",
     },
+    logOut:{
+      color: 'crimson',
+      border: '2px solid crimson',
+      padding: '6px 10px',
+      borderRadius: '4px',
+      fontFamily: "Poppins",
+      cursor: 'pointer',
+      fontSize: '1em'
+    }
   }));
   
   export default function Header() {
+    const {logout} = useLogout();
+    const {user} = useAuthContext();
     const cookies = new Cookies();
     let myTk = cookies.get('jwt');
     console.log(myTk);
-    const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
-  
+    const { header, logo, menuButton, toolbar, drawerContainer ,logOut } = useStyles();
+    const handleLogout = ()=>{
+      console.log('logged out');
+      logout()
+    }
     const [state, setState] = useState({
       mobileView: false,
       drawerOpen: false,
@@ -96,8 +105,26 @@ import {
     const displayDesktop = () => {
       return (
         <Toolbar className={toolbar}>
-          {Kyusda}
-          <div>{getMenuButtons()}</div>
+{
+            user && (
+              <div>
+              {Kyusda}
+              <div>{getMenuButtons()}</div>
+              <div>{user.email}</div>
+              <div className={logOut}>{logOutbutton}</div>
+              </div>
+            )
+          }
+          {
+            !user && (
+              <div>
+                 {Kyusda}
+              <div>{getMenuButtons()}</div>
+          {/* <div>{userEmail}</div> */}
+          {/* <div className={logOut}>{logOutbutton}</div> */}
+              </div>
+            )
+          }
         </Toolbar>
       );
     };
@@ -110,7 +137,7 @@ import {
   
       return (
         <Toolbar>
-          <IconButton
+ <IconButton
             {...{
               edge: "start",
               color: "inherit",
@@ -121,7 +148,6 @@ import {
           >
             <MenuIcon />
           </IconButton>
-  
           <Drawer
             {...{
               anchor: "left",
@@ -129,7 +155,25 @@ import {
               onClose: handleDrawerClose,
             }}
           >
-            <div className={drawerContainer}>{getDrawerChoices()}</div>
+              {
+            user && (
+              <div>
+           <div className={drawerContainer}>{getDrawerChoices()}</div>
+              <div>{user.email}</div>
+              <div className={logOut}>{logOutbutton}</div>
+              </div>
+            )
+          }
+          {
+            !user && (
+              <div>
+              <div className={drawerContainer}>{getDrawerChoices()}</div>
+                 {/* <div>{userEmail}</div> */}
+                 {/* <div className={logOut}>{logOutbutton}</div> */}
+                 </div>
+            )
+          }
+           
           </Drawer>
         </Toolbar>
       );
@@ -159,6 +203,18 @@ import {
     KYUSDA
       </Typography>
     );
+
+const logOutbutton = (
+  <Typography  onClick={()=>handleLogout()}>
+  LOGOUT
+  </Typography>
+)
+
+// const userEmail = (
+//   <Typography>
+// {user.email}
+//   </Typography>
+// )
   
     const getMenuButtons = () => {
       return headersData.map(({ label, href }) => {
