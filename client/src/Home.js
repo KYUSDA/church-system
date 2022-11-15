@@ -35,6 +35,7 @@ import Upperkutus from './components/Family/UpperKutus/Upperkutus';
 import Kibugi from './components/Family/Kibugi/Kibugi';
 import Penri from './components/Family/Penri/Penri';
 import GardenEstate from './components/Family/GardenEstate/GardenEstate';
+import Kanjata from './components/Family/Kanjata/Kanjata';
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -73,6 +74,7 @@ const Home = ()=>{
     <Route path='/kibugi' element={<Kibugi />}></Route>
     <Route path='/Penri' element={<Penri />}></Route>
     <Route path='/Gardenestate' element={<GardenEstate />}></Route>
+    <Route path='/kanjata' element={<Kanjata />}></Route>
   </Routes>
   )
 }
