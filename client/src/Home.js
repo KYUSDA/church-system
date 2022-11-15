@@ -27,7 +27,7 @@ import DiasporaA from './components/Family/DiasporaA/DiasporaA';
 import DiaspoaraB from './components/Family/DiasporaB/DiasporaA';
 import AroundschoolA from './components/Family/AroundschoolA/AroundA';
 import AroundschoolB from './components/Family/AroundschoolB/AroundschoolB';
-
+import Elegant from './components/Family/Elegant/elegant';
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -57,6 +57,7 @@ const Home = ()=>{
     <Route path='/DiasporaB' element={<DiaspoaraB />}></Route>
     <Route path='/AroundSchoolA' element={<AroundschoolA />}></Route>
     <Route path='/AroundSchoolB' element={<AroundschoolB />}></Route>
+    <Route path='/elegant' element={<Elegant />}></Route>
   </Routes>
   )
 }
