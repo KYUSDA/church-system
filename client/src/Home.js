@@ -29,6 +29,8 @@ import AroundschoolB from './components/Family/AroundschoolB/AroundschoolB';
 import Elegant from './components/Family/Elegant/elegant';
 import Mjini from './components/Family/Mjini/Mjini'
 import Waterfall from './components/Family/Waterfall/Waterfall';
+import Ack from './components/Family/Ack/Ack'
+import Ngomongo from './components/Family/Ngomongo/Ngomongo'
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -61,6 +63,8 @@ const Home = ()=>{
     <Route path='/elegant' element={<Elegant />}></Route>
     <Route path='/mjini' element={<Mjini />}></Route>
     <Route path='/waterfall' element={<Waterfall />}></Route>
+    <Route path='/Ack' element={<Ack />}></Route>
+    <Route path='/ngomongo' element={<Ngomongo />}></Route>
   </Routes>
   )
 }
