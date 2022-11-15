@@ -25,7 +25,8 @@ import Chaplaincy from './components/Details/Chaplaincy';
 import Alo from './components/Details/Alo'
 import DiasporaA from './components/Family/DiasporaA/DiasporaA';
 import DiaspoaraB from './components/Family/DiasporaB/DiasporaA';
-
+import AroundschoolA from './components/Family/AroundschoolA/AroundA';
+import AroundschoolB from './components/Family/AroundschoolB/AroundschoolB';
 
 const Home = ()=>{
   const { user } = useAuthContext();
@@ -54,6 +55,8 @@ const Home = ()=>{
     <Route path='/departmentDetails/Alo' element={<Alo />}></Route>
     <Route path='/DiasporaA' element={<DiasporaA />}></Route>
     <Route path='/DiasporaB' element={<DiaspoaraB />}></Route>
+    <Route path='/AroundSchoolA' element={<AroundschoolA />}></Route>
+    <Route path='/AroundSchoolB' element={<AroundschoolB />}></Route>
   </Routes>
   )
 }
