@@ -41,7 +41,7 @@ const   Families = () => {
                 className="app__work-hover app__flex"
               >
                 <a href={`${family.link}`}
-                target="_blank" rel="noreferrer">
+                rel="noreferrer">
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
                     whileHover={{ scale: [1, 0.90] }}

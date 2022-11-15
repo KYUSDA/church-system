@@ -23,6 +23,9 @@ import Development from './components/Details/Development';
 import Nurture from './components/Details/Nurture';
 import Chaplaincy from './components/Details/Chaplaincy';
 import Alo from './components/Details/Alo'
+import DiasporaA from './components/Family/DiasporaA/DiasporaA';
+import DiaspoaraB from './components/Family/DiasporaB/DiasporaA';
+
 
 const Home = ()=>{
   const { user } = useAuthContext();
@@ -49,6 +52,8 @@ const Home = ()=>{
     <Route path='/departmentDetails/NRT' element={<Nurture />}></Route>
     <Route path='/departmentDetails/chaplaincy' element={<Chaplaincy />}></Route>
     <Route path='/departmentDetails/Alo' element={<Alo />}></Route>
+    <Route path='/DiasporaA' element={<DiasporaA />}></Route>
+    <Route path='/DiasporaB' element={<DiaspoaraB />}></Route>
   </Routes>
   )
 }
