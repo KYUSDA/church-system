@@ -7,7 +7,6 @@ import SignInSide from './components/Member/SignIn';
 import ResetInSide from './components/Member/ResetToken';
 import Newpassword from './components/Member/Resetpassword';
 import Memberspage from './components/Member/Memberspage';
-// import DepartmentsDetails from './components/Work/DepartmentsDetails';
 import Health from './components/Details/Health';
 import Elders from './components/Details/Elders';
 import Treasury from './components/Details/Treasury';
@@ -28,6 +27,8 @@ import DiaspoaraB from './components/Family/DiasporaB/DiasporaA';
 import AroundschoolA from './components/Family/AroundschoolA/AroundA';
 import AroundschoolB from './components/Family/AroundschoolB/AroundschoolB';
 import Elegant from './components/Family/Elegant/elegant';
+import Mjini from './components/Family/Mjini/Mjini'
+import Waterfall from './components/Family/Waterfall/Waterfall';
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -58,6 +59,8 @@ const Home = ()=>{
     <Route path='/AroundSchoolA' element={<AroundschoolA />}></Route>
     <Route path='/AroundSchoolB' element={<AroundschoolB />}></Route>
     <Route path='/elegant' element={<Elegant />}></Route>
+    <Route path='/mjini' element={<Mjini />}></Route>
+    <Route path='/waterfall' element={<Waterfall />}></Route>
   </Routes>
   )
 }
