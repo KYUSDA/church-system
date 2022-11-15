@@ -32,6 +32,8 @@ import Waterfall from './components/Family/Waterfall/Waterfall';
 import Ack from './components/Family/Ack/Ack'
 import Ngomongo from './components/Family/Ngomongo/Ngomongo'
 import Upperkutus from './components/Family/UpperKutus/Upperkutus';
+import Kibugi from './components/Family/Kibugi/Kibugi';
+import Penri from './components/Family/Penri/Penri'
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -67,6 +69,8 @@ const Home = ()=>{
     <Route path='/Ack' element={<Ack />}></Route>
     <Route path='/ngomongo' element={<Ngomongo />}></Route>
     <Route path='/upperkutus' element={<Upperkutus />}></Route>
+    <Route path='/kibugi' element={<Kibugi />}></Route>
+    <Route path='/Penri' element={<Penri />}></Route>
   </Routes>
   )
 }
