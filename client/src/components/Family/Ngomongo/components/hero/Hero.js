@@ -18,14 +18,13 @@ const Hero = () => {
 						<HeroContentWrapper>
 				<H1>Welcome to Ngomongo family</H1>
 							<Para>
-			We are located just next to Kilele tution block , it covers areas on the left side of the murram road
-			include the following areas  Imani ,Kangu, Geomar etc ... 
+			located on your way to kagio etc ... 
 							</Para>
 							{/* <Button>Request Invite</Button> */}
 						</HeroContentWrapper>
 					</HeroContent>
 					<HeroImage>
-						<img src={HeroImg} alt='hero' />
+						{/* <img src={HeroImg} alt='hero' /> */}
 					</HeroImage>
 				</HeroWrapper>
 			</NoRightPaddingContainer>

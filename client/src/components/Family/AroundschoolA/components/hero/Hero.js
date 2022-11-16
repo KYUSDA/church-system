@@ -7,7 +7,7 @@ import {
 	HeroImage,
 	HeroContentWrapper,
 } from './Hero.style';
-import HeroImg from '../../images/image-mockups.png';
+// import HeroImg from '../../images/image-mockups.png';
 
 const Hero = () => {
 	return (
@@ -18,14 +18,14 @@ const Hero = () => {
 						<HeroContentWrapper>
 				<H1>Welcome to Around School A family</H1>
 							<Para>
-			We are located just next to Kilele tution block , it covers areas on the left side of the murram road
-			include the following areas  Imani ,Kangu, Geomar etc ... 
+			We are located just next to School , it covers areas around the school
+			include the following areas Executive hostel,Jobless,etc ... 
 							</Para>
 							{/* <Button>Request Invite</Button> */}
 						</HeroContentWrapper>
 					</HeroContent>
 					<HeroImage>
-						<img src={HeroImg} alt='hero' />
+						{/* <img src={HeroImg} alt='hero' /> */}
 					</HeroImage>
 				</HeroWrapper>
 			</NoRightPaddingContainer>

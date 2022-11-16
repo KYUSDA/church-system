@@ -23,9 +23,12 @@ const Footer = () => {
 								
 								</div>
 								<div className='social-icons'>
+									<a href='https://www.facebook.com/profile.php?id=100083015178066'>
 									<img src={iconFb} alt='' />
-									<img src={iconTwitter} alt='' />
-									<img src={iconYoutube} alt='' />
+									</a>
+									<a href='https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ'>
+ 									<img src={iconYoutube} alt='' />
+									</a>
 								</div>
 							</div>
 							<div className='link'>

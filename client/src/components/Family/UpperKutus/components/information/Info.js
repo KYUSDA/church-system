@@ -6,7 +6,8 @@ import BankingIcon from '../../images/icon-online.svg';
 import BudgetingIcomn from '../../images/icon-budgeting.svg';
 import Onboarding from '../../images/icon-onboarding.svg';
 import Api from '../../images/icon-api.svg';
-
+import profile from '../../images/myprofile.png'
+import samkam from '../../images/samkam.jpg'
 const Info = () => {
 	return (
 		<div>
@@ -29,12 +30,11 @@ const Info = () => {
 					 OUR LEADERS</p>
 					<InfoGrid>
 						<InfoCard>
-							<img src={BankingIcon} alt='' />
+							<img src={profile} alt='' />
 							<H3>Elder Samuel Omweri</H3>
 							<p>Elder in charge</p>
 							<Para>
-								Our modern web and mobile applications allow you to keep track
-								of your finances wherever you are in the world.
+								Am the elder in charge feel much welcome
 							</Para>
 						</InfoCard>
 						<InfoCard>
@@ -42,8 +42,7 @@ const Info = () => {
 							<H3>Sister Viclkine</H3>
 							<p>Family leader</p>
 							<Para>
-								See exactly where your money goes each month. Receive
-								notifications when you’re close to hitting your limits.
+							Come lets commune together
 							</Para>
 						</InfoCard>
 						<InfoCard>
@@ -51,17 +50,15 @@ const Info = () => {
 							<H3>Jacob</H3>
 							<p>Family leader</p>
 							<Para>
-								We don’t do branches. Open your account in minutes online and
-								start taking control of your finances right away.
+								Welcome to upperkutus family
 							</Para>
 						</InfoCard>
 						<InfoCard>
-							<img src={Api} alt='' />
+							<img src={samkam} alt='' />
 							<H3>Samuel Kamotho</H3>
 							<p>Family leader</p>
 							<Para>
-								Manage your savings, investments, pension, and much more from
-								one account. Tracking your money has never been easier.
+							A friend of upper kutus
 							</Para>
 						</InfoCard>
 					</InfoGrid>

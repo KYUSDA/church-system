@@ -18,8 +18,7 @@ const Hero = () => {
 						<HeroContentWrapper>
 				<H1>Welcome to  Penri family</H1>
 							<Para>
-			We are located just next to Kilele tution block , it covers areas on the left side of the murram road
-			include the following areas  Imani ,Kangu, Geomar etc ... 
+			Located near penri hostels... 
 							</Para>
 							{/* <Button>Request Invite</Button> */}
 						</HeroContentWrapper>

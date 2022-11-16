@@ -8,6 +8,10 @@ import {
 import { Container } from '../../styles/Common.style';
 import MoneyImg from '../../images/image-currency.jpg';
 import { H2, H4, H5, Para } from '../../styles/Typography.style';
+import family1 from '../../images/family1.avif'
+import family2 from '../../images/family2.avif'
+import family3 from '../../images/family3.jpg'
+import family4 from '../../images/family4.jpg'
 const Articles = () => {
 	return (
 		<div>
@@ -16,12 +20,12 @@ const Articles = () => {
 					<H2 style={{textAlign:'center'}}>Members Testimonies</H2>
 					<ArticleGrid>
 						<ArticleCard>
-							<img src={MoneyImg} alt='' />
+							<img src={family1} alt='' />
 							<ArticleCardContent>
 								<H5 
 							style={{fontSize:'20px',fontStyle:'italic'}}>Sarah</H5>
 								<H4>
-									Fourt year Student
+									Fourth year Student
 								</H4>
 								<Para>
 								It is always a blessing meeting up and sharing about Jesus christ
@@ -29,7 +33,7 @@ const Articles = () => {
 							</ArticleCardContent>
 						</ArticleCard>
 						<ArticleCard>
-							<img src={MoneyImg} alt='' />
+							<img src={family2} alt='' />
 							<ArticleCardContent>
 								<H5 style={{fontSize:'20px',fontStyle:'italic'}}>
 								Delphine</H5>
@@ -42,7 +46,7 @@ const Articles = () => {
 							</ArticleCardContent>
 						</ArticleCard>
 						<ArticleCard>
-							<img src={MoneyImg} alt='' />
+							<img src={family3} alt='' />
 							<ArticleCardContent>
 								<H5 style={{fontSize:'20px',fontStyle:'italic'}}>
 						 Samuel Kamotho</H5>
@@ -55,7 +59,7 @@ const Articles = () => {
 							</ArticleCardContent>
 						</ArticleCard>
 						<ArticleCard>
-							<img src={MoneyImg} alt='' />
+							<img src={family4} alt='' />
 							<ArticleCardContent>
 								<H5 style={{fontSize:'20px',fontStyle:'italic'}}>
 								Fabian</H5>

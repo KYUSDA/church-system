@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { Navigation, Nav, Ul, Li, Logo } from './Header.style';
-import logo from '../../images/kyusda logo.jpg';
 import { Link } from 'react-router-dom';
 import { Button, Container } from '../../styles/Common.style';
 import hamburger from '../../images/icon-hamburger.svg';
 import close from '../../images/icon-close.svg';
+import {useLogout} from '../../../../../hooks/userLogouthook';
+import { useAuthContext } from '../../../../../context/useAuthcontext';
 const Header = () => {
+	const  {logout} = useLogout();
+	const {user} = useAuthContext();
 	const [open, setOpen] = useState(false);
+
+	const handleLogout = ()=>{
+		console.log('logged out');
+		logout()
+	  }
+
+	  const logOutbutton = (
+		<Button onClick={()=>handleLogout()} style={{margin:"3px",cursor:'pointer'}}>
+		LOGOUT
+		</Button>
+	  )
 
 	const handleClick = () => {
 		setOpen(!open);
@@ -17,20 +31,32 @@ const Header = () => {
 				<Navigation>
 					<Nav>
 						<Logo>
-				<p style={{fontSize:"20px"}}>Elegant Family</p>
+				<p style={{fontSize:"30px" , fontWeight:'bolder'}}>
+					<a href='/'>Elegant Family</a>
+				</p>
 						</Logo>
-						<Ul className={open ? `active` : `navlinks`}>
-							<Li>
-								<Link to={`/#home`}>Home</Link>
-							</Li>
-							<Li>
-								<Link to={`/#departments`}>Departments</Link>
-							</Li>
-							<Li>
-								<Link to={`/#families`}>Families</Link>
-							</Li>
-						</Ul>
-						<Button>Login</Button>
+					{
+user&& (
+	<div>
+         <Button>{user.email}</Button>
+		 {logOutbutton}
+	</div>
+)
+
+					}
+
+{
+!user && (
+<Button style={{margin:"3px"}}>
+	<a href='/signin' style={{fontSize:"20px" ,cursor:"pointer" ,color:'red'}}>
+	Login
+	</a>	
+	</Button>
+)
+}
+
+
+						
 						<img
 							src={open ? close : hamburger}
 							className='hamburger'

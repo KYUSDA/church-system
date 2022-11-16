@@ -4,10 +4,10 @@ import logo from '../../images/logo.svg';
 import iconFb from '../../images/icon-facebook.svg';
 import iconTwitter from '../../images/icon-twitter.svg';
 import iconYoutube from '../../images/icon-youtube.svg';
-import iconPinterest from '../../images/icon-pinterest.svg';
+
 import { Button, Container } from '../../styles/Common.style';
 import { Link } from 'react-router-dom';
-import kyusdaImage from '../../images/kyusda logo.jpg';
+import kyusdaImage from '../../images/kyusdalogo.jpg';
 const Footer = () => {
 	return (
 		<div>
@@ -17,10 +17,10 @@ const Footer = () => {
 						<FooterLinks>
 							<div className='footer-top'>
 								<div className='logo'>
-	{/* <img src={kyusdaImage} alt='' 
-	style={{height:'100px',width:'100px'}} /> */}
-	<img  src='../../images/kyusda logo.jpg' alt='kyusda logo'/>
-								
+	<img src={kyusdaImage} alt='' 
+	style={{height:'100px',width:'100px'}} />
+	<Button>KYUSDA</Button>
+								{kyusdaImage}
 								</div>
 								<div className='social-icons'>
 									<img src={iconFb} alt='' />
@@ -41,7 +41,7 @@ const Footer = () => {
 						</FooterLinks>
 						<FooterButton>
 							<Button>Login</Button>
-						</FooterButton>{' '}
+						</FooterButton>
 					</div>
 				</Container>
 			</FooterWrapper>
