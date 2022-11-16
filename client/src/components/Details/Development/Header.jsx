@@ -6,14 +6,43 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-
+import {useAuthContext} from '../../../context/useAuthcontext';
+import {useLogout} from '../../../hooks/userLogouthook'
+import {makeStyles} from '@material-ui/core';
+const useStyles = makeStyles(()=>({
+  logOut:{
+    color: 'crimson',
+    border: '2px solid crimson',
+    padding: '6px 10px',
+    borderRadius: '4px',
+    fontFamily: "Poppins",
+    cursor: 'pointer',
+    fontSize: '1em'
+  }
+}))
 function Header(props) {
+  const classes = useStyles();
+  const {user} = useAuthContext();
+  const {logout} = useLogout();
   const { sections, title } = props;
 
+  const handleLogout = ()=>{
+    console.log('logged out');
+    logout()
+  }
+  const logOutbutton = (
+    <Typography  onClick={()=>handleLogout()}>
+    LOGOUT
+    </Typography>
+  )
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Button size="small">Personal Ministry Department</Button>
+        <Button size="small">
+          <a href='/'>
+ Development Department
+          </a>
+          </Button>
         <Typography
           component="h2"
           variant="h5"
@@ -24,27 +53,27 @@ function Header(props) {
         >
 
         </Typography>
-        <Button variant="outlined" size="small">
-          Sign In
-        </Button>
-      </Toolbar>
-      <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: 'space-between', overflowX: 'auto' }}
-      >
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </Link>
-        ))}
+        {
+          user  &&(
+            <div>
+            <Button variant="outlined" size="small">
+            {user.email}
+          </Button>
+          <Button className={classes.logOut}>
+ {logOutbutton}
+          </Button>
+            </div>
+          )
+        }
+        {
+          !user && (
+            <Button variant="outlined" size="small">
+              <a href='signin'>
+                Sign In
+              </a>
+          </Button>
+          )
+        }
       </Toolbar>
     </React.Fragment>
   );

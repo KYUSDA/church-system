@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import sprite from "../../assets/sprite.svg";
 import DetailsFooter from "./DetailsFooter";
 import {useLocation} from 'react-router-dom';
-import Pray from '../../components/Details/Personal Ministry/Blog'
+import Pray from '../../components/Details/Prayers/Blog'
 
 const Prayer = ()=>{
 return(

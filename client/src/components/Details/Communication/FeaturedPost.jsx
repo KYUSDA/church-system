@@ -19,7 +19,7 @@ function FeaturedPost(props) {
               {post.title}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              {post.description} and elder in charge is Elder Ibrahim KImwecha
+              {post.description}
             </Typography>
           </CardContent>
         </Card>

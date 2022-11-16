@@ -24,9 +24,9 @@ const sections = [
 ];
 
 const mainFeaturedPost = {
-  title: 'Welcome to Patrionship Department',
+  title: 'Welcome to Amo Department',
   description:
-  "Includes the Lectures and sponsors who support the church",
+  "Adventist men organisation",
   image: 'https://source.unsplash.com/random',
   imageText: 'main image description',
   linkText: '',
@@ -41,7 +41,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department comprised of 2 patrions'
+      'The department comprised of '
   },
 ];
 
@@ -52,11 +52,11 @@ const sidebar = {
   description:
     '',
   archives: [
-    { title: 'patrionship sabbath', url: '#' },
+    { title: 'Amo Sabbath', url: '#' },
   ],
   social: [
-    { name: 'Kyusda Youtube', icon: BsYoutube },
-    { name: 'Kyusda Facebook', icon: FacebookIcon },
+    { name: 'Kyusda Youtube', icon: BsYoutube ,link:'https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ'},
+    { name: 'Kyusda Facebook', icon: FacebookIcon ,link:"https://www.facebook.com/profile.php?id=100083015178066" },
   ],
 };
 

@@ -45,22 +45,22 @@ const Home = ()=>{
     <Route path='/signin' element={ !user ? <SignInSide />: <Navigate to='/member'/>}></Route>
     <Route path='/resetToken' element={<ResetInSide />}></Route>
     <Route path='/resetPassword' element={   <Newpassword />}></Route>
-    <Route path='/member' element={user ? <Memberspage /> :<Navigate to='/signin' />}></Route>
-    <Route path='/departmentDetails/health' element={ <Health />}></Route>
-    <Route path='/departmentDetails/elders' element={<Elders />}/><Route />
-    <Route path='/departmentDetails/treasury' element={ <Treasury />}></Route>
-    <Route path='/departmentDetails/communication' element={<Communication />}></Route>
-    <Route path='/departmentDetails/sabbathschool' element={<Sababthschool />}></Route>
-    <Route path='/departmentDetails/AMO' element={<Amo />}></Route>
-    <Route path='/departmentDetails/welfare' element={<Welfare />}></Route>
-    <Route path='/departmentDetails/prayer' element={<Prayer />}></Route>
-    <Route path='/departmentDeatils/religiousliberty' element={<Religious />}></Route>
-    <Route path='/departmentDetails/patrionship' element={<Patrionship />}></Route>
-    <Route path='/departmentDetails/PersonalMinistry' element={<Personalministry />}></Route>
-    <Route path='/departmentDetails/development' element={<Development />}></Route>
-    <Route path='/departmentDetails/NRT' element={<Nurture />}></Route>
-    <Route path='/departmentDetails/chaplaincy' element={<Chaplaincy />}></Route>
-    <Route path='/departmentDetails/Alo' element={<Alo />}></Route>
+    <Route path='/member' element={user ? <Mainpage /> :<Navigate to='/signin' />}></Route>
+    <Route path='/health' element={ <Health />}></Route>
+    <Route path='/elders' element={<Elders />}/><Route />
+    <Route path='/treasury' element={ <Treasury />}></Route>
+    <Route path='/communication' element={<Communication />}></Route>
+    <Route path='/sabbathschool' element={<Sababthschool />}></Route>
+    <Route path='/AMO' element={<Amo />}></Route>
+    <Route path='/welfare' element={<Welfare />}></Route>
+    <Route path='/prayer' element={<Prayer />}></Route>
+    <Route path='/religiousliberty' element={<Religious />}></Route>
+    <Route path='/patrionship' element={<Patrionship />}></Route>
+    <Route path='/PersonalMinistry' element={<Personalministry />}></Route>
+    <Route path='/development' element={<Development />}></Route>
+    <Route path='/NRT' element={<Nurture />}></Route>
+    <Route path='/chaplaincy' element={<Chaplaincy />}></Route>
+    <Route path='/Alo' element={<Alo />}></Route>
     <Route path='/DiasporaA' element={<DiasporaA />}></Route>
     <Route path='/DiasporaB' element={<DiaspoaraB />}></Route>
     <Route path='/AroundSchoolA' element={<AroundschoolA />}></Route>

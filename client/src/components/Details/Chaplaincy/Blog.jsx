@@ -54,8 +54,8 @@ const sidebar = {
     { title: 'Chaplaincy Sabbath', url: '#' },
   ],
   social: [
-    { name: 'Kyusda Youtube', icon: BsYoutube },
-    { name: 'Kyusda Facebook', icon: FacebookIcon },
+    { name: 'Kyusda Youtube', icon: BsYoutube , link:'https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ'},
+    { name: 'Kyusda Facebook', icon: FacebookIcon , link:'https://www.facebook.com/profile.php?id=100083015178066' },
   ],
 };
 

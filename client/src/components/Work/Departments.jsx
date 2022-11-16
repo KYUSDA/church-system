@@ -43,7 +43,7 @@ const Departments = () => {
                 staggerChildren: 0.5 }}
                 className="app__work-hover app__flex"
               >
-        <Link to={`departmentDetails/${department.link}`} 
+        <Link to={`/${department.link}`} 
         rel="noreferrer"
         >
                   <motion.div

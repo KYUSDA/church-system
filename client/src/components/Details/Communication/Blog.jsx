@@ -19,7 +19,6 @@ const sections = [
   { title: 'About Us', url: '/' },
   { title: 'Families', url: '/' },
   { title: 'Departments', url: '/' },
-  { title: 'Gallery', url: '/gallery' }
 ];
 
 const mainFeaturedPost = {
@@ -40,7 +39,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department is made up of 16 members',
+      'The department is made up of 16 members and elder in charge is Eld Ibrahim kimwecha',
  
   },
 ];
@@ -55,8 +54,8 @@ const sidebar = {
     { title: 'Communication Week', url: '#' },
   ],
   social: [
-    { name: 'Kyusda Youtube', icon: BsYoutube },
-    { name: 'Kyusda Facebook', icon: FacebookIcon },
+    { name: 'Kyusda Youtube', icon: BsYoutube  , link:'https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ'},
+    { name: 'Kyusda Facebook', icon: FacebookIcon  , link:'https://www.facebook.com/profile.php?id=100083015178066'},
   ],
 };
 

@@ -27,7 +27,7 @@ if(resp.ok){
     localStorage.setItem('user',JSON.stringify(data));
     dispatch({type:'LOGIN',payload:data});
 setLoading(false);
-redirect('/meber')
+redirect('/')
 }
     }
 

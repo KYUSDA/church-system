@@ -5,7 +5,9 @@ import {
   Header, 
   Testimonial,
   Departments,
-  Families
+  Families,
+Announcements,
+Kyusda
 } 
 from './container/index';
 import { Navbar } from './components';
@@ -17,7 +19,9 @@ const App = () => (
     <About />
     <Departments />
 <Families />
+<Announcements />
 <Testimonial />
+<Kyusda />
 <Footer />
   </div>
 );

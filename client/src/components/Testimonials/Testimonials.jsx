@@ -17,15 +17,11 @@ const Testimonial = () => {
 
   useEffect(() => {
     const query = '*[_type == "testimonials"]';
-    const brandsQuery = '*[_type == "brands"]';
 
     client.fetch(query).then((data) => {
       setTestimonials(data);
     });
 
-    client.fetch(brandsQuery).then((data) => {
-      setBrands(data);
-    });
   }, []);
 
   return (
@@ -57,19 +53,7 @@ const Testimonial = () => {
           </div>
         </>
       )}
-   {/* <h2 className="head-text">Institutions  & Companies</h2>
-      <div className="app__testimonial-brands app__flex">
-      
-        {brands.map((brand) => (
-          <motion.div
-            whileInView={{ opacity: [0, 1] }}
-            transition={{ duration: 0.5, type: 'tween' }}
-            key={brand._id}
-          >
-            <img src={urlFor(brand.imgUrl)} alt={brand.name} />
-          </motion.div>
-        ))}
-      </div> */}
+
     </>
   );
 };

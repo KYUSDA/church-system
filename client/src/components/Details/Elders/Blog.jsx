@@ -14,13 +14,13 @@ import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 
-const sections = [
-  { title: 'Home', url: '/' },
-  { title: 'About Us', url: '/' },
-  { title: 'Families', url: '/' },
-  { title: 'Departments', url: '/' },
-  { title: 'Gallery', url: '/gallery' }
-];
+// const sections = [
+//   { title: 'Home', url: '/' },
+//   { title: 'About Us', url: '/' },
+//   { title: 'Families', url: '/' },
+//   { title: 'Departments', url: '/' },
+//   { title: 'Gallery', url: '/gallery' }
+// ];
 
 const mainFeaturedPost = {
   title: 'Welcome to Elders Department',
@@ -49,13 +49,13 @@ const posts = ["efadsfasd","wrfwrf", "wfwsfs"];
 const sidebar = {
   title: 'Project',
   description:
-    'The department has started a online cyber known as Neptune connects',
+    'Coming soon',
   archives: [
-    { title: 'Religious Liberty Week', url: '#' },
+    { title: 'Coming soon', url: '#' },
   ],
   social: [
-    { name: 'Kyusda Youtube', icon: BsYoutube },
-    { name: 'Kyusda Facebook', icon: FacebookIcon },
+    { name: 'Kyusda Youtube', icon: BsYoutube , link:'https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ'},
+    { name: 'Kyusda Facebook', icon: FacebookIcon , link:'https://www.facebook.com/profile.php?id=100083015178066'},
   ],
 };
 
@@ -66,7 +66,7 @@ export default function Blog() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header  sections={sections} />
+        <Header   />
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={4}>
@@ -75,7 +75,7 @@ export default function Blog() {
             ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>
-            <Main title="Depatment Gallery" posts={posts} />
+            <Main title="Department Gallery" posts={posts} />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}

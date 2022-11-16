@@ -50,13 +50,13 @@ const posts = ["efadsfasd","wrfwrf", "wfwsfs"];
 const sidebar = {
   title: 'Project',
   description:
-    '',
+    'coming soon',
   archives: [
-    { title: 'patrionship sabbath', url: '#' },
+    { title: 'coming soon', url: '#' },
   ],
   social: [
-    { name: 'Kyusda Youtube', icon: BsYoutube },
-    { name: 'Kyusda Facebook', icon: FacebookIcon },
+    { name: 'Kyusda Youtube', icon: BsYoutube ,link:'https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ' },
+    { name: 'Kyusda Facebook', icon: FacebookIcon , link:'https://www.facebook.com/profile.php?id=100083015178066'},
   ],
 };
 
@@ -76,7 +76,7 @@ export default function Blog() {
             ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>
-            <Main title="Depatment Gallery" posts={posts} />
+            <Main title="Department Gallery" posts={posts} />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}
