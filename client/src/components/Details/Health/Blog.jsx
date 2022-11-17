@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import healthpic1 from '../../../assets/healthpic2.jpeg';
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Health Department',
   description:
   "Teaching about good life style , in mater of what we eat etc",
-  image: 'https://source.unsplash.com/random',
+  image: healthpic1,
   imageText: 'main image description',
   linkText: '',
 };

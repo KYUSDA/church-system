@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import dev from '../../../assets/Dev.JPG'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Development  Department',
   description:
   "We always ensure church growth",
-  image: 'https://source.unsplash.com/random',
+  image: dev,
   imageText: 'main image description',
   linkText: '',
 };

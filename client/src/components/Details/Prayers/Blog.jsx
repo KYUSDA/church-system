@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import prayer1 from '../../../assets/family1.avif'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Prayer Ministry Department',
   description:
   "Let's commune with God through prayers",
-  image: 'https://source.unsplash.com/random',
+  image: prayer1,
   imageText: 'main image description',
   linkText: '',
 };

@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Religious Liberty Department',
   description:
   "Adventist men organisation",
-  image: 'https://source.unsplash.com/random',
+  image: 'https://source.unsplash.com/church',
   imageText: 'main image description',
   linkText: '',
 };

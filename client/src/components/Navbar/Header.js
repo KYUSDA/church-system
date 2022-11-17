@@ -20,7 +20,7 @@ import {
   import { Link, animateScroll as scroll } from "react-scroll";
   import { HiMenuAlt4, HiX } from 'react-icons/hi';
 import { motion } from 'framer-motion';
-
+import Kyusda from "../../assets/kyusda logo.png";
   
   const headersData = [
     {
@@ -103,7 +103,7 @@ const Header = () => {
   return (
     <nav className="app__navbar">
       <div className="app__navbar-logo">
-        {/* <img src={images.logo} alt="logo" /> */}
+        <img src={Kyusda} alt="logo"  style={{height:'60px'}}/>
       </div>
       {
 user && (
@@ -128,7 +128,7 @@ user && (
       <a href={`#${item}`}>{item}</a>
     </li>
   ))}
-  <a href="/signin" style={{color:"black",fontSize:"20px",fontWeight:"bolder",textDecoration:"none"}}>Member</a>
+  <a href="/signin" style={{color:"blue",fontSize:"20px",fontWeight:"bolder",textDecoration:"none",width:'auto',backgroundColor:"red"}}>Member</a>
 </ul>
 )
 }

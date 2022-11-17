@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import Aloimage from '../../../assets/Alo.JPG'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -26,8 +26,8 @@ const sections = [
 const mainFeaturedPost = {
   title: 'Welcome to ALO Department',
   description:
-  "Adventist men organisation",
-  image: 'https://source.unsplash.com/random',
+  "Adventist Women organisation",
+  image: Aloimage,
   imageText: 'main image description',
   linkText: '',
 };
@@ -41,7 +41,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department comprised of '
+      'The department is headed'
   },
 ];
 

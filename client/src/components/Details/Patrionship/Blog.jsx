@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import patrion from '../../../assets/Patrionship.JPG'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Patrionship Department',
   description:
   "Includes the Lectures and sponsors who support the church",
-  image: 'https://source.unsplash.com/random',
+  image: patrion,
   imageText: 'main image description',
   linkText: '',
 };

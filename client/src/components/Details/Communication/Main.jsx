@@ -6,11 +6,7 @@ import Divider from '@mui/material/Divider';
 import Markdown from './Markdown';
 import sprite from '../../../assets/sprite.svg'
 import { Carousel } from 'react-responsive-carousel';
-const images = [
-    "https://res.cloudinary.com/ifeomaimoh/image/upload/v1652345767/demo_image2.jpg",
-  "https://res.cloudinary.com/ifeomaimoh/image/upload/v1652366604/demo_image5.jpg",
-   "https://res.cloudinary.com/ifeomaimoh/image/upload/v1652345874/demo_image1.jpg",
-  ];
+import comm2 from '../../../assets/mydep.JPG'
 
 
   const rotateAnimationHandler = (props, state) => {
@@ -81,65 +77,10 @@ function Main(props) {
         {title}
       </Typography>
       <Divider />
-      {/* {posts.map((post) => (
-        <Markdown className="markdown" key={post.substring(0, 40)}>
-          {post}
-        </Markdown>
-      ))} */}
-           {/* <div className="box">
-     <Carousel useKeyboardArrows={true}
-      showIndicators
-      renderArrowNext={(clickHandler, hasNext) => {
-        return (
-          hasNext && (
-            <button className="nav_btn nav_btn_right" onClick={clickHandler}>
-              <svg>
-                <use xlinkHref={sprite + "#right"}></use>
-              </svg>
-            </button>
-          )
-        );
-      }}
-      renderArrowPrev={(clickHandler, hasNext) => {
-        return (
-          hasNext && (
-            <button onClick={clickHandler} className="nav_btn nav_btn_left">
-              <svg>
-                <use xlinkHref={sprite + "#left"}></use>
-              </svg>
-            </button>
-          )
-        );
-      }}
-      renderIndicator={(clickHandler, isSelected, index) => {
-        return (
-          <li
-            onClick={clickHandler}
-            className={`ind ${isSelected ? "active" : ""}`}
-            key={index}
-            role="button"
-          />
-        );
-      }}
-      statusFormatter={(currentItem, total) => {
-        return (
-          <div>
-image {currentItem} of {total}
-          </div>
-         
-        );
-      }}
-      transitionTime={310}
-      animationHandler={rotateAnimationHandler}
-      swipeable={false} 
-     >
-        {images.map((URL, index) => (
-          <div className="slide">
-            <img alt="sample_file" src={URL} key={index} className='myslider'/>
-            </div>
-            ))}
-       </Carousel>
-    </div> */}
+     <div>
+      <img src={comm2} alt='communication'  
+      style={{height:"300px",width:"700px"}}/>
+     </div>
     </Grid>
   );
 }

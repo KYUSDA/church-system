@@ -13,7 +13,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import Chap1 from '../../../assets/Chaplaincy.JPG';
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -26,7 +26,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Chaplaincy Department',
   description:
   "We reach out to hospitals,prisons , schools etc ",
-  image: 'https://source.unsplash.com/random',
+  image: Chap1,
   imageText: 'main image description',
   linkText: '',
 };

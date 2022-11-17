@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import Personal from '../../../assets/PersonalMinistry.jpeg'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Personal Ministry Department',
   description:
   "In charge of Reaching out to our non-adventist brother and sisters",
-  image: 'https://source.unsplash.com/random',
+  image: Personal,
   imageText: 'main image description',
   linkText: '',
 };

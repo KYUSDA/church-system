@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Sabbath School Department',
   description:
   "we have active sabbath school",
-  image: 'https://source.unsplash.com/random',
+  image: 'https://source.unsplash.com/church',
   imageText: 'main image description',
   linkText: '',
 };
