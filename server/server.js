@@ -5,7 +5,7 @@ mongoose.connect(process.env.MONGODB_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
-    app.listen(process.env.PORT,()=>{
+    app.listen(process.env.PORT || 8000,()=>{
         console.log(`Server running on PORT:${process.env.PORT}`)
     })
 })
