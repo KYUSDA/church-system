@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { motion } from 'framer-motion';
-
+import {Link} from 'react-router-dom';
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Families.scss';
@@ -40,7 +40,7 @@ const   Families = () => {
                 staggerChildren: 0.5 }}
                 className="app__work-hover app__flex"
               >
-                <a href={`${family.link}`}
+                <Link to={`/${family.link}`}
                 rel="noreferrer">
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
@@ -50,7 +50,7 @@ const   Families = () => {
                   >
                     <AiFillEye />
                   </motion.div>
-                </a>
+                </Link>
               </motion.div>
             </div>
 

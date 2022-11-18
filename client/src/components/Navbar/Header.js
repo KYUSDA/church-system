@@ -10,14 +10,11 @@ import {
   } from "@material-ui/core";
   import MenuIcon from "@material-ui/icons/Menu";
   import React, { useState, useEffect } from "react";
-  import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
   import Cookies from 'universal-cookie';
   import { useLogout } from "../../hooks/userLogouthook";
   import { useAuthContext } from "../../context/useAuthcontext";
   import './Navbar.scss';
-  //get the jwt 
-  //check for the validity ,pass via link
-  import { Link, animateScroll as scroll } from "react-scroll";
   import { HiMenuAlt4, HiX } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import Kyusda from "../../assets/kyusda logo.png";
@@ -128,7 +125,12 @@ user && (
       <a href={`#${item}`}>{item}</a>
     </li>
   ))}
-  <a href="/signin" style={{color:"blue",fontSize:"20px",fontWeight:"bolder",textDecoration:"none",width:'auto',backgroundColor:"red"}}>Member</a>
+  <Link 
+   to='/signIn'
+   rel="noreferrer"
+   style={{color:"blue",fontSize:"20px",fontWeight:"bolder",textDecoration:"none",
+   width:'auto',backgroundColor:"red"}}>
+  Member</Link>
 </ul>
 )
 }
@@ -167,7 +169,12 @@ user && (
       <a href={`#${item}`}>{item}</a>
     </li>
   ))}
-  <a href="/signin" style={{color:"black",fontSize:"20px",fontWeight:"bolder",textDecoration:"none"}}>Member</a>
+  <Link 
+   to='/signIn'
+   rel="noreferrer"
+   style={{color:"blue",fontSize:"20px",fontWeight:"bolder",textDecoration:"none",width:'auto',
+   backgroundColor:"red"}}>
+  Member</Link>
 </ul>
 )
 }
@@ -180,177 +187,3 @@ user && (
 
 export default Header;
 
-  
-//   export default function Header() {
-//     const {logout} = useLogout();
-//     const {user} = useAuthContext();
-//     const cookies = new Cookies();
-//     let myTk = cookies.get('jwt');
-//     console.log(myTk);
-//     const { header, logo, menuButton, toolbar, drawerContainer ,logOut } = useStyles();
-//     const handleLogout = ()=>{
-//       console.log('logged out');
-//       logout()
-//     }
-//     const [state, setState] = useState({
-//       mobileView: false,
-//       drawerOpen: false,
-//     });
-  
-//     const { mobileView, drawerOpen } = state;
-  
-//     useEffect(() => {
-//       const setResponsiveness = () => {
-//         return window.innerWidth < 900
-//           ? setState((prevState) => ({ ...prevState, mobileView: true }))
-//           : setState((prevState) => ({ ...prevState, mobileView: false }));
-//       };
-  
-//       setResponsiveness();
-  
-//       window.addEventListener("resize", () => setResponsiveness());
-  
-//       return () => {
-//         window.removeEventListener("resize", () => setResponsiveness());
-//       };
-//     }, []);
-  
-//     const displayDesktop = () => {
-//       return (
-//         <Toolbar className={toolbar}>
-// {
-//             user && (
-//               <div>
-//               {Kyusda}
-//               <div>{getMenuButtons()}</div>
-//               <div>{user.email}</div>
-//               <div className={logOut}>{logOutbutton}</div>
-//               </div>
-//             )
-//           }
-//           {
-//             !user && (
-//               <div>
-//                  {Kyusda}
-//               <div>{getMenuButtons()}</div>
-//               </div>
-//             )
-//           }
-//         </Toolbar>
-//       );
-//     };
-  
-//     const displayMobile = () => {
-//       const handleDrawerOpen = () =>
-//         setState((prevState) => ({ ...prevState, drawerOpen: true }));
-//       const handleDrawerClose = () =>
-//         setState((prevState) => ({ ...prevState, drawerOpen: false }));
-  
-//       return (
-//         <Toolbar>
-//  <IconButton
-//             {...{
-//               edge: "start",
-//               color: "inherit",
-//               "aria-label": "menu",
-//               "aria-haspopup": "true",
-//               onClick: handleDrawerOpen,
-//             }}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           <Drawer
-//             {...{
-//               anchor: "left",
-//               open: drawerOpen,
-//               onClose: handleDrawerClose,
-//             }}
-//           >
-//               {
-//             user && (
-//               <div>
-//            <div className={drawerContainer}>{getDrawerChoices()}</div>
-//               <div>{user.email}</div>
-//               <div className={logOut}>{logOutbutton}</div>
-//               </div>
-//             )
-//           }
-//           {
-//             !user && (
-//               <div>
-//               <div className={drawerContainer}>{getDrawerChoices()}</div>
-//                  {/* <div>{userEmail}</div> */}
-//                  {/* <div className={logOut}>{logOutbutton}</div> */}
-//                  </div>
-//             )
-//           }
-           
-//           </Drawer>
-//         </Toolbar>
-//       );
-//     };
-  
-//     const getDrawerChoices = () => {
-//       return headersData.map(({ label, href }) => {
-//         console.log(href)
-//         return (
-//           <Link
-//             {...{
-//               component: RouterLink,
-//               to: href,
-//               color: "inherit",
-//               style: { textDecoration: "none" },
-//               key: label,
-//               state:{token:myTk}
-//             }}
-//           >
-//             <MenuItem>{label}</MenuItem>
-//           </Link>
-//         );
-//       });
-//     };
-  
-//     const Kyusda = (
-//       <Typography variant="h6" component="h1" className={logo}>
-//     KYUSDA
-//       </Typography>
-//     );
-
-// const logOutbutton = (
-//   <Typography  onClick={()=>handleLogout()}>
-//   LOGOUT
-//   </Typography>
-// )
-
-// // const userEmail = (
-// //   <Typography>
-// // {user.email}
-// //   </Typography>
-// // )
-  
-//     const getMenuButtons = () => {
-//       return headersData.map(({ label, href }) => {
-//         return (
-//           <Button
-//             {...{
-//               key: label,
-//               color: "inherit",
-//               to: href,
-//               component: RouterLink,
-//               className: menuButton,
-//             }}
-//           >
-//             {label}
-//           </Button>
-//         );
-//       });
-//     };
-  
-//     return (
-//       <header>
-//         <AppBar className={header}>
-//           {mobileView ? displayMobile() : displayDesktop()}
-//         </AppBar>
-//       </header>
-//     );
-//   }

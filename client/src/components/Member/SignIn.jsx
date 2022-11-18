@@ -115,14 +115,14 @@ const {login,error,loading} = useLogin();
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="/resetToken" variant="body2">
+                  <a href="/resetToken" variant="body2">
                     Forgot password?
-                  </Link>
+                  </a>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
+                  <a href="/signUp" variant="body2">
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </a>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

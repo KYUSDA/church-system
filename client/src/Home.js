@@ -2,8 +2,9 @@ import React from 'react';
 import {Routes,Route,Link,Navigate} from 'react-router-dom';
 import { useAuthContext } from './context/useAuthcontext';
 import Mainpage from './App';
-import SignUp from './components/Details/SignUp';
-import SignInSide from './components/Details/Signin';
+import SignUp from './components/Member/Signup';
+import Masterguide from './components/Details/Masterguide.jsx';
+import SignInSide from './components/Member/SignIn';
 import ResetInSide from './components/Member/ResetToken';
 import Newpassword from './components/Member/Resetpassword';
 import Memberspage from './components/Member/Memberspage';
@@ -41,11 +42,12 @@ const Home = ()=>{
   return (
   <Routes>
     <Route path='/' element={<Mainpage />}></Route>
-    <Route path='/signup' element={!user ? <SignUp /> : <Navigate to='/member' />}></Route>
-    <Route path='/signin' element={ !user ? <SignInSide />: <Navigate to='/member'/>}></Route>
+    <Route path='/masterguide'  element={<Masterguide />}/>
+    <Route path='/signUp' element={!user ? <SignUp /> : <Navigate to='/member' />}></Route>
+    <Route path='/signIn' element={ !user ? <SignInSide />: <Navigate to='/member'/>}></Route>
     <Route path='/resetToken' element={<ResetInSide />}></Route>
     <Route path='/resetPassword' element={   <Newpassword />}></Route>
-    <Route path='/member' element={user ? <Mainpage /> :<Navigate to='/signin' />}></Route>
+    <Route path='/member' element={user ? <Mainpage /> :<Navigate to='/signIn' />}></Route>
     <Route path='/health' element={ <Health />}></Route>
     <Route path='/elders' element={<Elders />}/><Route />
     <Route path='/treasury' element={ <Treasury />}></Route>
