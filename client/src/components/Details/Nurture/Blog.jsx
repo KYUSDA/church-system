@@ -13,7 +13,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import caring from '../../../assets/caring.jpeg'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -25,8 +25,8 @@ const sections = [
 const mainFeaturedPost = {
   title: 'Welcome to Nuture ,Retention & Reclamation Department',
   description:
-  "Entails nuturing of those new in faith and bring back those who have backslided",
-  image: 'https://source.unsplash.com/random',
+  "Deals with nurturing newly baptized members , retaining all church members and reclaiming the lost",
+  image: caring,
   imageText: 'main image description',
   linkText: '',
 };
@@ -40,7 +40,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department comprised of 3'
+      ''
   },
 ];
 

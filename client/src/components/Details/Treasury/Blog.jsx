@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import stew from '../../../assets/stewardship.png';
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -24,10 +24,10 @@ const sections = [
 ];
 
 const mainFeaturedPost = {
-  title: 'Welcome to Treasury Department',
+  title: 'Welcome to Stewardship Department',
   description:
-  "We are Christ steward",
-  image: 'https://source.unsplash.com/random',
+  "It is the act of taking managing what God has bestowed on us; the body, material wealth, time and abilities/talents",
+  image: stew,
   imageText: 'main image description',
   linkText: '',
 };
@@ -36,12 +36,12 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      '',
+      '1 Corinthians 4:12----moreover it is  required in stewards, that a man be found faithful. ',
   },
   {
     title: 'Members',
     description:
-      'The department comprised of 2 members'
+      'Headed by Henry Mwaniki Kamau'
   },
 ];
 

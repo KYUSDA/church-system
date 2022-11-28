@@ -6,8 +6,8 @@ import BankingIcon from '../../images/icon-online.svg';
 import BudgetingIcomn from '../../images/icon-budgeting.svg';
 import Onboarding from '../../images/icon-onboarding.svg';
 import Api from '../../images/icon-api.svg';
-import profile from '../../images/myprofile.png'
-import samkam from '../../images/samkam.jpg'
+import profile from '../../../../../assets/Eldersam.jpg';
+
 const Info = () => {
 	return (
 		<div>
@@ -39,26 +39,10 @@ const Info = () => {
 						</InfoCard>
 						<InfoCard>
 							<img src={BudgetingIcomn} alt='' />
-							<H3>Sister Viclkine</H3>
+							<H3>Sister Vickline</H3>
 							<p>Family leader</p>
 							<Para>
 							Come lets commune together
-							</Para>
-						</InfoCard>
-						<InfoCard>
-							<img src={Onboarding} alt='' />
-							<H3>Jacob</H3>
-							<p>Family leader</p>
-							<Para>
-								Welcome to upperkutus family
-							</Para>
-						</InfoCard>
-						<InfoCard>
-							<img src={samkam} alt='' />
-							<H3>Samuel Kamotho</H3>
-							<p>Family leader</p>
-							<Para>
-							A friend of upper kutus
 							</Para>
 						</InfoCard>
 					</InfoGrid>

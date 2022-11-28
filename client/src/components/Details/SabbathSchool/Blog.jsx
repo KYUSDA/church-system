@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import sabbath from '../../../../../client/src/assets/Sabbathschool.jpeg'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Sabbath School Department',
   description:
   "we have active sabbath school",
-  image: 'https://source.unsplash.com/church',
+  image: sabbath,
   imageText: 'main image description',
   linkText: '',
 };
@@ -36,7 +36,7 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      '',
+      'The Sabbath school, the primary religious education program of the Church, has four purposes: study of the Scripture, fellowship, community outreach, and world mission emphasis. The Sabbath School and Personal Ministries Department distributes the Sabbath school Bible study guide for all age levels, provides designs for Sabbath school programming within the context of the various world division cultures, provides resources and training systems for Sabbath school teachers, and promotes world mission Sabbath school offerings.',
   },
   {
     title: 'Members',

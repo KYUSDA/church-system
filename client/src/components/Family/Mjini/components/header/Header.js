@@ -34,6 +34,7 @@ const Header = () => {
 				<p style={{fontSize:"30px" , fontWeight:'bolder'}}>
 					<a href='/'>Mjini Family</a>
 				</p>
+				
 						</Logo>
 					{
 user&& (

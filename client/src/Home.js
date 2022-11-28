@@ -37,6 +37,8 @@ import Kibugi from './components/Family/Kibugi/Kibugi';
 import Penri from './components/Family/Penri/Penri';
 import GardenEstate from './components/Family/GardenEstate/GardenEstate';
 import Kanjata from './components/Family/Kanjata/Kanjata';
+import Publishing from './components/Details/Publishing.jsx'
+import Deaconry from './components/Details/Deaconry';
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -77,6 +79,8 @@ const Home = ()=>{
     <Route path='/Penri' element={<Penri />}></Route>
     <Route path='/Gardenestate' element={<GardenEstate />}></Route>
     <Route path='/kanjata' element={<Kanjata />}></Route>
+    <Route path='/publishing' element={<Publishing />}></Route>
+  <Route path='/deaconry' element={<Deaconry />}></Route>
   </Routes>
   )
 }

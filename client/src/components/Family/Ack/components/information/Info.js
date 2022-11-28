@@ -6,8 +6,7 @@ import BankingIcon from '../../images/icon-online.svg';
 import BudgetingIcomn from '../../images/icon-budgeting.svg';
 import Onboarding from '../../images/icon-onboarding.svg';
 import Api from '../../images/icon-api.svg';
-// import profile from '../../images/myprofile.png'
-// import samkam from '../../images/samkam.jpg'
+import profile from '../../../../../assets/Eldersam.jpg';
 const Info = () => {
 	return (
 		<div>
@@ -29,36 +28,19 @@ const Info = () => {
 					marginTop:'20px'}}>
 					 OUR LEADERS</p>
 					<InfoGrid>
-						<InfoCard>
-							<img src={Api} alt='' />
+					<InfoCard>
+							<img src={profile} alt='' />
 							<H3>Elder Samuel Omweri</H3>
 							<p>Elder in charge</p>
 							<Para>
-								Am the elder in charge feel much welcome
+							Welcome to ACK family 
 							</Para>
 						</InfoCard>
 						<InfoCard>
 							<img src={BudgetingIcomn} alt='' />
-							<H3>Sister Viclkine</H3>
+							<H3>Sister Vickline</H3>
 							<p>Family leader</p>
 							<Para>
-							Come lets commune together
-							</Para>
-						</InfoCard>
-						<InfoCard>
-							<img src={''} alt='' />
-							<H3>Jacob</H3>
-							<p>Family leader</p>
-							<Para>
-								Welcome to upperkutus family
-							</Para>
-						</InfoCard>
-						<InfoCard>
-							<img src={'dfdf'} alt='' />
-							<H3>Samuel Kamotho</H3>
-							<p>Family leader</p>
-							<Para>
-							A friend of upper kutus
 							</Para>
 						</InfoCard>
 					</InfoGrid>

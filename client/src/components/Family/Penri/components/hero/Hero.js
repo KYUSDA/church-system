@@ -24,7 +24,6 @@ const Hero = () => {
 						</HeroContentWrapper>
 					</HeroContent>
 					<HeroImage>
-						<img src={HeroImg} alt='hero' />
 					</HeroImage>
 				</HeroWrapper>
 			</NoRightPaddingContainer>

@@ -20,7 +20,7 @@ function FeaturedPost(props) {
             </Typography>
             <Typography variant="subtitle1" paragraph>
         {post.description} 
-        Headed by Elder Samuel Omweri
+       
             </Typography>
           </CardContent>
         </Card>

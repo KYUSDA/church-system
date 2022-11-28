@@ -36,12 +36,12 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      '',
+      'We love seeing kyusda grow and we are here to support them',
   },
   {
     title: 'Members',
     description:
-      'The department comprised of 2 patrions'
+      'Headed by Elder Samuel Omweri'
   },
 ];
 

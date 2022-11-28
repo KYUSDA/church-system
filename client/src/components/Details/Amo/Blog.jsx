@@ -36,7 +36,7 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      '',
+      'Adventist Men Organization has been established primarily to promote programmes and activities designed to foster the spiritual, intellectual, social, moral, health and physical well-being of students, working class, businessmen, professional men etc., to give them opportunities to understand the responsibilities of Adventist men and to engage them in evangelistic activities.',
   },
   {
     title: 'Members',

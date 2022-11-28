@@ -36,12 +36,12 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      '',
+      "The Department of Women's Ministries exists to uphold, encourage, and challenge Adventist women in their pilgrimage as disciples of Jesus Christ and members of His world church.",
   },
   {
     title: 'Members',
     description:
-      'The department is headed'
+      ''
   },
 ];
 

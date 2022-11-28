@@ -36,12 +36,12 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      'Ever wanted to be a pathfinder ,adventures teacher.',
+      'Being a Master Guide grants you a responsibility more than status. The Master Guide ministry was developed to train and develop leaders for the Church and in specific, for youth ministry.',
   },
   {
     title: 'Members',
     description:
-      'The department comprised of 4 members'
+      ''
   },
 ];
 
@@ -50,14 +50,14 @@ const posts = ["efadsfasd","wrfwrf", "wfwsfs"];
 const sidebar = {
   title: 'Project',
   description:
-    'Medical Ministry',
+    'Kyusda master guide campout',
   archives: [
-    { title: 'Health Sabbath', url: '#' },
+    { title: 'Masterguide Sabbath', url: '#' },
   ],
   social: [
     { name: 'Kyusda Youtube', icon: BsYoutube , link:'https://www.youtube.com/channel/UCe6xeVkEBvG7OD_9HltS1xQ'},
     { name: 'Kyusda Facebook', icon: FacebookIcon ,link:'https://www.facebook.com/profile.php?id=100083015178066'},
-    { name:'kyusda health whatsapp', icon: BsWhatsapp }
+    { name:'kyusda Masterguide whatsapp', icon: BsWhatsapp }
   ],
 };
 

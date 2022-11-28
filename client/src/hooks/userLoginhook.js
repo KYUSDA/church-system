@@ -14,7 +14,7 @@ const login = async(email,password)=>{
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({email,password}),
             credentials:'include',
-            withCredentials:true
+            withCredentials:false
            })
         const data = await resp.json();
 if(!resp.ok){

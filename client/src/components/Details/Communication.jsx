@@ -13,7 +13,7 @@ import Comm from '../../components/Details/Communication/Blog'
 
 const Communication = ()=>{
   return (
-    <div className="hea">
+    <div>
     <Comm />
     </div>
   )

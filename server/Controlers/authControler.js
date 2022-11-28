@@ -49,6 +49,7 @@ resp.status(200).json({
     email:loggedMember.email,
     tk
 })
+console.log('signed in');
 }catch(err){
 resp.status(404).json({
     status:'failure',

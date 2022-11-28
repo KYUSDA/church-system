@@ -40,7 +40,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department comprised of 3'
+      'The department is headed by Joram Barasa'
   },
 ];
 

@@ -6,7 +6,7 @@ import BankingIcon from '../../images/icon-online.svg';
 import BudgetingIcomn from '../../images/icon-budgeting.svg';
 import Onboarding from '../../images/icon-onboarding.svg';
 import Api from '../../images/icon-api.svg';
-
+import profileimg from '../../../../../assets/Eldersam.jpg'
 const Info = () => {
 	return (
 		<div>
@@ -29,12 +29,11 @@ const Info = () => {
 					 OUR LEADERS</p>
 					<InfoGrid>
 						<InfoCard>
-							<img src={BankingIcon} alt='' />
+							<img src={profileimg} alt='' />
 							<H3>Elder Samuel Omweri</H3>
 							<p>Elder in charge</p>
 							<Para>
-								Our modern web and mobile applications allow you to keep track
-								of your finances wherever you are in the world.
+							I take this time to welcome to Diaspora A family
 							</Para>
 						</InfoCard>
 						<InfoCard>
@@ -42,8 +41,7 @@ const Info = () => {
 							<H3>Sister Viclkine</H3>
 							<p>Family leader</p>
 							<Para>
-								See exactly where your money goes each month. Receive
-								notifications when you’re close to hitting your limits.
+							It is a priviledge to have you in our family
 							</Para>
 						</InfoCard>
 						<InfoCard>
@@ -51,8 +49,7 @@ const Info = () => {
 							<H3>Jacob</H3>
 							<p>Family leader</p>
 							<Para>
-								We don’t do branches. Open your account in minutes online and
-								start taking control of your finances right away.
+								Always welcome to our family
 							</Para>
 						</InfoCard>
 						<InfoCard>
@@ -60,8 +57,7 @@ const Info = () => {
 							<H3>Samuel Kamotho</H3>
 							<p>Family leader</p>
 							<Para>
-								Manage your savings, investments, pension, and much more from
-								one account. Tracking your money has never been easier.
+								Lets learn from jesus feet
 							</Para>
 						</InfoCard>
 					</InfoGrid>

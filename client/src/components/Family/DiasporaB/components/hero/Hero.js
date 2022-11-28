@@ -19,7 +19,7 @@ const Hero = () => {
 							<H1>Welcome to Diaspora B family</H1>
 							<Para>
 			We are located just next to Kilele tution block , it covers areas on the Right side of the murram road
-			include the following areas  Gitwe  etc ... 
+			include the following areas  Gitwe region  etc ... 
 							</Para>
 							{/* <Button>Request Invite</Button> */}
 						</HeroContentWrapper>

@@ -7,7 +7,7 @@ import iconYoutube from '../../images/icon-youtube.svg';
 
 import { Button, Container } from '../../styles/Common.style';
 import { Link } from 'react-router-dom';
-import kyusdaImage from '../../images/kyusdalogo.jpg';
+import imgLogo from '../../../../../assets/kyusda logo.png' 
 const Footer = () => {
 	return (
 		<div>
@@ -17,15 +17,15 @@ const Footer = () => {
 						<FooterLinks>
 							<div className='footer-top'>
 								<div className='logo'>
-	<img src={kyusdaImage} alt='' 
-	style={{height:'100px',width:'100px'}} />
-	<Button>KYUSDA</Button>
-								{kyusdaImage}
+								<img src={imgLogo}  alt='kyusda image' style={{height:"100px",width:'80px'}}/>				
 								</div>
 								<div className='social-icons'>
+									<a href='https://www.facebook.com/profile.php?id=100083015178066' target='_blank'>
 									<img src={iconFb} alt='' />
-									<img src={iconTwitter} alt='' />
-									<img src={iconYoutube} alt='' />
+									</a>
+							<a href='https://www.youtube.com/@kyusdachurch9822' target='_blank'>
+							<img src={iconYoutube} alt='' />
+							</a>	
 								</div>
 							</div>
 							<div className='link'>
@@ -40,7 +40,6 @@ const Footer = () => {
 							</div>
 						</FooterLinks>
 						<FooterButton>
-							<Button>Login</Button>
 						</FooterButton>
 					</div>
 				</Container>

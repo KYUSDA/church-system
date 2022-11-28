@@ -6,7 +6,7 @@ import BankingIcon from '../../images/icon-online.svg';
 import BudgetingIcomn from '../../images/icon-budgeting.svg';
 import Onboarding from '../../images/icon-onboarding.svg';
 import Api from '../../images/icon-api.svg';
-
+import profile from '../../../../../assets/Eldersam.jpg'
 const Info = () => {
 	return (
 		<div>
@@ -28,40 +28,20 @@ const Info = () => {
 					marginTop:'20px'}}>
 					 OUR LEADERS</p>
 					<InfoGrid>
-						<InfoCard>
-							<img src={BankingIcon} alt='' />
-							<H3>Elder Samuel Omweri</H3>
-							<p>Elder in charge</p>
+					<InfoCard>
+							<img src={profile} alt='' />
+							<H3>Elder Samuel</H3>
+							<p>Leader in charge</p>
 							<Para>
-								Our modern web and mobile applications allow you to keep track
-								of your finances wherever you are in the world.
+								Welcome to Waterfall family 
 							</Para>
 						</InfoCard>
 						<InfoCard>
 							<img src={BudgetingIcomn} alt='' />
-							<H3>Sister Viclkine</H3>
+							<H3>Sister Vickline</H3>
 							<p>Family leader</p>
 							<Para>
-								See exactly where your money goes each month. Receive
-								notifications when you’re close to hitting your limits.
-							</Para>
-						</InfoCard>
-						<InfoCard>
-							<img src={Onboarding} alt='' />
-							<H3>Jacob</H3>
-							<p>Family leader</p>
-							<Para>
-								We don’t do branches. Open your account in minutes online and
-								start taking control of your finances right away.
-							</Para>
-						</InfoCard>
-						<InfoCard>
-							<img src={Api} alt='' />
-							<H3>Samuel Kamotho</H3>
-							<p>Family leader</p>
-							<Para>
-								Manage your savings, investments, pension, and much more from
-								one account. Tracking your money has never been easier.
+						
 							</Para>
 						</InfoCard>
 					</InfoGrid>

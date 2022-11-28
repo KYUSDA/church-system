@@ -19,7 +19,7 @@ function FeaturedPost(props) {
               {post.title}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              {post.description} Headed by Elder Christopher Salaton 
+              {post.description}
             </Typography>
           </CardContent>
         </Card>

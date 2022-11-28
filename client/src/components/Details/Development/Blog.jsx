@@ -36,12 +36,12 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      'Ensure church is well equipped instrumentaly and financialy to ensure smooth flow of church activities',
+      "Serves as leeway of stabilizing and financing the church bugdet and its activities by mobilizing the members to contribute ",
   },
   {
     title: 'Members',
     description:
-      'The department comprised of 8 members'
+      'The department comprised of Debrah Kwamboka, Raphael Nyakundi, Brian Mungala Sila Mutai, Daniel Kioko, Lavender Akoth, Quinter Achieng , Daniel Isaiah , Newton Ouno, Kelly Emmanuel, Abigail Kerubo,Grace Kadii,Jacob Kebaso , Dece Samba, Jamlick Stephano, Samuel Mwangi'
   },
 ];
 

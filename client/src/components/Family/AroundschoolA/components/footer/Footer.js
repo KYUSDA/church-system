@@ -8,6 +8,7 @@ import iconPinterest from '../../images/icon-pinterest.svg';
 import { Button, Container } from '../../styles/Common.style';
 import { Link } from 'react-router-dom';
 import kyusdaImage from '../../images/kyusda logo.jpg';
+import imgLogo from '../../../../../assets/kyusda logo.png';
 const Footer = () => {
 	return (
 		<div>
@@ -19,8 +20,8 @@ const Footer = () => {
 								<div className='logo'>
 	{/* <img src={kyusdaImage} alt='' 
 	style={{height:'100px',width:'100px'}} /> */}
-	<img  src='../../images/kyusda logo.jpg' alt='kyusda logo'/>
-								
+	<img src={imgLogo}  alt='kyusda image' style={{height:"100px",width:'80px'}}/>				
+
 								</div>
 								<div className='social-icons'>
 									<a href='https://www.facebook.com/profile.php?id=100083015178066'>
@@ -42,9 +43,6 @@ const Footer = () => {
 								<Link to='/#contact'>Help</Link> <Link to='/contact'>Contact</Link>
 							</div>
 						</FooterLinks>
-						<FooterButton>
-							<Button>Login</Button>
-						</FooterButton>{' '}
 					</div>
 				</Container>
 			</FooterWrapper>

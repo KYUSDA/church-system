@@ -26,7 +26,7 @@ const sections = [
 const mainFeaturedPost = {
   title: 'Welcome to Prayer Ministry Department',
   description:
-  "Let's commune with God through prayers",
+  "To facilitate of the Holy Spirit in individuals in corporate gatherings and in personal interactions",
   image: prayer1,
   imageText: 'main image description',
   linkText: '',
@@ -41,7 +41,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department comprised of 8 members'
+      'The department members include Daniel Kioko, Cheryl Kayiera, Elder Christopher Salaton and Department head Turphose Okello '
   },
 ];
 

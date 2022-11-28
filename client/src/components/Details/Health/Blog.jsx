@@ -26,7 +26,7 @@ const sections = [
 const mainFeaturedPost = {
   title: 'Welcome to Health Department',
   description:
-  "Teaching about good life style , in mater of what we eat etc",
+  "Church health affairs and medical missionary",
   image: healthpic1,
   imageText: 'main image description',
   linkText: '',
@@ -41,7 +41,7 @@ const featuredPosts = [
   {
     title: 'Members',
     description:
-      'The department comprised of 4 members'
+      'The department headed by Daniel Mochama Isaiah and Elder Christopher Salaton'
   },
 ];
 

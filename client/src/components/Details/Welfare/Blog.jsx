@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-
+import welf from '../../../assets/welfare.jpeg'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
@@ -27,7 +27,7 @@ const mainFeaturedPost = {
   title: 'Welcome to Welfare Department',
   description:
   "We offer support to our church members",
-  image: 'https://source.unsplash.com/random',
+  image: welf,
   imageText: 'main image description',
   linkText: '',
 };
@@ -36,12 +36,12 @@ const featuredPosts = [
   {
     title: 'About Us ',
     description:
-      '',
+      'The KyUSDA Welfare Department was established in order to address the wide range of concerns expressed by members of the church. These requirements include those of a physical, spiritual, and emotional nature. As a result, the department makes an effort to provide support whenever it is feasible The primary way in which this department assists members of the church is by providing them with food, monies to assist with funeral expenses, and personal visitation.',
   },
   {
     title: 'Members',
     description:
-      'The department comprised of 8 members'
+      'The department is headed by Brian Otieno Mungala and Headed by Elder Christopher Salaton'
   },
 ];
 
