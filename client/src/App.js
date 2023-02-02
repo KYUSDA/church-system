@@ -7,7 +7,8 @@ import {
   Departments,
   Families,
 Announcements,
-Kyusda
+Kyusda,
+Leader
 } 
 from './container/index';
 import { Navbar } from './components';
@@ -17,6 +18,7 @@ const App = () => (
     <Navbar />
     <Header />
     <About />
+    {/* <Leader /> */}
     <Departments />
 <Families />
 <Announcements />

@@ -9,7 +9,7 @@ const signup = async(firstName,lastName,registration,
         email,course,year,password,passwordConfirm)=>{
         setError(null);
         setLoading(true);
-        const url = `https://kyusdaapi.azurewebsites.net/kyusda/v1/member/signUp`;
+        const url = `https://localhost:3000/kyusda/v1/member/signUp`;
         const resp = await fetch(url,{
             method:'POST',
             headers:{'Content-Type':'application/json'},

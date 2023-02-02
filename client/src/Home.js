@@ -47,7 +47,7 @@ const Home = ()=>{
     <Route path='/masterguide'  element={<Masterguide />}/>
     <Route path='/signUp' element={!user ? <SignUp /> : <Navigate to='/member' />}></Route>
     <Route path='/signIn' element={ !user ? <SignInSide />: <Navigate to='/member'/>}></Route>
-    <Route path='/resetToken' element={<ResetInSide />}></Route>
+    <Route path='/resetToken' element={!user ?<ResetInSide />:<SignInSide />}></Route>
     <Route path='/resetPassword' element={   <Newpassword />}></Route>
     <Route path='/member' element={user ? <Mainpage /> :<Navigate to='/signIn' />}></Route>
     <Route path='/health' element={ <Health />}></Route>

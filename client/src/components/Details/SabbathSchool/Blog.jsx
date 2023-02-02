@@ -14,7 +14,7 @@ import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import sabbath from '../../../../../client/src/assets/Sabbathschool.jpeg'
+import sabbath from '../../../assets/Sabbathschool.jpeg'
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'About Us', url: '/' },
