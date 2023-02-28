@@ -7,7 +7,7 @@ const departmentRoute = require('./Router/departMentRoute');
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin:'https://kyusdaapi.azurewebsites.net', 
+    origin:'http://localhost:3000', 
     credentials:true
 }))
 

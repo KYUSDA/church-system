@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { json } from "react-router-dom";
+import {json,redirect} from 'react-router-dom';
 import { useAuthContext } from "../context/useAuthcontext";
 export const useSignup = ()=>{
     const [error,setError] = useState(null);
@@ -9,7 +9,7 @@ const signup = async(firstName,lastName,registration,
         email,course,year,password,passwordConfirm)=>{
         setError(null);
         setLoading(true);
-        const url = `https://localhost:3000/kyusda/v1/member/signUp`;
+        const url = `http://localhost:8000/kyusda/v1/member/signUp`;
         const resp = await fetch(url,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
@@ -29,6 +29,7 @@ if(resp.ok){
     localStorage.setItem('user',JSON.stringify(data));
     dispatch({type:'LOGIN',payload:data});
 setLoading(false);
+redirect('/member')
 }
     }
 

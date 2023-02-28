@@ -8,7 +8,7 @@ export const useLogin = ()=>{
 const login = async(email,password)=>{
         setError(null);
         setLoading(true);
-        const url = `https://kyusdaapi.azurewebsites.net/kyusda/v1/member/signIn`;
+        const url = `http://localhost:8000/kyusda/v1/member/signIn`;
         const resp = await fetch(url,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
@@ -27,7 +27,7 @@ if(resp.ok){
     localStorage.setItem('user',JSON.stringify(data));
     dispatch({type:'LOGIN',payload:data});
 setLoading(false);
-redirect('/')
+redirect('/member')
 }
     }
 

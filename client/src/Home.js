@@ -39,6 +39,7 @@ import GardenEstate from './components/Family/GardenEstate/GardenEstate';
 import Kanjata from './components/Family/Kanjata/Kanjata';
 import Publishing from './components/Details/Publishing.jsx'
 import Deaconry from './components/Details/Deaconry';
+import MembersDashboard from './components/Member/MembersDashboard';
 const Home = ()=>{
   const { user } = useAuthContext();
   return (
@@ -49,7 +50,7 @@ const Home = ()=>{
     <Route path='/signIn' element={ !user ? <SignInSide />: <Navigate to='/member'/>}></Route>
     <Route path='/resetToken' element={!user ?<ResetInSide />:<SignInSide />}></Route>
     <Route path='/resetPassword' element={   <Newpassword />}></Route>
-    <Route path='/member' element={user ? <Mainpage /> :<Navigate to='/signIn' />}></Route>
+    <Route path='/member' element={user ? <MembersDashboard /> :<Navigate to='/signIn' />}></Route>
     <Route path='/health' element={ <Health />}></Route>
     <Route path='/elders' element={<Elders />}/><Route />
     <Route path='/treasury' element={ <Treasury />}></Route>
@@ -81,6 +82,8 @@ const Home = ()=>{
     <Route path='/kanjata' element={<Kanjata />}></Route>
     <Route path='/publishing' element={<Publishing />}></Route>
   <Route path='/deaconry' element={<Deaconry />}></Route>
+  <Route path='/membersDashboard' 
+  element={<MembersDashboard />} />
   </Routes>
   )
 }

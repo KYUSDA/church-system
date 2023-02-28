@@ -57,6 +57,7 @@ resp.status(404).json({
 })
     }
 }
+
 const memberResetToken = async(req,resp)=>{
 try
 {

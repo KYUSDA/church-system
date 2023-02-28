@@ -113,6 +113,11 @@ user && (
   ))}
   <p>{user.email}</p>
   <p className={classes.logOut}>{logOutbutton}</p>
+  <button style={{
+  backgroundColor:'transparent', color:'crimson', padding:'15px',
+  fontSize:'15px',textDecoration:'none',marginLeft:'5px'}}>
+  <Link to='/member'>Member</Link>
+  </button>
 </ul>
 )
 }
