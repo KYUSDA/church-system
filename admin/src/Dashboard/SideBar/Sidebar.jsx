@@ -13,6 +13,8 @@ import {
     ChatBubbleOutline,
     WorkOutline,
     Report,
+    PeopleOutline,
+    CalendarViewDayOutlined
   } from "@material-ui/icons";
   import { Link } from "react-router-dom";
 const Sidebar = () => {
@@ -32,10 +34,6 @@ const Sidebar = () => {
             <Timeline className="sidebarIcon" />
             Analytics
           </li>
-          <li className="sidebarListItem">
-            <TrendingUp className="sidebarIcon" />
-            Sales
-          </li>
         </ul>
       </div>
       <div className="sidebarMenu">
@@ -47,20 +45,24 @@ const Sidebar = () => {
               Users
             </li>
           </Link>
-          <Link to="/products" className="link">
+          <Link to="/departments" className="link">
             <li className="sidebarListItem">
               <Storefront className="sidebarIcon" />
-              Products
+              Departments
             </li>
           </Link>
-          <li className="sidebarListItem">
-            <AttachMoney className="sidebarIcon" />
-            Transactions
-          </li>
-          <li className="sidebarListItem">
-            <BarChart className="sidebarIcon" />
-            Reports
-          </li>
+          <Link to="/families" className="link">
+            <li className="sidebarListItem">
+              <PeopleOutline className="sidebarIcon" />
+              Families
+            </li>
+          </Link>
+          <Link to="/calender" className="link">
+            <li className="sidebarListItem">
+              <CalendarViewDayOutlined className="sidebarIcon" />
+              Calender
+            </li>
+          </Link>
         </ul>
       </div>
       <div className="sidebarMenu">

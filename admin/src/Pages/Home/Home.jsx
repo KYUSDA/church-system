@@ -4,7 +4,7 @@ import Chart from '../../Dashboard/Chart/Chart'
 import FeaturedInfo from '../../Dashboard/FeaturedInfo/FeaturedInfo'
 import WidgetLg from '../../Dashboard/WidgetLg/WidgetLg'
 import WidgetSm from '../../Dashboard/WidgetSm/WidgetSm'
-import { userData } from '../../../../admin/src/DummyData/Dummy'
+import { userData } from '../../DummyData/Dummy'
 import { userRequest } from '../../requestMethods';
 const Home = () => {
   const [userStats,setUserStats] = useState([]);
@@ -44,7 +44,7 @@ const Home = () => {
   return (
     <div className="home">
     <FeaturedInfo />
-    <Chart data={userStats} title="User Analytics" grid dataKey="Active User"/>
+    <Chart data={userData} title="User Analytics" grid dataKey="Active User"/>
     <div className="homeWidgets">
       <WidgetSm/>
       <WidgetLg/>

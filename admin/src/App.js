@@ -6,43 +6,41 @@ import Home from './Pages/Home/Home';
 import UserList from './Pages/Userlist/UserList';
 import User from './Pages/User/Users';
 import Newuser from './Pages/NewUser/Newuser';
-import { BrowserRouter as Router ,Routes ,Route } from 'react-router-dom';
-import Product from './Pages/Product/Product';
-import ProductList from './Pages/ProductList/ProductList';
-import NewProduct from './Pages/NewProduct/NewProduct';
+import { BrowserRouter as Router ,Routes ,Route, Navigate } from 'react-router-dom';
+import Department from './Pages/Department/Department';
+import DepartmentList from './Pages/DepartmentList/DepartmentList';
+import FamilyList from './Pages/FamilyList/FamilyList';
+import NewClaim from './Pages/NewDepartment/NewDepartment';
 import Login from './Pages/login/Login';
 import Trial from './Pages/trial'
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const user = false;
 const App = () => {
   // const admin = useSelector((state) => state.user.currentUser.isAdmin);
+  // const admin = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.token;
+const admin = localStorage.getItem('loggedIn');
   return (
     <Router>
   <Routes>
-  <Route path='/login' element={<Login />} />
-  <Route path='/register' element={<Trial />} />
+        <Route path='/login' element={<Login />} />
   </Routes>
-{
-  user && (
-<>
+      <>
         <Topbar />
   <div className='container'>
     <Sidebar />
     <Routes>
-<Route exact path='/' element={<Home/>} />
+<Route exact path='/' element={<Home/>}/>
 <Route path='/users' element={<UserList />} />
-<Route path='/users/:id' element={<User />}/>
+<Route path='/user/:id' element={<User />}/>
 <Route path='/newUser' element={<Newuser />}/>
-<Route path='/product/:id' element={<Product />}/>
-<Route path='/products' element={<ProductList />}/>
-<Route path='/newProduct' element={<NewProduct />}/>  
+<Route path='/department/:id' element={<Department />}/>
+<Route path='/departments' element={<DepartmentList />}/>
+<Route path='/families' element={<FamilyList />}/>
+<Route path='/newClaim' element={<NewClaim />}/>  
     </Routes>
     </div>
-</>
-  )
-}
+      </>
     </Router>
   )
 }

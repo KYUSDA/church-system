@@ -1,7 +1,7 @@
 import "./UserList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../../../admin/src/DummyData/Dummy";
+import { userRows } from "../../DummyData/Dummy";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
@@ -26,24 +26,37 @@ deleteUser(id,dispatch);
     width: 220 
   },
     {
-      field: "username",
-      headerName: "Username",
+      field: "firstName",
+      headerName: "Firstname",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="userListUser">
             <img className="userListImg" src={'images'} alt="" />
-            {params.row.username}
+            {params.row.firstName} 
           </div>
         );
       },
     },
+    { field: "lastName", 
+    headerName: "Lastname", 
+    width: 120 },
     { field: "email", 
     headerName: "Email", 
     width: 200 },
     {
-      field: "isAdmin",
-      headerName: "Admin",
+      field: "registration",
+      headerName: "registration",
+      width: 200,
+    },
+    {
+      field: "year",
+      headerName: "year of study",
+      width: 100,
+    },
+    {
+      field: "role",
+      headerName: "Church Role",
       width: 120,
     },
     {
@@ -53,7 +66,7 @@ deleteUser(id,dispatch);
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/users/" + params.row._id}>
+            <Link to={"/user/" + params.row._id}>
               <button className="userListEdit">Edit</button>
             </Link>
             <DeleteOutline

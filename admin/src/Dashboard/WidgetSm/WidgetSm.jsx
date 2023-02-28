@@ -7,9 +7,10 @@ const WidgetSm = () => {
 
   useEffect(() => {
     const getUsers = async () => {
+      console.log('user details being fetched');
       try {
-        const res = await userRequest.get("/users/getUser/?new=true");
-        console.log(res.data)
+        const res = await userRequest.get("/user/getUser/?new=true");
+        console.log(res.data,'users regestered are')
         setUsers(res.data);
       } catch {}
     };
@@ -18,7 +19,7 @@ const WidgetSm = () => {
   console.log(users)
   return (
     <div className="widgetSm">
-    <span className="widgetSmTitle">New Join Members</span>
+    <span className="widgetSmTitle">New Church Members</span>
     <ul className="widgetSmList">
     {users.map((user) => (
           <li className="widgetSmListItem" key={user._id}>
@@ -31,7 +32,7 @@ const WidgetSm = () => {
               className="widgetSmImg"
             />
             <div className="widgetSmUser">
-              <span className="widgetSmUsername">{user.username}</span>
+              <span className="widgetSmUsername">{user.email}</span>
             </div>
             <button className="widgetSmButton">
               <Visibility className="widgetSmIcon" />

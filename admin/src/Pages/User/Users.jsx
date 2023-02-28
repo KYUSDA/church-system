@@ -15,47 +15,11 @@ import {format} from 'timeago.js';
 const Users = () => {
   const location = useLocation();
   const userId = location.pathname.split('/')[2];
+  console.log(userId)
   const user = useSelector((state)=>state.user.currentUser.find((user)=>user._id === userId));
   console.log(userId,user);
-  const [pStats,setPStats] = useState();
-  const MONTHS = useMemo(
-    () => [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    []
-  );
+ 
 
-// useEffect(()=>{
-
-// const getStats = async()=>{
-//   try{
-//     const res = await userRequest.get("/users/stats/?pid=" + userId);
-//     const list = res.data.sort((a,b)=>{
-//         return a._id - b._id
-//     })
-//     list.map((item) =>
-//       setPStats((prev) => [
-//         ...prev,
-//         { name: MONTHS[item._id - 1], Sales: item.total },
-//       ])
-//     );
-//   }catch(err){
-
-//   }
-// }
-
-// })
 
   return (
 <div className="user">
@@ -81,7 +45,19 @@ const Users = () => {
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.username}</span>
+              <span className="userShowInfoTitle">{user.firstname}</span>
+            </div>
+            <div className="userShowInfo">
+              <PermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">{user.lastname}</span>
+            </div>
+            <div className="userShowInfo">
+              <PermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">{user.nationalID}</span>
+            </div>
+            <div className="userShowInfo">
+              <PermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">{user.role}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
@@ -98,10 +74,18 @@ const Users = () => {
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
-                <label>Username</label>
+                <label>firstname</label>
                 <input
                   type="text"
-                  placeholder={user.username}
+                  placeholder={user.firstname}
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>lastname</label>
+                <input
+                  type="text"
+                  placeholder={user.lastname}
                   className="userUpdateInput"
                 />
               </div>
@@ -110,6 +94,22 @@ const Users = () => {
                 <input
                   type="text"
                   placeholder={user.email}
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>National ID</label>
+                <input
+                  type="text"
+                  placeholder={user.nationalID}
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Role</label>
+                <input
+                  type="text"
+                  placeholder={user.role}
                   className="userUpdateInput"
                 />
               </div>

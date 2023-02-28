@@ -15,20 +15,29 @@ console.log(inputs);
 
   const handleClick = (e)=>{
     e.preventDefault();
-    const product = {...inputs};
-    console.log(product)
-    addUser(product,dispatch);
+    const claim = {...inputs};
+    console.log(claim)
+    addUser(claim,dispatch);
   }
   return (
     <div className="newUser">
     <h1 className="newUserTitle">New User</h1>
     <form className="newUserForm">
       <div className="newUserItem">
-        <label>Username</label>
+        <label>firstname</label>
         <input
-            name="username"
+            name="firstname"
             type="text"
-            placeholder="Username"
+            placeholder="firstname"
+            onChange={handleChange}
+          />
+      </div>
+      <div className="newUserItem">
+        <label>lastname</label>
+        <input
+            name="lastname"
+            type="text"
+            placeholder="lastname"
             onChange={handleChange}
           />
       </div>
@@ -42,11 +51,29 @@ console.log(inputs);
           />
       </div>
       <div className="newUserItem">
+        <label>NationalID</label>
+        <input
+            name="nationalID"
+            type="number"
+            placeholder="national id"
+            onChange={handleChange}
+          />
+      </div>
+      <div className="newUserItem">
         <label>Password</label>
         <input
             name="password"
             type="password"
             placeholder="Password"
+            onChange={handleChange}
+          />
+      </div>
+      <div className="newUserItem">
+        <label>Password Confirm</label>
+        <input
+            name="passwordConfirm"
+            type="password"
+            placeholder="Password connfirm"
             onChange={handleChange}
           />
       </div>

@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/apiCall";
-
+import { useNavigate } from "react-router-dom"
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [useremail, setUseremail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
+    console.log(useremail,password);
     e.preventDefault();
-    login(dispatch, { username, password });
+    login(dispatch, { useremail, password });
   };
 
   return (
@@ -24,9 +26,9 @@ const Login = () => {
     >
       <input
         style={{ padding: 10, marginBottom: 20 }}
-        type="text"
-        placeholder="username"
-        onChange={(e) => setUsername(e.target.value)}
+        type="email"
+        placeholder="email"
+        onChange={(e) => setUseremail(e.target.value)}
       />
       <input
         style={{ padding: 10, marginBottom: 20 }}

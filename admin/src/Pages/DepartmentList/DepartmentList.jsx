@@ -1,43 +1,42 @@
-import './ProductList.css';
+import './DepartmentList.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { productRows } from '../../DummyData/Dummy';
 import {useDispatch,useSelector} from 'react-redux'
 import { useState,useEffect } from 'react';
-import { getProducts , deleteProduct} from '../../redux/apiCall';
-const ProductList = () => {
+import { getDepartments ,deleteDepartment } from '../../redux/apiCall';
+import { format } from 'timeago.js';
+const DepartmentList = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state)=>state.product.products);
-  const [data, setData] = useState(productRows);
+  console.log(useSelector(state=>state));
+  const departments = useSelector((state)=>state.department.departments);
+  console.log(departments);
+  const [data, setData] = useState(departments);
 useEffect(() => {
-  getProducts(dispatch)
+  getDepartments(dispatch)
 }, [dispatch])
-console.log(products);
   const handleDelete = (id) => {
-   deleteProduct(id,dispatch)
+   deleteDepartment(id,dispatch)
   };
   const columns = [
-    { field: "_id", headerName: "ID", width: 220 },
+    { field: "_id", headerName: "Department ID", width: 220 },
     {
-      field: "product",
-      headerName: "Product",
+      field: "name",
+      headerName: "Department Name",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="productListItem">
             <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.title}
+            {params.row.name}
           </div>
         );
       },
     },
-    { field: "inStock", headerName: "Stock", width: 200 },
-    {
-      field: "price",
-      headerName: "Price",
-      width: 160,
-    },
+    { field: "head", headerName: "Department Head", width: 120 },
+    { field: "elder", headerName: "Elder Incharge", width: 120 },
+    { field: "event", headerName: "Upcoming Event", width: 120 },
+    { field: "project", headerName: "project", width: 120 },
     {
       field: "action",
       headerName: "Action",
@@ -45,7 +44,7 @@ console.log(products);
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/product/" + params.row._id}>
+            <Link to={"/claim/" + params.row._id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -60,7 +59,7 @@ console.log(products);
   return (
     <div className="productList">
 <DataGrid
-        rows={products}
+        rows={departments}
         disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
@@ -70,4 +69,4 @@ console.log(products);
   )
 }
 
-export default ProductList
+export default DepartmentList

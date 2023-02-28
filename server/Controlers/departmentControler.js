@@ -18,4 +18,13 @@ resp.status(404).json({
 })
     }
 }
-module.exports = {getDepartmentDetails}
+
+const getAllDepartments = async(req,resp)=>{
+    try{
+const departments = await departmentModel.find();
+resp.status(200).json(departments)
+    }catch(err){
+resp.status(404).json(err)
+    }
+}
+module.exports = {getDepartmentDetails,getAllDepartments}

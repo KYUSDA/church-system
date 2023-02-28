@@ -20,7 +20,7 @@ const FeaturedInfo = () => {
   return (
 <div className="featured">
       <div className="featuredItem">
-        <span className="featuredTitle">Revanue</span>
+        <span className="featuredTitle">Church Members</span>
         <div className="featuredMoneyContainer">
           <span className="featuredMoney">${income[1] ? income[1]?.total : income[0]?.total }</span>
           <span className="featuredMoneyRate">
@@ -32,27 +32,23 @@ const FeaturedInfo = () => {
             )}
           </span> 
         </div>
-        <span className="featuredSub">Compared to last month</span>
       </div>
       <div className="featuredItem">
-        <span className="featuredTitle">Sales</span>
+        <span className="featuredTitle">Families</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">$4,415</span>
+          <span className="featuredMoney">20</span>
           <span className="featuredMoneyRate">
-            -1.4 <ArrowDownward className="featuredIcon negative"/>
           </span>
         </div>
-        <span className="featuredSub">Compared to last month</span>
       </div>
       <div className="featuredItem">
-        <span className="featuredTitle">Cost</span>
+        <span className="featuredTitle">Departments</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">$2,225</span>
+          <span className="featuredMoney">15</span>
           <span className="featuredMoneyRate">
-            +2.4 <ArrowUpward className="featuredIcon"/>
+  
           </span>
         </div>
-        <span className="featuredSub">Compared to last month</span>
       </div>
     </div>
   )
