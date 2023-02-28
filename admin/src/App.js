@@ -44,5 +44,3 @@ const admin = localStorage.getItem('loggedIn');
     </Router>
   )
 }
-
-export default App
