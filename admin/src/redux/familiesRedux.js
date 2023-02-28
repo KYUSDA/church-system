@@ -53,6 +53,10 @@ export const familySlice = createSlice({
       state.error = true;
     },
     //UPDATE
+    addfamilyStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
     addfamilySuccess: (state, action) => {
       state.isFetching = false;
       state.families.push(action.payload);
