@@ -7,6 +7,7 @@ import User from './Pages/User/Users';
 import Newuser from './Pages/NewUser/Newuser';
 import { BrowserRouter as Router ,Routes ,Route, Navigate } from 'react-router-dom';
 import Department from './Pages/Department/Department';
+import Family from './Pages/Family/Family';
 import DepartmentList from './Pages/DepartmentList/DepartmentList';
 import FamilyList from './Pages/FamilyList/FamilyList';
 import NewClaim from './Pages/NewDepartment/NewDepartment';
@@ -33,6 +34,7 @@ const admin = localStorage.getItem('loggedIn');
 <Route path='/user/:id' element={<User />}/>
 <Route path='/newUser' element={<Newuser />}/>
 <Route path='/department/:id' element={<Department />}/>
+<Route path='/family/:id' element={<Family />}/>
 <Route path='/departments' element={<DepartmentList />}/>
 <Route path='/families' element={<FamilyList />}/>
 <Route path='/newClaim' element={<NewClaim />}/>  

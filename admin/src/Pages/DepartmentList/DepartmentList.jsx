@@ -44,7 +44,7 @@ useEffect(() => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/claim/" + params.row._id}>
+            <Link to={"/department/" + params.row._id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline

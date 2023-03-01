@@ -36,7 +36,13 @@ import {
 import {
 getfamilyStart,
 getfamilyFailure,
-getfamilySuccess
+getfamilySuccess,
+updatefamilyStart,
+updatefamilySuccess,
+updatefamilyFailure,
+deletefamilyFailure,
+deletefamilyStart,
+deletefamilySuccess
 } from './familiesRedux';
 
 export const login = async (dispatch, user) => {
@@ -74,21 +80,21 @@ console.log(res);
 export const deleteDepartment = async (id, dispatch) => {
   dispatch(deletedepartmentStart());
   try {
-     await userRequest.delete(`/claim/${id}`);
+     await userRequest.delete(`/department/${id}`);
     dispatch(deletedepartmentSuccess(id));
   } catch (err) {
     dispatch(deletedepartmentFailure());
   }
 };
 
-export const updateDepartment = async (id, updatedClaim, dispatch) => {
+export const updateDepartment = async (id, updatedDepartment, dispatch) => {
   dispatch(updatedepartmentStart());
   try {
     //update in mongodb
-  const res =   await userRequest.patch(`/claim/${id}`,updatedClaim);
+  const res =   await userRequest.patch(`/department/${id}`,updatedDepartment);
   console.log(res)
     // update in our state.
-    dispatch(updatedepartmentSuccess({ id, updatedClaim }));
+    dispatch(updatedepartmentSuccess({ id, updatedDepartment }));
   } catch (err) {
     dispatch(updatedepartmentFailure());
   }
@@ -122,7 +128,8 @@ export const deleteUser = async (id,dispatch)=>{
   dispatch(deleteUserStart())
   try
   {
-    await userRequest.delete(`/user/${id}`);
+  const resp =  await userRequest.delete(`/user/${id}`);
+  console.log(resp);
     dispatch(deleteUserSuccess())
   }catch(err){
 dispatch(deleteUserFailure());
@@ -130,12 +137,13 @@ dispatch(deleteUserFailure());
 }
 
 //update User
-export const updateUser = async(id,user,dispatch)=>{
-dispatch(updateUserStart())
+export const updateUser = async(id,userUpdate,dispatch)=>{
+  console.log(userUpdate);
+   await userRequest.patch(`/user/${id}`,userUpdate);
+// dispatch(updateUserStart({id,userUpdate}))
 try
 {
-
-dispatch(updateUserSuccess({id,user}))
+dispatch(updateUserSuccess({id,userUpdate}))
 }catch(err){
   dispatch(updateUserFailure)
 }
@@ -165,5 +173,28 @@ export const getFamilies = async(dispatch)=>{
   dispatch(getfamilySuccess(res.data));
   }catch(err){
   dispatch(getfamilyFailure());
+  }
+}
+
+export const updateFamily = async(id,family,dispatch)=>{
+  console.log(family);
+  dispatch(updatefamilyStart())
+  try
+  {
+  dispatch(updatefamilySuccess({id,family}))
+  }catch(err){
+    dispatch(updatefamilyFailure)
+  }
+}
+
+export const deleteFamily = async (id,dispatch)=>{
+  dispatch(deletefamilyStart())
+  try
+  {
+  const resp =  await userRequest.delete(`/family/${id}`);
+  console.log(resp);
+    dispatch(deletefamilySuccess())
+  }catch(err){
+dispatch(deletefamilyFailure());
   }
 }

@@ -3,7 +3,8 @@ exports.getAll = async (req,resp,next)=>{
     try{
         const query = req.query.new;
          const users = query ? await User.find().sort({ _id: -1 }).limit(5):await User.find();
-            resp.status(200).json(users)
+        console.log(users);
+        resp.status(200).json(users)
     }catch(err){
         resp.status(404).json({
             status:'failure',
@@ -32,6 +33,7 @@ exports.updateUser = async (req,resp)=>{
     console.log(req.body);
     try{
         const id = req.params.id;
+        console.log(id);
         const updatedUser = await User.findByIdAndUpdate(id,req.body,{
             new:true,
             runValidators:true

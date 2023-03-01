@@ -12,15 +12,32 @@ import './Users.css'
 import { useSelector } from 'react-redux';
 import { userRequest } from '../../requestMethods';
 import {format} from 'timeago.js';
+import { useDispatch } from 'react-redux';
+import {updateUser} from '../../redux/apiCall';
 const Users = () => {
   const location = useLocation();
   const userId = location.pathname.split('/')[2];
   console.log(userId)
   const user = useSelector((state)=>state.user.currentUser.find((user)=>user._id === userId));
   console.log(userId,user);
- 
+ const dispatch = useDispatch();
+ const [inputs ,setInputs] = useState();
+ const handleChange = (e)=>{
+  setInputs((prev)=>{
+    console.log({...prev,[e.target.name]:e.target.value})
+      return {...prev,[e.target.name]:e.target.value}
+  })
+}
 
-
+const handleClick = (e)=>{
+  console.log('updating');
+e.preventDefault();
+console.log({...inputs});
+const updateUsers = {...inputs}
+updateUser(userId,updateUsers,dispatch)
+// alert('user updated');
+// window.location.replace('/');
+}
   return (
 <div className="user">
       <div className="userTitleContainer">
@@ -37,31 +54,32 @@ const Users = () => {
               alt=""
               className="userShowImg"
             />
-            <div className="userShowTopTitle">
-              <span className="userShowUsername">{user.username}</span>
-            </div>
           </div>
           <div className="userShowBottom">
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.firstname}</span>
+              <span className="userShowInfoTitle">{user.firstName}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.lastname}</span>
+              <span className="userShowInfoTitle">{user.lastName}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.nationalID}</span>
+              <span className="userShowInfoTitle">{user.registration}</span>
+            </div>
+            <div className="userShowInfo">
+              <PermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">{user.course}</span>
+            </div>
+            <div className="userShowInfo">
+              <PermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">{user.year}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
               <span className="userShowInfoTitle">{user.role}</span>
-            </div>
-            <div className="userShowInfo">
-              <CalendarToday className="userShowIcon" />
-              <span className="userShowInfoTitle">{`Created:${format(user.createdAt)}`}</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
@@ -77,40 +95,60 @@ const Users = () => {
                 <label>firstname</label>
                 <input
                   type="text"
-                  placeholder={user.firstname}
+                  name='firstName'
+                  placeholder={user.firstName}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
                 <label>lastname</label>
                 <input
                   type="text"
-                  placeholder={user.lastname}
+                  name='lastName'
+                  placeholder={user.lastName}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Email</label>
                 <input
                   type="text"
+                  name='email'
                   placeholder={user.email}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
-                <label>National ID</label>
+                <label>Course</label>
                 <input
                   type="text"
-                  placeholder={user.nationalID}
+                  name='course'
+                  placeholder={user.course}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Role</label>
+                <label>Year</label>
                 <input
                   type="text"
-                  placeholder={user.role}
+                  name='year'
+                  placeholder={user.year}
                   className="userUpdateInput"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Registration No</label>
+                <input
+                  type="text"
+                  name='registration'
+                  placeholder={user.registration}
+                  className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -126,7 +164,7 @@ const Users = () => {
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button onClick={handleClick} className="userUpdateButton">Update</button>
             </div>
           </form>
         </div>
