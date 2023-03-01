@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Topbar from './Dashboard/TopBar/Topbar';
 import Sidebar from './Dashboard/SideBar/Sidebar';
@@ -12,7 +11,6 @@ import DepartmentList from './Pages/DepartmentList/DepartmentList';
 import FamilyList from './Pages/FamilyList/FamilyList';
 import NewClaim from './Pages/NewDepartment/NewDepartment';
 import Login from './Pages/login/Login';
-import Trial from './Pages/trial'
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -44,3 +42,5 @@ const admin = localStorage.getItem('loggedIn');
     </Router>
   )
 }
+
+export default App
