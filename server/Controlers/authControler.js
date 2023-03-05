@@ -22,6 +22,7 @@ try {
     const tk = createjwt(id);
     resp.cookie("kyusdamember",tk,{httpOnly:true,maxAge: maxAge* 1000});
     resp.status(200).json({
+        id:id,
         status:'success',
         email:memberRegestered.email,
         tk
@@ -45,6 +46,7 @@ const id = loggedMember._id;
 const tk = createjwt(id);
 resp.cookie("kyusdamember",tk,{httpOnly:true,maxAge: maxAge* 1000});
 resp.status(200).json({
+    id,
     status:'success',
     email:loggedMember.email,
     tk

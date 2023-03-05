@@ -17,13 +17,10 @@ exports.getAll = async (req,resp,next)=>{
     exports.getOne =  async (req,resp)=>{
         try{
            const id = req.params.id;
+           console.log(id);
             const getOneUser = await User.findById(id);
-            resp.status(200).json({
-                status:'success',
-                data:{
-                    getOneUser
-                }
-            })
+            console.log(getOneUser);
+            resp.status(200).json(getOneUser)
         }catch(err){
 resp.status(404).json(err);
         }

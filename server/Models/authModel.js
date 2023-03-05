@@ -49,6 +49,10 @@ const authSchema = new Schema(
                 message:`Enter the correct password confirmation`
             }
         },
+         familyLocated:{
+type:String,
+default:"not yet assigned"
+         },
         role:{
             type:String,
             enum:["member","elder","admin"],
