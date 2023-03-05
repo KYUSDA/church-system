@@ -18,24 +18,26 @@ console.log(inputs);
     const claim = {...inputs};
     console.log(claim)
     addUser(claim,dispatch);
+    alert('user created');
+    window.location.replace('/');
   }
   return (
     <div className="newUser">
-    <h1 className="newUserTitle">New User</h1>
+    <h1 className="newUserTitle">New Church Member</h1>
     <form className="newUserForm">
       <div className="newUserItem">
-        <label>firstname</label>
+        <label>firstName</label>
         <input
-            name="firstname"
+            name="firstName"
             type="text"
             placeholder="firstname"
             onChange={handleChange}
           />
       </div>
       <div className="newUserItem">
-        <label>lastname</label>
+        <label>lastName</label>
         <input
-            name="lastname"
+            name="lastName"
             type="text"
             placeholder="lastname"
             onChange={handleChange}
@@ -45,17 +47,35 @@ console.log(inputs);
         <label>Email</label>
         <input
             name="email"
-            type="email"
+            type="string"
             placeholder="Email"
             onChange={handleChange}
           />
       </div>
       <div className="newUserItem">
-        <label>NationalID</label>
+        <label>Registration</label>
         <input
-            name="nationalID"
+            name="registration"
+            type="string"
+            placeholder="registration no"
+            onChange={handleChange}
+          />
+      </div>
+      <div className="newUserItem">
+        <label>Course</label>
+        <input
+            name="course"
+            type="text"
+            placeholder="Password"
+            onChange={handleChange}
+          />
+      </div>
+      <div className="newUserItem">
+        <label>Year</label>
+        <input
+            name="year"
             type="number"
-            placeholder="national id"
+            placeholder="Year"
             onChange={handleChange}
           />
       </div>
@@ -73,7 +93,7 @@ console.log(inputs);
         <input
             name="passwordConfirm"
             type="password"
-            placeholder="Password connfirm"
+            placeholder="Password confirm"
             onChange={handleChange}
           />
       </div>

@@ -10,7 +10,8 @@ import Department from './Pages/Department/Department';
 import Family from './Pages/Family/Family';
 import DepartmentList from './Pages/DepartmentList/DepartmentList';
 import FamilyList from './Pages/FamilyList/FamilyList';
-import NewClaim from './Pages/NewDepartment/NewDepartment';
+import NewDepart from './Pages/NewDepartment/NewDepartment';
+import NewFamily from './Pages/New family/NewFamily';
 import Login from './Pages/login/Login';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -37,7 +38,8 @@ const admin = localStorage.getItem('loggedIn');
 <Route path='/family/:id' element={<Family />}/>
 <Route path='/departments' element={<DepartmentList />}/>
 <Route path='/families' element={<FamilyList />}/>
-<Route path='/newClaim' element={<NewClaim />}/>  
+<Route path='/newDepart' element={<NewDepart />}/>  
+<Route path='/newFamily' element={<NewFamily />}/>
     </Routes>
     </div>
       </>

@@ -9,7 +9,7 @@ const WidgetSm = () => {
     const getUsers = async () => {
       console.log('user details being fetched');
       try {
-        const res = await userRequest.get("/user/getUser/?new=true");
+        const res = await userRequest.get("/user/getUsers/?new=true");
         console.log(res.data,'users regestered are')
         setUsers(res.data);
       } catch {}

@@ -35,7 +35,7 @@ window.location.replace('/');
     <div className="product">
     <div className="productTitleContainer">
       <h1 className="productTitle">Department</h1>
-      <Link to="/newClaim">
+      <Link to="/newFamily">
         <button className="productAddButton">Create</button>
       </Link>
     </div>
@@ -73,15 +73,15 @@ window.location.replace('/');
         <form className="productForm">
             <div className="productFormLeft">
                 <label>Family Name</label>
-                <input type="text" name='carOwner' placeholder={family.name} onChange={handleChange}/>
+                <input type="text" name='name' placeholder={family.name} onChange={handleChange}/>
                 <label>Elder In charge</label>
-                <input type="number" name='phoneNumber' placeholder={family.elder} onChange={handleChange} />
+                <input type="number" name='elder' placeholder={family.elder} onChange={handleChange} />
                  <label>Head</label>
-            <input type="text" name='registrationNo' placeholder={family.head} onChange={handleChange} />
+            <input type="text" name='head' placeholder={family.head} onChange={handleChange} />
             <label>Location</label>
-            <input type="text" name='vehicleType' placeholder={family.location} onChange={handleChange} />
+            <input type="text" name='location' placeholder={family.location} onChange={handleChange} />
             <label>Bio</label>
-            <input type="text" name='registrationNo' placeholder={family.bio} onChange={handleChange} />
+            <input type="text" name='bio' placeholder={family.bio} onChange={handleChange} />
             </div>
             <div className="productFormRight">
                 <div className="productUpload">

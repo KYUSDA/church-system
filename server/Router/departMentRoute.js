@@ -7,9 +7,16 @@ departDetail
 .patch(departmentDetail.updateDepartment);
 
 departDetail
+.route('/createDep')
+.post(departmentDetail.createDep)
+
+
+departDetail
 .route("/getAll")
 .get(departmentDetail.getAllDepartments)
 .post(departmentDetail.getDepartmentDetails)
+
+
 
 
 

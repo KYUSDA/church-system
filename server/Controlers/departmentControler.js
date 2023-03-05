@@ -67,9 +67,22 @@ resp.status(404).json({
 })
     }
 }
+
+const createDep = async(req,resp)=>{
+try{
+const depart =  await departmentModel.create(req.body);
+console.log(depart);
+resp.status(200).json(depart)
+}catch(err){
+resp.status(404).json(err);
+}
+}
+
+
 module.exports = {
-    getDepartmentDetails,
-    getAllDepartments,
+getDepartmentDetails,
+getAllDepartments,
 deleteDepertment,
-updateDepartment
+updateDepartment,
+createDep
 }

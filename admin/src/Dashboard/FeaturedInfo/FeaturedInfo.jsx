@@ -3,40 +3,38 @@ import "./FeaturedInfo.css";
 import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import { userRequest } from '../../requestMethods';
 const FeaturedInfo = () => {
-  const [income, setIncome] = useState([]);
-  const [perc, setPerc] = useState(0);
+  const [members, setMembers] = useState([]);
+  const [families,setFamilies] = useState([]);
+  const [department,setDepartments] = useState([]);
 
   useEffect(() => {
     const getIncome = async () => {
       try {
-        const res = await userRequest.get("/order/income");
-        setIncome(res.data);
-        setPerc((res.data[1].total * 100) / res.data[0].total - 100);
+        const res = await userRequest.get("/user/getUsers");
+        const family = await userRequest.get('/family/getFamilies');
+        const depart = await userRequest.get('/department/getAll');
+        setMembers(res.data);
+        setFamilies(family.data);
+        setDepartments(depart.data);
       } catch {}
     };
     getIncome();
   }, []);
-  console.log(income)
+  console.log(members.length,families.length,department.length);
   return (
 <div className="featured">
       <div className="featuredItem">
         <span className="featuredTitle">Church Members</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">${income[1] ? income[1]?.total : income[0]?.total }</span>
+          <span className="featuredMoney">{members.length}</span>
           <span className="featuredMoneyRate">
-          %{Math.floor(perc)}{" "}
-            {perc < 0 ? (
-              <ArrowDownward className="featuredIcon negative" />
-            ) : (
-              <ArrowUpward className="featuredIcon" />
-            )}
           </span> 
         </div>
       </div>
       <div className="featuredItem">
         <span className="featuredTitle">Families</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">20</span>
+          <span className="featuredMoney">{families.length}</span>
           <span className="featuredMoneyRate">
           </span>
         </div>
@@ -44,7 +42,7 @@ const FeaturedInfo = () => {
       <div className="featuredItem">
         <span className="featuredTitle">Departments</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">15</span>
+          <span className="featuredMoney">{department.length}</span>
           <span className="featuredMoneyRate">
   
           </span>

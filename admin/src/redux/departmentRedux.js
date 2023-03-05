@@ -53,15 +53,15 @@ export const departmentSlice = createSlice({
       state.error = true;
     },
     //UPDATE
-    adddepartmentStart: (state) => {
+    addDepartmentStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    adddepartmentSuccess: (state, action) => {
+    addDepartmentSuccess: (state, action) => {
       state.isFetching = false;
-      state.claims.push(action.payload);
+      state.departments.push(action.payload);
     },
-    adddepartmentFailure: (state) => {
+    addDepartmentFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },

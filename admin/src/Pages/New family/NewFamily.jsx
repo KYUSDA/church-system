@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./NewDepartment.css";
+import "./NewFamily.css";
 import {
   getStorage,
   ref,
@@ -7,7 +7,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
-import { addDepartment } from "../../redux/apiCall";
+import { addFamily } from "../../redux/apiCall";
 import { useDispatch } from "react-redux";
 
 export default function NewProduct() {
@@ -25,23 +25,23 @@ export default function NewProduct() {
 
   const handleClick = (e) => {
     e.preventDefault();
-          const department = { ...inputs};
-          console.log(department);
-          addDepartment(department, dispatch);
-          alert('Department Created');
+          const family = { ...inputs};
+          console.log(family);
+          addFamily(family, dispatch);
+          alert('Family Created');
           window.location.replace('/')
   };
 
   return (
     <div className="newProduct">
-      <h1 className="addProductTitle">New Department</h1>
+      <h1 className="addProductTitle">New Family</h1>
       <form className="addProductForm">
         <div className="addProductItem">
           <label>Name</label>
           <input
             name="name"
             type="text"
-            placeholder="Department Name"
+            placeholder="Family Name"
             onChange={handleChange}
           />
         </div>
@@ -59,23 +59,23 @@ export default function NewProduct() {
           <input
             name="head"
             type="string"
-            placeholder="Head No"
+            placeholder="Head Name"
             onChange={handleChange}
           />
         </div>
         <div className="addProductItem">
-          <label>Project</label>
+          <label>Location</label>
           <input
-            name="project"
+            name="location"
             type="string"
-            placeholder="project"
+            placeholder="location"
             onChange={handleChange}
           />
         </div>
         <div className="addProductItem">
-          <label>Upcoming Event</label>
+          <label>bio</label>
           <input
-            name="event"
+            name="bio"
             type="string"
             placeholder="Event"
             onChange={handleChange}

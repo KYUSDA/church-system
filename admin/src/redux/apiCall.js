@@ -42,7 +42,10 @@ updatefamilySuccess,
 updatefamilyFailure,
 deletefamilyFailure,
 deletefamilyStart,
-deletefamilySuccess
+deletefamilySuccess,
+addfamilyFailure,
+addfamilySuccess,
+addfamilyStart
 } from './familiesRedux';
 
 export const login = async (dispatch, user) => {
@@ -99,10 +102,10 @@ export const updateDepartment = async (id, updatedDepartment, dispatch) => {
     dispatch(updatedepartmentFailure());
   }
 };
-export const addDepartment = async (claim, dispatch) => {
+export const addDepartment = async (department, dispatch) => {
   dispatch(addDepartmentStart());
   try {
-    const res = await userRequest.post(`/claim/createclaim`, claim);
+    const res = await userRequest.post(`/department/createDep`, department);
     dispatch(addDepartmentSuccess(res.data));
   } catch (err) {
     dispatch(addDepartmentFailure());
@@ -139,13 +142,13 @@ dispatch(deleteUserFailure());
 //update User
 export const updateUser = async(id,userUpdate,dispatch)=>{
   console.log(userUpdate);
+  dispatch(updateUserStart())
    await userRequest.patch(`/user/${id}`,userUpdate);
-// dispatch(updateUserStart({id,userUpdate}))
 try
 {
 dispatch(updateUserSuccess({id,userUpdate}))
 }catch(err){
-  dispatch(updateUserFailure)
+  dispatch(updateUserFailure())
 }
 }
 
@@ -176,14 +179,15 @@ export const getFamilies = async(dispatch)=>{
   }
 }
 
-export const updateFamily = async(id,family,dispatch)=>{
-  console.log(family);
+export const updateFamily = async(id,familyUpdate,dispatch)=>{
+  console.log(familyUpdate);
   dispatch(updatefamilyStart())
   try
   {
-  dispatch(updatefamilySuccess({id,family}))
+    await userRequest.patch(`/family/${id}`,familyUpdate);
+  dispatch(updatefamilySuccess({id,familyUpdate}))
   }catch(err){
-    dispatch(updatefamilyFailure)
+    dispatch(updatefamilyFailure())
   }
 }
 
@@ -197,4 +201,14 @@ export const deleteFamily = async (id,dispatch)=>{
   }catch(err){
 dispatch(deletefamilyFailure());
   }
+}
+
+export const addFamily = async(family,dispatch)=>{
+dispatch(addfamilyStart());
+try{
+const res = await userRequest.post('/family/createFamily',family);
+dispatch(addfamilySuccess(res.data));
+}catch(err){
+dispatch(addfamilyFailure());
+}
 }

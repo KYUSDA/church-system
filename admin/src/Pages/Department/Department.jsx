@@ -35,7 +35,7 @@ window.location.replace('/');
     <div className="product">
     <div className="productTitleContainer">
       <h1 className="productTitle">Department</h1>
-      <Link to="/newClaim">
+      <Link to="/newDepart">
         <button className="productAddButton">Create</button>
       </Link>
     </div>

@@ -35,8 +35,8 @@ e.preventDefault();
 console.log({...inputs});
 const updateUsers = {...inputs}
 updateUser(userId,updateUsers,dispatch)
-// alert('user updated');
-// window.location.replace('/');
+alert('user updated');
+window.location.replace('/');
 }
   return (
 <div className="user">

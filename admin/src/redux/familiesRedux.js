@@ -46,7 +46,7 @@ export const familySlice = createSlice({
       state.isFetching = false;
       state.family[
         state.families.findIndex((family) => family._id === action.payload.id)
-      ] = action.payload.updatedfamily;
+      ] = action.payload.familyUpdate;
     },
     updatefamilyFailure: (state) => {
       state.isFetching = false;
