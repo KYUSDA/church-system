@@ -59,31 +59,31 @@ window.location.replace('/');
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.firstName}</span>
+              <span className="userShowInfoTitle">{user?.firstName}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.lastName}</span>
+              <span className="userShowInfoTitle">{user?.lastName}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.registration}</span>
+              <span className="userShowInfoTitle">{user?.registration}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.course}</span>
+              <span className="userShowInfoTitle">{user?.course}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.year}</span>
+              <span className="userShowInfoTitle">{user?.year}</span>
             </div>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.role}</span>
+              <span className="userShowInfoTitle">{user?.role}</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.email}</span>
+              <span className="userShowInfoTitle">{user?.email}</span>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ window.location.replace('/');
                 <input
                   type="text"
                   name='firstName'
-                  placeholder={user.firstName}
+                  placeholder={user?.firstName}
                   className="userUpdateInput"
                   onChange={handleChange}
                 />
@@ -106,7 +106,7 @@ window.location.replace('/');
                 <input
                   type="text"
                   name='lastName'
-                  placeholder={user.lastName}
+                  placeholder={user?.lastName}
                   className="userUpdateInput"
                   onChange={handleChange}
                 />
@@ -116,7 +116,7 @@ window.location.replace('/');
                 <input
                   type="text"
                   name='email'
-                  placeholder={user.email}
+                  placeholder={user?.email}
                   className="userUpdateInput"
                   onChange={handleChange}
                 />
@@ -126,7 +126,7 @@ window.location.replace('/');
                 <input
                   type="text"
                   name='course'
-                  placeholder={user.course}
+                  placeholder={user?.course}
                   className="userUpdateInput"
                   onChange={handleChange}
                 />
@@ -136,7 +136,7 @@ window.location.replace('/');
                 <input
                   type="text"
                   name='year'
-                  placeholder={user.year}
+                  placeholder={user?.year}
                   className="userUpdateInput"
                   onChange={handleChange}
                 />
@@ -146,11 +146,29 @@ window.location.replace('/');
                 <input
                   type="text"
                   name='registration'
-                  placeholder={user.registration}
+                  placeholder={user?.registration}
                   className="userUpdateInput"
                   onChange={handleChange}
                 />
               </div>
+              <div className='newUserItem'>
+<label>
+  Assign a group
+</label>
+<select type="text"
+ className="input input-warning "
+   onChange={handleChange}
+   name='familyLocated'
+              >
+                <option defaultValue={'false'} disabled>
+Assign family member
+                </option>
+                <option  value='Diaspora A'>Diaspora A</option>
+                <option  value='Diaspora B'>Diaspora B</option>
+                <option  value='Around School A'>Around School A</option>
+                <option value='Around School B'>Around School B</option>
+                </select>
+      </div>
             </div>
             <div className="userUpdateRight">
               <div className="userUpdateUpload">

@@ -60,18 +60,23 @@ deleteUser(id,dispatch);
       width: 120,
     },
     {
+      field: "familyLocated",
+      headerName: "Family Group",
+      width: 120,
+    },
+    {
       field: "action",
       headerName: "Action",
       width: 150,
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row._id}>
+            <Link to={"/user/" + params.row?._id}>
               <button className="userListEdit">Edit</button>
             </Link>
             <DeleteOutline
               className="userListDelete"
-              onClick={() => handleDelete(params.row._id)}
+              onClick={() => handleDelete(params.row?._id)}
             />
           </>
         );
@@ -85,7 +90,7 @@ deleteUser(id,dispatch);
         rows={users}
         disableSelectionOnClick
         columns={columns}
-        getRowId={(row)=>row._id}
+        getRowId={(row)=>row?._id}
         pageSize={8}
         checkboxSelection
       />

@@ -97,6 +97,23 @@ console.log(inputs);
             onChange={handleChange}
           />
       </div>
+      <div className='newUserItem'>
+<label>
+  Assign a group
+</label>
+<select type="text"
+ className="input input-warning "
+   onChange={handleChange}
+              >
+                <option defaultValue={'false'} disabled>
+Assign family member
+                </option>
+                <option value='Diaspora A'>Diaspora A</option>
+                <option value='Diaspora B'>Diaspora B</option>
+                <option value='Around School A'>Around School A</option>
+                <option value='Around School B'>Around School B</option>
+                </select>
+      </div>
       <button onClick={handleClick} className="newUserButton">Create</button>
     </form>
   </div>

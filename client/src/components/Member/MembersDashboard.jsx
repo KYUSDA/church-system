@@ -71,7 +71,7 @@ console.log(userData);
 <div className='flex flex-col capitalize text-3xl'>
 <span className='font-semibold'>Welcome Back
 </span>
-<span>{user.email}</span>
+<span>{user?.email}</span>
 </div>
 <div className='flex'>
 <div
@@ -198,11 +198,14 @@ dark:text-blue-200">
 src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
 alt=" empty schedule" />
 	<span class="font-bold mt-8">Family Group Allocated</span>
-	<span></span>
+	<span>{userData?.familyLocated}</span>
   <span class="text-purple-500">
 	</span>
   <button class="mt-8 bg-purple-800 rounded-lg py-2 px-4">
-						Check it Out
+	<Link to={`/${userData?.familyLocated}`}>
+	Check it Out
+	</Link>
+						
 		</button>
 </div>
 </div>
@@ -251,7 +254,7 @@ alt=" empty schedule" />
 </div>
 </div>
 <span className="mt-4 text-gray-600">Church Role</span>
-<span className="mt-1 text-3xl font-semibold"></span>
+<span className="mt-1 text-3xl font-semibold">{userData?.role}</span>
 <div class="mt-12 flex items-center">
 			<span>Upcomming Events</span>
 			<button class="ml-2 focus:outline-none">
@@ -290,7 +293,7 @@ alt=" empty schedule" />
   </div>
   </Link>
   <div class="mt-4 flex justify-center capitalize text-blue-600">
-			<Link to="/">see all</Link>
+			<Link to="#">see all</Link>
 		</div>
 </aside>
     </div>

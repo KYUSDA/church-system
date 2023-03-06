@@ -68,8 +68,8 @@ const Home = ()=>{
     <Route path='/Alo' element={<Alo />}></Route>
     <Route path='/DiasporaA' element={<DiasporaA />}></Route>
     <Route path='/DiasporaB' element={<DiaspoaraB />}></Route>
-    <Route path='/AroundSchoolA' element={<AroundschoolA />}></Route>
-    <Route path='/AroundSchoolB' element={<AroundschoolB />}></Route>
+    <Route path='/Around School A' element={<AroundschoolA />}></Route>
+    <Route path='/Around School B' element={<AroundschoolB />}></Route>
     <Route path='/elegant' element={<Elegant />}></Route>
     <Route path='/mjini' element={<Mjini />}></Route>
     <Route path='/waterfall' element={<Waterfall />}></Route>
