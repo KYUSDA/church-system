@@ -105,15 +105,30 @@ console.log(inputs);
  className="input input-warning "
    onChange={handleChange}
               >
-                <option defaultValue={'false'} disabled>
-Assign family member
-                </option>
+                <option value='not yet assigned'>Not assigned</option>
                 <option value='Diaspora A'>Diaspora A</option>
                 <option value='Diaspora B'>Diaspora B</option>
                 <option value='Around School A'>Around School A</option>
                 <option value='Around School B'>Around School B</option>
                 </select>
       </div>
+      <div className='newUserItem'>
+        <label>Change Role</label>
+        <select 
+        type='text'
+        name='role'
+        className='input input-warning'
+        onChange={handleChange}
+        >
+    <option value='Member'>Member</option>
+    <option value='Elder'>Elder</option>
+    <option value='Department Head'>Around School A</option>
+    <option value='Family Leader'>Family Leader</option>
+    <option value='Deacon'>Deacon</option>
+    <option value='Deaconess'>Deaconess</option>
+        </select>
+      </div>
+
       <button onClick={handleClick} className="newUserButton">Create</button>
     </form>
   </div>
