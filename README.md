@@ -41,7 +41,7 @@ or
 yarn install 
 if your using yarn package manager
 
-6. Start the server. Use
+6. Start the React App. Use
 
 npm Start
 
@@ -110,7 +110,7 @@ or
 yarn install 
 if your using yarn package manager
 
-6. Start the server. Use
+6. Start the React App. Use
 
 npm Start
 
