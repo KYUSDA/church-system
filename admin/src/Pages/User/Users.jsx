@@ -180,7 +180,6 @@ window.location.replace('/');
         >
     <option value='Member'>Member</option>
     <option value='Elder'>Elder</option>
-    <option value='Department Head'>Around School A</option>
     <option value='Family Leader'>Family Leader</option>
     <option value='Deacon'>Deacon</option>
     <option value='Deaconess'>Deaconess</option>
