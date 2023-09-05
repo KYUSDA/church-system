@@ -32,8 +32,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 const SignInSide = ()=>{
-  const [email,setemail] = useState();
-  const [password,setpassword] = useState();
+  const [email,setemail] = useState('');
+  const [password,setpassword] = useState('');
   const {user} = useAuthContext()
   // console.log(user.email);
 const {login,error,loading} = useLogin();
@@ -41,6 +41,7 @@ const {login,error,loading} = useLogin();
     setemail('');
     setpassword('')
     event.preventDefault();
+    console.log(email,password);
  await login(email,password)
   };
 

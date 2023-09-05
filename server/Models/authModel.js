@@ -64,6 +64,8 @@ default:"not yet assigned"
 
     }
 )
+console.log('weka working fine');
+
 //hash password
 authSchema.pre("save",async function(next){
     if(!this.isModified("password")){

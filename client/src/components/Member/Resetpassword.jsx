@@ -49,14 +49,12 @@ event.preventDefault();
     setpassword('');
     setpasswordConfirm('');
     console.log(token);
- const url = `http://localhost:8000/kyusda/v1/member/resetPassword/${token}`;
+ const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetPassword/${token}`;
  console.log(url);
  const resp = await fetch(url,{
   method:'PATCH',
   headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({password,passwordConfirm}),
-  credentials:'include',
-  withCredentials:true
+  body:JSON.stringify({password,passwordConfirm})
  })
  const data = await resp.json();
 console.log(data);

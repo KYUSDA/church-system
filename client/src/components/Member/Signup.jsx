@@ -41,6 +41,7 @@ const SignUp = ()=>{
 
     const {signup,loading,error} = useSignup();
     const handleSubmit = async(event) => {
+      console.log(firstName)
         event.preventDefault();
         setfirstName('');
         setlastName('');

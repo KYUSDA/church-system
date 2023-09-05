@@ -36,13 +36,11 @@ export default function ResetInSide(props) {
     console.log(email);
     event.preventDefault();
      setemail('');
-    const url = `http://localhost:8000/kyusda/v1/member/resetToken`;
+    const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetToken`;
     const resp = await fetch(url,{
      method:'POST',
      headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({email}),
-     credentials:'include',
-     withCredentials:true
+     body:JSON.stringify({email})
     })
     const data = await resp.json();
    console.log(data.resetToken);

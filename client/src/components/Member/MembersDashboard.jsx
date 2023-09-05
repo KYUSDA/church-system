@@ -9,7 +9,7 @@ const MembersDashboard = () => {
 	console.log(user.email,user.id);
 useEffect(()=>{
 const getData  = async()=>{
-const url = `http://localhost:8000/kyusda/v1/user/${user.id}`
+const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/user/${user.id}`
 const resp = await fetch(url);
 const data = await resp.json();
 setUserData(data)

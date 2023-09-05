@@ -9,16 +9,15 @@ const signup = async(firstName,lastName,registration,
         email,course,year,password,passwordConfirm)=>{
         setError(null);
         setLoading(true);
-        const url = `http://localhost:8000/kyusda/v1/member/signUp`;
+        const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/signUp`;
         const resp = await fetch(url,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({firstName,lastName,registration,
-        email,course,year,password,passwordConfirm}),
-            credentials:'include',
-            withCredentials:true
+        email,course,year,password,passwordConfirm})
         })
         const data = await resp.json();
+        console.log(data)
 if(!resp.ok){
     console.log(data.error)
 setError(data.err);
@@ -29,7 +28,7 @@ if(resp.ok){
     localStorage.setItem('user',JSON.stringify(data));
     dispatch({type:'LOGIN',payload:data});
 setLoading(false);
-redirect('/member')
+redirect('/signIn')
 }
     }
 
