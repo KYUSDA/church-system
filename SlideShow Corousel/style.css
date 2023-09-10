@@ -12,6 +12,7 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
   width: 100%;
   font-size: 1.1rem;
+  margin-bottom: 70px;
 }
 
 .bg-showcase{
@@ -226,6 +227,8 @@ img{
 .featured-content{
   background-color: #fff;
   width: 100%;
+  margin: 0 auto;
+  border-bottom: 5px solid #0e2125;
 }
 
 .featured-content-text h2{
@@ -236,33 +239,23 @@ img{
   text-align: center;
 }
 
-.featured-content-img{
+.featured-content-img-holder{
   display: flex;
-  flex: 1;
-  width: 100%;
-}
-
-.featured-content-img ul{
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
-  width: 100%;
-  margin: 0 auto;
   justify-content: center;
   align-items: center;
-  place-items: center;
-}
-
-.featured-content-img ul li{
   flex: 1;
+  flex-wrap: wrap;
   width: 100%;
 }
 
 .img-holder{
   width: 120px;
-  height: 90px;
+  height: auto;
   margin: 10px;
+}
+
+.img-holder figcaption{
+  font-size: 10px;
 }
 
 
@@ -507,32 +500,6 @@ img{
   position: relative;
 }
 
-/* .eldership-profile .title h2::after{
-  content: '';
-  border-bottom: 4px solid #053B50;
-  display: block;
-  width: 20%;
-  position: absolute;
-  top: 40px;
-  bottom: 0;
-  left: 40%;
-} */
-
-/* .profiles{
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 40px;
-  padding: 50px;
-  background-color: aqua;
-  gap: 30px;
-  row-gap: 10px;
-  justify-content: center;
-  align-content: center;
-  place-items: center;
-} */
-
 .profiles{
   display: flex;
   flex-wrap: wrap;
@@ -553,14 +520,11 @@ img{
   margin-bottom: 70px;
   width: 150px;
   height: 350px;
-  /* background-color: #053B50; */
-  /* padding: 50px; */
 }
 
 .img-container p{
   text-align: center;
   font-size: 18px;
-  /* margin-bottom: 50px; */
 }
 
 .img-container .elder-name{
@@ -572,8 +536,6 @@ img{
 
 .eldership-profile img{
   display: block;
-  /* border: 4px solid #eee; */
   width: 100%;
   border-radius: 50%;
-  /* margin-top: -10px; */
 }
