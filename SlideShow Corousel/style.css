@@ -1,41 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap');
-
+/* || RESET */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
-   margin: 0 auto;
-  margin-top: 7px;
-  /* margin-left: 7px; */
-  /* margin-right: 7px; */
-  position: relative;
-  background: #eee;
-  font-family: 'Nunito', sans-serif;
-  width: 100%;
-  font-size: 1.1rem;
+/* || VARIABLES */
+:root{
+  /* COLOR */
+  --PRIMARY-BGCOLOR:#eee;
+  --BGCOLOR: #0e2125;
+
+  /* FONT */
+  --FF: Arial, Helvetica, sans-serif;
+  --FS: 1.1rem;
+
+  /* GENERAL */
+  --BOX-SHADOWS: 0 6px 5px -5px #000;
 }
 
+/* || GENERAL STYLES */
+html, body {
+  overflow-x: hidden;
+  margin: 0 auto;
+  margin-top: 7px;
+  position: relative;
+  background: var(--PRIMARY-BGCOLOR);
+  font-family: var(--FF);
+  width: 100%;
+  font-size: var(--FS);
+}
+
+img{
+  width: 100%;
+  height: auto;
+}
+
+header{
+  position: relative;
+}
+
+/* .........SHOWCASE HEADER SECTION.......... */
 .bg-showcase{
   margin: 0 auto;
   width: 95%;
   height: 50vh;
-  background-color: #111;
-  /* background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)) ,url(img/bg\ image2.jpg); */
+  background-color: var(--BGCOLOR);
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)) ,url(img/kyusda2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  /* background-position: right; */
 }
 
 .bg-showcase-announcement1{
   margin: 0 auto;
   width: 95%;
   height: 50vh;
-  background-color: #0e2125;
+  background-color: var(--BGCOLOR);
   background-image: url(img/announcement.jpg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -45,19 +66,11 @@ html, body {
   margin: 0 auto;
   width: 95%;
   height: 50vh;
-  background-color: #0e2125;
+  background-color: var(--BGCOLOR);
   background-image: url(img/annoucement2.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-}
-
-
-img{
-    width: 100%;
-    height: auto;
-    /* border: 2px solid #ccc; */
-    /* padding: 10px; */
 }
 
 
@@ -67,7 +80,6 @@ img{
     height: 50vh;
     overflow: hidden;
     width: 100%;
-    /* max-width: 1000px; */
     position: relative;
     margin: auto;
   }
@@ -79,7 +91,6 @@ img{
   
   /* Styles for the next and previous buttons */
   .prev, .next {
-    /* display: none; */
     background-color: rgba(0,0,0,0.8);
     cursor: pointer;
     position: relative;
@@ -129,17 +140,6 @@ img{
   .slideshow-container:hover .next {
     display: flex;
 }
-  
-  /* Styles for caption text */
-  .text {
-    color: #f2f2f2;
-    font-size: 15px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
-  }
 
 .slideshow-container .slideshow-text{
     opacity: 1;
@@ -148,47 +148,23 @@ img{
    top: 50%;
    left: 35%;
    transform: translate(-50%, -35%);
-   /* font-size: 2rem; */
-   /* text-align: center; */
   }
 
   .slideshow-container .slideshow-text h2{
     color: #fff;
-    /* margin-bottom: 10px; */
     text-shadow: 3px 4px 0 rgba(0,0,0,0.2);
-    /* font-weight: 700; */
     font-weight: 300;
     font-size: 4rem;
     letter-spacing: 1px;
     word-spacing: 4px;
     text-transform: uppercase;
-    /* font-family: Arial, Helvetica, sans-serif; */
   }
 
   .slideshow-container .slideshow-text .slogan{
     color: #fff;
     font-size: 1.5rem;
     padding-left: 20px;
-    /* font-weight: 500; */
-    /* font-family: Arial, Helvetica, sans-serif; */
-    /* font-family: 'Sofia', cursive; */
-    /* font-family: 'Flamenco', cursive, georgia, Arial, Helvetica, sans-serif;  */
    }
-
-  .slideshow-container .slideshow-text .announcements{
-    font-size: 1.5rem;
-    font-weight: 400;
-  }
-
-  .date-text{
-    font-weight: 400;
-  }
-  
-  /* When hovering over the slideshow container, make the text visible */
-  /* .slideshow-container:hover .slideshow-text{
-    opacity: 1;    
-  } */
-  
   
   /* Styles for number text (1/3, etc.) */
   .numbertext {
@@ -200,10 +176,6 @@ img{
     left: 40px;
   }
 
-  header{
-    position: relative;
-  }
-  
   /* Styles for the dots/bullets/indicators */
 
   .dots{
@@ -218,9 +190,6 @@ img{
     height: 15px;
     width: 15px;
     margin: 0 2px;
-    /* background-color: #bbb; */
-    /* background-color: #fff; */
-    /* background-color: #053B50; */
     background-color: aqua;
     border-radius: 50%;
     display: inline-block;
@@ -229,9 +198,7 @@ img{
   
   /* Styles for the active dot and hover effect */
   .active, .dot:hover {
-    /* background-color: #717171; */
     background-color: #fff;
-    /* background-color: #053B50; */
   }
   
   /* Fading animation */
@@ -252,149 +219,25 @@ img{
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  
-  .site-wrap {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    column-gap: 50px;
-    max-width: 1200px;
-    margin: 70px auto;
-    background: #eee;
-    padding: 40px;
-    text-align: left;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
-    transform: scale(0.98);
-    transition: transform 0.5s;
-    /* font-family: Arial, Helvetica, sans-serif; */
-  }
-
-  /* .about-us-img {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-  } */
-
-  .about-us-img img{
-    /* transform: rotate(90deg); */
-    width: 100%;
-    width: 200px;
-    height: 200px; 
-    border-radius: 50%;
-    margin: 150px 40px 0 40px;
-  }
-
-  .icons{
-    position: absolute;
-    bottom: 20%;
-    left: 10%;
-    transform: translate(-20%, -10%);
-  }
-
-  .icons a{
-    padding: 8px;
-  }
-  
-
-  .about-us-description h2{
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 2.5rem;
-    position: relative;
-    /* font-weight: 300; */
-  }
-
-  .about-us-description h2::after{
-    content: '';
-    border-bottom: 4px solid rgba(5, 59, 80, 0.7);
-    display: block;
-    width: 30%;
-    position: absolute;
-    top: 40px;
-    bottom: 0;
-    left: 35%;
-  }
-
-  /* .about-us-description h2 p{
-    letter-spacing: 1px;
-    word-spacing: 4px;
-  } */
-
-  .about-text-title{
-    margin: 10px 0 5px 0;
-    /* color: #053B50; */
-    color: #0e2125;
-    font-weight: 900;
-    font-size: 1.2rem;
-    text-align: center;
-  }
-
-  /* .about-us-paragraphs{
-    letter-spacing: 1px;
-  } */
-  
+  /* ...........NAVIGATION SECTION............. */
   
   body.fixed-nav .site-wrap {
     transform: scale(1);
   }
   
-  /* header {
-    text-align: center;
-    height: 50vh;
-    background: url(img/bg\ image.jpg) center center no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } */
-  
-  /* h1 {
-    color: white;
-    font-size: 7vw;
-    text-shadow: 3px 4px 0 rgba(0,0,0,0.2);
-  } */
-  
   nav {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    /* background: #053B50; */
-    background: #0e2125;
+    background: var(--BGCOLOR);
     top: 0;
     width: 100%;
-    /* height: 50px; */
     transition:all 0.5s;
     position: relative;
     z-index: 1;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+    box-shadow: var(--BOX-SHADOWS);
   }
   
   body.fixed-nav nav {
     position: fixed;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    box-shadow: var(--BOX-SHADOWS);
   }
   
   nav ul {
@@ -405,28 +248,20 @@ img{
   }
   
   nav li {
-    flex: 1;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin: 0 30px; */
+    flex: 1;
   }
   
   li.logo {
     max-width: 0;
     overflow: hidden;
     background: white;
-    /* background: #333; */
     transition: all 0.5s;
-    /* font-weight: 600; */
-    /* font-size: 30px; */
   }
-  
-  /* li.logo a {
-    color: black;
-  } */
-  
+
   .fixed-nav li.logo {
     max-width: 60px;
   }
@@ -439,7 +274,6 @@ img{
     transition: all 0.5s;
     font-weight: 500;
     font-size: 1.1rem;
-    /* text-transform: uppercase; */
   }
 
   nav a:hover{
@@ -477,89 +311,164 @@ img{
   }
 
 
-  /* ....................Eldership..................... */
-.eldership-profile{
+/* ..............ABOUT US SECTION.............. */
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  .site-wrap {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 50px;
+    max-width: 1200px;
+    margin: 70px auto;
+    background: #eee;
+    padding: 40px;
+    text-align: left;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
+    transform: scale(0.98);
+    transition: transform 0.5s;
+  }
+
+  .about-us-img img{
+    width: 100%;
+    width: 200px;
+    height: 200px; 
+    border-radius: 50%;
+    margin: 150px 40px 0 40px;
+  }
+
+  .icons{
+    position: absolute;
+    bottom: 20%;
+    left: 10%;
+    transform: translate(-20%, -10%);
+  }
+
+  .icons a{
+    padding: 8px;
+  }
+  
+
+  .about-us-description h2{
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+    position: relative;
+  }
+
+  .about-us-description h2::after{
+    content: '';
+    border-bottom: 4px solid rgba(5, 59, 80, 0.7);
+    display: block;
+    width: 30%;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 35%;
+  }
+
+  .about-text-title{
+    margin: 10px 0 5px 0;
+    color: var(--BGCOLOR);
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  /* ....................Featured content section..................... */
+.featured-content{
   background-color: #fff;
   width: 100%;
   margin: 0 auto;
-  overflow: hidden;
-  margin-bottom: 70px;
+  border-bottom: 5px solid var(--BGCOLOR);
 }
 
-.eldership-profile .title h2{
-  font-size: 2.5rem;
-  text-align: center;
-  padding: 50px 0 10px 0;
-  position: relative;
-}
-
-/* .eldership-profile .title h2::after{
-  content: '';
-  border-bottom: 4px solid #053B50;
-  display: block;
-  width: 20%;
-  position: absolute;
-  top: 40px;
-  bottom: 0;
-  left: 40%;
-} */
-
-/* .profiles{
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  width: 100%;
+.featured-content-text h2{
+  padding: 20px;
   margin: 0 auto;
   margin-top: 40px;
-  padding: 50px;
-  background-color: aqua;
-  gap: 30px;
-  row-gap: 10px;
-  justify-content: center;
-  align-content: center;
-  place-items: center;
-} */
+  margin-bottom: 40px;
+  text-align: center;
+}
 
-.profiles{
+.featured-content-img-holder{
   display: flex;
-  flex-wrap: wrap;
-  /* flex-basis: calc(33.33% - 10px); */
-  flex: 1;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 40px;
-  /* padding: 20px; */
-  align-items: center;
   justify-content: center;
-  place-items: center;
+  align-items: center;
+  flex: 1;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.img-container{
-  padding: 30px;
-  margin-right: 30px;
-  margin-bottom: 70px;
-  width: 150px;
-  height: 350px;
-  /* background-color: #053B50; */
-  /* padding: 50px; */
+.img-holder{
+  width: 100px;
+  height: auto;
+  margin: 10px;
 }
 
-.img-container p{
+.img-holder figcaption{
+  font-size: 12px;
+}
+
+
+
+  /* ................FOOTER SECTION.............. */
+.footer{
+  display: block;
+  background-color: #255760;
+  width: 100%;
+  height: 300px;
+  margin-top: 70px;
+}
+
+.footer-title h2{
+  color: #fff;
   text-align: center;
-  font-size: 18px;
-  /* margin-bottom: 50px; */
+  padding-top: 20px;
+  margin-bottom: 10px;
 }
 
-.img-container .elder-name{
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-bottom: 10px;
+.footer-title hr{
+width: 80%;
+margin: 0 auto;
+margin-bottom: 20px;
+}
+
+.footer-content-left{
+  color: #fff;
+  font-size: smaller;
+  font-weight: 500;
+  float: left;
+  margin-left: 25%;
   margin-top: 20px;
 }
 
-.eldership-profile img{
-  display: block;
-  /* border: 4px solid #eee; */
+.footer-content-right{
+  color: #fff;
+  font-size: smaller;
+  font-weight: 500;
+  float: right;
+  margin-right: 30%;
+  margin-top: 20px;
+}
+
+.footer-content-right p, .footer-content-left p{
+  padding: 10px;
+}
+
+.footer-content-right p i, .footer-content-left p i{
+  padding-right: 10px;
+}
+
+.copyright{
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  background-color: #071112;
   width: 100%;
-  border-radius: 50%;
-  /* margin-top: -10px; */
+  padding: 10px;
+  color: #fff;
+  font-size: smaller;
 }
