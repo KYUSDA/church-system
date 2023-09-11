@@ -1,18 +1,34 @@
+/* || RESET */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* || VARIABLES */
+:root{
+  /* COLOR */
+  --PRIMARY-BGCOLOR:#eee;
+  --BGCOLOR: #0e2125;
+
+  /* FONT */
+  --FF: Arial, Helvetica, sans-serif;
+  --FS: 1.1rem;
+
+  /* GENERAL */
+  --BOX-SHADOWS: 0 6px 5px -5px #000;
+}
+
+/* || GENERAL STYLES */
 html, body {
   overflow-x: hidden;
   margin: 0 auto;
   margin-top: 7px;
   position: relative;
-  background: #eee;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--PRIMARY-BGCOLOR);
+  font-family: var(--FF);
   width: 100%;
-  font-size: 1.1rem;
+  font-size: var(--FS);
 }
 
 img{
@@ -29,7 +45,7 @@ header{
   margin: 0 auto;
   width: 95%;
   height: 50vh;
-  background-color: #111;
+  background-color: var(--BGCOLOR);
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)) ,url(img/kyusda2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -40,7 +56,7 @@ header{
   margin: 0 auto;
   width: 95%;
   height: 50vh;
-  background-color: #0e2125;
+  background-color: var(--BGCOLOR);
   background-image: url(img/announcement.jpg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -50,7 +66,7 @@ header{
   margin: 0 auto;
   width: 95%;
   height: 50vh;
-  background-color: #0e2125;
+  background-color: var(--BGCOLOR);
   background-image: url(img/annoucement2.jpg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -210,18 +226,18 @@ header{
   }
   
   nav {
-    background: #0e2125;
+    background: var(--BGCOLOR);
     top: 0;
     width: 100%;
     transition:all 0.5s;
     position: relative;
     z-index: 1;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+    box-shadow: var(--BOX-SHADOWS);
   }
   
   body.fixed-nav nav {
     position: fixed;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    box-shadow: var(--BOX-SHADOWS);
   }
   
   nav ul {
@@ -355,7 +371,7 @@ header{
 
   .about-text-title{
     margin: 10px 0 5px 0;
-    color: #0e2125;
+    color: var(--BGCOLOR);
     font-weight: 900;
     font-size: 1.2rem;
     text-align: center;
@@ -366,7 +382,7 @@ header{
   background-color: #fff;
   width: 100%;
   margin: 0 auto;
-  border-bottom: 5px solid #0e2125;
+  border-bottom: 5px solid var(--BGCOLOR);
 }
 
 .featured-content-text h2{
@@ -395,7 +411,6 @@ header{
 .img-holder figcaption{
   font-size: 12px;
 }
-
 
 
 

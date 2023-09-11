@@ -48,7 +48,7 @@ setInterval(autoShowSlides, 10000); // Change slide every 10 seconds (10000 mill
 
 
 
-//....................NAVIGATION LINKS........................//
+//....................NAVIGATION LINKS & LOGO........................//
 
 // Get a reference to the element with the ID 'main' and store it in the 'nav' variable
 const nav = document.querySelector('#main');
