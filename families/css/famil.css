@@ -1,0 +1,231 @@
+/*------------------ welcome--------------------*/
+.breadcrumbs
+{
+	background: linear-gradient(rgba(150, 60, 221, 0.1), rgba(17, 17, 69, 0.8)), url('../img/area.jpg');
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.breadcrumb-container
+{
+	height: 34vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 1.5rem;
+}
+
+.breadcrumb-container .hero-heading
+{
+	font-size: 3rem;
+}
+/*------------------ welcome --------------------*/
+
+
+/*------------------------------- Our leaders-------------------------------------*/
+.team-leaders
+{
+	margin: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 4rem;
+}
+
+.team-leader .leader-img
+{
+	border-radius: 500px 500px 500px 500px;
+    height: 300px;
+    width: 300px;
+}
+
+.team-leader .leader-content
+{
+	padding: 1rem;
+}
+
+.team-leader .leader-designation
+{
+	font-size: 0.8rem;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.team-leader .leader-name
+{
+	font-size: 1.6rem;
+	font-weight: 600;
+	margin: 0.6rem 0;
+}
+/*------------------------------- Our leaders -------------------------------------*/
+
+/*------------------------------- Our Team -------------------------------------*/
+.team-members
+{
+	margin: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 4rem;
+}
+
+.team-member .member-img
+{
+	border-radius: 6px;
+}
+
+.team-member .member-content
+{
+	padding: 1rem;
+}
+
+.team-member .member-designation
+{
+	font-size: 0.8rem;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.team-member .member-name
+{
+	font-size: 1.6rem;
+	font-weight: 600;
+	margin: 0.6rem 0;
+}
+/*------------------------------- Our Team -------------------------------------*/
+
+
+
+/*--------------------------------- About -------------------------------------*/
+.about-cta
+{
+	background: linear-gradient(rgba(10, 17, 79, 0.9), rgba(10, 17, 79, 0.9)), url("../img/hero-bg.jpg");
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	text-align: center;
+}
+
+.about-cta .container .row
+{
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+/*--------------------------------- About -------------------------------------*/
+
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------------*/
+/*-------------------------------- Desktop screen styling --------------------------------*/
+/*-----------------------------------------------------------------------------------------*/
+@media screen and (min-width: 789px)
+{
+	/*----------- welcome styling ----------*/
+	.breadcrumb-container 
+	{
+		height: 50vh;
+	}
+
+
+	/*-------------- Future styling --------------*/
+	.future .container
+	{
+		text-align: center;
+	}
+
+	.future .para-line
+	{
+		max-width: 1050px;
+		margin: 0 auto;
+	}
+
+	.future-protection-imgs
+	{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+	}
+
+
+	/*------------------------ we -----------------------*/
+	.company-values
+	{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 4rem;
+	}
+
+
+	/*------------------------- x ---------------------------*/
+	.key-numbers .container .para-line
+	{
+		max-width: 800px;
+	}
+
+	.key-num-row
+	{
+		justify-content: center;
+		align-items: flex-start;
+	}
+
+	.key-num-2-col
+	{
+		margin-top: 4rem;
+	}
+
+
+	/*------------------------------- z -------------------------------*/
+	.company-highlights .container
+	{
+		display: grid;
+		grid-template-rows: repeat(2, 1fr);
+		grid-template-columns: repeat(3, 1fr);
+		gap: 4rem;
+	}
+	/*------------------------------- z-------------------------------*/
+
+
+
+	/*------------------------------------- Our leaders ----------------------------*/
+	.our-team .container
+	{
+		text-align: center;
+	}
+
+	.team-members
+	{
+		flex-direction: row;
+	}
+
+	.team-member .member-content
+	{
+		text-align: left;
+	}
+	/*------------------------------------- Our leaders----------------------------*/
+
+
+
+	/*------------------------------------ About ----------------------------*/
+	.about-cta .container .row
+	{
+		flex-direction: row;
+	}
+
+	.cta-content-col
+	{
+		width: 160%;
+		text-align: left;
+	}
+
+	.cta-btn-col
+	{
+		width: 40% !important;
+	}
+	/*------------------------------------ About ----------------------------*/
+}
