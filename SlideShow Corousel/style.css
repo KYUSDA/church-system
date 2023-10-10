@@ -58,6 +58,7 @@
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.5s ease-in-out;
   }
 
   .nav-links ul li{
@@ -65,14 +66,9 @@
     display: inline-block;
     margin-left: 2.5rem;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 400;
   }
-
-  .nav-links ul li i{
-    margin-right: 0.7rem;
-    color: #fff;
-  }
-
+  
   .nav-links ul li a{
     text-decoration: none;
     color: #fff;
