@@ -28,6 +28,24 @@
     overflow: hidden;
     position: relative;
   }
+
+  .mainMenu{
+    display: flex;
+    list-style: none;
+}
+
+nav .mainMenu .closeMenu, .icons i{
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.openMenu{
+  display: none;
+  margin: 20px;
+  cursor: pointer;
+  font-size: 2rem;
+}
   
   .header-title{
     font-size: 1rem;
@@ -37,7 +55,7 @@
     margin: 0.7rem 0;
   }
 
-  .header-navigation{
+  nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -123,6 +141,166 @@
   } 
 
 
+  /* NEW */
+  nav{
+    background-color: #053b50;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.mainMenu{
+    display: flex;
+    list-style: none;
+}
+
+.nav-links{
+    margin: 0 15rem;
+    display: inline-flex;
+    transition: all 0.5s ease-in-out;
+}
+
+nav .nav-links li a{
+    display: inline-block;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+nav .nav-links li a:hover{
+    color: aqua;
+    transform: scale(1.1);
+}
+
+nav .nav-links li a:focus,
+nav .nav-links li a:active {
+    transform: scale(1.2);
+    color: aqua;
+  }
+
+.openMenu{
+    display: none;
+    margin: 20px;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+nav .mainMenu .closeMenu, .icons i{
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+nav .logo img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 6px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.membership-btn i{
+    padding-right: 0.5rem;
+  } 
+
+  .membership-btn {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: #053b50;
+    text-transform: lowercase;
+    transition: all 1s;
+  }
+
+  .membership-btn a{
+    text-decoration: none;
+    color: #053b50;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .membership-btn:hover {
+    background-color: aqua;
+    color: #fff;
+  }
+  
+  .header-title{
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: #053b50;
+    margin: 0.7rem 0;
+  }
+
+
+@media (max-width: 800px){
+    nav .mainMenu{
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        background-color: rgba(0 , 0, 0, 0.9);
+        display: none;
+        transition: top 1s ease;
+    }
+
+    nav .nav-links{
+        display: block;
+    }
+
+    
+    nav .mainMenu .closeMenu{
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    nav .openMenu{
+        display: block;
+        background-color: none;
+    }
+
+    nav .mainMenu li{
+        text-align: center;  
+    }
+
+    nav .mainMenu li a{
+        font-size: 1.6rem;
+    }
+
+    nav .mainMenu li a:hover{
+        background-color: none;
+        color: aqua;
+    }
+
+    .icons i{
+        display: inline-block;
+        padding: 12px;
+    }
+
+    .icons i:hover{
+        background-color: none;
+        color: aqua;
+    }
+
+    .membership-btn{
+        margin-top: 40px;
+    }
+}
+
+
 
   /* HERO SECTION */
 
@@ -201,99 +379,49 @@
     font-weight: 300;
   }
 
-/* ....................Featured content section..................... */
-.featured-content {
-  background-color: #fff;
-  width: 100%;
-  margin: 0 auto;
-  border-bottom: 5px solid var(--BGCOLOR);
-}
+  
 
-.featured-content-text h2 {
-  padding: 20px;
-  margin: 0 auto;
-  margin-top: 70px;
-  margin-bottom: 40px;
-  text-align: center;
-}
 
-.featured-content-img-holder {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  flex-wrap: wrap;
-  width: 100%;
-}
 
-.img-holder {
-  width: 100px;
-  height: auto;
-  margin: 10px;
-}
 
-.img-holder figcaption {
-  font-size: 12px;
-}
 
-/* ................FOOTER SECTION.............. */
-.footer {
-  position: relative;
-  display: block;
-  background-color: #255760;
-  width: 100%;
-  height: 300px;
-  margin-top: 70px;
-}
 
-.footer-title h2 {
-  color: #fff;
-  text-align: center;
-  padding-top: 20px;
-  margin-bottom: 10px;
-}
+@media (max-width: 800px){
+  .mainMenu{
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      background-color: #333;
+      display: none;
+      transition: top 1s ease;
+  }
 
-.footer-title hr {
-  width: 80%;
-  margin: 0 auto;
-  margin-bottom: 20px;
-}
+  .mainMenu .closeMenu{
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+  }
 
-.footer-content-left {
-  color: #fff;
-  font-size: smaller;
-  font-weight: 500;
-  float: left;
-  margin-left: 25%;
-  margin-top: 20px;
-}
+  .openMenu{
+      display: block;
+      background-color: none;
+  }
 
-.footer-content-right {
-  color: #fff;
-  font-size: smaller;
-  font-weight: 500;
-  float: right;
-  margin-right: 30%;
-  margin-top: 20px;
-}
+  .mainMenu li a:hover{
+      background-color: none;
+      color: #fff;
+      font-size: 1.6rem;
+  }
 
-.footer-content-right p,
-.footer-content-left p {
-  padding: 10px;
-}
-
-.footer-content-right p i,
-.footer-content-left p i {
-  padding-right: 10px;
-}
-
-.copyright {
-  position: absolute;
-  bottom: 0;
-  text-align: center;
-  background-color: #071112;
-  width: 100%;
-  padding: 10px;
-  color: #fff;
-  font-size: smaller;
+  .icons i{
+      display: inline-block;
+      padding: 12px;
+  }
 }
