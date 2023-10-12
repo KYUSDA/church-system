@@ -42,8 +42,7 @@ pauseButton.addEventListener("click", togglePause);
 pauseButton.innerHTML = '&#10074;&#10074;'; // Initially set to the Pause icon
 
 
-
-
+/* || mobile version menu */
 
 const mainMenu = document.querySelector(".mainMenu");
 const closeMenu = document.querySelector(".closeMenu");
