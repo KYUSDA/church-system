@@ -65,12 +65,12 @@ nav .logo img{
     display: inline-flex;
     justify-content: space-around;
     align-items: center;
-    margin-right: 15rem;
+    margin-right: 9rem;
 }
 
 nav .nav-links li a{
     display: inline-flex;
-    margin-left: 25px;
+    padding: 0 30px;
     color: #fff;
     text-decoration: none;
     font-size: 1.2rem;

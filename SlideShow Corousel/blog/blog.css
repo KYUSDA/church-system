@@ -52,7 +52,7 @@
 
 .main-nav ul li{
     list-style: none;
-    padding: 20px 40px;
+    padding: 20px 30px;
 }
 
 .main-nav ul li a{
@@ -194,7 +194,7 @@
 /* Desktops */
 @media (min-width: 1200px) and (max-width: 1919px) {
     .main-nav ul li{
-        padding: 20px 40px;
+        padding: 20px 30px;
     }
 
     .main-nav ul li a{
