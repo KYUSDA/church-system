@@ -10,7 +10,7 @@
 
 
 .showcase{
-    min-height: 50vh;
+    min-height: 35vh;
     width: 100%;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ) , url(../img/blog-showcase.jpg);
     background-position: center;
@@ -21,8 +21,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
-    position: relative;
 }
 
 .showcase-title{
@@ -44,14 +42,8 @@
 
 /* || NAVIGATION */
 
-.main-nav{
-    position: absolute;
-    top: 45vh;
-    left: 0;
-    right: 0;
-}
-
 .main-nav ul{
+    margin-top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,6 +66,11 @@
 }
 
 .main-nav ul li a:hover{
+    color: orangered;
+}
+
+.main-nav ul li a:active,
+.main-nav ul li a:focus {
     color: orangered;
 }
 

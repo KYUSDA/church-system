@@ -8,7 +8,12 @@
     box-sizing: border-box;
   }
 
-  body,html{
+  img{
+    width: 100%;
+    overflow-y: hidden;
+  }
+
+  body, html{
     font-family: 'Roboto', sans-serif;
     background-color: #fff;
     color: #333;
@@ -16,15 +21,8 @@
     scroll-behavior: smooth;
   }
 
-  img{
-    width: 100%;
-    /* height: 100%; */
-    overflow-y: hidden;
-
-  }
-
   #main-header{
-    height: calc(100vh - 70px);
+    height: calc(100vh - 180px);
     width: 100%;
     background-color: #eee;
     overflow: hidden;
@@ -64,19 +62,18 @@ nav .logo img{
 }
 
 .nav-links{
-    padding: 0 15rem;
     display: inline-flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    transition: all 0.5s ease-in-out;
+    margin-right: 15rem;
 }
 
 nav .nav-links li a{
-    display: inline-block;
-    padding: 15px 30px;
+    display: inline-flex;
+    margin-left: 25px;
     color: #fff;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     transition: all 0.5s ease-in-out;
 }
@@ -105,9 +102,9 @@ nav .mainMenu .closeMenu, .icons i{
 }
 
 
-.membership-btn i{
-    padding-right: 0.5rem;
-  } 
+/* .membership-btn i{
+    padding-right: 0.2rem;
+  }  */
 
   .membership-btn {
     background: #fff;
@@ -121,17 +118,17 @@ nav .mainMenu .closeMenu, .icons i{
   .membership-btn a{
     text-decoration: none;
     color: #053b50;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 400;
   }
   
   .membership-btn:hover  {
-    background-color: orangered;
-    /* color: #fff; */
+    background-color: aqua;
+    cursor: pointer;
   }
 
   .membership-btn a:hover{
-    color: #fff;
+    color: #053b50;
   }
 
 
@@ -200,17 +197,6 @@ nav .mainMenu .closeMenu, .icons i{
 
   .caption p{
     font-weight: 300;
-  }
-
-  /* DOWN ARROW */
-  .arrow-down i{
-    position: absolute;
-    top: 93%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    color: #053b50;
-    animation: animate 2s infinite;
   }
 
   /* scroll-top-btn */
