@@ -11,7 +11,7 @@
 .showcase{
     min-height: 50vh;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ) , url(../img/Screenshot\ \(499\).png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ) , url(../img/Screenshot\ \(495\).png);
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
@@ -20,6 +20,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    position: relative;
 }
 
 .showcase-title{
@@ -39,3 +41,39 @@
     letter-spacing: 1px;
     font-weight: 400;
 }
+
+/* || NAVIGATION */
+
+.main-nav{
+    position: absolute;
+    top: 45%;
+    left: 0;
+    right: 0;
+}
+
+.main-nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+.main-nav ul li{
+    list-style: none;
+    padding: 20px 40px;
+}
+
+.main-nav ul li a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+
+    transition: all 0.5s ease-in-out;
+}
+
+.main-nav ul li a:hover{
+    color: orangered;
+}
+
