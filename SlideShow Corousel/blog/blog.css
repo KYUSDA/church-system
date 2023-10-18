@@ -8,6 +8,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
+
 .showcase{
     min-height: 50vh;
     width: 100%;
@@ -45,7 +46,7 @@
 
 .main-nav{
     position: absolute;
-    top: 45%;
+    top: 45vh;
     left: 0;
     right: 0;
 }
@@ -75,6 +76,15 @@
 .main-nav ul li a:hover{
     color: orangered;
 }
+
+
+/* || FOOTER */
+
+/* .footer{
+    bottom: 0;
+    width: 100px;
+    background-color: #000;
+} */
 
 
 /* || MEDIA QUERIES */
