@@ -64,8 +64,10 @@ nav .logo img{
 }
 
 .nav-links{
-    margin: 0 15rem;
+    padding: 0 15rem;
     display: inline-flex;
+    justify-content: center;
+    align-items: center;
     transition: all 0.5s ease-in-out;
 }
 
@@ -76,17 +78,17 @@ nav .nav-links li a{
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 400;
+    transition: all 0.5s ease-in-out;
 }
 
 nav .nav-links li a:hover{
-    color: aqua;
-    transform: scale(1.1);
+    color: orangered;
 }
 
 nav .nav-links li a:focus,
 nav .nav-links li a:active {
     transform: scale(1.2);
-    color: aqua;
+    color: orangered;
   }
 
 .openMenu{
@@ -123,8 +125,12 @@ nav .mainMenu .closeMenu, .icons i{
     font-weight: 600;
   }
   
-  .membership-btn:hover {
-    background-color: aqua;
+  .membership-btn:hover  {
+    background-color: orangered;
+    /* color: #fff; */
+  }
+
+  .membership-btn a:hover{
     color: #fff;
   }
 

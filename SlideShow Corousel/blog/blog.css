@@ -11,8 +11,8 @@
 .showcase{
     min-height: 50vh;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ) , url(../img/Screenshot\ \(495\).png);
-    background-position: bottom;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ) , url(../img/blog-showcase.jpg);
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -35,7 +35,7 @@
 .showcase .subtitle{
     padding: 20px;
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-align: center;
     letter-spacing: 1px;
     font-weight: 400;
@@ -84,6 +84,23 @@
     .main-nav ul li{
         display: none;
     }
+
+    .showcase-title{
+        color: #fff;
+        font-size: 2.2rem;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 400;
+    }
+    
+    .showcase .subtitle{
+        padding: 20px;
+        color: #fff;
+        font-size: 1.3rem;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
 }
 
 /* Extra Small Devices */
@@ -98,11 +115,45 @@
         letter-spacing: normal;
         font-weight: 300;
     }
+
+    .showcase-title{
+        color: #fff;
+        font-size: 2.5rem;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 400;
+    }
+    
+    .showcase .subtitle{
+        padding: 20px;
+        color: #fff;
+        font-size: 1.4rem;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
 }
 
 
 /* Small Tablets */
 @media (min-width: 768px) and (max-width: 991px) {
+    .showcase-title{
+        color: #fff;
+        font-size: 2.5rem;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 400;
+    }
+    
+    .showcase .subtitle{
+        padding: 20px;
+        color: #fff;
+        font-size: 1.4rem;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
+
     .main-nav ul li{
         padding: 20px;
     }
