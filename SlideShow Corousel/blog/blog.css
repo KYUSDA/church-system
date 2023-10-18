@@ -28,7 +28,6 @@
     color: #fff;
     font-size: 3rem;
     text-align: center;
-    text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 400;
 }
@@ -76,4 +75,93 @@
 .main-nav ul li a:hover{
     color: orangered;
 }
+
+
+/* || MEDIA QUERIES */
+
+/* MOBILE */
+@media (max-width: 678px) {
+    .main-nav ul li{
+        display: none;
+    }
+}
+
+/* Extra Small Devices */
+@media (min-width: 678px) and (max-width: 767px) {
+    .main-nav ul li{
+        padding: 20px 11px;
+    }
+
+    .main-nav ul li a{
+        color: #fff;
+        font-size: 1.1rem;
+        letter-spacing: normal;
+        font-weight: 300;
+    }
+}
+
+
+/* Small Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+    .main-nav ul li{
+        padding: 20px;
+    }
+
+    .main-nav ul li a{
+        color: #fff;
+        font-size: 1.1rem;
+        letter-spacing: normal;
+        font-weight: 300;
+    }
+    
+}
+
+
+/* Large Tablets/Laptops */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .main-nav ul li{
+        padding: 20px 30px;
+    }
+
+    .main-nav ul li a{
+        color: #fff;
+        font-size: 1.1rem;
+        letter-spacing: normal;
+        font-weight: 500;
+    }
+    
+}
+
+
+/* Desktops */
+@media (min-width: 1200px) and (max-width: 1919px) {
+    .main-nav ul li{
+        padding: 20px 40px;
+    }
+
+    .main-nav ul li a{
+        color: #fff;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        font-weight: 500;
+    }
+    
+}
+
+/* Extra Large Screens */
+@media (min-width: 1920px) {
+    .main-nav ul li{
+        padding: 20px 40px;
+    }
+
+    .main-nav ul li a{
+        color: #fff;
+        font-size: 1.2rem;
+        letter-spacing: normal;
+        font-weight: 600;
+    }
+    
+}
+
+
 
