@@ -7,3 +7,35 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
+
+.showcase{
+    min-height: 50vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ) , url(../img/Screenshot\ \(499\).png);
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.showcase-title{
+    color: #fff;
+    font-size: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+.showcase .subtitle{
+    padding: 20px;
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 400;
+}
