@@ -8,6 +8,11 @@
     font-family: 'Roboto', sans-serif;
 }
 
+html, body{
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
 
 .showcase{
     min-height: 35vh;
