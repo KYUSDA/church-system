@@ -13,19 +13,24 @@ html, body{
     overflow-x: hidden;
 }
 
-
-.showcase{
-    min-height: 35vh;
+header{
+    min-height: 40vh;
     width: 100%;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ) , url(../img/blog-showcase.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 
+    position: relative;
+}
+
+.showcase{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-top: 10vh;
+
 }
 
 .showcase-title{
@@ -48,16 +53,19 @@ html, body{
 /* || NAVIGATION */
 
 .main-nav ul{
-    margin-top: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     background-color: #000;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .main-nav ul li{
     list-style: none;
-    padding: 20px 30px;
+    padding: 1rem;
 }
 
 .main-nav ul li a{
@@ -65,7 +73,7 @@ html, body{
     color: #fff;
     font-size: 1.2rem;
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 400;
 
     transition: all 0.5s ease-in-out;
 }
@@ -92,7 +100,7 @@ html, body{
 /* || MEDIA QUERIES */
 
 /* MOBILE */
-@media (max-width: 678px) {
+/* @media (max-width: 678px) {
     .main-nav ul li{
         display: none;
     }
@@ -113,10 +121,10 @@ html, body{
         letter-spacing: 1px;
         font-weight: 400;
     }
-}
+} */
 
 /* Extra Small Devices */
-@media (min-width: 678px) and (max-width: 767px) {
+/* @media (min-width: 678px) and (max-width: 767px) {
     .main-nav ul li{
         padding: 20px 11px;
     }
@@ -144,11 +152,11 @@ html, body{
         letter-spacing: 1px;
         font-weight: 400;
     }
-}
+} */
 
 
 /* Small Tablets */
-@media (min-width: 768px) and (max-width: 991px) {
+/* @media (min-width: 768px) and (max-width: 991px) {
     .showcase-title{
         color: #fff;
         font-size: 2.5rem;
@@ -177,11 +185,11 @@ html, body{
         font-weight: 300;
     }
     
-}
+} */
 
 
 /* Large Tablets/Laptops */
-@media (min-width: 992px) and (max-width: 1199px) {
+/* @media (min-width: 992px) and (max-width: 1199px) {
     .main-nav ul li{
         padding: 20px 30px;
     }
@@ -193,11 +201,11 @@ html, body{
         font-weight: 500;
     }
     
-}
+} */
 
 
 /* Desktops */
-@media (min-width: 1200px) and (max-width: 1919px) {
+/* @media (min-width: 1200px) and (max-width: 1919px) {
     .main-nav ul li{
         padding: 20px 30px;
     }
@@ -209,10 +217,10 @@ html, body{
         font-weight: 500;
     }
     
-}
+} */
 
 /* Extra Large Screens */
-@media (min-width: 1920px) {
+/* @media (min-width: 1920px) {
     .main-nav ul li{
         padding: 20px 40px;
     }
@@ -224,7 +232,7 @@ html, body{
         font-weight: 600;
     }
     
-}
+} */
 
 
 
