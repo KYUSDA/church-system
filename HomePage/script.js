@@ -1,72 +1,66 @@
-let slideIndex = 0;
-let slideshowTimeout;
-let isPaused = false;
+function updateCountdown() {
+    const targetDate = new Date('2023-11-11T23:59:59').getTime();
+    const currentDate = new Date().getTime();
+    const timeRemaining = targetDate - currentDate;
 
-showSlides();
+    if (timeRemaining <= 0) {
+      // If the target date has passed, you can display a message or take some action here.
+      document.getElementById('countdown').textContent = 'Event has started!';
+      return;
+    }
 
-function showSlides() {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1;
-    }
-    slides[slideIndex - 1].style.display = "block";
-    
-    if (!isPaused) {
-        slideshowTimeout = setTimeout(showSlides, 5000); // Change image every 5 seconds
-    }
+    const days = String(Math.floor(timeRemaining / (1000 * 60 * 60 * 24)).toString().padStart(2, '0'));
+    const hours = String(Math.floor((timeRemaining % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)).toString().padStart(2, '0')));
+    const minutes = String(Math.floor((timeRemaining % (1000 * 60 * 60) / (1000 * 60)).toString().padStart(2, '0')));
+    const seconds = String(Math.floor((timeRemaining % (1000 * 60) / 1000).toString().padStart(2, '0')));
+
+    document.getElementById('days').innerHTML = days + " <br> Days";
+    document.getElementById('hours').innerHTML = hours + " <br> Hours";
+    document.getElementById('mins').innerHTML = minutes + " <br> Mins";
+    document.getElementById('secs').innerHTML = seconds + " <br> Secs";
+  }
+
+  // Update the countdown every second
+  setInterval(updateCountdown, 1000);
+
+  // Initial call to set the countdown when the page loads
+  updateCountdown();
+
+
+
+  // When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the header
+var header = document.getElementById("myHeader");
+
+// Get the offset position of the navbar
+var sticky = header.offsetTop;
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.scrollY > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
 }
 
-// Function to pause/unpause the slideshow when the button is clicked
-const pauseButton = document.getElementById("pauseButton");
 
-function togglePause() {
-    isPaused = !isPaused; // Toggle the pause state
-    if (isPaused) {
-        clearTimeout(slideshowTimeout); // Pause the slideshow
-        pauseButton.innerHTML = '&#9658;'; // Play icon
+
+
+// Get the search icon and search box elements by their IDs
+const searchIcon = document.getElementById('search-icon');
+const searchBox = document.getElementById('search-box');
+
+// Add a click event listener to the search icon
+searchIcon.addEventListener('click', function() {
+    // Toggle the visibility of the search box
+    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+        searchBox.style.display = 'inline';
+        // make the searchBox width be 100% of the parent element
+        searchBox.style.width = '100%';
     } else {
-        // Resume the slideshow
-        slideshowTimeout = setTimeout(showSlides, 5000); // Change image every 5 seconds
-        pauseButton.innerHTML = '&#10074;&#10074;'; // Pause icon
+        searchBox.style.display = 'none';
     }
-}
-
-pauseButton.addEventListener("click", togglePause);
-
-// Initialize the button text
-pauseButton.innerHTML = '&#10074;&#10074;'; // Initially set to the Pause icon
-
-
-/* || mobile version menu */
-
-const mainMenu = document.querySelector(".mainMenu");
-const closeMenu = document.querySelector(".closeMenu");
-const openMenu = document.querySelector(".openMenu");
-const scrollBtn = document.querySelector(".scroll-top-btn");
-
-
-openMenu.addEventListener('click', show);
-closeMenu.addEventListener('click', close);
-
-
-function show(){
-    mainMenu.style.display = 'flex';
-    mainMenu.style.top = '0';
-    scrollBtn.style.display = 'none';
-}
-
-
-function close(){
-    mainMenu.style.top = '-100%';
-    scrollBtn.style.display = 'block';
-}
-
-
-
-
-
+});
