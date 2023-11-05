@@ -207,7 +207,7 @@ img{
 
 /* HERO SECTION */
 .hero-section{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)) ,url(../images/hero-1.JPG);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)) ,url(./img/hero-1.JPG);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -336,7 +336,7 @@ img{
     padding: 70px 100px;
     padding-left: 200px;
     margin-bottom: 70px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) ,url(../images/Adventist\ melody.JPG);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) ,url(./img/Adventist\ melody.JPG);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
