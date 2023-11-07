@@ -1,5 +1,0 @@
-{
-  "appService.defaultWebAppToDeploy": "undefined/subscriptions/d078db17-6da2-4a57-88ab-0593d516d9a9/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/kyusdaBackend",
-  "appService.deploySubpath": "server",
-  "liveServer.settings.port": 5501
-}
