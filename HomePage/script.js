@@ -49,18 +49,4 @@ function myFunction() {
 
 
 
-// Get the search icon and search box elements by their IDs
-const searchIcon = document.getElementById('search-icon');
-const searchBox = document.getElementById('search-box');
 
-// Add a click event listener to the search icon
-searchIcon.addEventListener('click', function() {
-    // Toggle the visibility of the search box
-    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
-        searchBox.style.display = 'inline';
-        // make the searchBox width be 100% of the parent element
-        searchBox.style.width = '100%';
-    } else {
-        searchBox.style.display = 'none';
-    }
-});

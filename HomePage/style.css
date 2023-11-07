@@ -411,31 +411,5 @@ img{
 
 
 
-/* Style the search icon */
-.fa-search {
-    font-size: 20px;
-    color: #555; /* Change the color to your preference */
-    cursor: pointer; /* Show pointer cursor when hovering over the icon */
-}
 
-/* Style the search box container */
-#search-box {
-    display: none; /* Initially hidden */
-    margin-top: 10px; /* Adjust the spacing as needed */
-    position: relative; /* Position relative to the icon */
-}
-
-/* Style the search input field */
-#search-input {
-    padding: 5px;
-    width: 200px; /* Adjust the width as needed */
-    border: 1px solid #ccc; /* Border style */
-    border-radius: 4px; /* Rounded corners */
-    outline: none; /* Remove default focus outline */
-}
-
-/* Style the search input field when focused */
-#search-input:focus {
-    border-color: #007BFF; /* Change the border color when focused */
-}
 
