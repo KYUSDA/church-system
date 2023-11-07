@@ -65,9 +65,7 @@ img{
 }
 
 .top-row-one{
-    /* background-color: #eee; */
     background-color: rgb(107,0,62);
-    /* background-color: #1f1f2c; */
     color: #fff;
     padding: 10px 100px;
     text-transform: uppercase;
@@ -122,7 +120,6 @@ img{
     background-color: #eee;
     padding: 20px 100px;
     text-transform: uppercase;
-    /* box shadow */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 
     display: flex;
@@ -138,12 +135,6 @@ img{
     top: 0;
     width: 100%
   }
-  
-  /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-  /* .sticky + .content {
-    padding-top: 102px;
-  } */
-
 
 
 /* logo */
@@ -234,7 +225,6 @@ img{
     text-transform: uppercase;
     text-align: center;
     color: #fff;
-    /* color: #1f1f2c; */
 }
 
 .hero-section p{
@@ -284,7 +274,6 @@ img{
     width: 250px;
     height: 200px;	
     text-transform: uppercase;
-    /* box shadow */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 
     display: flex;
@@ -325,7 +314,6 @@ img{
     font-size: 60px;
     font-weight: 400;
     color: rgb(107,0,62);
-    /* text-transform: uppercase; */
 }
 
 
@@ -356,13 +344,3 @@ img{
     font-weight: 400;
     margin: 20px 0 40px 0;
 }
-
-
-
-
-
-
-
-
-
-
