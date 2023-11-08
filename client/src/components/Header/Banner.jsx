@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 const Banner = () => {
     return (
-        <div className="hero-section">
+        <div className='hero-section'>
             <div className="hero-text">
                 <h1>WELCOME TO KYUSDA CHURCH</h1>
                 <p>

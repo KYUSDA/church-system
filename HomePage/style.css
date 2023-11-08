@@ -199,16 +199,17 @@ img{
 /* HERO SECTION */
 .hero-section{
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)) ,url(./img/hero-1.JPG);
-    background-size: cover;
+    
+    /* background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    min-height: 82vh;
+    background-repeat: no-repeat; */
+    /* min-height: 82vh; */
 
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    position: relative;
+    position: relative; */
 }
 
 .hero-text{

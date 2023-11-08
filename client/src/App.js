@@ -17,7 +17,7 @@ import Banner from "./components/Header/Banner";
 const App = () => (
   <div className="app">
     <Navbar />
-    {/* <Banner /> */}
+    <Banner />
     {/* <Slideshow /> */}
     {/* <Header /> */}
     <About />
