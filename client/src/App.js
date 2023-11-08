@@ -13,18 +13,20 @@ import {
 import { Navbar } from "./components";
 import Slideshow from "./components/SlideShow/Slideshow";
 import "./App.scss";
+import Banner from "./components/Header/Banner";
 const App = () => (
   <div className="app">
-    <Slideshow />
     <Navbar />
+    {/* <Banner /> */}
+    {/* <Slideshow /> */}
     {/* <Header /> */}
-    {/* <About /> */}
+    <About />
     <Leader />
-    <Departments />
-    <Families />
+    {/* <Departments />
+    <Families /> */}
     <Announcements />
     <Testimonial />
-    {/* <Kyusda /> */}
+    <Kyusda />
     {/* <Footer /> */}
     {/* New footer */}
   </div>

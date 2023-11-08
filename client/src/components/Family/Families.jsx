@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { motion } from 'framer-motion';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Families.scss';
 
-const   Families = () => {
+export const Families = () => {
   const [Families, setFamilies] = useState([]);
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
 
@@ -28,20 +28,22 @@ const   Families = () => {
       >
         {Families.map((family, index) => (
           <div className="app__work-item app__flex"
-           key={index}>
+            key={index}>
             <div
               className="app__work-img app__flex"
             >
               <img src={urlFor(family.imgUrl)}
-               alt={family.title} />
+                alt={family.title} />
               <motion.div
                 whileHover={{ opacity: [0, 1] }}
-                transition={{ duration: 0.25, ease: 'easeInOut', 
-                staggerChildren: 0.5 }}
+                transition={{
+                  duration: 0.25, ease: 'easeInOut',
+                  staggerChildren: 0.5
+                }}
                 className="app__work-hover app__flex"
               >
                 <Link to={`/${family.link}`}
-                rel="noreferrer">
+                  rel="noreferrer">
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
                     whileHover={{ scale: [1, 0.90] }}
@@ -57,12 +59,12 @@ const   Families = () => {
             <div className="app__work-content app__flex">
               <h4 className="bold-text">
                 {family.title}</h4>
-              <p className="p-text" 
-              style={{ marginTop: 10 }}>
+              <p className="p-text"
+                style={{ marginTop: 10 }}>
                 {family.description}</p>
               <div className="app__work-tag app__flex">
                 <p className="p-text">
-                    {family.tags[0]}</p>
+                  {family.tags[0]}</p>
               </div>
             </div>
           </div>
@@ -72,8 +74,4 @@ const   Families = () => {
   );
 };
 
-export default AppWrap(
-  MotionWrap(Families, 'app__works'),
-  'families',
-  'app__whitebg',
-);
+export default Families

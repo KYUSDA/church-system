@@ -1,194 +1,130 @@
-import {
-    AppBar,
-    Toolbar,
-    Typography,
-    makeStyles,
-    Button,
-    IconButton,
-    Drawer,
-    MenuItem,
-  } from "@material-ui/core";
-  import MenuIcon from "@material-ui/icons/Menu";
-  import React, { useState, useEffect } from "react";
+import { Typography } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-  import Cookies from 'universal-cookie';
-  import { useLogout } from "../../hooks/userLogouthook";
-  import { useAuthContext } from "../../context/useAuthcontext";
-  import './Navbar.scss';
-  import { HiMenuAlt4, HiX } from 'react-icons/hi';
-import { motion } from 'framer-motion';
+import Cookies from "universal-cookie";
+import { useLogout } from "../../hooks/userLogouthook";
+import { useAuthContext } from "../../context/useAuthcontext";
+import "./Navbar.scss";
+import { HiMenuAlt4, HiX } from "react-icons/hi";
+import { motion } from "framer-motion";
 import Kyusda from "../../assets/kyusda logo.png";
-  
-  const headersData = [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-    label:'Families',
-    href:'families'
-    },
-    {
-      label:'Departments',
-      href:'departments'
-    },
-    {
-      label:"Announcements",
-      href:"/#announcements"
-    },
-    {
-      label: "Member",
-      href: "/signin",
-    }
-  ];
-  
-  const useStyles = makeStyles(() => ({
-    header: {
-      backgroundColor: "green",
-      paddingRight: "79px",
-      paddingLeft: "118px",
-      "@media (max-width: 900px)": {
-        paddingLeft: 0,
-      },
-    },
-    logo: {
-      fontFamily: "Work Sans, sans-serif",
-      fontWeight: 600,
-      color: "#FFFEFE",
-      textAlign: "left",
-    },
-    menuButton: {
-      fontFamily: "Open Sans, sans-serif",
-      fontWeight: 700,
-      size: "18px",
-      marginLeft: "38px",
-    },
-    toolbar: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    drawerContainer: {
-      padding: "20px 30px",
-    },
-    logOut:{
-      color: 'crimson',
-      border: '2px solid crimson',
-      padding: '6px 10px',
-      borderRadius: '4px',
-      fontFamily: "Poppins",
-      cursor: 'pointer',
-      fontSize: '1em'
-    }
-  }));
+import "../../style.css";
+import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
 
-  
 const Header = () => {
-  const classes = useStyles();
   const [toggle, setToggle] = useState(false);
-    const {user} = useAuthContext();
-     const {logout} = useLogout();
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
 
-         const handleLogout = ()=>{
-      console.log('logged out');
-      logout()
-    }
-     const logOutbutton = (
-  <Typography  onClick={()=>handleLogout()}>
-  LOGOUT
-  </Typography>
-)
+  const handleLogout = () => {
+    console.log("logged out");
+    logout();
+  };
+  const logOutbutton = (
+    <Typography onClick={() => handleLogout()}>LOGOUT</Typography>
+  );
   return (
-    <nav className="app__navbar">
-      <div className="app__navbar-logo">
-        <img src={Kyusda} alt="logo"  style={{height:'60px'}}/>
+    <header id="main-header">
+      <div className="rows">
+        <div className="top-row-one">
+          <div className="social-links">
+            <a
+              href="https://www.facebook.com/KYUSDANewYork/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaFacebookSquare
+                style={{
+                  color: "white",
+                  borderRadius: "50%",
+                  width: "30px",
+                  height: "40px",
+                }}
+              />
+            </a>
+            <a href="https://twitter/kyusda/" target="_blank" rel="noreferrer">
+              <FaTwitter
+                style={{
+                  color: "white",
+                  borderRadius: "50%",
+                  width: "30px",
+                  height: "40px",
+                }}
+              />
+            </a>
+            <a
+              href="https://www.youtube.com/@kyusdachurch"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaYoutube
+                style={{
+                  color: "white",
+                  borderRadius: "50%",
+                  width: "30px",
+                  height: "40px",
+                }}
+              />
+            </a>
+          </div>
+          <div className="upcoming-events">
+            <p>Upcoming Event</p>
+            <p id="countdown">
+              <span id="days">00</span> <br />
+              <span id="hours">00</span>
+              <span id="mins">00</span>
+              <span id="secs">00</span>
+            </p>
+            <Link to="#events">READ MORE</Link>
+          </div>
+          <div className="register-btn">
+            <Link to="/signUp" style={{ marginRight: "20px" }}>
+              Register Membership
+            </Link>
+            <Link to="/signIn">Login</Link>
+          </div>
+        </div>
+        <div className="top-row-two">
+          <div className="logo">
+            <a href="index.html">
+              <img src="img/kyusdalogo.png" alt="kyusda logo" />
+              <span>KYUSDA CHURCH</span>
+            </a>
+          </div>
+          <div className="nav-links">
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/families">Families</Link>
+              </li>
+              <li>
+                <Link to="/departments">Departments</Link>
+              </li>
+            </ul>
+          </div>
+          <div class="donate-btn">
+            <Link to="/donation">Send Donation</Link>
+          </div>
+        </div>
       </div>
-      {
-user && (
-  <ul className="app__navbar-links">
-  {['home', 'about', 'families', 'departments', 'announcements','testimonial'].map((item) => (
-    <li className="app__flex p-text" key={`link-${item}`}>
-      <div />
-      <a href={`#${item}`}>{item}</a>
-    </li>
-  ))}
-  <p>{user.email}</p>
-  <p className={classes.logOut}>{logOutbutton}</p>
-  <button style={{
-  backgroundColor:'transparent', color:'crimson', padding:'15px',
-  fontSize:'15px',textDecoration:'none',marginLeft:'5px'}}>
-  <Link to='/member'>Member</Link>
-  </button>
-</ul>
-)
-}
-{
-!user && (
-  <ul className="app__navbar-links">
-  {['home', 'about', 'families', 'departments', 'announcements','testimonial'].map((item) => (
-    <li className="app__flex p-text" key={`link-${item}`}>
-      <div />
-      <a href={`#${item}`}>{item}</a>
-    </li>
-  ))}
-  <Link 
-   to='/signIn'
-   rel="noreferrer"
-   style={{color:"blue",fontSize:"20px",fontWeight:"bolder",textDecoration:"none",
-   width:'auto',backgroundColor:"red"}}>
-  Member</Link>
-</ul>
-)
-}
-
-
-
-      <div className="app__navbar-menu">
-        <HiMenuAlt4 onClick={() => setToggle(true)} />
-
-        {toggle && (
-          <motion.div
-            whileInView={{ x: [300, 0] }}
-            transition={{ duration: 0.85, ease: 'easeOut' }}
-          >
-            <HiX onClick={() => setToggle(false)} />
-            {
-user && (
-  <ul className="app__navbar-links">
-  {['home', 'about', 'families', 'departments', 'announcements','testimonial'].map((item) => (
-    <li className="app__flex p-text" key={`link-${item}`}>
-      <div />
-      <a href={`#${item}`}>{item}</a>
-    </li>
-  ))}
-  <p>{user.email}</p>
-  <p className={classes.logOut}>{logOutbutton}</p>
-</ul>
-)
-}
-{
-!user && (
-  <ul className="app__navbar-links">
-  {['home', 'about', 'families', 'departments', 'announcements','testimonial'].map((item) => (
-    <li className="app__flex p-text" key={`link-${item}`}>
-      <div />
-      <a href={`#${item}`}>{item}</a>
-    </li>
-  ))}
-  <Link 
-   to='/signIn'
-   rel="noreferrer"
-   style={{color:"blue",fontSize:"20px",fontWeight:"bolder",textDecoration:"none",width:'auto',
-   backgroundColor:"red"}}>
-  Member</Link>
-</ul>
-)
-}
-          </motion.div>
-        )}
+      <div className="hero-section">
+        <div className="hero-text">
+          <h1>WELCOME TO KYUSDA CHURCH</h1>
+          <p>
+            Christ was a Seventh-Day Adventist,
+            <br /> to all intents and purposes. <br />
+            (Medical Ministry 49.4)
+          </p>
+          <Link to="/about-section">
+            About Us <i class="fa fa-angle-down"></i>
+          </Link>
+        </div>
       </div>
-    </nav>
+    </header>
   );
 };
 
 export default Header;
-
