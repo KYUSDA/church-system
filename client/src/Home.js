@@ -23,26 +23,29 @@ import Development from "./components/Details/Development";
 import Nurture from "./components/Details/Nurture";
 import Chaplaincy from "./components/Details/Chaplaincy";
 import Alo from "./components/Details/Alo";
-import DiasporaA from "./components/Family/DiasporaA/DiasporaA";
-import DiaspoaraB from "./components/Family/DiasporaB/DiasporaA";
-import AroundschoolA from "./components/Family/AroundschoolA/AroundA";
-import AroundschoolB from "./components/Family/AroundschoolB/AroundschoolB";
-import Elegant from "./components/Family/Elegant/elegant";
-import Mjini from "./components/Family/Mjini/Mjini";
-import Waterfall from "./components/Family/Waterfall/Waterfall";
-import Ack from "./components/Family/Ack/Ack";
-import Ngomongo from "./components/Family/Ngomongo/Ngomongo";
-import Upperkutus from "./components/Family/UpperKutus/Upperkutus";
-import Kibugi from "./components/Family/Kibugi/Kibugi";
-import Penri from "./components/Family/Penri/Penri";
-import GardenEstate from "./components/Family/GardenEstate/GardenEstate";
-import Kanjata from "./components/Family/Kanjata/Kanjata";
+// import DiasporaA from "./components/Family/DiasporaA/DiasporaA";
+// import DiaspoaraB from "./components/Family/DiasporaB/DiasporaA";
+// import AroundschoolA from "./components/Family/AroundschoolA/AroundA";
+// import AroundschoolB from "./components/Family/AroundschoolB/AroundschoolB";
+// import Elegant from "./components/Family/Elegant/elegant";
+// import Mjini from "./components/Family/Mjini/Mjini";
+// import Waterfall from "./components/Family/Waterfall/Waterfall";
+// import Ack from "./components/Family/Ack/Ack";
+// import Ngomongo from "./components/Family/Ngomongo/Ngomongo";
+// import Upperkutus from "./components/Family/UpperKutus/Upperkutus";
+// import Kibugi from "./components/Family/Kibugi/Kibugi";
+// import Penri from "./components/Family/Penri/Penri";
+// import GardenEstate from "./components/Family/GardenEstate/GardenEstate";
+// import Kanjata from "./components/Family/Kanjata/Kanjata";
 import Publishing from "./components/Details/Publishing.jsx";
 import Deaconry from "./components/Details/Deaconry";
 import MembersDashboard from "./components/Member/MembersDashboard";
 import Families from "./components/Families";
+import Departments from "./components/Departments";
+import SingleFamily from "./components/Family/SingleFamily/SingleFamily";
 const Home = () => {
-  const { user } = useAuthContext();
+  // const { user } = useAuthContext();
+  const user = false;
   return (
     <Routes>
       <Route path="/" element={<Mainpage />}></Route>
@@ -55,17 +58,18 @@ const Home = () => {
         path="/signIn"
         element={!user ? <SignInSide /> : <Navigate to="/member" />}
       ></Route>
-      <Route
+      {/* <Route
         path="/resetToken"
         element={!user ? <ResetInSide /> : <SignInSide />}
-      ></Route>
+      ></Route> */}
       <Route path="/resetPassword" element={<Newpassword />}></Route>
-      <Route
+      {/* <Route
         path="/member"
         element={user ? <MembersDashboard /> : <Navigate to="/signIn" />}
-      ></Route>
+      ></Route> */}
       <Route path="/families" element={<Families />}></Route>
-      {/* <Route path="/Departments" element={<Departments />}></Route> */}
+      <Route path="/families/:id" element={<SingleFamily />} />
+      <Route path="/Departments" element={<Departments />}></Route>
       <Route path="/health" element={<Health />}></Route>
       <Route path="/elders" element={<Elders />} />
       <Route />
@@ -82,20 +86,20 @@ const Home = () => {
       <Route path="/NRT" element={<Nurture />}></Route>
       <Route path="/chaplaincy" element={<Chaplaincy />}></Route>
       <Route path="/Alo" element={<Alo />}></Route>
-      <Route path="/DiasporaA" element={<DiasporaA />}></Route>
+      {/* <Route path="/DiasporaA" element={<DiasporaA />}></Route>
       <Route path="/DiasporaB" element={<DiaspoaraB />}></Route>
       <Route path="/Around School A" element={<AroundschoolA />}></Route>
       <Route path="/Around School B" element={<AroundschoolB />}></Route>
-      <Route path="/elegant" element={<Elegant />}></Route>
-      <Route path="/mjini" element={<Mjini />}></Route>
+      <Route path="/elegant" element={<Elegant />}></Route> */}
+      {/* <Route path="/mjini" element={<Mjini />}></Route>
       <Route path="/waterfall" element={<Waterfall />}></Route>
-      <Route path="/Ack" element={<Ack />}></Route>
-      <Route path="/ngomongo" element={<Ngomongo />}></Route>
+      <Route path="/Ack" element={<Ack />}></Route> */}
+      {/* <Route path="/ngomongo" element={<Ngomongo />}></Route>
       <Route path="/upperkutus" element={<Upperkutus />}></Route>
       <Route path="/kibugi" element={<Kibugi />}></Route>
       <Route path="/Penri" element={<Penri />}></Route>
       <Route path="/Gardenestate" element={<GardenEstate />}></Route>
-      <Route path="/kanjata" element={<Kanjata />}></Route>
+      <Route path="/kanjata" element={<Kanjata />}></Route> */}
       <Route path="/publishing" element={<Publishing />}></Route>
       <Route path="/deaconry" element={<Deaconry />}></Route>
       <Route path="/membersDashboard" element={<MembersDashboard />} />

@@ -5,32 +5,38 @@ import { Link } from 'react-router-dom';
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Families.scss';
-
+import { getAllFamilies } from '../../redux/apicall';
+import { useSelector, useDispatch } from 'react-redux';
 export const Families = () => {
   const [Families, setFamilies] = useState([]);
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    console.log('get families');
     const query = '*[_type == "families"]';
     client.fetch(query).then((data) => {
       setFamilies(data);
+      console.log(data);
+      getAllFamilies(dispatch, data);
     });
   }, []);
 
   return (
-    <>
+    <div>
       <h2 className="head-text">Our <span>
         Families</span> Section</h2>
       <motion.div
         animate={animateCard}
         transition={{ duration: 0.5, delayChildren: 0.5 }}
         className="app__work-portfolio"
+        style={{ marginBottom: "120px" }}
       >
         {Families.map((family, index) => (
           <div className="app__work-item app__flex"
-            key={index}>
+            key={index} >
             <div
               className="app__work-img app__flex"
+
             >
               <img src={urlFor(family.imgUrl)}
                 alt={family.title} />
@@ -41,8 +47,9 @@ export const Families = () => {
                   staggerChildren: 0.5
                 }}
                 className="app__work-hover app__flex"
+
               >
-                <Link to={`/${family.link}`}
+                <Link to={`/families/${family._id}`}
                   rel="noreferrer">
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
@@ -57,7 +64,7 @@ export const Families = () => {
             </div>
 
             <div className="app__work-content app__flex">
-              <h4 className="bold-text">
+              <h4 className="bold-text" >
                 {family.title}</h4>
               <p className="p-text"
                 style={{ marginTop: 10 }}>
@@ -70,7 +77,7 @@ export const Families = () => {
           </div>
         ))}
       </motion.div>
-    </>
+    </div>
   );
 };
 

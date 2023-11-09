@@ -1,13 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
-import  Header from './Header'
+import Header from './Header'
 function Navbar() {
-    return (
-      <div className="App">
-        <Header/>
-      </div>
-    );
+  return (
+    <div className="App">
+      <Header />
+    </div>
+  );
 
 }
 

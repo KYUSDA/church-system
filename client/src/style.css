@@ -55,7 +55,7 @@ img{
 /* ||HEADER */
 #main-header{
     background-color: #fff;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     overflow: hidden;
 }
 
