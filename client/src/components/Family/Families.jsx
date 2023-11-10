@@ -15,8 +15,8 @@ export const Families = () => {
     console.log('get families');
     const query = '*[_type == "families"]';
     client.fetch(query).then((data) => {
-      setFamilies(data);
       console.log(data);
+      setFamilies(data);
       getAllFamilies(dispatch, data);
     });
   }, []);

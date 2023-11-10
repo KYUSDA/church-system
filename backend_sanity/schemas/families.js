@@ -46,20 +46,27 @@ export default {
         {
           name: "leader",
           title: "Leader",
-          type: "string",
-        },
-        {
-          name: "leaderUrl",
-          title: "LeaderUrl",
-          type: "image",
-          options: {
-            hotspot: true,
-          },
-        },
-        {
-          name: "description",
-          title: "Description",
-          type: "string",
+          type: "object",
+          fields: [
+            {
+              name: "name",
+              title: "Name",
+              type: "string",
+            },
+            {
+              name: "leaderUrl",
+              title: "LeaderUrl",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+            },
+            {
+              name: "description",
+              title: "Description",
+              type: "string",
+            },
+          ],
         },
       ],
     },
@@ -71,20 +78,27 @@ export default {
         {
           name: "member",
           title: "Member",
-          type: "string",
-        },
-        {
-          name: "memberUrl",
-          title: "MemberUrl",
-          type: "image",
-          options: {
-            hotspot: true,
-          },
-        },
-        {
-          name: "description",
-          title: "Description",
-          type: "string",
+          type: "object",
+          fields: [
+            {
+              name: "name",
+              title: "Name",
+              type: "string",
+            },
+            {
+              name: "memberUrl",
+              title: "MemberUrl",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+            },
+            {
+              name: "description",
+              title: "Description",
+              type: "string",
+            },
+          ],
         },
       ],
     },
