@@ -11,15 +11,24 @@ export const Families = () => {
   const [Families, setFamilies] = useState([]);
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
   const dispatch = useDispatch();
+
+  function findUniqueById(dataArray) {
+    // Use filter to get only items with unique ids
+    const uniqueItems = dataArray.filter((item, index, array) => {
+      return array.findIndex((otherItem) => otherItem.title === item.title) === index;
+    });
+    return uniqueItems;
+  }
+
   useEffect(() => {
-    console.log('get families');
     const query = '*[_type == "families"]';
     client.fetch(query).then((data) => {
-      console.log(data);
-      setFamilies(data);
+      const familyData = findUniqueById(data);
+      setFamilies(familyData);
       getAllFamilies(dispatch, data);
     });
   }, []);
+
 
   return (
     <div>
