@@ -13,9 +13,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageSide from '../../assets/kyusdachurch.jpg'
-import {useState} from 'react'
-import {useLogin} from '../../hooks/userLoginhook'
-import {useAuthContext} from '../../context/useAuthcontext'
+import { useState } from 'react'
+import { useLogin } from '../../hooks/userLoginhook'
+import { useAuthContext } from '../../context/useAuthcontext'
+import Header from '../Navbar/Header';
+import MainFooter from '../Footer/MainFooter';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,22 +33,22 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const SignInSide = ()=>{
-  const [email,setemail] = useState('');
-  const [password,setpassword] = useState('');
-  const {user} = useAuthContext()
+const SignInSide = () => {
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  const { user } = useAuthContext();
   // console.log(user.email);
-const {login,error,loading} = useLogin();
-  const handleSubmit = async(event) => {
+  const { login, error, loading } = useLogin();
+  const handleSubmit = async (event) => {
     setemail('');
     setpassword('')
     event.preventDefault();
-    console.log(email,password);
- await login(email,password)
+    await login(email, password)
   };
 
   return (
     <ThemeProvider theme={theme}>
+      <Header />
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -87,7 +89,7 @@ const {login,error,loading} = useLogin();
                 id="email"
                 label="Email Address"
                 value={email}
-                onChange={(e)=>setemail(e.target.value)}
+                onChange={(e) => setemail(e.target.value)}
                 autoComplete="email"
                 autoFocus
               />
@@ -100,7 +102,7 @@ const {login,error,loading} = useLogin();
                 id="password"
                 autoComplete="current-password"
                 value={password}
-                onChange={(e)=>setpassword(e.target.value)}
+                onChange={(e) => setpassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

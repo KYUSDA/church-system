@@ -12,51 +12,54 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState} from 'react'
+import { useState } from 'react'
 import { UNSAFE_DataRouterStateContext } from 'react-router-dom';
+import Header from '../Navbar/Header';
+import MainFooter from '../Footer/MainFooter';
 import { useSignup } from '../../hooks/userSignuphook';
 function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="/">
-          KYUSDA
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-    }
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="/">
+        KYUSDA
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const theme = createTheme();
-const SignUp = ()=>{
-    const [firstName,setfirstName] = useState();
-    const [lastName,setlastName] = useState();
-    const [registration,setregistration] = useState();
-    const [email,setemail] = useState();
-    const [course,setcourse] = useState();
-    const [year,setyear] = useState();
-    const [password,setpassword] = useState();
-    const [passwordConfirm,setpasswordConfirm] = useState();
+const SignUp = () => {
+  const [firstName, setfirstName] = useState();
+  const [lastName, setlastName] = useState();
+  const [registration, setregistration] = useState();
+  const [email, setemail] = useState();
+  const [course, setcourse] = useState();
+  const [year, setyear] = useState();
+  const [password, setpassword] = useState();
+  const [passwordConfirm, setpasswordConfirm] = useState();
 
-    const {signup,loading,error} = useSignup();
-    const handleSubmit = async(event) => {
-      console.log(firstName)
-        event.preventDefault();
-        setfirstName('');
-        setlastName('');
-        setregistration('');
-        setemail('');
-        setcourse('');
-        setyear('');
-        setpassword('');
+  const { signup, loading, error } = useSignup();
+  const handleSubmit = async (event) => {
+    console.log(firstName)
+    event.preventDefault();
+    setfirstName('');
+    setlastName('');
+    setregistration('');
+    setemail('');
+    setcourse('');
+    setyear('');
+    setpassword('');
     setpasswordConfirm('');
-    await signup(firstName,lastName,registration,email,course
-      ,year,password,
+    await signup(firstName, lastName, registration, email, course
+      , year, password,
       passwordConfirm)
-      };
-return(
+  };
+  return (
     <ThemeProvider theme={theme}>
+      <Header />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -83,7 +86,7 @@ return(
                   id="firstName"
                   label="First Name"
                   value={firstName}
-                  onChange={(e)=>setfirstName(e.target.value)}
+                  onChange={(e) => setfirstName(e.target.value)}
                   autoFocus
                 />
               </Grid>
@@ -94,7 +97,7 @@ return(
                   id="lastName"
                   label="Last Name"
                   value={lastName}
-                  onChange={(e)=>setlastName(e.target.value)}
+                  onChange={(e) => setlastName(e.target.value)}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -105,7 +108,7 @@ return(
                   id="email"
                   label="Email Address"
                   value={email}
-                  onChange={(e)=>setemail(e.target.value)}
+                  onChange={(e) => setemail(e.target.value)}
                   autoComplete="email"
                 />
               </Grid>
@@ -116,7 +119,7 @@ return(
                   id="registration"
                   label='Registration'
                   value={registration}
-                  onChange={(e)=>setregistration(e.target.value)}
+                  onChange={(e) => setregistration(e.target.value)}
                   autoComplete="registration"
                 />
               </Grid>
@@ -127,7 +130,7 @@ return(
                   id="course"
                   label="Course"
                   value={course}
-                  onChange={(e)=>setcourse(e.target.value)}
+                  onChange={(e) => setcourse(e.target.value)}
                   autoComplete="course"
                 />
               </Grid>
@@ -138,7 +141,7 @@ return(
                   id="year"
                   label="Year"
                   value={year}
-                  onChange={(e)=>setyear(e.target.value)}
+                  onChange={(e) => setyear(e.target.value)}
                   autoComplete="year"
                 />
               </Grid>
@@ -150,7 +153,7 @@ return(
                   type="password"
                   id="password"
                   value={password}
-                 onChange={(e)=>setpassword(e.target.value)}
+                  onChange={(e) => setpassword(e.target.value)}
                   autoComplete="new-password"
                 />
               </Grid>
@@ -162,13 +165,13 @@ return(
                   type="password"
                   id="passwordconfirm"
                   value={passwordConfirm}
-                 onChange={(e)=>setpasswordConfirm(e.target.value)}
+                  onChange={(e) => setpasswordConfirm(e.target.value)}
                   autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox 
+                  control={<Checkbox
                     value="allowExtraEmails" color="primary" />}
                   label="Accept policy set at Kyusda"
                 />
@@ -195,7 +198,10 @@ return(
         <Copyright sx={{ mt: 5 }} />
       </Container>
       {error && <div>{error}</div>}
+      <div style={{ marginTop: "40px" }}>
+        <MainFooter />
+      </div>
     </ThemeProvider>
-)
+  )
 }
 export default SignUp

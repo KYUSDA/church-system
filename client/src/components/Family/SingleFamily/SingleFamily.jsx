@@ -11,7 +11,6 @@ const SingleFamily = () => {
     const family = useSelector((state) => state?.families?.families).find((family) => family?._id == familyId);
     return (
         <div>
-
             <div>
                 <Header />
                 <section className='breadcrumbs'>

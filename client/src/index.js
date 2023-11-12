@@ -12,13 +12,13 @@ import { PersistGate } from "redux-persist/integration/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    {/* <AuthContextProvider> */}
-    <Provider store={store}>
-      <PersistGate loading="null" persistor={persistor}>
-        <Home />
-      </PersistGate>
-    </Provider>
-    {/* </AuthContextProvider> */}
+    <AuthContextProvider>
+      <Provider store={store}>
+        <PersistGate loading="null" persistor={persistor}>
+          <Home />
+        </PersistGate>
+      </Provider>
+    </AuthContextProvider>
   </BrowserRouter>
 );
 reportWebVitals();

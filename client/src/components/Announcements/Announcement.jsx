@@ -15,9 +15,8 @@ const Announcements = () => {
 
   return (
     <>
-      <h2 className="head-text">Announcements</h2>
       {announcements.map((announce => (
-        <div className="app__testimonial-item app__flex">
+        <div className="app__testimonial-item app__flex" style={{ marginTop: "600px" }}>
           <img src={urlFor(announce.imageUrl)} alt={announce.name} />
           <div className="app__testimonial-content">
             <p className="p-text">{announce.announce}</p>
