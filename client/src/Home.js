@@ -14,7 +14,6 @@ import SingleFamily from "./components/Family/SingleFamily/SingleFamily";
 import DepartmentsDetails from "./components/Work/DepartmentsDetails";
 const Home = () => {
   const { user } = useAuthContext();
-  // const user = false;
   return (
     <Routes>
       <Route path="/" element={<Mainpage />}></Route>
