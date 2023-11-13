@@ -4,17 +4,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useLogout } from "../../hooks/userLogouthook";
-import { useAuthContext } from "../../context/useAuthcontext";
+// import { useAuthContext } from "../../context/useAuthcontext";
 import "./Navbar.scss";
 import { HiMenuAlt4, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
-import Kyusda from "../../assets/kyusda logo.png";
+import Kyusda from "../../assets/kyusdaLogo.png";
 import "../../style.css";
 import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
-  const { user } = useAuthContext();
+  // const { user } = useAuthContext();
   const { logout } = useLogout();
 
   const handleLogout = () => {
@@ -87,10 +87,10 @@ const Header = () => {
         </div>
         <div className="top-row-two">
           <div className="logo">
-            <a href="index.html">
-              <img src="img/kyusdalogo.png" alt="kyusda logo" />
+            <Link to="/">
+              <img src={Kyusda} alt="kyusda logo" />
               <span>KYUSDA CHURCH</span>
-            </a>
+            </Link>
           </div>
           <div className="nav-links">
             <ul>

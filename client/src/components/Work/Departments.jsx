@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { motion } from 'framer-motion';
-import {Link} from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Departments.scss';
-
+import { getAllDepartments } from '../../redux/apicall';
+import { useSelector, useDispatch } from 'react-redux';
+import './DepartmentDetails.css';
 const Departments = () => {
+  const dispatch = useDispatch();
   const [departments, setDepartments] = useState([]);
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
+
+  function findUniqueById(dataArray) {
+    // Use filter to get only items with unique ids
+    const uniqueItems = dataArray.filter((item, index, array) => {
+      return array.findIndex((otherItem) => otherItem.title === item.title) === index;
+    });
+    return uniqueItems;
+  }
 
   useEffect(() => {
     const query = '*[_type == "departments"]';
     client.fetch(query).then((data) => {
-      setDepartments(data);
+      const familyData = findUniqueById(data);
+      setDepartments(familyData);
+      getAllDepartments(dispatch, familyData);
     });
   }, []);
 
@@ -30,22 +42,24 @@ const Departments = () => {
 
         {departments.map((department, index) => (
           <div className="app__work-item app__flex"
-           key={index}>
+            key={index}>
             <div
               className="app__work-img app__flex"
             >
               <img src={urlFor(department.imgUrl)}
-               alt={department.title} />
+                alt={department.title} />
 
               <motion.div
                 whileHover={{ opacity: [0, 1] }}
-                transition={{ duration: 0.25, ease: 'easeInOut', 
-                staggerChildren: 0.5 }}
+                transition={{
+                  duration: 0.25, ease: 'easeInOut',
+                  staggerChildren: 0.5
+                }}
                 className="app__work-hover app__flex"
               >
-        <Link to={`/${department.link}`} 
-        rel="noreferrer"
-        >
+                <Link to={`/Departments/${department._id}`}
+                  rel="noreferrer"
+                >
                   <motion.div
                     whileInView={{ scale: [0, 1] }}
                     whileHover={{ scale: [1, 0.90] }}
