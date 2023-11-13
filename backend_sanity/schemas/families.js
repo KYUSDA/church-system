@@ -27,6 +27,14 @@ export default {
       },
     },
     {
+      name: "locationUrl",
+      title: "LocationUrl",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    },
+    {
       name: "tags",
       title: "Tags",
       type: "array",

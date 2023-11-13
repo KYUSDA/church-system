@@ -9,11 +9,14 @@ const SingleFamily = () => {
     const location = useLocation();
     const familyId = location.pathname.split('/')[2];
     const family = useSelector((state) => state?.families?.families).find((family) => family?._id == familyId);
+    console.log(family);
     return (
         <div>
             <div>
                 <Header />
-                <section className='breadcrumbs'>
+                <section className='imageContainer'>
+                    <img src={urlFor(family.imgUrl)}
+                        alt={family.title} />
                     <div className="breadcrumb-container">
                         <h2 className="hero-heading white">{family?.title?.toUpperCase()} FAMILY</h2>
                     </div>
@@ -27,6 +30,10 @@ const SingleFamily = () => {
                             {family?.description}
                         </p>
                     </div>
+                </section>
+                <section className="googleMap">
+                    <img src={urlFor(family?.locationUrl)}
+                        alt="family location" />
                 </section>
                 <section className="our-team">
                     <div className="container">

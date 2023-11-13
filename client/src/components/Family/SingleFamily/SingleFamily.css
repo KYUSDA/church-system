@@ -1,9 +1,19 @@
 .breadcrumbs{
-    background: linear-gradient(rgba(150, 60, 221, 0.1), rgba(17, 17, 69, 0.8)), url('../../../assets/area.jpg');
-	background-position: center top;
+    /* background: linear-gradient(rgba(150, 60, 221, 0.1), rgba(17, 17, 69, 0.8)), url('../../../assets/area.jpg'); */
+	/* background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover; */
+}
+.imageContainer{
+	height:800px;
+}
+.imageContainer img{
+	height:100%;
+	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
 .breadcrumb-container
 {
 	height: 34vh;
@@ -32,6 +42,7 @@
 	flex-direction: column;
 	gap: 4rem; */
 }
+
 .team-leader .leader-img
 {
 	border-radius: 500px 500px 500px 500px;
@@ -143,4 +154,16 @@
 	{
 		text-align: left;
 	}
+}
+.googleMap{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	margin:30px auto;
+	width:800px;
+	height:400px;
+}
+.googleMap img{
+width:100%;
+height:100%;
 }
