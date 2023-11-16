@@ -2,8 +2,8 @@ import React from 'react';
 import '../../style.css';
 const About = () => {
   return (
-    <main className='content'>
-      <section id='about-section' className='aboutDetails'>
+    <main id='content'>
+      <section id='about-section' className='about-us'>
         <div className='about-us-left'>
           <div className='left'>
             <img src="../../assets/dua-hands_84660.png" alt="" />
