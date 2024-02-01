@@ -1,0 +1,8 @@
+.hero-section{
+    position: relative;
+    background-image: url('../../assets/kyusdachurch.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+}

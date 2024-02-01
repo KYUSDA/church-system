@@ -18,17 +18,11 @@ const App = () => (
   <div className="app">
     <Navbar />
     <Banner />
-    {/* <Slideshow /> */}
-    {/* <Header /> */}
     <About />
     <Leader />
-    {/* <Departments />
-    <Families /> */}
     <Announcements />
     <Testimonial />
     <Kyusda />
-    {/* <Footer /> */}
-    {/* New footer */}
   </div>
 );
 
