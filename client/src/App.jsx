@@ -1,17 +1,13 @@
 import React from "react";
 import {
   About,
-  Footer,
-  Header,
   Testimonial,
-  Departments,
-  Families,
   Announcements,
-  Kyusda,
+  KyuSda,
   Leader,
 } from "./container/index";
 import { Navbar } from "./components";
-import Slideshow from "./components/SlideShow/Slideshow";
+//import Slideshow from "./components/SlideShow/Slideshow";
 import "./App.scss";
 import Banner from "./components/Header/Banner";
 const App = () => (
@@ -22,7 +18,7 @@ const App = () => (
     <Leader />
     <Announcements />
     <Testimonial />
-    <Kyusda />
+    <KyuSda />
   </div>
 );
 

@@ -1,29 +1,11 @@
-import { Typography } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
-import { useLogout } from "../../hooks/userLogouthook";
-// import { useAuthContext } from "../../context/useAuthcontext";
 import "./Navbar.scss";
-import { HiMenuAlt4, HiX } from "react-icons/hi";
-import { motion } from "framer-motion";
-import Kyusda from "../../assets/kyusdaLogo.png";
+import KyuSda from "../../assets/kyusdaLogo.png";
 import "../../style.css";
 import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
 
 const Header = () => {
-  const [toggle, setToggle] = useState(false);
-  // const { user } = useAuthContext();
-  const { logout } = useLogout();
-
-  const handleLogout = () => {
-    console.log("logged out");
-    logout();
-  };
-  const logOutbutton = (
-    <Typography onClick={() => handleLogout()}>LOGOUT</Typography>
-  );
   return (
     <header id="main-header">
       <div className="rows">
@@ -88,7 +70,7 @@ const Header = () => {
         <div className="top-row-two">
           <div className="logo">
             <Link to="/">
-              <img src={Kyusda} alt="kyusda logo" />
+              <img src={KyuSda} alt="kyusda logo" />
               <span>KYUSDA CHURCH</span>
             </Link>
           </div>
