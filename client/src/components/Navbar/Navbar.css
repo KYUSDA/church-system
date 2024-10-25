@@ -24,9 +24,6 @@
 }
 .banner{
    text-align: center;
-   background-image: url('../../assets/pexels-pixabay-164634.jpg');
-   background-size: cover;
-   background-position: center;
    height:100vh;
 }
 .content{

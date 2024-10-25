@@ -14,10 +14,9 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageSide from '../../assets/kyusdachurch.jpg'
 import { useState } from 'react'
-import { useLogin } from '../../hooks/userLoginhook'
+import { useLogin } from '../../hooks/userLoginHook'
 import { useAuthContext } from '../../context/useAuthcontext'
 import Header from '../Navbar/Header';
-import MainFooter from '../Footer/MainFooter';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -34,14 +33,13 @@ function Copyright(props) {
 const theme = createTheme();
 
 const SignInSide = () => {
-  const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { user } = useAuthContext();
-  // console.log(user.email);
   const { login, error, loading } = useLogin();
   const handleSubmit = async (event) => {
-    setemail('');
-    setpassword('')
+    setEmail('');
+    setPassword('')
     event.preventDefault();
     await login(email, password)
   };
@@ -89,7 +87,7 @@ const SignInSide = () => {
                 id="email"
                 label="Email Address"
                 value={email}
-                onChange={(e) => setemail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
                 autoFocus
               />
@@ -102,7 +100,7 @@ const SignInSide = () => {
                 id="password"
                 autoComplete="current-password"
                 value={password}
-                onChange={(e) => setpassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

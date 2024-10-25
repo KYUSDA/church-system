@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Families.scss';
 import { getAllFamilies } from '../../redux/apicall';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 export const Families = () => {
   const [Families, setFamilies] = useState([]);
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });

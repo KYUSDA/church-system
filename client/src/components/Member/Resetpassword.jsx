@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function Copyright(props) {
@@ -33,36 +33,36 @@ const theme = createTheme();
 
 export default function Newpassword() {
   const nav = useNavigate();
-const [password,setpassword] = useState('');
-const [passwordConfirm,setpasswordConfirm] = useState('');
-const [token,setToken] = useState('');
-useEffect(()=>{
-const getToken = ()=>{
-const tk = localStorage.getItem("Reset token");
-setToken(tk);
-}
-getToken();
-},[])
-const handleSubmit = async(event) => {
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    const getToken = () => {
+      const tk = localStorage.getItem("Reset token");
+      setToken(tk);
+    }
+    getToken();
+  }, [])
+  const handleSubmit = async (event) => {
     //get token from the email
-event.preventDefault();
-    setpassword('');
-    setpasswordConfirm('');
+    event.preventDefault();
+    setPassword('');
+    setPasswordConfirm('');
     console.log(token);
- const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetPassword/${token}`;
- console.log(url);
- const resp = await fetch(url,{
-  method:'PATCH',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({password,passwordConfirm})
- })
- const data = await resp.json();
-console.log(data);
-if(data.status === 'success'){
-  alert(`${data.message}`);
-}else{
-  console.log(data.err);
-}
+    const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetPassword/${token}`;
+    console.log(url);
+    const resp = await fetch(url, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, passwordConfirm })
+    })
+    const data = await resp.json();
+    console.log(data);
+    if (data.status === 'success') {
+      alert(`${data.message}`);
+    } else {
+      console.log(data.err);
+    }
 
   };
 
@@ -112,7 +112,7 @@ if(data.status === 'success'){
                 value={password}
                 autoComplete="password"
                 autoFocus
-                onChange={(e)=>{setpassword(e.target.value)}}
+                onChange={(e) => { setPassword(e.target.value) }}
               />
               <TextField
                 margin="normal"
@@ -124,7 +124,7 @@ if(data.status === 'success'){
                 id="passwordConfirm"
                 value={passwordConfirm}
                 autoComplete="current-password"
-                onChange={(e)=>{setpasswordConfirm(e.target.value)}}
+                onChange={(e) => { setPasswordConfirm(e.target.value) }}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
