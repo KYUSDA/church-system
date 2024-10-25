@@ -9,7 +9,6 @@ const SingleFamily = () => {
     const location = useLocation();
     const familyId = location.pathname.split('/')[2];
     const family = useSelector((state) => state?.families?.families).find((family) => family?._id == familyId);
-    console.log(family);
     return (
         <div>
             <div>

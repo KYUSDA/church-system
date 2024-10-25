@@ -16,7 +16,7 @@ import { useState } from 'react'
 import { UNSAFE_DataRouterStateContext } from 'react-router-dom';
 import Header from '../Navbar/Header';
 import MainFooter from '../Footer/MainFooter';
-import { useSignup } from '../../hooks/userSignuphook';
+import { useSignUp } from '../../hooks/userSignUpHook';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -32,27 +32,26 @@ function Copyright(props) {
 
 const theme = createTheme();
 const SignUp = () => {
-  const [firstName, setfirstName] = useState();
-  const [lastName, setlastName] = useState();
-  const [registration, setregistration] = useState();
-  const [email, setemail] = useState();
-  const [course, setcourse] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [registration, setRegistration] = useState();
+  const [email, setEmail] = useState();
+  const [course, setCourse] = useState();
   const [year, setyear] = useState();
-  const [password, setpassword] = useState();
-  const [passwordConfirm, setpasswordConfirm] = useState();
+  const [password, setPassword] = useState();
+  const [passwordConfirm, setPasswordConfirm] = useState();
 
-  const { signup, loading, error } = useSignup();
+  const { signup, loading, error } = useSignUp();
   const handleSubmit = async (event) => {
-    console.log(firstName)
     event.preventDefault();
-    setfirstName('');
-    setlastName('');
-    setregistration('');
-    setemail('');
-    setcourse('');
+    setFirstName('');
+    setLastName('');
+    setRegistration('');
+    setEmail('');
+    setCourse('');
     setyear('');
-    setpassword('');
-    setpasswordConfirm('');
+    setPassword('');
+    setPasswordConfirm('');
     await signup(firstName, lastName, registration, email, course
       , year, password,
       passwordConfirm)
@@ -86,7 +85,7 @@ const SignUp = () => {
                   id="firstName"
                   label="First Name"
                   value={firstName}
-                  onChange={(e) => setfirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   autoFocus
                 />
               </Grid>
@@ -97,7 +96,7 @@ const SignUp = () => {
                   id="lastName"
                   label="Last Name"
                   value={lastName}
-                  onChange={(e) => setlastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value)}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -108,7 +107,7 @@ const SignUp = () => {
                   id="email"
                   label="Email Address"
                   value={email}
-                  onChange={(e) => setemail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                 />
               </Grid>
@@ -119,7 +118,7 @@ const SignUp = () => {
                   id="registration"
                   label='Registration'
                   value={registration}
-                  onChange={(e) => setregistration(e.target.value)}
+                  onChange={(e) => setRegistration(e.target.value)}
                   autoComplete="registration"
                 />
               </Grid>
@@ -130,7 +129,7 @@ const SignUp = () => {
                   id="course"
                   label="Course"
                   value={course}
-                  onChange={(e) => setcourse(e.target.value)}
+                  onChange={(e) => setCourse(e.target.value)}
                   autoComplete="course"
                 />
               </Grid>
@@ -153,7 +152,7 @@ const SignUp = () => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setpassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
                 />
               </Grid>
@@ -165,7 +164,7 @@ const SignUp = () => {
                   type="password"
                   id="passwordconfirm"
                   value={passwordConfirm}
-                  onChange={(e) => setpasswordConfirm(e.target.value)}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
                   autoComplete="new-password"
                 />
               </Grid>
@@ -198,9 +197,6 @@ const SignUp = () => {
         <Copyright sx={{ mt: 5 }} />
       </Container>
       {error && <div>{error}</div>}
-      <div style={{ marginTop: "40px" }}>
-        <MainFooter />
-      </div>
     </ThemeProvider>
   )
 }

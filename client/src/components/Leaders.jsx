@@ -1,7 +1,7 @@
 import React from 'react'
-import ibra from '../assets/ibra pic.jpg'
-import hannah from '../assets/Hannah pic.jpg';
-import salaton from '../assets/Salaton pic.jpg';
+import ibra from '../assets/ibra.jpg'
+import hannah from '../assets/hannah.jpg';
+import salaton from '../assets/Salaton.jpg';
 import pstotula from '../assets/pastorkyusda.jpeg';
 import eldersam from '../assets/Eldersam.jpg';
 import joshua from '../assets/Joshua pic.jpg';

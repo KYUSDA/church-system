@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -12,9 +10,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState,useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-import kyusdaimage from '../../assets/Aloamo.JPG';
+import { useState } from 'react';
+import kyuSdaImage from '../../assets/Aloamo.JPG';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -30,28 +27,27 @@ function Copyright(props) {
 
 const theme = createTheme();
 export default function ResetInSide(props) {
-  const [email,setemail] = useState();
-  const [token,setToken] = useState();
-  const handleSubmit =async(event)=> {
-    console.log(email);
+  const [email, setEmail] = useState();
+  const [token, setToken] = useState();
+  const handleSubmit = async (event) => {
     event.preventDefault();
-     setemail('');
+    setEmail('');
     const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetToken`;
-    const resp = await fetch(url,{
-     method:'POST',
-     headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({email})
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
     })
     const data = await resp.json();
-   console.log(data.resetToken);
-   if(data.status === 'success'){
-     alert(`password reset token sent successfuly,check your email`);
-     console.log(data.resetToken);
-     setToken(data.resetToken);
-     localStorage.setItem('Reset token',data.resetToken);
-   }else{
-    alert('something is very wrong');
-   }
+    console.log(data.resetToken);
+    if (data.status === 'success') {
+      alert(`password reset token sent successfuly,check your email`);
+      console.log(data.resetToken);
+      setToken(data.resetToken);
+      localStorage.setItem('Reset token', data.resetToken);
+    } else {
+      alert('something is very wrong');
+    }
 
   };
 
@@ -65,7 +61,7 @@ export default function ResetInSide(props) {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: kyusdaimage,
+            backgroundImage: kyuSdaImage,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -99,7 +95,7 @@ export default function ResetInSide(props) {
                 name="email"
                 autoComplete="email"
                 value={email}
-               onChange={(e)=>{setemail(e.target.value)}}
+                onChange={(e) => { setEmail(e.target.value) }}
                 autoFocus
               />
               <Button
