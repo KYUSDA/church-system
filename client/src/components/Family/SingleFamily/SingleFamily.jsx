@@ -3,12 +3,12 @@ import Header from '../../Navbar/Header';
 import MainFooter from '../../Footer/MainFooter';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { urlFor, client } from '../../../client';
+import { urlFor } from '../../../client';
 import './SingleFamily.css';
 const SingleFamily = () => {
     const location = useLocation();
     const familyId = location.pathname.split('/')[2];
-    const family = useSelector((state) => state?.families?.families).find((family) => family?._id == familyId);
+    const family = useSelector((state) => state?.families?.families).find((family) => family?._id === familyId);
     return (
         <div>
             <div>

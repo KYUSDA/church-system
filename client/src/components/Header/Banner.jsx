@@ -12,7 +12,7 @@ const Banner = () => {
                     (Medical Ministry 49.4)
                 </p>
                 <Link to="/about-section">
-                    About Us <i class="fa fa-angle-down"></i>
+                    About Us <i className="fa fa-angle-down"></i>
                 </Link>
             </div>
         </div>

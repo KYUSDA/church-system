@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { AiFillEye, AiFillGithub } from 'react-icons/ai';
+import { AiFillEye } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom'
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Departments.scss';
 import { getAllDepartments } from '../../redux/apicall';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './DepartmentDetails.css';
 const Departments = () => {
   const dispatch = useDispatch();
   const [departments, setDepartments] = useState([]);
-  const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
+  const [animateCard] = useState({ y: 0, opacity: 1 });
 
   function findUniqueById(dataArray) {
     // Use filter to get only items with unique ids
@@ -28,7 +28,7 @@ const Departments = () => {
       setDepartments(familyData);
       getAllDepartments(dispatch, familyData);
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

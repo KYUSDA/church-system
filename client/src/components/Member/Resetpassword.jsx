@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+
 
 
 function Copyright(props) {
@@ -32,7 +32,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Newpassword() {
-  const nav = useNavigate();
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [token, setToken] = useState('');

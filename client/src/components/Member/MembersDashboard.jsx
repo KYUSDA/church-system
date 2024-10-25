@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
 import { useAuthContext } from '../../context/useAuthcontext';
 
 const MembersDashboard = () => {
-	const { dispatch, user } = useAuthContext();
+	const { user } = useAuthContext();
 	const [userData, setUserData] = useState();
 	console.log(user.email, user.id);
 	useEffect(() => {
@@ -36,13 +35,13 @@ const MembersDashboard = () => {
 				<ul className='mt-2 text-gray-700 dark:text-gray-400 capitalize'>
 					<li className='mt-3 p-2 text-blue-600 dark:text-blue-300 rounded-lg'>
 						<Link to=''>
-							<svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
+							<svg className="fill-current h-5 w-5" viewBox="0 0 24 24">
 								<path
 									d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9
 							17v2H5v-2h4M21 3h-8v6h8V3M11 3H3v10h8V3m10
 							8h-8v10h8V11m-10 4H3v6h8v-6z"></path>
 							</svg>
-							<span class="text-xs mt-2">dashBoard</span>
+							<span className="text-xs mt-2">dashBoard</span>
 						</Link>
 					</li>
 					<li
@@ -77,11 +76,11 @@ const MembersDashboard = () => {
 					<div
 						className="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col bg-white dark:bg-gray-600 rounded-lg">
 						<h3
-							class="flex items-center pt-1 pb-1 px-8 text-lg font-semibold
+							className="flex items-center pt-1 pb-1 px-8 text-lg font-semibold
 					capitalize dark:text-gray-300">
 							<span>Devotions</span>
-							<button class="ml-2">
-								<svg class="h-5 w-5 fill-current" viewBox="0 0 256 512">
+							<button className="ml-2">
+								<svg className="h-5 w-5 fill-current" viewBox="0 0 256 512">
 									<path
 										d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9
 								0l-22.6-22.6c-9.4-9.4-9.4-24.6
@@ -101,7 +100,7 @@ const MembersDashboard = () => {
 											</div>
 										</div>
 										<p
-											class="text-sm font-medium leading-snug
+											className="text-sm font-medium leading-snug
 									text-gray-600 my-3">
 											Lorem ipsum, dolor sit amet consectetur
 											adipisicing elit. Explicabo assumenda porro
@@ -121,7 +120,7 @@ const MembersDashboard = () => {
 												</span>
 											</div>
 											<p
-												class="text-sm font-medium leading-snug text-gray-600">
+												className="text-sm font-medium leading-snug text-gray-600">
 												3 hours ago
 											</p>
 										</div>
@@ -133,7 +132,7 @@ const MembersDashboard = () => {
 											<span>Lesson Discussion</span>
 											<div className="flex items-center">
 												<svg
-													class="h-5 w-5 fill-current mr-1
+													className="h-5 w-5 fill-current mr-1
 											text-gray-600"
 													viewBox="0 0 24 24">
 													<path
@@ -144,7 +143,7 @@ const MembersDashboard = () => {
 											</div>
 										</div>
 										<p
-											class="text-sm font-medium leading-snug
+											className="text-sm font-medium leading-snug
 									text-gray-600 my-3">
 											Lorem ipsum, dolor sit amet consectetur
 											adipisicing elit. Explicabo assumenda porro
@@ -164,7 +163,7 @@ const MembersDashboard = () => {
 												</span>
 											</div>
 											<p
-												class="text-sm font-medium leading-snug text-gray-600">
+												className="text-sm font-medium leading-snug text-gray-600">
 												1 hour ago
 											</p>
 										</div>
@@ -174,7 +173,7 @@ const MembersDashboard = () => {
 
 							<Link
 								to="#"
-								class="flex justify-center capitalize text-blue-500
+								className="flex justify-center capitalize text-blue-500
 dark:text-blue-200">
 								<span>see all</span>
 							</Link>
@@ -197,11 +196,11 @@ dark:text-blue-200">
 							<img
 								src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
 								alt=" empty schedule" />
-							<span class="font-bold mt-8">Family Group Allocated</span>
+							<span className="font-bold mt-8">Family Group Allocated</span>
 							<span>{userData?.familyLocated}</span>
-							<span class="text-purple-500">
+							<span className="text-purple-500">
 							</span>
-							<button class="mt-8 bg-purple-800 rounded-lg py-2 px-4">
+							<button className="mt-8 bg-purple-800 rounded-lg py-2 px-4">
 								<Link to={`/${userData?.familyLocated}`}>
 									Check it Out
 								</Link>
@@ -227,9 +226,9 @@ dark:text-blue-200">
 								<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
 							</svg>
 						</span>
-						<div class="absolute w-2 h-2 left-0 mb-6 ml-2 bottom-0">
+						<div className="absolute w-2 h-2 left-0 mb-6 ml-2 bottom-0">
 							<span
-								class="px-2 py-1 bg-red-600 rounded-full text-white
+								className="px-2 py-1 bg-red-600 rounded-full text-white
 						text-xs">
 								Settings
 							</span>
@@ -240,7 +239,7 @@ dark:text-blue-200">
 							className="h-10 w-10 rounded-full object-cover"
 							src="https://i.pinimg.com/originals/68/e1/e1/68e1e137959d363f172dc3cc50904669.jpg"
 							alt="tempest profile" />
-						<button class="ml-1 focus:outline-none">
+						<button className="ml-1 focus:outline-none">
 
 							<svg className="h-4 w-4 fill-current" viewBox="0 0 192 512">
 								<path
@@ -255,10 +254,10 @@ dark:text-blue-200">
 				</div>
 				<span className="mt-4 text-gray-600">Church Role</span>
 				<span className="mt-1 text-3xl font-semibold">{userData?.role}</span>
-				<div class="mt-12 flex items-center">
+				<div className="mt-12 flex items-center">
 					<span>Upcomming Events</span>
-					<button class="ml-2 focus:outline-none">
-						<svg class="h-5 w-5 fill-current" viewBox="0 0 256 512">
+					<button className="ml-2 focus:outline-none">
+						<svg className="h-5 w-5 fill-current" viewBox="0 0 256 512">
 							<path
 								d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9
 						0l-22.6-22.6c-9.4-9.4-9.4-24.6
@@ -274,7 +273,7 @@ dark:text-blue-200">
 					<div className='flex'>
 						<img className='h-10 w-10 rounded-full object-cover' src="https://lh3.googleusercontent.com/cX0xwvJKCNIFrl2wIwoYiIURxmZt1y7tF3wJvynqcnQG5tmYdKBLpDDvhXzmVZzrstAEkw=s151"
 							alt="veldora profile" />
-						<div class="flex flex-col ml-4">
+						<div className="flex flex-col ml-4">
 							<span>Finalist Sabbath</span>
 							<span className="text-sm text-gray-600">25/04/2023</span>
 						</div>
@@ -286,13 +285,13 @@ dark:text-blue-200">
 					<div className='flex'>
 						<img className='h-10 w-10 rounded-full object-cover' src="https://lh3.googleusercontent.com/cX0xwvJKCNIFrl2wIwoYiIURxmZt1y7tF3wJvynqcnQG5tmYdKBLpDDvhXzmVZzrstAEkw=s151"
 							alt="veldora profile" />
-						<div class="flex flex-col ml-4">
+						<div className="flex flex-col ml-4">
 							<span>Grand Contribution</span>
 							<span className="text-sm text-gray-600">03/11/2023</span>
 						</div>
 					</div>
 				</Link>
-				<div class="mt-4 flex justify-center capitalize text-blue-600">
+				<div className="mt-4 flex justify-center capitalize text-blue-600">
 					<Link to="#">see all</Link>
 				</div>
 			</aside>

@@ -50,7 +50,7 @@ export default function ResetInSide(props) {
     }
 
   };
-
+  console.log(token);
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>

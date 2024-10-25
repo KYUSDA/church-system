@@ -20,7 +20,7 @@ import image18 from "../../assets/Gordonteam.JPG";
 import image19 from "../../assets/vickyteam.JPG";
 // import './App.css';
 
-function Kyusda() {
+const KyuSda = () => {
   const galleryImages = [
     {
       img: image1,
@@ -98,4 +98,4 @@ function Kyusda() {
   );
 }
 
-export default Kyusda;
+export default KyuSda;

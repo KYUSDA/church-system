@@ -3,8 +3,6 @@ import { AppWrap, MotionWrap } from '../../wrapper';
 import { motion } from 'framer-motion';
 import "./imageGallery.scss";
 function ImageGallery() {
-  console.log(images)
-
   return (
     <motion.div className='carousel'>
       <motion.div
@@ -14,7 +12,7 @@ function ImageGallery() {
         {images.map(image => {
           return (
             <motion.div className="item" key={image}>
-              <img src={image} />
+              <img src={image} alt={""} />
             </motion.div>)
         })}
       </motion.div>

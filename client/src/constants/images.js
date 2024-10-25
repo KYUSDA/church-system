@@ -7,7 +7,8 @@ import pastorKyuSda from "../assets/pastorkyusda.jpeg";
 import elderSam from "../assets/Eldersam.jpg";
 import joshua from "../assets/Joshua pic.jpg";
 import ibra from "../assets/ibra.jpg";
-export default {
+
+const images = {
   healthPicOne,
   healthPicTwo,
   healthPicThree,
@@ -18,3 +19,4 @@ export default {
   elderSam,
   joshua,
 };
+export default images;

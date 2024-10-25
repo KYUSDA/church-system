@@ -1,5 +1,5 @@
 import React from 'react'
-import GetDepartments from '../components/Work/Departments';
+import GetDepartments from './Department/Departments';
 import Header from './Navbar/Header';
 const Departments = () => {
     return (

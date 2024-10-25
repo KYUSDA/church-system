@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import Header from '../Navbar/Header';
@@ -8,7 +8,7 @@ import { urlFor } from '../../client';
 const DepartmentsDetails = () => {
   const location = useLocation();
   const departmentId = location.pathname.split('/')[2];
-  const department = useSelector((state) => state?.departments?.departments).find((department) => department?._id == departmentId);
+  const department = useSelector((state) => state?.departments?.departments).find((department) => department?._id === departmentId);
 
   return (
     <div>

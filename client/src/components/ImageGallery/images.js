@@ -5,4 +5,6 @@ import image4 from "../../assets/member4.jpeg";
 import image5 from "../../assets/member5.jpeg";
 import image6 from "../../assets/member6.jpeg";
 import image7 from "../../assets/member7.jpeg";
-export default [image1,image2,image3,image4,image5,image6,image7]
+
+const images = [image1, image2, image3, image4, image5, image6, image7];
+export default images;
