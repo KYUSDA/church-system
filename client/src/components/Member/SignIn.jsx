@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import imageSide from '../../assets/kyusdachurch.jpg'
 import { useState } from 'react'
 import { useLogin } from '../../hooks/userLoginHook.jsx'
-import { useAuthContext } from '../../context/useAuthcontext'
 import Header from '../Navbar/Header';
 function Copyright(props) {
   return (
@@ -35,8 +34,7 @@ const theme = createTheme();
 const SignInSide = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user } = useAuthContext();
-  const { login, error, loading } = useLogin();
+  const { login } = useLogin();
   const handleSubmit = async (event) => {
     setEmail('');
     setPassword('')

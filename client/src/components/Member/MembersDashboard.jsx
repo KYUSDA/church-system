@@ -15,7 +15,7 @@ const MembersDashboard = () => {
 			console.log(data);
 		}
 		getData();
-	}, []);
+	}, [user.id, user.email]);
 	console.log(userData);
 	return (
 		<div className='h-screen w-full flex overflow-hidden select-none'>

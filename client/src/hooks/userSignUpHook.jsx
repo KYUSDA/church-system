@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { json, redirect } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { useAuthContext } from "../context/useAuthcontext";
 export const useSignUp = () => {
   const [error, setError] = useState(null);
