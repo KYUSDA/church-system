@@ -1,8 +1,8 @@
 import React from 'react'
 import { Families } from '../components/Family/Families';
-import Header from './Navbar/Header';
-import FamilyFAQ from './Family/FAQ/FamilyFAQ';
-import MainFooter from './Footer/MainFooter';
+import Header from '../components/Navbar/Header';
+import FamilyFAQ from '../components/Family/FAQ/FamilyFAQ';
+import MainFooter from '../components/Footer/MainFooter';
 const AllFamilies = () => {
     return (
         <div>
