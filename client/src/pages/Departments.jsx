@@ -1,6 +1,6 @@
 import React from 'react'
-import GetDepartments from './Department/Departments';
-import Header from './Navbar/Header';
+import GetDepartments from '../components/Department/Departments';
+import Header from '../components/Navbar/Header';
 const Departments = () => {
     return (
         <div>

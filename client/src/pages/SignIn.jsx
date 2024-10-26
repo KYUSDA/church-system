@@ -12,10 +12,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import imageSide from '../../assets/kyusdachurch.jpg'
+import imageSide from '../assets/kyusdachurch.jpg'
 import { useState } from 'react'
-import { useLogin } from '../../hooks/userLoginHook.jsx'
-import Header from '../Navbar/Header';
+import { useLogin } from '../hooks/userLoginHook.jsx'
+import Header from '../components/Navbar/Header.jsx';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
