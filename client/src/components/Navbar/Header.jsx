@@ -4,8 +4,12 @@ import "./Navbar.scss";
 import KyuSda from "../../assets/kyusdaLogo.png";
 import "../../style.css";
 import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
+import { useLogout } from "../../hooks/userLogoutHook";
+
 
 const Header = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   return (
     <header id="main-header">
       <div className="rows">
@@ -60,12 +64,20 @@ const Header = () => {
             </p>
             <Link to="#events">READ MORE</Link>
           </div>
-          <div className="register-btn">
-            <Link to="/signUp" style={{ marginRight: "20px" }}>
-              Register Membership
-            </Link>
-            <Link to="/signIn">Login</Link>
-          </div>
+          {
+            user?.email ?
+              <div className="flex">
+                <Link to="/member">Dashboard</Link>
+                <button onClick={() => localStorage.removeItem("user")}>Log Out</button>
+              </div>
+              : <div className="register-btn">
+                <Link to="/signUp" style={{ marginRight: "20px" }}>
+                  Register Membership
+                </Link>
+                <Link to="/signIn">Login</Link>
+              </div>
+          }
+
         </div>
         <div className="top-row-two">
           <div className="logo">

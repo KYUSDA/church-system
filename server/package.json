@@ -2,10 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=v18.16.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "dev":"nodemon index.js",
+    "start": "node index.js"
   },
   "author": "samuel kamotho",
   "license": "ISC",

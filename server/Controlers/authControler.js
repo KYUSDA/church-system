@@ -1,137 +1,120 @@
+import memberAuth from "../Models/authModel.js";
+import sendEmail from "../utilities/email.js";
+import { createHash } from "crypto";
+import pkg from "jsonwebtoken";
 
-const memberAuth = require('../Models/authModel');
-const sendEmail = require('../utilities/email')
-const crypto = require('crypto');
-const jsonwebtoken = require('jsonwebtoken');
+const { sign } = pkg;
 
+let maxAge = 3 * 24 * 60 * 60;
+const createJWT = (id) => {
+  return sign({ id }, process.env.SECRET, {
+    expiresIn: maxAge,
+  });
+};
 
-let maxAge = 3*24*60*60
-const createjwt = (id)=>{
-    return jsonwebtoken.sign({id},process.env.SECRET,{
-        expiresIn:maxAge
-    })
- };
-
-const memberSignUp = async(req,resp)=>{
-try {
-    // const data = await 
-    console.log(req.body);
-    const memberRegestered = await memberAuth.create(req.body);
-    const id = memberRegestered._id;
+const memberSignUp = async (req, resp) => {
+  try {
+    const memberRegistered = await memberAuth.create(req.body);
+    const id = memberRegistered._id;
     //generate token and pass the cookie inside.
-    const tk = createjwt(id);
-    resp.cookie("kyusdamember",tk,{httpOnly:true,maxAge: maxAge* 1000});
+    const tk = createJWT(id);
+    resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
     resp.status(200).json({
-        id:id,
-        status:'success',
-        email:memberRegestered.email,
-        tk
-    })
-    console.log(memberRegestered);
-} catch (error) {
-    console.log(error);
+      id: id,
+      status: "success",
+      email: memberRegistered.email,
+      tk,
+    });
+  } catch (error) {
     resp.status(404).json({
-        status:'failure',
-       error
-    })
-}
-}
+      status: "failure",
+      error: error.message,
+    });
+  }
+};
 
-const memberSignin = async(req,resp)=>{
-    try{
-const {email,password} = req.body;
-const loggedMember = await memberAuth.login(email,password);
-console.log(loggedMember);
-const id = loggedMember._id;
-const tk = createjwt(id);
-resp.cookie("kyusdamember",tk,{httpOnly:true,maxAge: maxAge* 1000});
-resp.status(200).json({
-    id,
-    status:'success',
-    email:loggedMember.email,
-    tk
-})
-console.log('signed in');
-}catch(err){
-resp.status(404).json({
-    status:'failure',
-    err
-})
-    }
-}
+const memberSignIn = async (req, resp) => {
+  try {
+    const { email, password } = req.body;
+    const loggedMember = await memberAuth.login(email, password);
+    const id = loggedMember._id;
+    const tk = createJWT(id);
+    resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
+    resp.status(200).json({
+      id,
+      status: "success",
+      email: loggedMember.email,
+      tk,
+    });
+  } catch (err) {
+    resp.status(404).json({
+      status: "failure",
+      err: err.message,
+    });
+  }
+};
 
-const memberResetToken = async(req,resp)=>{
-try
-{
-    const {email} = req.body;
-    console.log(email);
+const memberResetToken = async (req, resp) => {
+  try {
+    const { email } = req.body;
     //generate a token from methods
-let getMember = await memberAuth.findOne({email})
-const tokenGen = await getMember.resetToken();
-console.log(tokenGen);
- //save to database
- await getMember.save({validateBeforeSave:false});
- const resetUrl = 
-`${req.protocol}://localhost:3000/resetPassword`;
-console.log(resetUrl);
-const message = 
-`sorry,we heard you lost your password, don't worry click here to reset it:`
+    let getMember = await memberAuth.findOne({ email });
+    const tokenGen = await getMember.resetToken();
+    //save to database
+    await getMember.save({ validateBeforeSave: false });
+    const resetUrl = `${req.protocol}://localhost:3000/resetPassword`;
+    const message = `sorry,we heard you lost your password, don't worry click here to reset it:`;
     await sendEmail({
-        email:getMember.email,
-        subject:'your reset token ,expires in the next 1hr (60min)',
-        url:resetUrl,
-        message:message
-    })
+      email: getMember.email,
+      subject: "your reset token ,expires in the next 1hr (60min)",
+      url: resetUrl,
+      message: message,
+    });
     resp.status(200).json({
-    status:'success',
-    resetToken:tokenGen,
-    message
-})
-}catch(err){
+      status: "success",
+      resetToken: tokenGen,
+      message,
+    });
+  } catch (err) {
     resp.status(404).json({
-        status:'failure',
-        err
-    })
-}
-}
+      status: "failure",
+      err,
+    });
+  }
+};
 
-const resetPassword = async(req,resp)=>{
-    const tk = req.params.token
-    console.log(req.body,'values include');
-    console.log(tk);
-    try{
-        const hashToken = crypto.createHash('sha256').update(tk).digest('hex');
-        console.log(hashToken);
-    //     let getMember = await memberAuth.findOne({
-    // passwordresetToken:hashToken, 
-    // resetTokenexpires:{$gt:Date.now()}});
-    // console.log(getMember);
+const resetPassword = async (req, resp) => {
+  const tk = req.params.token;
+  try {
+    const hashToken = createHash("sha256").update(tk).digest("hex");
     const getMember = await memberAuth.findOne({
-        passwordresetToken:hashToken,
-        resetTokenexpires:{$gt:Date.now()}})
-    console.log(getMember);
-    if(getMember){
-        getMember.password = req.body.password;
-        getMember.passwordConfirm = req.body.passwordConfirm;
-        getMember.resetTokenSetAt = Date.now();
-        getMember.passwordresetToken = undefined;
-        getMember.resetTokenexpires = undefined;
-        await getMember.save()
-        resp.status(200).json({
-        status:'success',
-        message:'password updated succesfully',
-        redirect:'signIn'
-    })
+      passwordResetToken: hashToken,
+      resetTokenExpires: { $gt: Date.now() },
+    });
+    if (getMember) {
+      getMember.password = req.body.password;
+      getMember.passwordConfirm = req.body.passwordConfirm;
+      getMember.resetTokenSetAt = Date.now();
+      getMember.passwordResetToken = undefined;
+      getMember.resetTokenExpires = undefined;
+      await getMember.save();
+      resp.status(200).json({
+        status: "success",
+        message: "password updated successfully",
+        redirect: "signIn",
+      });
     }
-    }catch(err){
+  } catch (err) {
     resp.status(404).json({
-        status:"fail",
-        err
-    })
-    }
-}
+      status: "fail",
+      err,
+    });
+  }
+};
 
-
-
-module.exports = {memberSignUp,memberSignin,
-    memberResetToken,resetPassword};
+export default {
+  memberSignUp,
+  memberSignIn,
+  memberResetToken,
+  resetPassword,
+};
