@@ -4,12 +4,10 @@ import "./Navbar.scss";
 import KyuSda from "../../assets/kyusdaLogo.png";
 import "../../style.css";
 import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
-import { useLogout } from "../../hooks/userLogoutHook";
 
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
   return (
     <header id="main-header">
       <div className="rows">
