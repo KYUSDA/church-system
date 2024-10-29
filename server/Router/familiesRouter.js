@@ -1,15 +1,15 @@
-const express = require('express');
-const familyController = require('../Controlers/family');
-const familyRouter = express.Router();
-familyRouter.route('/getFamilies')
-.get(familyController.getAll);
-familyRouter
-.route('/createFamily')
-.post(familyController.createFamily);
+import { Router } from "express";
+import {
+  getAll,
+  createFamily,
+  getOne,
+  updateFamily,
+  deleteFamily,
+} from "../Controlers/family.js";
+const familyRouter = Router();
+familyRouter.route("/getFamilies").get(getAll);
+familyRouter.route("/createFamily").post(createFamily);
 
-familyRouter.route('/:id')
-.get(familyController.getOne)
-.patch(familyController.updateFamily)
-.delete(familyController.deleteFamily);
+familyRouter.route("/:id").get(getOne).patch(updateFamily).delete(deleteFamily);
 
-module.exports = familyRouter;
+export default familyRouter;

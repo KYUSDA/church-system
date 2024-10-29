@@ -8,7 +8,7 @@ export const useLogin = () => {
     const login = async (email, password) => {
         setError(null);
         setLoading(true);
-        const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/signIn`;
+        const url = `http://localhost:8000/kyusda/v1/member/signIn`;
         const resp = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -16,19 +16,14 @@ export const useLogin = () => {
         })
         console.log(resp)
         const data = await resp.json();
-
-        // if(!resp.ok){
-        // console.log(data)
-        // setError(data.err);
-        // setLoading(false);
-        // }
         if (resp.ok) {
-            //set the token and useron frontend
+            //set the token and user on frontend
             localStorage.setItem('user', JSON.stringify(data));
             dispatch({ type: 'LOGIN', payload: data });
             setLoading(false);
             redirect('/member')
         }
+        setError(data.err);
     }
 
     return { login, loading, error }
