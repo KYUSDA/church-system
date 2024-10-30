@@ -54,4 +54,4 @@ jobs:
           app-name: 'kyusdabackend'
           slot-name: 'Production'
           package: ./node-app
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_22E4250F0561413EAEE18E686724BDCD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2E5A6846D1E74DFE9F76627601E71873 }}
