@@ -51,8 +51,7 @@ jobs:
         uses: Azure/appservice-settings@v1
         with:
           app-name: 'kyusdabackend'
-          settings: |
-            WEBSITE_STARTUP_FILE=server/index.js
+          app-settings-json: '{"WEBSITE_STARTUP_FILE": "server/index.js"}'
         env:
           AZURE_APP_SERVICE_PUBLISH_PROFILE: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2E5A6846D1E74DFE9F76627601E71873 }}
       
