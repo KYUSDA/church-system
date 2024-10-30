@@ -46,6 +46,15 @@ jobs:
         with:
           name: node-app
           path: ./node-app
+
+      - name: Set WEBSITE_STARTUP_FILE application setting
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: 'kyusdabackend'
+          settings: |
+            WEBSITE_STARTUP_FILE=server/index.js
+        env:
+          AZURE_APP_SERVICE_PUBLISH_PROFILE: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2E5A6846D1E74DFE9F76627601E71873 }}
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
