@@ -31,12 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          # Ensure web.config is included in the artifact
-          path: |
-            ./server
-            ./server/web.config  # Include web.config file
-           
-          
+          path: ./server
 
   deploy:
     runs-on: ubuntu-latest
