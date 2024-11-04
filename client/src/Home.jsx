@@ -11,6 +11,12 @@ import Families from "./pages/Families";
 import Departments from "./pages/Departments";
 import SingleFamily from "./pages/SingleFamily";
 import DepartmentsDetails from "./components/Department/DepartmentsDetails";
+
+
+import PrivacyPolicy from "./components/Footer/Policy";
+import Terms from "./components/Footer/Terms";
+import Layout from "./components/Footer/Layout";
+
 const Home = () => {
   const { user } = useAuthContext();
   return (
@@ -38,6 +44,8 @@ const Home = () => {
       <Route path="/Departments" element={<Departments />}></Route>
       <Route path="/Departments/:id" element={<DepartmentsDetails />} />
       <Route path="/membersDashboard" element={<MembersDashboard />} />
+      <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout> } />
+      <Route path="/kirinyaga-adventist-terms-and-conditions" element={<Layout><Terms /></Layout> } />
     </Routes>
   );
 };
