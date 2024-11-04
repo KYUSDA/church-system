@@ -4,9 +4,10 @@ import {
   Testimonial,
   Announcements,
   KyuSda,
-  Leader,
+  Leader
 } from "./container/index";
 import { Navbar } from "./components";
+import MainFooter from "./components/Footer/MainFooter";
 //import Slideshow from "./components/SlideShow/Slideshow";
 import "./App.scss";
 import Banner from "./components/Header/Banner";
@@ -19,6 +20,7 @@ const App = () => (
     <Announcements />
     <Testimonial />
     <KyuSda />
+    <MainFooter />
   </div>
 );
 
