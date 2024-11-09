@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: ./server/release.zip
+          path: ./server
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip  ./server/release.zip
+        run: unzip  ./server
       
       - name: Login to Azure
         uses: azure/login@v2
