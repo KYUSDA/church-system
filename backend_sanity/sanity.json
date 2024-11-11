@@ -1,11 +1,11 @@
 {
   "root": true,
-  "project": {
-    "name": "kyusda church"
-  },
   "api": {
     "projectId": "sgmu0lrq",
     "dataset": "production"
+  },
+  "project": {
+    "name": "kyusda church"
   },
   "plugins": [
     "@sanity/base",
