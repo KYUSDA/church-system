@@ -1,6 +1,6 @@
 # KYUSDA FRONTEND
 
-Currently you can access our production URL on this url[kyusda Frontend](https://github.com/facebook/create-react-app).
+Currently you can access our production URL on this url [kyusda Frontend](https://github.com/facebook/create-react-app).
 
 
 ## Available Scripts
