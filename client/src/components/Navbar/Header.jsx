@@ -98,7 +98,7 @@ const Header = () => {
             </ul>
           </div>
           <div className="donate-btn">
-            <Link to="/donation">Send Donation</Link>
+            <Link to="/donation">Support Us</Link>
           </div>
         </div>
       </div>
