@@ -92,7 +92,7 @@ const Header = () => {
           </div>
           <div className="upcoming-events">
             <p>
-              <strong>Upcoming Event: </strong> {eventName}
+              <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp; {eventName}
             </p>
             <p id="countdown">
               <span id="days">{timeLeft.days}</span>
