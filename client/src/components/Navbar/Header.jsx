@@ -56,8 +56,8 @@ const Header = () => {
                 style={{
                   color: "white",
                   borderRadius: "50%",
-                  width: "30px",
-                  height: "40px",
+                  width: "20px",
+                  height: "30px",
                 }}
               />
             </a>
@@ -70,8 +70,8 @@ const Header = () => {
                 style={{
                   color: "white",
                   borderRadius: "50%",
-                  width: "30px",
-                  height: "40px",
+                  width: "20px",
+                  height: "30px",
                 }}
               />
             </a>
@@ -84,15 +84,16 @@ const Header = () => {
                 style={{
                   color: "white",
                   borderRadius: "50%",
-                  width: "30px",
-                  height: "40px",
+                  width: "20px",
+                  height: "30px",
                 }}
               />
             </a>
           </div>
           <div className="upcoming-events">
             <p>
-              <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp; {eventName}
+              <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp; 
+              <span style={{ color: "#12ac8e" }}>{eventName}</span> {/* Added color to event name */}
             </p>
             <p id="countdown">
               <span id="days">{timeLeft.days}</span>
@@ -101,10 +102,10 @@ const Header = () => {
               <span style={{ fontSize: "12px" }}>Hrs</span>{" "}
               <span id="mins">{timeLeft.minutes}</span>
               <span style={{ fontSize: "12px" }}>Mins</span>{" "}
-              <span id="secs" style={{ fontSize: "30px" }}>{timeLeft.seconds}</span>
+              <span id="secs" style={{ fontSize: "34px" , color: "#12ac8e"}}>{timeLeft.seconds}</span>
               <span style={{ fontSize: "12px" }}>Sec</span>
             </p>
-            <Link to="#events" style={{ fontSize: "12px" }}>MORE EVENTS</Link>
+            <Link to="#events" style={{ fontSize: "12px" , color: "#12ac8e"}}>EVENTS DETAILS</Link>
           </div>
           {user?.email ? (
             <div className="flex">
@@ -115,10 +116,10 @@ const Header = () => {
             </div>
           ) : (
             <div className="register-btn">
-              <Link to="/signUp" style={{ marginRight: "20px" }}>
+              <Link to="/signUp" style={{ marginRight: "20px" , fontSize: "14px"}}>
                 Register Membership
               </Link>
-              <Link to="/signIn">Login</Link>
+              <Link to="/signIn" style={{ fontSize: "14px"}}>Login</Link>
             </div>
           )}
         </div>
@@ -139,6 +140,9 @@ const Header = () => {
               </li>
               <li>
                 <Link to="/departments">Departments</Link>
+              </li>
+              <li>
+                <Link to="#">Contact Us</Link>
               </li>
             </ul>
           </div>
