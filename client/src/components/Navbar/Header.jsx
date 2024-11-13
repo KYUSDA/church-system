@@ -105,7 +105,7 @@ const Header = () => {
               <span id="secs" style={{ fontSize: "34px" , color: "#12ac8e"}}>{timeLeft.seconds}</span>
               <span style={{ fontSize: "12px" }}>Sec</span>
             </p>
-            <Link to="#events" style={{ fontSize: "12px" , color: "#12ac8e"}}>EVENTS DETAILS</Link>
+            <Link to="#events" style={{ fontSize: "12px" , color: "#12ac8e"}}>EVENTS' DETAILS</Link>
           </div>
           {user?.email ? (
             <div className="flex">
