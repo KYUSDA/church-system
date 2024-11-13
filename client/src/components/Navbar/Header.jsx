@@ -5,6 +5,7 @@ import KyuSda from "../../assets/kyusdaLogo.png";
 import "../../style.css";
 import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
 
+
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -60,6 +61,15 @@ const Header = () => {
                   height: "30px",
                 }}
               />
+              {/* <BsFacebook
+  style={{
+    color: "white",
+    borderRadius: "50%",
+    width: "30px",
+    height: "40px",
+  }}
+/> */}
+
             </a>
             <a
               href="https://twitter/kyusda/"
@@ -74,6 +84,15 @@ const Header = () => {
                   height: "30px",
                 }}
               />
+              {/* <TbBrandX
+  style={{
+    color: "white",
+    borderRadius: "50%",
+    width: "30px",
+    height: "40px",
+  }}
+/> */}
+
             </a>
             <a
               href="https://www.youtube.com/@kyusdachurch"
