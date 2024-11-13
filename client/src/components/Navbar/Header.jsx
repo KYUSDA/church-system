@@ -112,7 +112,7 @@ const Header = () => {
           <div className="upcoming-events">
             <p>
               <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp; 
-              <span style={{ color: "#12ac8e" }}>{eventName}</span> {/* Added color to event name */}
+              <span style={{ color: "#12ac8e", fontSize: "22px" }}>{eventName}</span> {/* Added color to event name */}
             </p>
             <p id="countdown">
               <span id="days">{timeLeft.days}</span>
