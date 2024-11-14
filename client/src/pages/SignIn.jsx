@@ -16,6 +16,10 @@ import imageSide from '../assets/kyusdachurch.jpg'
 import { useState } from 'react'
 import { useLogin } from '../hooks/userLoginHook.jsx'
 import Header from '../components/Navbar/Header.jsx';
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import CircularProgress from "@mui/material/CircularProgress";
+import Backdrop from "@mui/material/Backdrop";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -34,13 +38,16 @@ const theme = createTheme();
 const SignInSide = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useLogin();
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { login, error } = useLogin();
   const handleSubmit = async (event) => {
     setEmail('');
     setPassword('')
     event.preventDefault();
-    await login(email, password)
+    await login(email, password, rememberMe);
   };
+  const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,6 +88,8 @@ const SignInSide = () => {
               <TextField
                 margin="normal"
                 required
+                error={email === ""}
+                helperText={email === "" ? "Email is required" : ""}
                 fullWidth
                 id="email"
                 label="Email Address"
@@ -92,23 +101,39 @@ const SignInSide = () => {
               <TextField
                 margin="normal"
                 required
+                error={password === ""}
+                helperText={password === "" ? "Password is required" : ""}
                 fullWidth
                 label="Password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  ),
+                }}
               />
+              {/*Pending Remember me functionality */}
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="primary" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />}
                 label="Remember me"
               />
+              <p className='text-red-400 text-md'>{error}</p>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={!isFormValid}
               >
                 Sign In
               </Button>

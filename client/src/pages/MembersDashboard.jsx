@@ -5,18 +5,15 @@ import { useAuthContext } from '../context/useAuthcontext';
 const MembersDashboard = () => {
 	const { user } = useAuthContext();
 	const [userData, setUserData] = useState();
-	console.log(user.email, user.id);
 	useEffect(() => {
 		const getData = async () => {
-			const url = `http://localhost:8000/kyusda/v1/user/${user.id}`
+			const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/user/${user.id}`
 			const resp = await fetch(url);
 			const data = await resp.json();
 			setUserData(data)
-			console.log(data);
 		}
 		getData();
 	}, [user.id, user.email]);
-	console.log(userData);
 	return (
 		<div className='h-screen w-full flex overflow-hidden select-none'>
 			<nav className='w-24 flex flex-col items-center bg-white dark:bg-gray-800 py-4'>

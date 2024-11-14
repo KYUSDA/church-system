@@ -7,11 +7,11 @@ const { isEmail } = pkg;
 const authSchema = new Schema({
   firstName: {
     type: String,
-    required: [true, "please enter your firstname"],
+    required: [true, "please enter your firstName"],
   },
   lastName: {
     type: String,
-    required: [true, "please enter your lastname"],
+    required: [true, "please enter your lastName"],
   },
   email: {
     type: String,
@@ -33,6 +33,10 @@ const authSchema = new Schema({
   year: {
     type: Number,
     required: [true, "please enter year of study"],
+  },
+  phoneNumber: {
+    type: String,
+    required: [true, "please enter your phone number"],
   },
   password: {
     type: String,

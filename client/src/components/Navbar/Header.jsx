@@ -4,10 +4,17 @@ import "./Navbar.scss";
 import KyuSda from "../../assets/kyusdaLogo.png";
 import "../../style.css";
 import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
+import { useLogout } from "../../hooks/userLogoutHook";
 
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const { logout } = useLogout();
+
+  const handleLogOut = () => {
+    logout();
+  }
   return (
     <header id="main-header">
       <div className="rows">
@@ -64,9 +71,9 @@ const Header = () => {
           </div>
           {
             user?.email ?
-              <div className="flex">
+              <div className="flex justify-between items-center gap-x-3">
                 <Link to="/member">Dashboard</Link>
-                <button onClick={() => localStorage.removeItem("user")}>Log Out</button>
+                <button onClick={handleLogOut} className="rounded-md p-2 bg-[#12ac8e]">Log Out</button>
               </div>
               : <div className="register-btn">
                 <Link to="/signUp" style={{ marginRight: "20px" }}>

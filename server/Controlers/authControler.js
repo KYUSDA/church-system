@@ -5,10 +5,12 @@ import pkg from "jsonwebtoken";
 
 const { sign } = pkg;
 
-let maxAge = 3 * 24 * 60 * 60;
-const createJWT = (id) => {
+let maxAge = 60 * 60;
+let extendedMaxAge = 3 * 24 * 60 * 60;
+const createJWT = (id, rememberMe) => {
+  const tokenMaxAge = rememberMe ? extendedMaxAge : maxAge;
   return sign({ id }, process.env.SECRET, {
-    expiresIn: maxAge,
+    expiresIn: tokenMaxAge,
   });
 };
 
@@ -26,19 +28,27 @@ const memberSignUp = async (req, resp) => {
       tk,
     });
   } catch (error) {
-    resp.status(404).json({
+    const errorResponse = {
       status: "failure",
       error: error.message,
-    });
+    };
+
+    if (error.code === 11000) {
+      const duplicateField = Object.keys(error.keyValue)[0];
+      const duplicateValue = error.keyValue[duplicateField];
+      errorResponse.error = `Duplicate ${duplicateField}: ${duplicateValue} already exists`;
+    }
+
+    resp.status(404).json(errorResponse);
   }
 };
 
 const memberSignIn = async (req, resp) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
     const loggedMember = await memberAuth.login(email, password);
     const id = loggedMember._id;
-    const tk = createJWT(id);
+    const tk = createJWT(id, rememberMe);
     resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
     resp.status(200).json({
       id,
