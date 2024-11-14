@@ -16,10 +16,8 @@ import imageSide from '../assets/kyusdachurch.jpg'
 import { useState } from 'react'
 import { useLogin } from '../hooks/userLoginHook.jsx'
 import Header from '../components/Navbar/Header.jsx';
-import { IconButton, InputAdornment } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import CircularProgress from "@mui/material/CircularProgress";
-import Backdrop from "@mui/material/Backdrop";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
