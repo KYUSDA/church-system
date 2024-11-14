@@ -44,8 +44,8 @@ const Home = () => {
       <Route path="/Departments" element={<Departments />}></Route>
       <Route path="/Departments/:id" element={<DepartmentsDetails />} />
       <Route path="/membersDashboard" element={<MembersDashboard />} />
-      <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout> } />
-      <Route path="/kirinyaga-adventist-terms-and-conditions" element={<Layout><Terms /></Layout> } />
+      <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout>} />
+      <Route path="/kirinyaga-adventist-terms-and-conditions" element={<Layout><Terms /></Layout>} />
     </Routes>
   );
 };

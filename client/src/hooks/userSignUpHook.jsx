@@ -5,6 +5,10 @@ export const useSignUp = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const { dispatch } = useAuthContext();
+
+  const clearError = () => {
+    setError(null);
+  }
   const signUp = async (
     firstName,
     lastName,
@@ -13,11 +17,12 @@ export const useSignUp = () => {
     course,
     year,
     password,
-    passwordConfirm
+    passwordConfirm,
+    phoneNumber
   ) => {
     setError(null);
     setLoading(true);
-    const url = `http://localhost:8000/kyusda/v1/member/signUp`;
+    const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/member/signUp`;
     const resp = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,17 +35,17 @@ export const useSignUp = () => {
         year,
         password,
         passwordConfirm,
+        phoneNumber
       }),
     });
     const data = await resp.json();
     console.log(data);
     if (!resp.ok) {
-      console.log(data.error);
-      setError(data.err);
+      setError(data.error);
       setLoading(false);
     }
     if (resp.ok) {
-      //set the token and useron frontend
+      //set the token and user on frontend
       localStorage.setItem("user", JSON.stringify(data));
       dispatch({ type: "LOGIN", payload: data });
       setLoading(false);
@@ -48,5 +53,5 @@ export const useSignUp = () => {
     }
   };
 
-  return { signUp, loading, error };
+  return { signUp, loading, error, clearError };
 };
