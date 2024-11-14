@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import KyuSda from "../../assets/kyusdaLogo.png";
@@ -15,6 +15,41 @@ const Header = () => {
   const handleLogOut = () => {
     logout();
   }
+
+  // State for countdown timer
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  // Countdown target date (replace with your event date)
+  const eventName = "Music Sabbath"; // Event name added here
+
+  useEffect(() => {
+    const eventDate = new Date("2024-11-16T00:00:00");
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = eventDate - now;
+
+      if (difference <= 0) {
+        clearInterval(timer); // Stop timer if the event date has passed
+      } else {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        setTimeLeft({ days, hours, minutes, seconds });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer); // Cleanup interval on component unmount
+  }, []);
+
   return (
     <header id="main-header">
       <div className="rows">
@@ -29,20 +64,42 @@ const Header = () => {
                 style={{
                   color: "white",
                   borderRadius: "50%",
-                  width: "30px",
-                  height: "40px",
+                  width: "20px",
+                  height: "30px",
                 }}
               />
+              {/* <BsFacebook
+  style={{
+    color: "white",
+    borderRadius: "50%",
+    width: "30px",
+    height: "40px",
+  }}
+/> */}
+
             </a>
-            <a href="https://twitter/kyusda/" target="_blank" rel="noreferrer">
+            <a
+              href="https://twitter/kyusda/"
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaTwitter
                 style={{
                   color: "white",
                   borderRadius: "50%",
-                  width: "30px",
-                  height: "40px",
+                  width: "20px",
+                  height: "30px",
                 }}
               />
+              {/* <TbBrandX
+  style={{
+    color: "white",
+    borderRadius: "50%",
+    width: "30px",
+    height: "40px",
+  }}
+/> */}
+
             </a>
             <a
               href="https://www.youtube.com/@kyusdachurch"
@@ -53,21 +110,28 @@ const Header = () => {
                 style={{
                   color: "white",
                   borderRadius: "50%",
-                  width: "30px",
-                  height: "40px",
+                  width: "20px",
+                  height: "30px",
                 }}
               />
             </a>
           </div>
           <div className="upcoming-events">
-            <p>Upcoming Event</p>
-            <p id="countdown">
-              <span id="days">00</span> <br />
-              <span id="hours">00</span>
-              <span id="mins">00</span>
-              <span id="secs">00</span>
+            <p>
+              <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp;
+              <span style={{ color: "#12ac8e", fontSize: "22px" }}>{eventName}</span> {/* Added color to event name */}
             </p>
-            <Link to="#events">READ MORE</Link>
+            <p id="countdown">
+              <span id="days">{timeLeft.days}</span>
+              <span style={{ fontSize: "12px" }}>Days</span> <br />
+              <span id="hours">{timeLeft.hours}</span>
+              <span style={{ fontSize: "12px" }}>Hrs</span>{" "}
+              <span id="mins">{timeLeft.minutes}</span>
+              <span style={{ fontSize: "12px" }}>Mins</span>{" "}
+              <span id="secs" style={{ fontSize: "34px", color: "#12ac8e" }}>{timeLeft.seconds}</span>
+              <span style={{ fontSize: "12px" }}>Sec</span>
+            </p>
+            <Link to="#events" style={{ fontSize: "12px", color: "#12ac8e" }}>EVENTS' DETAILS</Link>
           </div>
           {
             user?.email ?
@@ -102,10 +166,13 @@ const Header = () => {
               <li>
                 <Link to="/departments">Departments</Link>
               </li>
+              <li>
+                <Link to="#">Contact Us</Link>
+              </li>
             </ul>
           </div>
           <div className="donate-btn">
-            <Link to="/donation">Send Donation</Link>
+            <Link to="/donation">Support Us</Link>
           </div>
         </div>
       </div>
