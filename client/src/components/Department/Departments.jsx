@@ -8,6 +8,8 @@ import './Departments.scss';
 import { getAllDepartments } from '../../redux/apicall';
 import { useDispatch } from 'react-redux';
 import './DepartmentDetails.css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 const Departments = () => {
   const dispatch = useDispatch();
   const [departments, setDepartments] = useState([]);
@@ -46,8 +48,13 @@ const Departments = () => {
             <div
               className="app__work-img app__flex"
             >
-              <img src={urlFor(department.imgUrl)}
-                alt={department.title} />
+              <LazyLoadImage 
+              src={urlFor(department.imgUrl)}
+              alt={department.title}
+              effect={'blur'}
+              loading='lazy'
+              placeholderSrc={'/cover.jpeg'}
+                />
 
               <motion.div
                 whileHover={{ opacity: [0, 1] }}

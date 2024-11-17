@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { LazyLoadImage,trackWindowScroll } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -9,7 +11,7 @@ import {
 
 import './Gallery.css'
 
-const Gallery = ({ galleryImages }) => {
+const Gallery = ({ galleryImages,scrollPosition }) => {
 
     const [slideNumber, setSlideNumber] = useState(0)
     const [openModal, setOpenModal] = useState(false)
@@ -47,7 +49,13 @@ const Gallery = ({ galleryImages }) => {
                     <FontAwesomeIcon icon={faCircleChevronLeft} className='btnPrev' onClick={prevSlide} />
                     <FontAwesomeIcon icon={faCircleChevronRight} className='btnNext' onClick={nextSlide} />
                     <div className='fullScreenImage'>
-                        <img src={galleryImages[slideNumber].img} alt='' />
+                        <LazyLoadImage 
+                        src={galleryImages[slideNumber].img} 
+                        alt='' 
+                        effect={'blur'}
+                        loading='lazy'
+                        placeholderSrc={'/cover.jpeg'}
+                         />
                     </div>
                 </div>
             }
@@ -61,7 +69,15 @@ const Gallery = ({ galleryImages }) => {
                                 key={index}
                                 onClick={() => handleOpenModal(index)}
                             >
-                                <img src={slide.img} alt='' />
+                                <LazyLoadImage
+                                 src={slide.img} 
+                                 effect={'blur'}
+                                 alt='' 
+                                 loading='lazy'
+                                 placeholderSrc={'/cover.jpeg'}
+                                 scrollPosition={scrollPosition}
+                                 />
+                               
                             </div>
                         )
                     })
@@ -72,4 +88,4 @@ const Gallery = ({ galleryImages }) => {
     )
 }
 
-export default Gallery
+export default trackWindowScroll(Gallery);
