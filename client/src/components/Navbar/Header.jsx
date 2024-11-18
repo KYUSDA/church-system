@@ -25,10 +25,10 @@ const Header = () => {
   });
 
   // Countdown target date (replace with your event date)
-  const eventName = "Music Sabbath";
+  const eventName = "VoP Sabbath";
 
   useEffect(() => {
-    const eventDate = new Date("2024-11-16T00:00:00");
+    const eventDate = new Date("2024-11-23T00:00:00");
     const timer = setInterval(() => {
       const now = new Date();
       const difference = eventDate - now;
@@ -103,7 +103,7 @@ const Header = () => {
           <div className="upcoming-events">
             <p>
               <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp;
-              <span style={{ color: "#12ac8e", fontSize: "22px" }}>{eventName}</span>
+              <span style={{ color: "#12ac8e", fontSize: "21px" }}>{eventName}</span>
             </p>
             <p id="countdown">
               <span id="days">{timeLeft.days}</span>
