@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import './Banner.css';
 
 const Banner = () => {
@@ -12,9 +11,6 @@ const Banner = () => {
                     <br /> to all intents and purposes. <br />
                     (Medical Ministry 49.4)
                 </p>
-                <Link to="/about-section">
-                    About Us <i className="fa fa-angle-down"></i>
-                </Link>
             </div>
 
             {/* YouTube Preview Thumbnail */}
