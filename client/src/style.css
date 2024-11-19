@@ -104,7 +104,7 @@ img{
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 10px;
 }
 
 #countdown span{

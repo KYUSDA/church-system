@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import './Banner.css';
+
 const Banner = () => {
     return (
         <div className='hero-section'>
@@ -11,12 +11,23 @@ const Banner = () => {
                     <br /> to all intents and purposes. <br />
                     (Medical Ministry 49.4)
                 </p>
-                <Link to="/about-section">
-                    About Us <i className="fa fa-angle-down"></i>
-                </Link>
             </div>
+
+            {/* YouTube Preview Thumbnail */}
+            <a 
+                href="https://www.youtube.com/watch?v=844gAZ62cXs" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="youtube-thumbnail-link"
+            >
+                <img 
+                    src="https://img.youtube.com/vi/844gAZ62cXs/hqdefault.jpg" 
+                    alt="Upcoming Event" 
+                    className="youtube-thumbnail" 
+                />
+            </a>
         </div>
     )
 }
 
-export default Banner
+export default Banner;
