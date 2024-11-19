@@ -10,7 +10,13 @@ const app = express();
 app.use(json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://jolly-coast-0386d1803.5.azurestaticapps.net",
+      "https://jolly-coast-0386d1803.5.azurestaticapps.net/",
+      "*",
+    ],
     credentials: true,
   })
 );
