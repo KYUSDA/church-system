@@ -17,6 +17,11 @@
     color: white;
 }
 
+.hero-text h1{
+    font-weight: 600;
+    font-size: 3rem;
+}
+
 .youtube-thumbnail-link {
     position: absolute;
     bottom: 80px;

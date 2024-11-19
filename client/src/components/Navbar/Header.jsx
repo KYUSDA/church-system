@@ -25,10 +25,10 @@ const Header = () => {
   });
 
   // Countdown target date (replace with your event date)
-  const eventName = "Music Sabbath"; // Event name added here
+  const eventName = "VoP Sabbath";
 
   useEffect(() => {
-    const eventDate = new Date("2024-11-16T00:00:00");
+    const eventDate = new Date("2024-11-23T00:00:00");
     const timer = setInterval(() => {
       const now = new Date();
       const difference = eventDate - now;
@@ -47,7 +47,7 @@ const Header = () => {
       }
     }, 1000);
 
-    return () => clearInterval(timer); // Cleanup interval on component unmount
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -68,15 +68,7 @@ const Header = () => {
                   height: "30px",
                 }}
               />
-              {/* <BsFacebook
-  style={{
-    color: "white",
-    borderRadius: "50%",
-    width: "30px",
-    height: "40px",
-  }}
-/> */}
-
+              
             </a>
             <a
               href="https://twitter/kyusda/"
@@ -91,14 +83,6 @@ const Header = () => {
                   height: "30px",
                 }}
               />
-              {/* <TbBrandX
-  style={{
-    color: "white",
-    borderRadius: "50%",
-    width: "30px",
-    height: "40px",
-  }}
-/> */}
 
             </a>
             <a
@@ -119,7 +103,7 @@ const Header = () => {
           <div className="upcoming-events">
             <p>
               <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp;
-              <span style={{ color: "#12ac8e", fontSize: "22px" }}>{eventName}</span> {/* Added color to event name */}
+              <span style={{ color: "#12ac8e", fontSize: "21px" }}>{eventName}</span>
             </p>
             <p id="countdown">
               <span id="days">{timeLeft.days}</span>
