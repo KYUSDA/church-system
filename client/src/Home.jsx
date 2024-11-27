@@ -8,7 +8,7 @@ import ResetInSide from "./pages/ResetToken";
 import NewPassword from "./pages/ResetPassword";
 import MembersDashboard from "./pages/MembersDashboard";
 import Families from "./pages/Families";
-import Departments from "./pages/Departments";
+import Departments from "./components/Department/Departments";
 import SingleFamily from "./pages/SingleFamily";
 import DepartmentsDetails from "./components/Department/DepartmentsDetails";
 
@@ -41,8 +41,8 @@ const Home = () => {
       ></Route>
       <Route path="/families" element={<Families />}></Route>
       <Route path="/families/:id" element={<SingleFamily />} />
-      <Route path="/Departments" element={<Departments />}></Route>
-      <Route path="/Departments/:id" element={<DepartmentsDetails />} />
+      <Route path="/Departments" element={<Layout><Departments /></Layout>}></Route>
+      <Route path="/Departments/:id" element={<Layout><DepartmentsDetails /></Layout>} />
       <Route path="/membersDashboard" element={<MembersDashboard />} />
       <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout>} />
       <Route path="/kirinyaga-adventist-terms-and-conditions" element={<Layout><Terms /></Layout>} />
