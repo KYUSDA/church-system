@@ -1,38 +1,38 @@
 export const faQuestions = [
   {
     id: 1,
-    question: "Why do Kyusda have families ?",
+    question: "What is the purpose of having families in KyUSDA?",
     answer:
-      "A family is a small unit where members from one place unite in worship and also to know the well being of others as we share the brotherly love in christ.",
+      "A family in KyUSDA serves as a small community where members come together to worship, support one another, and share Christ's love, while also caring for each other's well-being.",
   },
   {
     id: 2,
-    question: "When does these families meet?",
+    question: "When do the KyUSDA families gather?",
     answer:
-      "KyUSDA families meet on Sundays at a time agreed by all family members.",
+      "KyUSDA families meet every Sunday at a time that is mutually agreed upon by all family members.",
   },
   {
     id: 3,
-    question: "Where do they meet?",
+    question: "Where do KyUSDA families meet?",
     answer:
-      "Families meet at a place they agree as members it can be at school or at a place where one of them lives to ensure the bonding nd togetherness.",
+      "Family meetings take place at a location chosen by the members, which could be on campus, at someone's home, or any place where the members can come together to strengthen their bond.",
   },
   {
     id: 4,
-    question: "What happens in the family meetings?",
+    question: "What activities take place during family meetings?",
     answer:
-      "During family meetings we meet,pray,share the word,tackle the questions presented by members and also invite even those who are not of our faith as we look closer for the second coming of christ.",
+      "In family meetings, we come together for prayer, share the Word of God, discuss questions raised by members, and even invite those outside of our faith as we prepare for the second coming of Christ.",
   },
   {
     id: 5,
-    question: "Who is the leader of families?",
+    question: "Who leads the KyUSDA families?",
     answer:
-      "Families are like small units that make up a church and they are headed by family leaders and every family is assigned a specific church elder to ensure its well-being.",
+      "Each KyUSDA family is led by a family leader, and each family is also supported by a designated church elder to ensure its spiritual well-being and growth.",
   },
   {
     id: 6,
-    question: "Why should I belong or attend a family meeting?",
+    question: "Why should I be part of or attend a family meeting?",
     answer:
-      "The Bible clearly says that let us not forsake the assembling of believers and in family meetings is where we can even air our questions and know one another and nurture or nourish our faith as we grow in Christ. Let us all get involved.",
+      "The Bible encourages believers not to forsake gathering together. Family meetings provide a space to ask questions, get to know each other, and nurture our faith as we grow in Christ. It's a great opportunity for everyone to get involved.",
   },
 ];
