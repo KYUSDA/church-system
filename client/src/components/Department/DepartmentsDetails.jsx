@@ -1,8 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import Header from '../Navbar/Header';
-import MainFooter from '../Footer/MainFooter';
 import './DepartmentDetails.css';
 import { urlFor } from '../../client';
 const DepartmentsDetails = () => {
@@ -14,7 +12,6 @@ const DepartmentsDetails = () => {
     <div>
 
       <div>
-        <Header />
         <section className='breadcrumbs'>
           <div className="breadcrumb-container">
             <h2 className="hero-heading white">{department?.title?.toUpperCase()} </h2>
@@ -84,9 +81,6 @@ const DepartmentsDetails = () => {
             </div>
           </div>
         </section>
-        <div style={{ marginTop: "60px", height: '150px' }}>
-          <MainFooter />
-        </div>
       </div>
     </div>
   )
