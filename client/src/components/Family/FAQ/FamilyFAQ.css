@@ -4,11 +4,15 @@
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
+  padding-bottom: 50px; /* Add padding to prevent overlap with footer */
+  position: relative; /* Ensures proper stacking order */
 }
 
 .container {
-  height: 500px;
+  /* height: 500px; */
   margin: auto;
+  height: auto; /* Allow container to adjust height dynamically */
+  padding-bottom: 20px; /* Add space for content expansion */
 }
 
 .heading {
@@ -68,9 +72,10 @@
 
 /* Visible Answer (Toggled Open) */
 .faq .answer.show {
-  max-height: 200px;
+  max-height: 300px;
   opacity: 1;
   padding: 10px 15px;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 /* Hidden Answer */
