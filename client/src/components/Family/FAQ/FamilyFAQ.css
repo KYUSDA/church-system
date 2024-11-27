@@ -57,11 +57,10 @@
   opacity: 0;
   padding: 0 15px; /* Horizontal padding for better spacing */
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
-  background-color: #444; /* Background color for answer */
   border-radius: 5px; /* Rounded corners */
   margin-top: 10px; /* Space between question and answer */
   color: #eee; /* Text color for better readability */
-  font-size: 1rem; /* Adjust font size */
+  font-size: 1.2rem; /* Adjust font size */
   line-height: 1.5; /* Improve line spacing */
 }
 
