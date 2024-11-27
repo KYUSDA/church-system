@@ -96,6 +96,7 @@
   max-height: 300px;
 }
 
+/* || Media Queries */
 
 /* General styles for small screens */
 @media (max-width: 768px) {
@@ -106,28 +107,26 @@
 
   /* Adjust answer font size */
   .faq .answer {
-      font-size: 0.9rem; /* Reduce font size for answers */
-      line-height: 1.4; /* Adjust line spacing */
+      font-size: 0.9rem; 
+      line-height: 1.4;
   }
-
-  /* Adjust padding for better spacing */
   .faq .question {
-      padding: 0.8rem; /* Reduce padding for the question container */
+      padding: 0.8rem;
   }
 
   .faq .answer {
-      padding: 8px 10px; /* Reduce padding for the answer container */
+      padding: 8px 10px; 
   }
 
   /* Adjust heading size */
   .heading {
-      font-size: 24px; /* Reduce the size of the section heading */
+      font-size: 24px;
   }
 
   /* Grid column layout for narrower screens */
   .col {
       grid-template-columns: 1fr; /* Single-column layout on small screens */
-      gap: 15px; /* Reduce gap between FAQs */
+      gap: 15px; 
   }
 }
 
@@ -135,34 +134,30 @@
 
 /* General styles for medium screens */
 @media (max-width: 1024px) and (min-width: 769px) {
-  /* Adjust question font size */
   .faq .question h3 {
-      font-size: 1.2rem; /* Slightly reduce font size for questions */
+      font-size: 1.2rem;
   }
-
-  /* Adjust answer font size */
   .faq .answer {
-      font-size: 1rem; /* Slightly reduce font size for answers */
-      line-height: 1.5; /* Keep good line spacing */
+      font-size: 1rem; 
+      line-height: 1.5;
   }
 
   /* Adjust padding for the question container */
   .faq .question {
-      padding: 1rem; /* Moderate padding for the question container */
+      padding: 1rem;
   }
-
   .faq .answer {
-      padding: 10px 15px; /* Moderate padding for the answer container */
+      padding: 10px 15px; 
   }
 
   /* Adjust heading size for medium screens */
   .heading {
-      font-size: 28px; /* Moderate size for the section heading */
+      font-size: 28px;
   }
 
   /* Grid layout adjustments for medium screens */
   .col {
       grid-template-columns: repeat(2, 1fr); /* Two-column layout */
-      gap: 20px; /* Moderate gap between items */
+      gap: 20px; 
   }
 }
