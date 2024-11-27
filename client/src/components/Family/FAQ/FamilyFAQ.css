@@ -57,18 +57,18 @@
   opacity: 0;
   padding: 0 15px; /* Horizontal padding for better spacing */
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
-  border-radius: 5px; /* Rounded corners */
-  margin-top: 10px; /* Space between question and answer */
-  color: #eee; /* Text color for better readability */
-  font-size: 1.2rem; /* Adjust font size */
-  line-height: 1.5; /* Improve line spacing */
+  border-radius: 5px;
+  margin-top: 5px; /* Space between question and answer */
+  color: #eee; 
+  font-size: 1.2rem; 
+  line-height: 1.5; 
 }
 
 /* Visible Answer (Toggled Open) */
 .faq .answer.show {
-  max-height: 200px; /* Adjust height based on expected content size */
+  max-height: 200px;
   opacity: 1;
-  padding: 10px 15px; /* Add padding when visible */
+  padding: 10px 15px;
 }
 
 /* Hidden Answer */
