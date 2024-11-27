@@ -1,3 +1,9 @@
+
+.image-style {
+  transition: transform 0.3s ease-in-out;
+}
+
+
 .app__works {
     flex: 1;
     width: 100%;
