@@ -16,6 +16,7 @@ import DepartmentsDetails from "./components/Department/DepartmentsDetails";
 import PrivacyPolicy from "./components/Footer/Policy";
 import Terms from "./components/Footer/Terms";
 import Layout from "./components/Footer/Layout";
+import ResourceCenter from "./pages/ResourceCenter";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -36,7 +37,7 @@ const Home = () => {
       ></Route>
       <Route path="/resetPassword" element={<NewPassword />}></Route>
       <Route
-        path="/member"
+        path="/member/*"
         element={user ? <MembersDashboard /> : <Navigate to="/signIn" />}
       ></Route>
       <Route path="/families" element={<Families />}></Route>
