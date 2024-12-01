@@ -47,16 +47,13 @@ export default function Newpassword() {
     event.preventDefault();
     setPassword('');
     setPasswordConfirm('');
-    console.log(token);
     const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetPassword/${token}`;
-    console.log(url);
     const resp = await fetch(url, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password, passwordConfirm })
     })
     const data = await resp.json();
-    console.log(data);
     if (data.status === 'success') {
       alert(`${data.message}`);
     } else {

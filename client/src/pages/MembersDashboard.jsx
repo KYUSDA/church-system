@@ -3,6 +3,10 @@ import { NavLink, Routes, Route } from "react-router-dom";
 import { useAuthContext } from "../context/useAuthcontext";
 import ResourceCenter from "./ResourceCenter";
 import DashboardHome from "./DashboardHome";
+import Settings from "./Settings";
+import LessonDiscussion from "./LessonDiscussion";
+import BibleTrivia from "./BibleTrivia";
+import Family from "./Family";
 
 const MembersDashboard = () => {
 	const { user } = useAuthContext();
@@ -135,10 +139,14 @@ const MembersDashboard = () => {
 				</div>
 			</nav>
 
-			<main className="flex-1 overflow-y-auto">
+			<main className="flex-1 overflow-y-auto pl-8  w-full bg-blue-300 pr-[20vw]">
 				<Routes>
 					<Route path="/" element={<DashboardHome />} />
 					<Route path="/resources" element={<ResourceCenter />} />
+					<Route path="/settings" element={<Settings />} />
+					<Route path="/lesson" element={<LessonDiscussion />} />
+					<Route path="/bibleTrivia" element={<BibleTrivia />} />
+					<Route path="/family" element={<Family />} />
 				</Routes>
 			</main>
 		</div>
