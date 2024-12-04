@@ -139,7 +139,7 @@ const MembersDashboard = () => {
 				</div>
 			</nav>
 
-			<main className="flex-1 overflow-y-auto pl-8  w-full bg-blue-300 pr-[20vw]">
+			<main className="flex-1 overflow-y-auto pl-8  w-full pr-[20vw]">
 				<Routes>
 					<Route path="/" element={<DashboardHome />} />
 					<Route path="/resources" element={<ResourceCenter />} />
