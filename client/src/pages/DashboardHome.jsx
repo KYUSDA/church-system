@@ -23,7 +23,7 @@ const DashboardHome = () => {
         <div className="max-w-7xl mx-auto p-8">
             {/* Header */}
             <NavBar user={user} />
-            <div className='w-full'>
+            <div className='w-[75vw] p-3'>
                 <AnalyticsSection />
                 <QuickActions />
                 {/* Stats Grid */}
