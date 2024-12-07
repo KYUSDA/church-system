@@ -2,7 +2,7 @@ const CommunitySection = () => {
     return (
         <div className="bg-white rounded-xl p-6 shadow-lg">
             <h3 className="text-lg font-semibold mb-4">Community</h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
                 {/* Birthdays This Week */}
                 <div className="bg-blue-50 p-4 rounded-lg">
                     <h4 className="font-medium mb-3">Birthdays This Week</h4>

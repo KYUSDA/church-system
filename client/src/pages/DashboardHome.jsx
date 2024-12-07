@@ -28,7 +28,7 @@ const DashboardHome = () => {
                 <QuickActions />
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 max-sm:flex-col">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-semibold text-gray-900">
                                 Family Group
@@ -39,7 +39,7 @@ const DashboardHome = () => {
                         </div>
                     </div>
                     <div className='bg-white rounded-xl shadow-lg p-6 border border-gray-100'>
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between  max-sm:flex-col">
                             <h3 className="text-lg font-semibold text-gray-900">
                                 Badges
                             </h3>
@@ -108,7 +108,7 @@ const DashboardHome = () => {
 
                 </div>
 
-                <div className="grid grid-cols-2 gap-8 m-4">
+                <div className="grid grid-cols-2 gap-8 m-4 max-lg:grid-cols-1">
                     <CommunitySection />
 
                     {/* Family Group Section */}

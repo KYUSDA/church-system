@@ -2,7 +2,7 @@ import React from 'react'
 
 const AnalyticsSection = () => {
     return (
-        <div className='grid grid-cols-4 gap-4 mt-16 max-lg:grid-cols-2 mb-8'>
+        <div className='grid grid-cols-4 gap-4 mt-16 max-lg:grid-cols-2 mb-8 max-sm:grid-cols-1'>
             <div className="bg-white rounded-xl p-4 shadow-lg">
                 <h4 className="text-gray-500 text-sm">Family meeting Attendance</h4>
                 <div className="flex items-center mt-2">
