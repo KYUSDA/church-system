@@ -35,6 +35,27 @@ a{
 }
 
 
+.donate-btn {
+    border: none;
+    outline: none;
+    background-color: #488aec;
+    color: #eee;
+    border-radius: 7px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+  }
+  
+  .donate-btn:hover {
+    transform: translateY(-3px);
+  }
+  
+  .button-span {
+    color: #aaa;
+  }
+  
+
+
 /* Keyframes for slide-up animation */
 /* Define the slide-up keyframes */
 @keyframes slide-up {
