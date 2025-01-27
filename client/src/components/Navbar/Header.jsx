@@ -18,39 +18,72 @@ const Header = () => {
       <div className="logo flex items-center gap-3">
         <Link to="/" className="flex items-center gap-3">
           <img src={KyuSda} alt="kyusda logo" className="w-12 h-12" />
-          <span className="text-black">KYUSDA CHURCH</span>
+          <span className="text-black font-bold">KYUSDA CHURCH</span>
         </Link>
       </div>
 
       {/* navlinks */}
       <div className="nav-links flex flex-grow justify-center">
-      <ul className="flex gap-6 text-black uppercase font-semibold text-sm">
-        <li>
-          <Link to="/" className="relative group hover:text-blue-700">
-            Home
-            <span className="underline-transition"></span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/families" className="relative group hover:text-orange-600">
-            Families
-            <span className="underline-transition"></span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/departments" className="relative group hover:text-orange-600">
-            Departments
-            <span className="underline-transition"></span>
-          </Link>
-        </li>
-        <li>
-          <Link to="#" className="relative group hover:text-orange-600">
-            Contact Us
-            <span className="underline-transition"></span>
-          </Link>
-        </li>
-      </ul>
-  </div>
+  <ul className="flex gap-6 text-black uppercase text-sm">
+    <li>
+      <Link
+        to="/"
+        className="relative group text-sm underline-transition"
+      >
+        Home
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/families"
+        className="relative group  text-sm underline-transition"
+      >
+        Families
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/departments"
+        className="relative group  text-sm underline-transition"
+      >
+        Departments
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="#"
+        className="relative group  text-sm underline-transition"
+      >
+        Contact Us
+      </Link>
+    </li>
+  </ul>
+</div>
+
+<style jsx>{`
+  .underline-transition {
+    position: relative;
+    display: inline-block;
+  }
+
+  .underline-transition::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px; /* Adjust based on text */
+    left: 0;
+    background-color:#3b82f6;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .underline-transition:hover::after {
+    transform: scaleX(1);
+  }
+`}</style>
+
 
       <div className="flex gap-3 items-center">
         {user?.email ? (
@@ -60,17 +93,59 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex gap-3">
-            <Link to="/signUp" className="text-black">Register</Link>
-            <Link to="/signIn" className="text-black">Login</Link>
+            <Link to="/signUp" className="text-black text-sm register-btn">REGISTER</Link>
+            <Link to="/signIn" className="text-black text-sm login-btn">LOGIN</Link>
           </div>
         )}
 
-        <div className="donate-btn bg-green-700 rounded-lg px-4 py-2 hover:bg-opacity-80">
-          <Link to="/donation" className="text-white">Support Us</Link>
+<style jsx>{`
+  .register-btn {
+    position: relative;
+    display: inline-block;
+  }
+
+  .register-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px; /* Adjust based on text */
+    left: 0;
+    background-color:#3b82f6;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .register-btn:hover::after {
+    transform: scaleX(0);
+  }
+
+  .login-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+
+  .login-btn:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+`}</style>
+        <div className="donate-btn px-4 py-2 ">
+          <Link to="/donation" className="text-white font-sans">SUPPORT US</Link>
         </div>
       </div>
     </header>
   );
 };
+
 
 export default Header;
