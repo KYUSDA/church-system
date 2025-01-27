@@ -3,7 +3,7 @@ import { AiFillEye } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { urlFor, client } from '../../client';
-import './Families.scss';
+
 import { getAllFamilies } from '../../redux/apicall';
 import { useDispatch } from 'react-redux';
 
