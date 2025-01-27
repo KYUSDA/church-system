@@ -1,167 +1,151 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "./Navbar.scss";
-import KyuSda from "../../assets/kyusdaLogo.png";
-import "../../style.css";
-import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
-import { useLogout } from "../../hooks/userLogoutHook";
 
+import React from "react";
+import { Link } from "react-router-dom";
+import KyuSda from "../../assets/kyusdaLogo.png";
+import { useLogout } from "../../hooks/userLogoutHook";
+import '../../global/global.css';
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
   const { logout } = useLogout();
 
   const handleLogOut = () => {
     logout();
   }
 
-  // State for countdown timer
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  // Countdown target date (replace with your event date)
-  const eventName = "VoP Sabbath";
-
-  useEffect(() => {
-    const eventDate = new Date("2024-11-23T00:00:00");
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = eventDate - now;
-
-      if (difference <= 0) {
-        clearInterval(timer); // Stop timer if the event date has passed
-      } else {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <header id="main-header">
-      <div className="rows">
-        <div className="top-row-one">
-          <div className="social-links">
-            <a
-              href="https://www.facebook.com/KYUSDANewYork/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaFacebookSquare
-                style={{
-                  color: "white",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "30px",
-                }}
-              />
-              
-            </a>
-            <a
-              href="https://twitter/kyusda/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaTwitter
-                style={{
-                  color: "white",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "30px",
-                }}
-              />
+    <header className="bg-color main-header flex justify-between items-center px-6 py-2">
+      <div className="logo flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
+          <img src={KyuSda} alt="kyusda logo" className="w-12 h-12" />
+          <span className="text-black font-bold">KYUSDA CHURCH</span>
+        </Link>
+      </div>
 
-            </a>
-            <a
-              href="https://www.youtube.com/@kyusdachurch"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaYoutube
-                style={{
-                  color: "white",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "30px",
-                }}
-              />
-            </a>
-          </div>
-          <div className="upcoming-events">
-            <p>
-              <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp;
-              <span style={{ color: "#12ac8e", fontSize: "21px" }}>{eventName}</span>
-            </p>
-            <p id="countdown">
-              <span id="days">{timeLeft.days}</span>
-              <span style={{ fontSize: "12px" }}>Days</span> <br />
-              <span id="hours">{timeLeft.hours}</span>
-              <span style={{ fontSize: "12px" }}>Hrs</span>{" "}
-              <span id="mins">{timeLeft.minutes}</span>
-              <span style={{ fontSize: "12px" }}>Mins</span>{" "}
-              <span id="secs" style={{ fontSize: "34px", color: "#12ac8e" }}>{timeLeft.seconds}</span>
-              <span style={{ fontSize: "12px" }}>Sec</span>
-            </p>
-            <Link to="#events" style={{ fontSize: "12px", color: "#12ac8e" }}>EVENTS' DETAILS</Link>
-          </div>
-          {
-            user?.email ?
-              <div className="flex justify-between items-center gap-x-3">
-                <Link to="/member">Dashboard</Link>
-                <button onClick={handleLogOut} className="rounded-md p-2 bg-[#12ac8e]">Log Out</button>
-              </div>
-              : <div className="register-btn">
-                <Link to="/signUp" style={{ marginRight: "20px" }}>
-                  Register Membership
-                </Link>
-                <Link to="/signIn">Login</Link>
-              </div>
-          }
+      {/* navlinks */}
+      <div className="nav-links flex flex-grow justify-center">
+  <ul className="flex gap-6 text-black uppercase text-sm">
+    <li>
+      <Link
+        to="/"
+        className="relative group text-sm underline-transition"
+      >
+        Home
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/families"
+        className="relative group  text-sm underline-transition"
+      >
+        Families
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/departments"
+        className="relative group  text-sm underline-transition"
+      >
+        Departments
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="#"
+        className="relative group  text-sm underline-transition"
+      >
+        Contact Us
+      </Link>
+    </li>
+  </ul>
+</div>
 
-        </div>
-        <div className="top-row-two">
-          <div className="logo">
-            <Link to="/">
-              <img src={KyuSda} alt="kyusda logo" />
-              <span>KYUSDA CHURCH</span>
-            </Link>
+<style jsx>{`
+  .underline-transition {
+    position: relative;
+    display: inline-block;
+  }
+
+  .underline-transition::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px; /* Adjust based on text */
+    left: 0;
+    background-color:#3b82f6;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .underline-transition:hover::after {
+    transform: scaleX(1);
+  }
+`}</style>
+
+
+      <div className="flex gap-3 items-center">
+        {user?.email ? (
+          <div className="flex gap-3">
+            <Link to="/member" className="text-black">Dashboard</Link>
+            <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#12ac8e] text-white">Log Out</button>
           </div>
-          <div className="nav-links">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/families">Families</Link>
-              </li>
-              <li>
-                <Link to="/departments">Departments</Link>
-              </li>
-              <li>
-                <Link to="#">Contact Us</Link>
-              </li>
-            </ul>
+        ) : (
+          <div className="flex gap-3">
+            <Link to="/signUp" className="text-black text-sm register-btn">REGISTER</Link>
+            <Link to="/signIn" className="text-black text-sm login-btn">LOGIN</Link>
           </div>
-          <div className="donate-btn">
-            <Link to="/donation">Support Us</Link>
-          </div>
+        )}
+
+<style jsx>{`
+  .register-btn {
+    position: relative;
+    display: inline-block;
+  }
+
+  .register-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px; /* Adjust based on text */
+    left: 0;
+    background-color:#3b82f6;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .register-btn:hover::after {
+    transform: scaleX(0);
+  }
+
+  .login-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+
+  .login-btn:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+`}</style>
+        <div className="donate-btn px-4 py-2 ">
+          <Link to="/donation" className="text-white font-sans">SUPPORT US</Link>
         </div>
       </div>
     </header>
   );
 };
+
 
 export default Header;

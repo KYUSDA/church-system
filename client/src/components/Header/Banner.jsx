@@ -1,9 +1,12 @@
 import React from 'react'
 import './Banner.css';
+import EventsCard from '../EventsCard/events_card';
 
 const Banner = () => {
     return (
         <div className='hero-section'>
+        <EventsCard />
+            {/* Hero Text */}
             <div className="hero-text">
                 <h1>WELCOME TO KYUSDA CHURCH</h1>
                 <p>
@@ -12,20 +15,6 @@ const Banner = () => {
                     (Medical Ministry 49.4)
                 </p>
             </div>
-
-            {/* YouTube Preview Thumbnail */}
-            <a 
-                href="https://www.youtube.com/watch?v=844gAZ62cXs" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="youtube-thumbnail-link"
-            >
-                <img 
-                    src="https://img.youtube.com/vi/844gAZ62cXs/hqdefault.jpg" 
-                    alt="Upcoming Event" 
-                    className="youtube-thumbnail" 
-                />
-            </a>
         </div>
     )
 }
