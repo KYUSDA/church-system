@@ -1,6 +1,6 @@
 /* General FAQ Section Styles */
 .faqs {
-  background-color: rgba(107, 0, 62, 0.8);
+  background-color: #255760;;
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -49,6 +49,7 @@
   align-items: center;
   background: var(--fourth-color);
   padding: 1rem;
+  color: #0e2125;
 }
 
 .faq .question h3 {
