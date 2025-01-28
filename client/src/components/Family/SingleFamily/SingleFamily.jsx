@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../../Navbar/Header';
-import MainFooter from '../../Footer/MainFooter';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { urlFor } from '../../../client';
@@ -12,7 +10,6 @@ const SingleFamily = () => {
     return (
         <div>
             <div>
-                <Header />
                 <section className='imageContainer'>
                     <img src={urlFor(family.imgUrl)}
                         alt={family.title} />
@@ -88,9 +85,6 @@ const SingleFamily = () => {
                         </div>
                     </div>
                 </section>
-                <div style={{ marginTop: "20px", height: '150px' }}>
-                    <MainFooter />
-                </div>
             </div>
         </div>
     )
