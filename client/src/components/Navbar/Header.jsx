@@ -18,17 +18,17 @@ const Header = () => {
       <div className="logo flex items-center gap-3">
         <Link to="/" className="flex items-center gap-3">
           <img src={KyuSda} alt="kyusda logo" className="w-12 h-12" />
-          <span className="text-black font-bold">KYUSDA CHURCH</span>
+          <span className="text-[rgba(238,238,238,0.75)] font-bold">KYUSDA CHURCH</span>
         </Link>
       </div>
 
       {/* navlinks */}
       <div className="nav-links flex flex-grow justify-center">
-  <ul className="flex gap-6 text-black uppercase text-sm">
+  <ul className="flex gap-6 uppercase text-sm">
     <li>
       <Link
         to="/"
-        className="relative group text-sm underline-transition"
+        className="relative group text-sm text-[rgba(238,238,238,0.75)] underline-transition"
       >
         Home
       </Link>
@@ -36,7 +36,7 @@ const Header = () => {
     <li>
       <Link
         to="/families"
-        className="relative group  text-sm underline-transition"
+        className="relative group  text-sm text-[rgba(238,238,238,0.75)] underline-transition"
       >
         Families
       </Link>
@@ -44,7 +44,7 @@ const Header = () => {
     <li>
       <Link
         to="/departments"
-        className="relative group  text-sm underline-transition"
+        className="relative group  text-sm text-[rgba(238,238,238,0.75)] underline-transition"
       >
         Departments
       </Link>
@@ -52,7 +52,7 @@ const Header = () => {
     <li>
       <Link
         to="#"
-        className="relative group  text-sm underline-transition"
+        className="relative group  text-sm text-[rgba(238,238,238,0.75)] underline-transition"
       >
         Contact Us
       </Link>
@@ -73,7 +73,7 @@ const Header = () => {
     height: 2px;
     bottom: -2px; /* Adjust based on text */
     left: 0;
-    background-color:#3b82f6;
+    background-color:#255760;
     transform: scaleX(0);
     transform-origin: bottom left;
     transition: transform 0.3s ease-out;
@@ -93,8 +93,8 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex gap-3">
-            <Link to="/signUp" className="text-black text-sm register-btn">REGISTER</Link>
-            <Link to="/signIn" className="text-black text-sm login-btn">LOGIN</Link>
+            <Link to="/signUp" className="text-[rgba(238,238,238,0.75)] text-sm register-btn">REGISTER</Link>
+            <Link to="/signIn" className="text-[rgba(238,238,238,0.75)] text-sm login-btn">LOGIN</Link>
           </div>
         )}
 
@@ -111,7 +111,7 @@ const Header = () => {
     height: 2px;
     bottom: -2px; /* Adjust based on text */
     left: 0;
-    background-color:#3b82f6;
+    background-color:#255760;
     transform: scaleX(1);
     transform-origin: bottom left;
     transition: transform 0.3s ease-out;
@@ -140,7 +140,7 @@ const Header = () => {
   }
 `}</style>
         <div className="donate-btn px-4 py-2 ">
-          <Link to="/donation" className="text-white font-sans">SUPPORT US</Link>
+          <Link to="/donation" className="text-[rgba(238,238,238,0.75)] font-bold font-sans">SUPPORT US</Link>
         </div>
       </div>
     </header>
