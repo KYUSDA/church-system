@@ -73,7 +73,7 @@ const Header = () => {
     height: 2px;
     bottom: -2px; /* Adjust based on text */
     left: 0;
-    background-color:#3b82f6;
+    background-color:#255760;
     transform: scaleX(0);
     transform-origin: bottom left;
     transition: transform 0.3s ease-out;
@@ -111,7 +111,7 @@ const Header = () => {
     height: 2px;
     bottom: -2px; /* Adjust based on text */
     left: 0;
-    background-color:#3b82f6;
+    background-color:#255760;
     transform: scaleX(1);
     transform-origin: bottom left;
     transition: transform 0.3s ease-out;
