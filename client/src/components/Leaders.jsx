@@ -17,24 +17,24 @@ const leaders = [
 
 function Leaders() {
   return (
-    <div className="container mx-auto my-12 px-6">
-      <section className="text-center">
-        <h2 className="text-4xl font-bold mb-8 pt-6 text-gray-800">
-          <span className="text-[#6B003E]">Meet the </span>Church Leaders
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
-          {leaders.map(({ src, name, role }, index) => (
-            <div key={index} className="p-4 text-center w-64 mx-auto">
-              <img src={src} alt={name} className="w-32 h-32 mx-auto rounded-full object-cover" />
-              <h5 className="text-lg font-semibold mt-4">{name}</h5>
-              <p className="text-gray-500">{role}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+    <div className="container mx-auto my-12 px-6 text-center">
+      <h2 className="text-4xl font-bold mb-8 pt-6 text-gray-800">
+        <span className="text-[#6B003E]">Meet the </span>Church Leaders
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 justify-center">
+        {leaders.map(({ src, name, role }, index) => (
+          <div key={index} className="p-4 text-center w-64 mx-auto">
+            <img src={src} alt={name} className="w-32 h-32 mx-auto rounded-full object-cover" />
+            <h5 className="text-lg font-semibold mt-4">{name}</h5>
+            <p className="text-gray-500">{role}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default Leaders;
+
+
 
