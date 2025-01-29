@@ -7,9 +7,9 @@ import eldersam from '../assets/Eldersam.jpg';
 import joshua from '../assets/Joshua pic.jpg';
 
 const leaders = [
-  { src: pstotula, name: "Pst Nicanor Otula", role: "Pastor" },
-  { src: eldersam, name: "Elder Samuel Omweri", role: "First Elder" },
-  { src: ibra, name: "Elder Ibrahim Kimwecha", role: "Elder" },
+  { src: pstotula, name: "Nicanor Otula", role: "Pastor" },
+  { src: eldersam, name: "Samuel Omweri", role: "First Elder" },
+  { src: ibra, name: "Ibrahim Kimwecha", role: "Elder" },
   { src: hannah, name: "Hannah Njoki", role: "ALO Leader" },
   { src: joshua, name: "Joshua Hamisi", role: "Elder" },
   { src: salaton, name: "Christopher Salaton", role: "Elder" }
