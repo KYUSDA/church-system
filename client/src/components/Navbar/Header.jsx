@@ -1,151 +1,73 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import KyuSda from "../../assets/kyusdaLogo.png";
 import { useLogout } from "../../hooks/userLogoutHook";
 import '../../global/global.css';
+import { FiMenu } from "react-icons/fi";
+import MobileNavbar from "./MobileNav";
+import './nav_bar.css';
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const { logout } = useLogout();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogOut = () => {
     logout();
-  }
+    setMenuOpen(false);
+  };
 
   return (
-    <header className="bg-color main-header flex justify-between items-center px-6 py-2">
+    <header className="bg-color main-header flex justify-between items-center px-6 py-2 md:px-12 relative">
       <div className="logo flex items-center gap-3">
         <Link to="/" className="flex items-center gap-3">
           <img src={KyuSda} alt="kyusda logo" className="w-12 h-12" />
-          <span className="text-[rgba(238,238,238,0.75)] font-bold">KYUSDA CHURCH</span>
+          <span className="text-[#eeeeee] font-bold">KYUSDA CHURCH</span>
         </Link>
       </div>
 
-      {/* navlinks */}
-      <div className="nav-links flex flex-grow justify-center">
-  <ul className="flex gap-6 uppercase text-sm">
-    <li>
-      <Link
-        to="/"
-        className="relative group text-sm text-[rgba(238,238,238,0.75)] underline-transition"
-      >
-        Home
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/families"
-        className="relative group  text-sm text-[rgba(238,238,238,0.75)] underline-transition"
-      >
-        Families
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/departments"
-        className="relative group  text-sm text-[rgba(238,238,238,0.75)] underline-transition"
-      >
-        Departments
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="#"
-        className="relative group  text-sm text-[rgba(238,238,238,0.75)] underline-transition"
-      >
-        Contact Us
-      </Link>
-    </li>
-  </ul>
-</div>
+      {/* Mobile Menu Button */}
+      <button className="md:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
+        <FiMenu size={24} />
+      </button>
 
-<style jsx>{`
-  .underline-transition {
-    position: relative;
-    display: inline-block;
-  }
-
-  .underline-transition::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -2px; /* Adjust based on text */
-    left: 0;
-    background-color:#255760;
-    transform: scaleX(0);
-    transform-origin: bottom left;
-    transition: transform 0.3s ease-out;
-  }
-
-  .underline-transition:hover::after {
-    transform: scaleX(1);
-  }
-`}</style>
-
-
-      <div className="flex gap-3 items-center">
-        {user?.email ? (
-          <div className="flex gap-3">
-            <Link to="/member" className="text-black">Dashboard</Link>
-            <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#12ac8e] text-white">Log Out</button>
-          </div>
-        ) : (
-          <div className="flex gap-3">
-            <Link to="/signUp" className="text-[rgba(238,238,238,0.75)] text-sm register-btn">REGISTER</Link>
-            <Link to="/signIn" className="text-[rgba(238,238,238,0.75)] text-sm login-btn">LOGIN</Link>
-          </div>
-        )}
-
-<style jsx>{`
-  .register-btn {
-    position: relative;
-    display: inline-block;
-  }
-
-  .register-btn::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -2px; /* Adjust based on text */
-    left: 0;
-    background-color:#255760;
-    transform: scaleX(1);
-    transform-origin: bottom left;
-    transition: transform 0.3s ease-out;
-  }
-
-  .register-btn:hover::after {
-    transform: scaleX(0);
-  }
-
-  .login-btn::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
-    background-color: black;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-  }
-
-  .login-btn:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-`}</style>
-        <div className="donate-btn px-4 py-2 ">
-          <Link to="/donation" className="text-[rgba(238,238,238,0.75)] font-bold font-sans">SUPPORT US</Link>
+      {/* Desktop Navlinks and Auth Buttons */}
+      <nav className="hidden md:flex items-center justify-between gap-6 text-white w-full">
+        {/* Nav Links in the Center */}
+        <div className="flex-grow flex justify-center gap-6">
+          <Link to="/" className="nav-link underline-transition">Home</Link>
+          <Link to="/families" className="nav-link underline-transition">Families</Link>
+          <Link to="/departments" className="nav-link underline-transition">Departments</Link>
+          <Link to="#" className="nav-link underline-transition">Contact Us</Link>
         </div>
-      </div>
+
+        {/* Auth Buttons and Donate on the Right */}
+        <div className="flex gap-4 items-center">
+          {user?.email ? (
+            <div className="flex gap-3">
+              <Link to="/member" className="nav-link">Dashboard</Link>
+              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#12ac8e] text-white">Log Out</button>
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              <Link to="/signUp" className="text-white text-sm register-btn">REGISTER</Link>
+              <Link to="/signIn" className="text-white text-sm login-btn">LOGIN</Link>
+            </div>
+          )}
+
+          {/* Donate Button */}
+          <div className="donate-btn">
+            <Link to="/donation" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              SUPPORT US
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Navbar */}
+      <MobileNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </header>
   );
 };
-
 
 export default Header;
