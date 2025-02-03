@@ -22,6 +22,7 @@ const MobileNavbar = ({ menuOpen, setMenuOpen }) => {
         <li><Link to="/" className="nav-link underline-transition">Home</Link></li>
         <li><Link to="/families" className="nav-link underline-transition">Families</Link></li>
         <li><Link to="/departments" className="nav-link underline-transition">Departments</Link></li>
+        <Link to="/church-gallery" className="nav-link underline-transition">Gallery</Link>
         <li><Link to="#" className="nav-link underline-transition">Contact Us</Link></li>
 
         {/* Auth Buttons */}
@@ -33,7 +34,7 @@ const MobileNavbar = ({ menuOpen, setMenuOpen }) => {
         ) : (
           <div className="flex flex-col gap-4">
             <Link to="/signUp" className="text-white text-sm border p-2 rounded-md mr-4">REGISTER</Link>
-            <Link to="/signIn" className="text-white text-sm login-btn">LOGIN</Link>
+            <Link to="/signIn" className="text-white text-sm">LOGIN</Link>
           </div>
         )}
 
