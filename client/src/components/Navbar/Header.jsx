@@ -38,6 +38,7 @@ const Header = () => {
           <Link to="/" className="nav-link underline-transition">Home</Link>
           <Link to="/families" className="nav-link underline-transition">Families</Link>
           <Link to="/departments" className="nav-link underline-transition">Departments</Link>
+          <Link to="/church-gallery" className="nav-link underline-transition">Gallery</Link>
           <Link to="#" className="nav-link underline-transition">Contact Us</Link>
         </div>
 
@@ -51,7 +52,7 @@ const Header = () => {
           ) : (
             <div className="flex gap-4">
               <Link to="/signUp" className="text-white text-sm register-btn">REGISTER</Link>
-              <Link to="/signIn" className="text-white text-sm login-btn">LOGIN</Link>
+              <Link to="/signIn" className="text-white text-sm">LOGIN</Link>
             </div>
           )}
 
