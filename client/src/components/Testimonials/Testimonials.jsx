@@ -18,10 +18,6 @@ const Testimonial = () => {
           delay: 3000,
           disableOnInteraction: false,
         },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
         slidesPerView: 1,
         spaceBetween: 30,
         breakpoints: {
@@ -38,11 +34,6 @@ const Testimonial = () => {
       <div className="text-center mb-6">
         <p className="text-[#6B003E] text-4xl font-bold">Testimonials</p>
         <h2 className="text-2xl text-gray-600">Loved by Individuals Across The Globe</h2>
-      </div>
-
-      <div className="flex justify-center gap-4 mb-6">
-        <button className="swiper-button-prev p-3 bg-gray-300 rounded-full">←</button>
-        <button className="swiper-button-next p-3 bg-gray-300 rounded-full">→</button>
       </div>
 
       <div className="swiper mySwiper">
