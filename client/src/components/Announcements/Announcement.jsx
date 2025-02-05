@@ -1,40 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { AppWrap, MotionWrap } from '../../wrapper';
-import { urlFor, client } from '../../client';
-import './Announcements.scss';
+import React from 'react'
 
-const Announcements = () => {
-  const [announcements, setAnnouncements] = useState([]);
-  useEffect(() => {
-    const query = '*[_type == "announcements"]';
-    client.fetch(query).then((data) => {
-      setAnnouncements(data);
-    });
-
-  }, []);
-
+function Announcement() {
   return (
-    <>
-      {announcements.map((announce => (
-        <div className="app__testimonial-item app__flex" style={{ marginTop: "600px" }}>
-          <img src={urlFor(announce.imageUrl)} alt={announce.name} />
-          <div className="app__testimonial-content">
-            <p className="p-text">{announce.announce}</p>
-            <h5>{announce.department} department</h5>
-            <div>
-              <h4 className="bold-text">{announce.name}</h4>
-              <h5 className="p-text">By: {announce.organisation}</h5>
-              <h5>{announce.date}</h5>
-            </div>
-          </div>
-        </div>
-      )))}
-    </>
-  );
-};
+    <header className="text-center mb-12">
+        <h1 className="text-3xl font-semibold text-gray-900 relative inline-block">
+          Our Recent <span className="text-blue-500 font-medium">SERMONS</span>
+          <span className="block w-16 h-1 bg-blue-500 mt-1"></span>
+        </h1>
+        <p className="text-lg text-gray-600 mt-4">
+        Be inspired by the Word. Explore our latest sermons and messages of faith.
+        </p>
+      </header>
+  )
+}
 
-export default AppWrap(
-  MotionWrap(Announcements, 'app__testimonial'),
-  'announcements',
-  'app__primarybg',
-);
+export default Announcement
