@@ -47,7 +47,7 @@ const Header = () => {
           {user?.email ? (
             <div className="flex gap-3">
               <Link to="/member" className="nav-link">Dashboard</Link>
-              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#12ac8e] text-white">Log Out</button>
+              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#0f2f36] text-white">Log Out</button>
             </div>
           ) : (
             <div className="flex gap-4">
