@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import KyuSda from "../../assets/kyusdaLogo.png";
+import KyuSda from "../../assets/logo-kyusda.jpg";
 import { useLogout } from "../../hooks/userLogoutHook";
 import '../../global/global.css';
 import { FiMenu } from "react-icons/fi";
@@ -21,8 +21,8 @@ const Header = () => {
     <header className="bg-color main-header flex justify-between items-center px-6 py-2 md:px-12 relative">
       <div className="logo flex items-center gap-3">
         <Link to="/" className="flex items-center gap-3">
-          <img src={KyuSda} alt="kyusda logo" className="w-12 h-12" />
-          <span className="text-[#eeeeee] font-bold">KYUSDA CHURCH</span>
+          <img src={KyuSda} alt="kyusda logo" className="w-12 h-12 rounded-full" />
+          <span className="text-[12px] text-[#eeeeee] font-bold">KYUSDA CHURCH</span>
         </Link>
       </div>
 
@@ -47,7 +47,7 @@ const Header = () => {
           {user?.email ? (
             <div className="flex gap-3">
               <Link to="/member" className="nav-link">Dashboard</Link>
-              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#12ac8e] text-white">Log Out</button>
+              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#0f2f36] text-white">Log Out</button>
             </div>
           ) : (
             <div className="flex gap-4">
