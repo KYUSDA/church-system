@@ -82,10 +82,10 @@ const KyuSda = () => {
   ];
 
   return (
-    <div className="App" style={{ margin: "150px auto" }}>
+    <div className="App my-8">
       <br />
       <div>
-        <p style={{ textAlign: "center" }}>KYUSDA GALLERY</p>
+        <p className="text-center text-3xl text-[#6B003E] font-bold">OUR <span className="text-blue-500">CHURCH</span> GALLERY</p>
       </div>
       <br />
       <br />

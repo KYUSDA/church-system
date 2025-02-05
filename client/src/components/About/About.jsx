@@ -1,18 +1,25 @@
 import React from 'react';
+import community from '../../assets/community.png';
 
 const About = () => {
   return (
     <main id="content" className="bg-gray-100 py-12">
       {/* Header Section */}
       <header className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900">About KYUSDA</h1>
-        <p className="text-lg text-gray-600 mt-4">Discover who we are and what we stand for as a community of faith.</p>
+        <h1 className="text-3xl font-semibold text-gray-900 relative inline-block">
+          About <span className="text-blue-500 font-medium">KYUSDA</span>
+          <span className="block w-16 h-1 bg-blue-500 mt-1"></span>
+        </h1>
+        <p className="text-lg text-gray-600 mt-4">
+          Discover who we are and what we stand for as a community of faith.
+        </p>
       </header>
+
 
       {/* Main Content Section */}
       <section className="max-w-7xl mx-auto px-5 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Left Column: Brief History */}
-        <div>
+        <div className='flex flex-col justify-center items-center'>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Our History</h2>
           <p className="text-gray-700 leading-relaxed">
             KYUSDA (Kirinyaga University Seventh-day Adventists) has a rich history of serving as a spiritual home for students and the wider community. Rooted in the principles of faith, love, and service, we strive to create an environment where individuals can grow spiritually, intellectually, and socially. Our mission is to inspire a Christ-centered lifestyle through worship, study, and outreach.
@@ -57,7 +64,7 @@ const About = () => {
           {/* Sabbath Worship */}
           <div className="flex flex-col items-center text-center bg-white shadow-md rounded-lg p-6">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1ErKnDZLzZLcE3A42pwGedtOFq9AlINDTuw&usqp=CAU"
+              src={community}
               alt="Sabbath Worship Icon"
               className="w-16 h-16 mb-4"
             />

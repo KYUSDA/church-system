@@ -7,9 +7,9 @@ import eldersam from '../assets/Eldersam.jpg';
 import joshua from '../assets/Joshua pic.jpg';
 
 const leaders = [
-  { src: pstotula, name: "Pst Nicanor Otula", role: "Pastor" },
-  { src: eldersam, name: "Elder Samuel Omweri", role: "First Elder" },
-  { src: ibra, name: "Elder Ibrahim Kimwecha", role: "Elder" },
+  { src: pstotula, name: "Nicanor Otula", role: "Pastor" },
+  { src: eldersam, name: "Samuel Omweri", role: "First Elder" },
+  { src: ibra, name: "Ibrahim Kimwecha", role: "Elder" },
   { src: hannah, name: "Hannah Njoki", role: "ALO Leader" },
   { src: joshua, name: "Joshua Hamisi", role: "Elder" },
   { src: salaton, name: "Christopher Salaton", role: "Elder" }
@@ -21,9 +21,9 @@ function Leaders() {
       <h2 className="text-4xl font-bold mb-8 pt-6 text-gray-800">
         <span className="text-[#6B003E]">Meet the </span>Church Leaders
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 justify-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 justify-center overflow-hidden">
         {leaders.map(({ src, name, role }, index) => (
-          <div key={index} className="p-4 text-center w-64 mx-auto">
+          <div key={index} className="text-center p-4 lg:text-start w-64 mx-auto">
             <img src={src} alt={name} className="w-32 h-32 mx-auto rounded-full object-cover" />
             <h5 className="text-lg font-semibold mt-4">{name}</h5>
             <p className="text-gray-500">{role}</p>
