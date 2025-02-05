@@ -3,7 +3,6 @@ import {
   About,
   Testimonial,
   Announcements,
-  KyuSda,
   Leader
 } from "./container/index";
 import { Navbar } from "./components";
@@ -19,7 +18,6 @@ const App = () => (
     <Leader />
     <Announcements />
     <Testimonial />
-    <KyuSda />
     <MainFooter />
   </div>
 );
