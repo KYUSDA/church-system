@@ -30,11 +30,16 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto p-6">
-      <div className="text-center mb-6">
-        <p className="text-[#6B003E] text-4xl font-bold">Testimonials</p>
-        <h2 className="text-2xl text-gray-600">Loved by Individuals Across The Globe</h2>
-      </div>
+    <section className="max-w-7xl mx-auto p-6 mb-8">
+      <header className="text-center mb-12">
+        <h1 className="text-3xl font-semibold text-gray-900 relative inline-block">
+          <span className="text-blue-500 font-medium">Testimonials</span>
+          <span className="block w-16 h-1 bg-blue-500 mt-1"></span>
+        </h1>
+        <p className="text-lg text-gray-600 mt-4">
+        Heartfelt Experiences from Our Faithful Community
+        </p>
+      </header>
 
       <div className="swiper mySwiper">
         <div className="swiper-wrapper">
