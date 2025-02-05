@@ -17,7 +17,7 @@
     height: 2px;
     bottom: -2px; /* Adjust based on text */
     left: 0;
-    background-color:#41dbf7;
+    background-color: #12ac8e;
     transform: scaleX(0);
     transform-origin: bottom left;
     transition: transform 0.3s ease-out;
