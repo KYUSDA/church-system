@@ -1,5 +1,5 @@
 import React from 'react'
-import SingleFamily from '../components/Family/SingleFamily/SingleFamily'
+import SingleFamily from '../components/Family/FamiliyDetails'
 
 const SingleFamilyPage = () => {
     return (
