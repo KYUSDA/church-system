@@ -37,7 +37,7 @@ const EventsCard = () => {
       </div>
       <div className="absolute bottom-0 flex space-x-4 mt-4">
   <a 
-    href="https://twitter.com" 
+    href="https://x.com/kyusdachurch?s=09" 
     target="_blank" 
     rel="noopener noreferrer" 
     className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
@@ -45,7 +45,7 @@ const EventsCard = () => {
     <FaXTwitter />
   </a>
   <a 
-    href="https://youtube.com" 
+    href="http://www.youtube.com/@kyusdachurch" 
     target="_blank" 
     rel="noopener noreferrer" 
     className="bg-red-600 p-3 rounded-full text-white text-xl hover:bg-red-700 transition"
@@ -53,7 +53,7 @@ const EventsCard = () => {
     <FaYoutube />
   </a>
   <a 
-    href="https://facebook.com" 
+    href="https://www.facebook.com/KyUSDAchurch" 
     target="_blank" 
     rel="noopener noreferrer" 
     className="bg-blue-600 p-3 rounded-full text-white text-xl hover:bg-blue-700 transition"
