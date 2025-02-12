@@ -41,7 +41,7 @@ const Home = () => {
         element={user ? <MembersDashboard /> : <Navigate to="/signIn" />}
       ></Route>
       <Route path="/families" element={<Families />}></Route>
-      <Route path="/families/:id" element={<SingleFamily />} />
+      <Route path="/families/:id" element={<Layout><SingleFamily /></Layout>} />
       <Route path="/Departments" element={<Layout><Departments /></Layout>}></Route>
       <Route path="/Departments/:id" element={<Layout><DepartmentsDetails /></Layout>} />
       <Route path="/church-gallery" element={<Layout><KyuSda /></Layout>} />

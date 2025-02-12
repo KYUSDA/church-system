@@ -49,7 +49,7 @@ function MainFooter() {
       
       <div className="footer__bar">
         <div className="footer__bar__content">
-          <p>Copyright © 2024 Kirinyaga University Church. All rights reserved.</p>
+        <p>Copyright © {new Date().getFullYear()} Kirinyaga University Church. All rights reserved.</p>
           <div className="footer__socials">
             <a href='https://www.facebook.com/KyUSDAchurch' target='_blank' rel="noreferrer"><FaFacebook /></a>
             <a href="https://x.com/kyusdachurch?s=09" target='_blank' rel="noreferrer"><FaTwitter /></a>
