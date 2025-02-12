@@ -8,7 +8,7 @@ import ResetInSide from "./pages/ResetToken";
 import NewPassword from "./pages/ResetPassword";
 import MembersDashboard from "./pages/MembersDashboard";
 import Families from "./pages/Families";
-import Departments from "./pages/Departments";
+import Departments from "./components/Department/Departments";
 import SingleFamily from "./pages/SingleFamily";
 import DepartmentsDetails from "./components/Department/DepartmentsDetails";
 
@@ -16,7 +16,7 @@ import DepartmentsDetails from "./components/Department/DepartmentsDetails";
 import PrivacyPolicy from "./components/Footer/Policy";
 import Terms from "./components/Footer/Terms";
 import Layout from "./components/Footer/Layout";
-import ResourceCenter from "./pages/ResourceCenter";
+import { KyuSda } from "./container";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -41,9 +41,10 @@ const Home = () => {
         element={user ? <MembersDashboard /> : <Navigate to="/signIn" />}
       ></Route>
       <Route path="/families" element={<Families />}></Route>
-      <Route path="/families/:id" element={<SingleFamily />} />
-      <Route path="/Departments" element={<Departments />}></Route>
-      <Route path="/Departments/:id" element={<DepartmentsDetails />} />
+      <Route path="/families/:id" element={<Layout><SingleFamily /></Layout>} />
+      <Route path="/Departments" element={<Layout><Departments /></Layout>}></Route>
+      <Route path="/Departments/:id" element={<Layout><DepartmentsDetails /></Layout>} />
+      <Route path="/church-gallery" element={<Layout><KyuSda /></Layout>} />
       <Route path="/membersDashboard" element={<MembersDashboard />} />
       <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout>} />
       <Route path="/kirinyaga-adventist-terms-and-conditions" element={<Layout><Terms /></Layout>} />

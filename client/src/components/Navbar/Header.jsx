@@ -1,165 +1,71 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.scss";
-import KyuSda from "../../assets/kyusdaLogo.png";
-import "../../style.css";
-import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
+import KyuSda from "../../assets/logo-kyusda.jpg";
 import { useLogout } from "../../hooks/userLogoutHook";
-
+import '../../global/global.css';
+import { FiMenu } from "react-icons/fi";
+import MobileNavbar from "./MobileNav";
+import './nav_bar.css';
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
   const { logout } = useLogout();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogOut = () => {
     logout();
-  }
-
-  // State for countdown timer
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  // Countdown target date (replace with your event date)
-  const eventName = "VoP Sabbath";
-
-  useEffect(() => {
-    const eventDate = new Date("2024-11-23T00:00:00");
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = eventDate - now;
-
-      if (difference <= 0) {
-        clearInterval(timer); // Stop timer if the event date has passed
-      } else {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+    setMenuOpen(false);
+  };
 
   return (
-    <header id="main-header">
-      <div className="rows">
-        <div className="top-row-one">
-          <div className="social-links">
-            <a
-              href="https://www.facebook.com/KYUSDANewYork/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaFacebookSquare
-                style={{
-                  color: "white",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "30px",
-                }}
-              />
-              
-            </a>
-            <a
-              href="https://twitter/kyusda/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaTwitter
-                style={{
-                  color: "white",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "30px",
-                }}
-              />
+    <header className="bg-color main-header flex justify-between items-center px-6 py-2 md:px-12 relative">
+      <div className="logo flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
+          <img src={KyuSda} alt="kyusda logo" className="w-12 h-12 rounded-full" />
+          <span className="text-[12px] text-[#eeeeee] font-bold">KYUSDA CHURCH</span>
+        </Link>
+      </div>
 
-            </a>
-            <a
-              href="https://www.youtube.com/@kyusdachurch"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaYoutube
-                style={{
-                  color: "white",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "30px",
-                }}
-              />
-            </a>
-          </div>
-          <div className="upcoming-events">
-            <p>
-              <strong style={{ fontSize: "12px" }}>Upcoming Event: </strong> &nbsp; &nbsp;
-              <span style={{ color: "#12ac8e", fontSize: "21px" }}>{eventName}</span>
-            </p>
-            <p id="countdown">
-              <span id="days">{timeLeft.days}</span>
-              <span style={{ fontSize: "12px" }}>Days</span> <br />
-              <span id="hours">{timeLeft.hours}</span>
-              <span style={{ fontSize: "12px" }}>Hrs</span>{" "}
-              <span id="mins">{timeLeft.minutes}</span>
-              <span style={{ fontSize: "12px" }}>Mins</span>{" "}
-              <span id="secs" style={{ fontSize: "34px", color: "#12ac8e" }}>{timeLeft.seconds}</span>
-              <span style={{ fontSize: "12px" }}>Sec</span>
-            </p>
-            <Link to="#events" style={{ fontSize: "12px", color: "#12ac8e" }}>EVENTS' DETAILS</Link>
-          </div>
-          {
-            user?.email ?
-              <div className="flex justify-between items-center gap-x-3">
-                <Link to="/member">Dashboard</Link>
-                <button onClick={handleLogOut} className="rounded-md p-2 bg-[#12ac8e]">Log Out</button>
-              </div>
-              : <div className="register-btn">
-                <Link to="/signUp" style={{ marginRight: "20px" }}>
-                  Register Membership
-                </Link>
-                <Link to="/signIn">Login</Link>
-              </div>
-          }
+      {/* Mobile Menu Button */}
+      <button className="md:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
+        <FiMenu size={24} />
+      </button>
 
+      {/* Desktop Navlinks and Auth Buttons */}
+      <nav className="hidden md:flex items-center justify-between gap-6 text-white w-full">
+        {/* Nav Links in the Center */}
+        <div className="flex-grow flex justify-center gap-6">
+          <Link to="/" className="nav-link underline-transition">Home</Link>
+          <Link to="/families" className="nav-link underline-transition">Families</Link>
+          <Link to="/departments" className="nav-link underline-transition">Departments</Link>
+          <Link to="/church-gallery" className="nav-link underline-transition">Gallery</Link>
         </div>
-        <div className="top-row-two">
-          <div className="logo">
-            <Link to="/">
-              <img src={KyuSda} alt="kyusda logo" />
-              <span>KYUSDA CHURCH</span>
+
+        {/* Auth Buttons and Donate on the Right */}
+        <div className="flex gap-4 items-center">
+          {user?.email ? (
+            <div className="flex gap-3">
+              <Link to="/member" className="nav-link">Dashboard</Link>
+              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#0f2f36] text-white">Log Out</button>
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              <Link to="/signUp" className="text-white text-sm register-btn">REGISTER</Link>
+              <Link to="/signIn" className="text-white text-sm">LOGIN</Link>
+            </div>
+          )}
+
+          {/* Donate Button */}
+          <div className="donate-btn">
+            <Link to="/donation" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              SUPPORT US
             </Link>
           </div>
-          <div className="nav-links">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/families">Families</Link>
-              </li>
-              <li>
-                <Link to="/departments">Departments</Link>
-              </li>
-              <li>
-                <Link to="#">Contact Us</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="donate-btn">
-            <Link to="/donation">Support Us</Link>
-          </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Mobile Navbar */}
+      <MobileNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </header>
   );
 };

@@ -1,0 +1,17 @@
+.bg-color {
+    --primary-color: #12ac8e;
+    --primary-color-dark: #0d846c;
+    --primary-color-light: #0f2f36;
+    /* --primary-color-light: #488585; */
+    --secondary-color: #fb923c;
+    --text-dark: #333333;
+    --text-light: #767268;
+    --white: #fff;
+    --max-width: 1200px;
+  }
+
+
+
+.bg-color{
+    background-color: var(--primary-color-light);
+  }
