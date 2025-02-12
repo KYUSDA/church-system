@@ -1,134 +1,68 @@
-// 
+import React from "react";
+import { FaFacebookF, FaXTwitter, FaYoutube } from "react-icons/fa6";
 
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FaFacebookSquare, FaYoutube, FaTwitter } from "react-icons/fa";
 
-function EventsCard() {
-  const [isVisible, setIsVisible] = useState(false);
+const events = [
+  {
+    date: "Feb 12",
+    time: "7.00 am",
+    title: "Online Money Challenge Collections for Mission",
+    details: "Event Details",
+  },
+  {
+    date: "Jan 3",
+    time: "8.00 am",
+    title: "Our Sponsorship Meetup Will Be Held Again",
+    details: "Event Details",
+  },
+];
 
-  useEffect(() => {
-    const heroSection = document.querySelector(".hero-section");
-    const heroSectionHeight = heroSection?.offsetHeight || 0;
-
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsVisible(scrollPosition < heroSectionHeight);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100);
-  }, []); 
-
-  // State for countdown timer
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-     // Countdown target date (replace with your event date)
-      const eventName = "Health Sabbath";
-    
-      useEffect(() => {
-        const eventDate = new Date("2025-02-01T00:00:00");
-        const timer = setInterval(() => {
-          const now = new Date();
-          const difference = eventDate - now;
-    
-          if (difference <= 0) {
-            clearInterval(timer); // Stop timer if the event date has passed
-          } else {
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-              (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            );
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-    
-            setTimeLeft({ days, hours, minutes, seconds });
-          }
-        }, 1000);
-    
-        return () => clearInterval(timer);
-      }, []);
-
+const EventsCard = () => {
   return (
-    <div
-      className={`fixed bottom-0 left-4 bg-white shadow-lg rounded-2xl p-4 w-72 transform transition-transform z-50 ${
-        isVisible ? "translate-y-0" : "translate-y-full"
-      }`}
-    >
-      <div className="flex flex-col items-center">
-        {/* Social Links */}
-        <div className="flex space-x-4 mb-4">
-          <a
-            href="https://www.facebook.com/KYUSDANewYork/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-600 hover:scale-110 transition-transform"
+    <div className="relative flex justify-center items-center py-8">
+      <div className="flex space-x-6">
+        {events.map((event, index) => (
+          <div
+            key={index}
+            className="bg-white shadow-lg rounded-lg p-6 w-70 relative"
           >
-            <FaFacebookSquare size={28} />
-          </a>
-          <a
-            href="https://twitter/kyusda/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-400 hover:scale-110 transition-transform"
-          >
-            <FaTwitter size={28} />
-          </a>
-          <a
-            href="https://www.youtube.com/@kyusdachurch"
-            target="_blank"
-            rel="noreferrer"
-            className="text-red-600 hover:scale-110 transition-transform"
-          >
-            <FaYoutube size={28} />
-          </a>
-        </div>
-
-        {/* Event Details */}
-        <div className="text-center mb-4">
-          <h6 className="text-sm font-bold text-green-700">Upcoming Event:</h6>
-          <h2 className="text-xl font-bold text-green-700">{eventName}</h2>
-        </div>
-
-        {/* Countdown Timer */}
-        <div className="flex justify-around w-full text-center text-sm font-medium text-gray-700 mb-4">
-          <div>
-            <span className="block text-2xl font-bold text-green-600">{timeLeft.days}</span>
-            <span>Days</span>
+            <div className="absolute -top-4 left-4 bg-[rgba(18,172,141,0.9)] text-white px-3 py-1 rounded-md text-sm font-bold">
+              <span>{event.date}</span>
+              <div className="text-xs font-normal">{event.time}</div>
+            </div>
+            <h3 className="font-bold text-lg mt-6">{event.title}</h3>
+            <p className="text-[#12ac8e] mt-2 cursor-pointer font-semibold">{event.details}</p>
           </div>
-          <div>
-            <span className="block text-2xl font-bold text-green-600">{timeLeft.hours}</span>
-            <span>Hrs</span>
-          </div>
-          <div>
-            <span className="block text-2xl font-bold text-green-600">{timeLeft.minutes}</span>
-            <span>Mins</span>
-          </div>
-          <div>
-            <span className="block text-2xl font-bold text-green-600">{timeLeft.seconds}</span>
-            <span>Secs</span>
-          </div>
-        </div>
-
-        {/* Link to Details */}
-        <Link
-          to="#events"
-          className="text-green-700 text-sm font-semibold underline hover:text-green-900"
-        >
-          Event Details
-        </Link>
+        ))}
       </div>
+      <div className="absolute bottom-0 flex space-x-4 mt-4">
+  <a 
+    href="https://twitter.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
+  >
+    <FaXTwitter />
+  </a>
+  <a 
+    href="https://youtube.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="bg-red-600 p-3 rounded-full text-white text-xl hover:bg-red-700 transition"
+  >
+    <FaYoutube />
+  </a>
+  <a 
+    href="https://facebook.com" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="bg-blue-600 p-3 rounded-full text-white text-xl hover:bg-blue-700 transition"
+  >
+    <FaFacebookF />
+  </a>
+</div>
     </div>
   );
-}
+};
 
 export default EventsCard;
