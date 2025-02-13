@@ -23,7 +23,6 @@ const MobileNavbar = ({ menuOpen, setMenuOpen }) => {
         <li><Link to="/families" className="nav-link underline-transition">Families</Link></li>
         <li><Link to="/departments" className="nav-link underline-transition">Departments</Link></li>
         <Link to="/church-gallery" className="nav-link underline-transition">Gallery</Link>
-        <li><Link to="#" className="nav-link underline-transition">Contact Us</Link></li>
 
         {/* Auth Buttons */}
         {user?.email ? (
