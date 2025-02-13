@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebookF, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 
 
 const events = [
@@ -36,31 +36,31 @@ const EventsCard = () => {
         ))}
       </div>
       <div className="absolute bottom-0 flex space-x-4 mt-4">
-  <a 
-    href="https://x.com/kyusdachurch?s=09" 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
-  >
-    <FaXTwitter />
-  </a>
-  <a 
-    href="http://www.youtube.com/@kyusdachurch" 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="bg-red-600 p-3 rounded-full text-white text-xl hover:bg-red-700 transition"
-  >
-    <FaYoutube />
-  </a>
-  <a 
-    href="https://www.facebook.com/KyUSDAchurch" 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="bg-blue-600 p-3 rounded-full text-white text-xl hover:bg-blue-700 transition"
-  >
-    <FaFacebookF />
-  </a>
-</div>
+        <a
+          href="https://x.com/kyusdachurch?s=09"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
+        >
+          <FaTwitter />
+        </a>
+        <a
+          href="http://www.youtube.com/@kyusdachurch"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-red-600 p-3 rounded-full text-white text-xl hover:bg-red-700 transition"
+        >
+          <FaYoutube />
+        </a>
+        <a
+          href="https://www.facebook.com/KyUSDAchurch"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-blue-600 p-3 rounded-full text-white text-xl hover:bg-blue-700 transition"
+        >
+          <FaFacebookF />
+        </a>
+      </div>
     </div>
   );
 };
