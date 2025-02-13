@@ -1,299 +1,140 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../context/useAuthcontext';
+import React, { useState, useEffect } from "react";
+import { NavLink, Routes, Route } from "react-router-dom";
+import { useAuthContext } from "../context/useAuthcontext";
+import ResourceCenter from "./ResourceCenter";
+import DashboardHome from "./DashboardHome";
+import Settings from "./Settings";
+import LessonDiscussion from "./LessonDiscussion";
+import BibleTrivia from "./BibleTrivia";
+import Family from "./Family";
 
 const MembersDashboard = () => {
 	const { user } = useAuthContext();
 	const [userData, setUserData] = useState();
+	const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1024);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsCollapsed(window.innerWidth < 1024);
+		};
+
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
 	useEffect(() => {
 		const getData = async () => {
-			const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/user/${user.id}`
+			const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/user/${user.id}`;
 			const resp = await fetch(url);
 			const data = await resp.json();
-			setUserData(data)
-		}
+			setUserData(data);
+		};
 		getData();
-	}, [user.id, user.email]);
+	}, [user.id]);
+
+	const navItems = [
+		{ path: "/member", name: "Dashboard", icon: "M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3M11 3H3v10h8V3m10 8h-8v10h8V11m-10 4H3v6h8v-6z" },
+		{ path: "/member/resources", name: "Resources", icon: "M4 4v18h16V4H4zm14 16H6V6h12v14zm-3-7H9v-2h6v2zm0-4H9V7h6v2zm-6 8h6v-2H9v2z" },
+		{ path: "/member/lesson", name: "Lesson Discussion", icon: "M19 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m0 18H6V4h13v16m-7-9c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m4 3c0-1.3-2.7-2-4-2s-4 .7-4 2v1h8v-1m-3.5 4h-1v-1h1v1m-1-2v-1h1v1h-1z" },
+		{ path: "/member/bibleTrivia", name: "Bible Trivia", icon: "M5.81 2H17c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2m0 2v16h11.17L17 19.83V4H5.81M7 6h9v2H7V6m0 4h9v2H7v-2m0 4h5v2H7v-2z" },
+		{ path: "/member/family", name: "Family", icon: "M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62.86-1.11 1.28-2.53 1.13-3.96C17.92 8.15 18.44 8 19 8M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13v-1.75M0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20H0m24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9V20z" },
+		{ path: "/member/settings", name: "Settings", icon: "M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.65.07.97l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z" }
+	];
+
 	return (
-		<div className='h-screen w-full flex overflow-hidden select-none'>
-			<nav className='w-24 flex flex-col items-center bg-white dark:bg-gray-800 py-4'>
-				<div>
-					<Link to='/'>
-						<svg className='h-8 w-8 fill-current text-blue-600 dark:text-blue-300'
-							viewBox="0 0 24 24"
-						>
-							<path
-								d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3m6.82
-		6L12 12.72 5.18 9 12 5.28 18.82 9M17 16l-5 2.72L7 16v-3.73L12
-		15l5-2.73V16z"></path>
+		<div className="flex h-screen bg-gray-50">
+			<nav className={`${isCollapsed ? 'w-16' : 'w-64'} bg-white shadow-lg relative transition-all duration-300 ease-in-out`}>
+				<div className="p-6 border-b flex justify-between items-center">
+					<NavLink to="/" className="flex items-center space-x-3">
+						<svg className="h-8 w-8 text-blue-600" viewBox="0 0 24 24">
+							<path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3m6.82 6L12 12.72 5.18 9 12 5.28 18.82 9M17 16l-5 2.72L7 16v-3.73L12 15l5-2.73V16z"></path>
 						</svg>
-					</Link>
-				</div>
-				<ul className='mt-2 text-gray-700 dark:text-gray-400 capitalize'>
-					<li className='mt-3 p-2 text-blue-600 dark:text-blue-300 rounded-lg'>
-						<Link to=''>
-							<svg className="fill-current h-5 w-5" viewBox="0 0 24 24">
-								<path
-									d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9
-							17v2H5v-2h4M21 3h-8v6h8V3M11 3H3v10h8V3m10
-							8h-8v10h8V11m-10 4H3v6h8v-6z"></path>
-							</svg>
-							<span className="text-xs mt-2">dashBoard</span>
-						</Link>
-					</li>
-					<li
-						className="mt-3 p-2 hover:text-blue-600 dark-hover:text-blue-300
-				rounded-lg">
-
-					</li>
-				</ul>
-				<div
-					className="mt-auto flex items-center p-2 text-blue-700 bg-purple-200
-			dark:text-blue-500 rounded-full">
-
-					<Link to="#">
-						<svg className="fill-current h-5 w-5" viewBox="0 0 24 24">
-							<path
-								d="M12 1c-5 0-9 4-9 9v7a3 3 0 003 3h3v-8H5v-2a7 7 0 017-7
-						7 7 0 017 7v2h-4v8h4v1h-7v2h6a3 3 0
-						003-3V10c0-5-4.03-9-9-9z"></path>
-						</svg>
-					</Link>
-				</div>
-			</nav>
-
-			<main className='my-1 pt-2 pb-2 px-10 flex-1 bg-gray-200 dark:bg-black rounded-l-lg
-		transition duration-500 ease-in-out overflow-y-auto'>
-				<div className='flex flex-col capitalize text-3xl'>
-					<span className='font-semibold'>Welcome Back
-					</span>
-					<span>{user?.email}</span>
-				</div>
-				<div className='flex'>
-					<div
-						className="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col bg-white dark:bg-gray-600 rounded-lg">
-						<h3
-							className="flex items-center pt-1 pb-1 px-8 text-lg font-semibold
-					capitalize dark:text-gray-300">
-							<span>Devotions</span>
-							<button className="ml-2">
-								<svg className="h-5 w-5 fill-current" viewBox="0 0 256 512">
-									<path
-										d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9
-								0l-22.6-22.6c-9.4-9.4-9.4-24.6
-								0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6
-								0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136
-								136c9.5 9.4 9.5 24.6.1 34z"></path>
-								</svg>
-							</button>
-						</h3>
-						<div>
-							<ul className='pt-1 pb-2 px-3 overflow-y-auto'>
-								<li className='mt-2'>
-									<Link to='#' className="p-5 flex flex-col justify-between bg-gray-100 dark:bg-gray-200 rounded-lg">
-										<div className='flex items-center justify-between font-semibold capitalize dark:text-gray-700'>
-											<span>Morning Devotion</span>
-											<div className="flex items-center">
-											</div>
-										</div>
-										<p
-											className="text-sm font-medium leading-snug
-									text-gray-600 my-3">
-											Lorem ipsum, dolor sit amet consectetur
-											adipisicing elit. Explicabo assumenda porro
-											sapiente, cum nobis tempore delectus
-											consectetur ullam reprehenderit quis ducimus,
-											iusto dolor nam corporis id perspiciatis
-											consequuntur saepe excepturi.
-										</p>
-										<div className="flex justify-between">
-											<div className='flex'>
-												Posted By:
-												<span>
-													<span
-														className="text-blue-500 font-semibold">
-														John
-													</span>
-												</span>
-											</div>
-											<p
-												className="text-sm font-medium leading-snug text-gray-600">
-												3 hours ago
-											</p>
-										</div>
-									</Link>
-								</li>
-								<li className='mt-2'>
-									<Link to='#' className="p-5 flex flex-col justify-between bg-gray-100 dark:bg-gray-200 rounded-lg">
-										<div className='flex items-center justify-between font-semibold capitalize dark:text-gray-700'>
-											<span>Lesson Discussion</span>
-											<div className="flex items-center">
-												<svg
-													className="h-5 w-5 fill-current mr-1
-											text-gray-600"
-													viewBox="0 0 24 24">
-													<path
-														d="M14 12l-4-4v3H2v2h8v3m12-4a10
-												10 0 01-19.54 3h2.13a8 8 0
-												100-6H2.46A10 10 0 0122 12z"></path>
-												</svg>
-											</div>
-										</div>
-										<p
-											className="text-sm font-medium leading-snug
-									text-gray-600 my-3">
-											Lorem ipsum, dolor sit amet consectetur
-											adipisicing elit. Explicabo assumenda porro
-											sapiente, cum nobis tempore delectus
-											consectetur ullam reprehenderit quis ducimus,
-											iusto dolor nam corporis id perspiciatis
-											consequuntur saepe excepturi.
-										</p>
-										<div className="flex justify-between">
-											<div className='flex'>
-												Posted By:
-												<span>
-													<span
-														className="text-blue-500 font-semibold">
-														Sam
-													</span>
-												</span>
-											</div>
-											<p
-												className="text-sm font-medium leading-snug text-gray-600">
-												1 hour ago
-											</p>
-										</div>
-									</Link>
-								</li>
-							</ul>
-
-							<Link
-								to="#"
-								className="flex justify-center capitalize text-blue-500
-dark:text-blue-200">
-								<span>see all</span>
-							</Link>
-						</div>
-					</div>
-					<div className='mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col bg-purple-300 rounded-lg text-white'>
-						<h3 className='flex items-center pt-1 pb-1 px-8 text-lg font-bold capitalize'>
-							<button className="ml-2">
-								<svg className="h-5 w-5 fill-current" viewBox="0 0 256 512">
-									<path
-										d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9
-								0l-22.6-22.6c-9.4-9.4-9.4-24.6
-								0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6
-								0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136
-								136c9.5 9.4 9.5 24.6.1 34z"></path>
-								</svg>
-							</button>
-						</h3>
-						<div className='flex flex-col items-center mt-12'>
-							<img
-								src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
-								alt=" empty schedule" />
-							<span className="font-bold mt-8">Family Group Allocated</span>
-							<span>{userData?.familyLocated}</span>
-							<span className="text-purple-500">
-							</span>
-							<button className="mt-8 bg-purple-800 rounded-lg py-2 px-4">
-								<Link to={`/${userData?.familyLocated}`}>
-									Check it Out
-								</Link>
-
-							</button>
-						</div>
-					</div>
-				</div>
-			</main>
-			<aside className="w-1/4 my-1 mr-1 px-6 py-4 flex flex-col bg-gray-200 dark:bg-black dark:text-gray-400 rounded-r-lg overflow-y-auto">
-				<div className='flex items-center justify-between'>
-					<Link to='' className='relative'>
-						<span>
-							<svg className='h-5 w-5 hover:text-red-600 dark-hover:text-red-400'
-								iewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							>
-								<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-								<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-							</svg>
-						</span>
-						<div className="absolute w-2 h-2 left-0 mb-6 ml-2 bottom-0">
-							<span
-								className="px-2 py-1 bg-red-600 rounded-full text-white
-						text-xs">
-								Settings
-							</span>
-						</div>
-					</Link>
-					<div className='flex items-center'>
-						<img
-							className="h-10 w-10 rounded-full object-cover"
-							src="https://i.pinimg.com/originals/68/e1/e1/68e1e137959d363f172dc3cc50904669.jpg"
-							alt="tempest profile" />
-						<button className="ml-1 focus:outline-none">
-
-							<svg className="h-4 w-4 fill-current" viewBox="0 0 192 512">
-								<path
-									d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72
-    72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72
-    72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0
-    352c0 39.8 32.2 72 72 72s72-32.2
-    72-72-32.2-72-72-72-72 32.2-72 72z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<span className="mt-4 text-gray-600">Church Role</span>
-				<span className="mt-1 text-3xl font-semibold">{userData?.role}</span>
-				<div className="mt-12 flex items-center">
-					<span>Upcomming Events</span>
-					<button className="ml-2 focus:outline-none">
-						<svg className="h-5 w-5 fill-current" viewBox="0 0 256 512">
-							<path
-								d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9
-						0l-22.6-22.6c-9.4-9.4-9.4-24.6
-						0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3
-						103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1
-						34z"></path>
+						{!isCollapsed && <span className="text-xl font-bold">KYUSDA</span>}
+					</NavLink>
+					<button
+						onClick={() => setIsCollapsed(!isCollapsed)}
+						className="p-2 rounded-lg hover:bg-gray-100"
+					>
+						<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isCollapsed ? "M13 5l7 7-7 7" : "M11 19l-7-7 7-7"} />
 						</svg>
 					</button>
 				</div>
 
-				<Link to='/' className='mt-8 p-4 flex justify-between bg-gray-300 rounded-lg
-			font-semibold capitalize'>
-					<div className='flex'>
-						<img className='h-10 w-10 rounded-full object-cover' src="https://lh3.googleusercontent.com/cX0xwvJKCNIFrl2wIwoYiIURxmZt1y7tF3wJvynqcnQG5tmYdKBLpDDvhXzmVZzrstAEkw=s151"
-							alt="veldora profile" />
-						<div className="flex flex-col ml-4">
-							<span>Finalist Sabbath</span>
-							<span className="text-sm text-gray-600">25/04/2023</span>
+				<div className="p-4 flex flex-col justify-between h-[calc(100%-5rem)]">
+					{!isCollapsed && (
+						<div className="flex items-center space-x-4 mb-6">
+							<img
+								src="https://i.pinimg.com/originals/68/e1/e1/68e1e137959d363f172dc3cc50904669.jpg"
+								alt="Profile"
+								className="h-12 w-12 rounded-full object-cover"
+							/>
+							<div>
+								<h3 className="font-semibold">{user?.email}</h3>
+								<p className="text-sm text-gray-500">{userData?.role}</p>
+							</div>
 						</div>
-					</div>
-				</Link>
+					)}
 
-				<Link to='/' className='mt-8 p-4 flex justify-between bg-gray-300 rounded-lg
-			font-semibold capitalize'>
-					<div className='flex'>
-						<img className='h-10 w-10 rounded-full object-cover' src="https://lh3.googleusercontent.com/cX0xwvJKCNIFrl2wIwoYiIURxmZt1y7tF3wJvynqcnQG5tmYdKBLpDDvhXzmVZzrstAEkw=s151"
-							alt="veldora profile" />
-						<div className="flex flex-col ml-4">
-							<span>Grand Contribution</span>
-							<span className="text-sm text-gray-600">03/11/2023</span>
-						</div>
-					</div>
-				</Link>
-				<div className="mt-4 flex justify-center capitalize text-blue-600">
-					<Link to="#">see all</Link>
+					<ul className="space-y-2">
+						<li className="flex flex-col gap-y-4">
+							{navItems.map((item) => (
+								<NavLink
+									key={item.path}
+									to={item.path}
+									className={({ isActive }) =>
+										`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 rounded-lg relative group ${isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-blue-50'
+										} transition-all duration-300`
+									}
+								>
+									<svg className={
+										`${isCollapsed ? 'h-8 w-8' : 'h-6 w-6'} 
+									transition-all duration-300
+									`} viewBox="0 0 24 24" fill="currentColor"
+										style={{ minWidth: isCollapsed ? '2rem' : '1.5rem' }}
+									>
+										<path d={item.icon} />
+									</svg>
+
+									{!isCollapsed && <span className="transition-opacity duration-300">{item.name}</span>}
+
+									{isCollapsed && (
+										<div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-md invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 whitespace-nowrap z-50">
+											{item.name}
+										</div>
+									)}
+								</NavLink>
+							))}
+						</li>
+					</ul>
+
+					<button className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 mt-4 w-full rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors relative group`}>
+						<svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012 2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2 0 012-2h9z" />
+						</svg>
+						{!isCollapsed && <span>Log Out</span>}
+						{isCollapsed && (
+							<div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-md invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 whitespace-nowrap z-50">
+								Log Out
+							</div>
+						)}
+					</button>
 				</div>
-			</aside>
-		</div>
-	)
-}
+			</nav>
 
-export default MembersDashboard
+			<main className="flex-1 overflow-y-auto pl-8 w-full pr-[20vw]">
+				<Routes>
+					<Route path="/" element={<DashboardHome />} />
+					<Route path="/resources" element={<ResourceCenter />} />
+					<Route path="/settings" element={<Settings />} />
+					<Route path="/lesson" element={<LessonDiscussion />} />
+					<Route path="/bibleTrivia" element={<BibleTrivia />} />
+					<Route path="/family" element={<Family />} />
+				</Routes>
+			</main>
+		</div>
+	);
+};
+
+export default MembersDashboard;

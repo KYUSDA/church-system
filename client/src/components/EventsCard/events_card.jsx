@@ -62,19 +62,19 @@ const EventsCard = () => {
           </div>
         ))}
       </div>
-      <div className="flex space-x-4 mt-6">
-        <a 
-          href="https://x.com/kyusdachurch?s=09" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+      <div className="absolute bottom-0 flex space-x-4 mt-4">
+        <a
+          href="https://x.com/kyusdachurch?s=09"
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
         >
-          <FaXTwitter />
+          <FaTwitter />
         </a>
-        <a 
-          href="http://www.youtube.com/@kyusdachurch" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href="http://www.youtube.com/@kyusdachurch"
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-red-600 p-3 rounded-full text-white text-xl hover:bg-red-700 transition"
         >
           <FaYoutube />
