@@ -12,7 +12,7 @@ const Banner = () => {
 
       {/* Hero Text */}
       <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
-        <h1 className="text-4xl md:text-4xl font-semibold">WELCOME TO KYUSDA CHURCH</h1>
+        <h1 className="text-2xl md:text-4xl font-semibold">WELCOME TO KYUSDA CHURCH</h1>
         <p className="mt-4 text-sm md:text-base">
             Christ was a Seventh-Day Adventist, <br /> to all intents and purposes. <br />
             (Medical Ministry 49.4)
