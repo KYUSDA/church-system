@@ -18,7 +18,6 @@ import image16 from "../../assets/alo2.JPG";
 import image17 from "../../assets/Aloamo.JPG";
 import image18 from "../../assets/Gordonteam.JPG";
 import image19 from "../../assets/vickyteam.JPG";
-// import './App.css';
 
 const KyuSda = () => {
   const galleryImages = [
@@ -82,18 +81,12 @@ const KyuSda = () => {
   ];
 
   return (
-    <div className="App my-8">
-      <br />
-      <div>
-        <p className="text-center text-3xl text-[#6B003E] font-bold">OUR <span className="text-blue-500">CHURCH</span> GALLERY</p>
-      </div>
-      <br />
-      <br />
-      <WSPGallery galleryImages={galleryImages} />
+    <div className="my-6">
+      <h2 className="text-center text-2xl md:text-4xl font-bold my-8 md:mt-12 md:mb-12">
+        Our <span className="text-blue-500">Church</span> Gallery
+      </h2>
 
-      <br />
-      <br />
-      <div></div>
+      <WSPGallery galleryImages={galleryImages} />
     </div>
   );
 }
