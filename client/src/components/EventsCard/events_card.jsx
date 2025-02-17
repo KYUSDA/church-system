@@ -69,7 +69,7 @@ const EventsCard = () => {
           rel="noopener noreferrer"
           className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
         >
-          <FaTwitter />
+          <FaXTwitter />
         </a>
         <a
           href="http://www.youtube.com/@kyusdachurch"
