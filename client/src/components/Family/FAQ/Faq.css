@@ -1,4 +1,4 @@
-/* General FAQ Section Styles */
+
 .faqs {
   background-color: #255760;;
   background-position: center top;
@@ -20,7 +20,8 @@
   font-weight: bolder;
   font-size: 32px;
   color: #fff;
-  padding-top: 50px;
+  padding-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Column Grid Layout */
@@ -29,6 +30,8 @@
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
   justify-content: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
   gap: 20px;
 }
 
@@ -39,7 +42,7 @@
   -moz-box-shadow: 3px 13px 24px -1px rgba(20, 20, 20, 0.75);
   padding-bottom: 1rem;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 /* Question Section */
@@ -53,7 +56,7 @@
 }
 
 .faq .question h3 {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 

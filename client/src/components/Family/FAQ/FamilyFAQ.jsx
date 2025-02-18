@@ -1,7 +1,8 @@
+
+// export default FamilyFAQ;
 import React, { useState } from "react";
 import { faQuestions } from "../../../Dummy/FAQ";
-import './FamilyFAQ.css';
-
+import './Faq.css'
 const FamilyFAQ = () => {
     // State to track which FAQ is open
     const [openFAQ, setOpenFAQ] = useState(null);
@@ -27,7 +28,7 @@ const FamilyFAQ = () => {
                                             onClick={() => toggleFAQ(faq.id)}
                                             style={{ cursor: "pointer" }}
                                         >
-                                            <h3>{faq.id}. {faq.question}</h3>
+                                            <h3 className="text-slate-200">{faq.id}. {faq.question}</h3>
                                             <svg
                                                 width="15"
                                                 height="10"
