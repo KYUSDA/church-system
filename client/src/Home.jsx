@@ -2,10 +2,10 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./context/useAuthcontext";
 import MainPage from "./App";
-import SignUp from "./pages/SignUp";
-import SignInSide from "./pages/SignIn";
-import ResetInSide from "./pages/ResetToken";
-import NewPassword from "./pages/ResetPassword";
+import SignUp from "./pages/Auth/SignUp";
+import SignInSide from "./pages/Auth/SignIn";
+import ResetInSide from "./pages/Auth/ResetToken";
+import Newpassword from "./pages/Auth/ResetPassword";
 import MembersDashboard from "./pages/MembersDashboard";
 import Families from "./pages/Families";
 import Departments from "./components/Department/Departments";
@@ -35,7 +35,7 @@ const Home = () => {
         path="/resetToken"
         element={!user ? <ResetInSide /> : <SignInSide />}
       ></Route>
-      <Route path="/resetPassword" element={<NewPassword />}></Route>
+      <Route path="/resetPassword" element={<Newpassword />}></Route>
       <Route
         path="/member/*"
         element={user ? <MembersDashboard /> : <Navigate to="/signIn" />}
