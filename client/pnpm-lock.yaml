@@ -51,7 +51,7 @@ importers:
         specifier: ^2.4.6
         version: 2.4.6(react@18.3.1)
       framer-motion:
-        specifier: ^7.6.1
+        specifier: ^7.10.3
         version: 7.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
         specifier: ^0.474.0
