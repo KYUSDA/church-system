@@ -71,7 +71,7 @@ const Departments = () => {
                   </h4>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-600 overflow-hidden line-clamp-3">
+                  <p className="text-sm line-clamp-3 text-gray-600 overflow-hidden sm:line-clamp-3">
                     {department.description}
                   </p>
 
