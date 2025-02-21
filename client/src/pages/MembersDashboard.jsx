@@ -7,11 +7,18 @@ import Settings from "./Settings";
 import LessonDiscussion from "./LessonDiscussion";
 import BibleTrivia from "./BibleTrivia";
 import Family from "./Family";
+import { useLogout } from "../hooks/userLogoutHook";
 
 const MembersDashboard = () => {
 	const { user } = useAuthContext();
 	const [userData, setUserData] = useState();
 	const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1024);
+	const { logout } = useLogout();
+
+	// handle logout
+	const HandleLogout = () =>{
+		logout()
+	}
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -71,7 +78,7 @@ const MembersDashboard = () => {
 								className="h-12 w-12 rounded-full object-cover"
 							/>
 							<div>
-								<h3 className="font-semibold">{user?.email}</h3>
+								<h3 className="font-semibold text-sm overflow-hidden text-ellipsis whitespace-nowrap max-w-[140px]">{user?.email}</h3>
 								<p className="text-sm text-gray-500">{userData?.role}</p>
 							</div>
 						</div>
@@ -109,7 +116,7 @@ const MembersDashboard = () => {
 						</li>
 					</ul>
 
-					<button className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 mt-4 w-full rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors relative group`}>
+					<button onClick={HandleLogout} className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 mt-4 w-full rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors relative group`}>
 						<svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
 							<path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012 2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2 0 012-2h9z" />
 						</svg>
