@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import KyuSda from "../../assets/logo-kyusda.jpg";
-import { useLogout } from "../../hooks/userLogoutHook";
 import '../../global/global.css';
 import { FiMenu } from "react-icons/fi";
 import MobileNavbar from "./MobileNav";
 import './nav_bar.css';
 
 const Header = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const { logout } = useLogout();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleLogOut = () => {
-    logout();
-    setMenuOpen(false);
-  };
 
   return (
     <header className="bg-color main-header flex justify-between items-center px-6 py-2 md:px-12 relative">
@@ -43,17 +36,10 @@ const Header = () => {
 
         {/* Auth Buttons and Donate on the Right */}
         <div className="flex gap-4 items-center">
-          {user?.email ? (
-            <div className="flex gap-3">
-              <Link to="/member" className="nav-link">Dashboard</Link>
-              <button onClick={handleLogOut} className="rounded-md px-4 py-2 bg-[#0f2f36] text-white">Log Out</button>
-            </div>
-          ) : (
             <div className="flex gap-4">
               <Link to="/signUp" className="text-white text-sm register-btn">REGISTER</Link>
               <Link to="/signIn" className="text-white text-sm">LOGIN</Link>
             </div>
-          )}
 
           {/* Donate Button */}
           <div className="donate-btn">
