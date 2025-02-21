@@ -17,6 +17,7 @@ import PrivacyPolicy from "./components/Footer/Policy";
 import Terms from "./components/Footer/Terms";
 import Layout from "./components/Footer/Layout";
 import { KyuSda } from "./container";
+import DonationPage from "./components/donation/donation";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -44,6 +45,7 @@ const Home = () => {
       <Route path="/families/:id" element={<Layout><SingleFamily /></Layout>} />
       <Route path="/Departments" element={<Layout><Departments /></Layout>}></Route>
       <Route path="/Departments/:id" element={<Layout><DepartmentsDetails /></Layout>} />
+      <Route path="/donation" element={<Layout><DonationPage /></Layout>} />
       <Route path="/church-gallery" element={<Layout><KyuSda /></Layout>} />
       <Route path="/membersDashboard" element={<MembersDashboard />} />
       <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout>} />
