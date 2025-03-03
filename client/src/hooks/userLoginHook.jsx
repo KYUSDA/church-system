@@ -20,7 +20,7 @@ export const useLogin = () => {
             localStorage.setItem('user', JSON.stringify(data));
             dispatch({ type: 'LOGIN', payload: data });
             setLoading(false);
-            redirect('/member')
+            redirect('/member/dashboard')
         }
         setError(data.err);
     }
