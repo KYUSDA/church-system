@@ -6,6 +6,7 @@ import memberRoute from "./Router/authRoute.js";
 import departmentRoute from "./Router/departMentRoute.js";
 import userRoute from "./Router/userRouter.js";
 import familyRoute from "./Router/familiesRouter.js";
+import quizzeRoute from "./Router/quizzeRoute.js";
 const app = express();
 app.use(json());
 app.use(
@@ -25,4 +26,5 @@ app.use("/kyusda/v1/member/", memberRoute);
 app.use("/kyusda/v1/department/", departmentRoute);
 app.use("/kyusda/v1/user", userRoute);
 app.use("/kyusda/v1/family/", familyRoute);
+app.use("/kyusda/v1/quizzes/",quizzeRoute);
 export default app;
