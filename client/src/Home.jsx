@@ -18,11 +18,11 @@ import DonationPage from "./components/donation/donation";
 import DashboardHome from "./Dashboard/pages/DashboardHome";
 import ResourceCenter from "./Dashboard/pages/ResourceCenter";
 import Settings from "./Dashboard/pages/Settings";
-import LessonDiscussion from "./Dashboard/pages/LessonDiscussion";
 import BibleTrivia from "./Dashboard/pages/BibleTrivia";
 import Family from "./Dashboard/pages/Family";
 import DashboardLayout from "./Dashboard/Layout";
 import ProtectedRoute from "./Dashboard/components/ProtectedRoutes";
+import QuizzesPage from "./Dashboard/pages/LessonDiscussion";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -56,7 +56,7 @@ const Home = () => {
     <Route path="/member/dashboard" element={<ProtectedRoute><DashboardLayout><DashboardHome /></DashboardLayout></ProtectedRoute>}/>
     <Route path="/member/resources" element={<ProtectedRoute><DashboardLayout><ResourceCenter /></DashboardLayout></ProtectedRoute>} />
     <Route path="/member/settings" element={<ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>} />
-    <Route path="/member/lesson" element={<ProtectedRoute><DashboardLayout><LessonDiscussion /></DashboardLayout></ProtectedRoute>} />
+    <Route path="/member/defend-your-faith" element={<ProtectedRoute><DashboardLayout><QuizzesPage /></DashboardLayout></ProtectedRoute>} />
     <Route path="/member/bibleTrivia" element={<ProtectedRoute><DashboardLayout><BibleTrivia /></DashboardLayout></ProtectedRoute>} />
     <Route path="/member/family" element={<ProtectedRoute><DashboardLayout><Family /></DashboardLayout></ProtectedRoute>} />
     </Routes>
