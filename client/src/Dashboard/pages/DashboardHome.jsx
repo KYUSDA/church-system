@@ -1,11 +1,10 @@
-import AnalyticsSection from './Member/AnalyticsSection'
-import QuickActions from './Member/QuickActions'
-import CommunitySection from './Member/CommunitySection'
-import PersonalGoals from './Member/PersonalGoals'
-import { useAuthContext } from '../context/useAuthcontext'
+import AnalyticsSection from '../AnalyticsSection'
+import QuickActions from '../QuickActions'
+import CommunitySection from '../CommunitySection'
+import PersonalGoals from '../PersonalGoals'
+import { useAuthContext } from '../../context/useAuthcontext'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import NavBar from './Member/NavBar'
 import Tooltip from "@mui/material/Tooltip"
 
 const DashboardHome = () => {
@@ -20,10 +19,9 @@ const DashboardHome = () => {
         setUserData(fakeData);
     }, [user.id]);
     return (
-        <div className="max-w-7xl mx-auto p-8">
-            {/* Header */}
-            <NavBar user={user} />
-            <div className='w-[75vw] p-3'>
+        <div className="flex w-full">
+            <div className='w-full'>
+            <h1 className="text-2xl font-bold text-gray-900 text-center mt-2 lg:hidden">Good Morning 😊!</h1>
                 <AnalyticsSection />
                 <QuickActions />
                 {/* Stats Grid */}

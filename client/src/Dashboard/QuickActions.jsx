@@ -22,10 +22,10 @@ const QuickActions = () => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed bottom-8 right-8 flex flex-col w-[20vw]">
+        <div className="fixed bottom-8 right-8 flex flex-col max-w-xs w-full sm:max-w-md lg:max-w-lg">
             {/* Chat Bot */}
             {isChatOpen && (
-                <div className="bg-white rounded-xl shadow-lg p-4  mb-4 h-[50vh] relative">
+                <div className="bg-white rounded-xl shadow-lg p-4 mb-4 h-[50vh] relative">
                     <div className="flex justify-between items-center">
                         <h3 className="font-semibold">Church Assistant</h3>
                         <button
@@ -38,7 +38,7 @@ const QuickActions = () => {
                         </button>
                     </div>
 
-                    <div className="h-64 mb-4 space-y-2 overflow-y-auto mb-2">
+                    <div className="h-64 mb-4 space-y-2 overflow-y-auto">
                         {messages.map((msg, index) => (
                             <div key={index} className={`p-2 rounded-lg ${msg.isBot ? 'bg-gray-100' : 'bg-blue-100 ml-auto'}`}>
                                 {msg.text}

@@ -1,10 +1,7 @@
-import CalenderSection from "./Member/CalenderSection"
-import MinistryUpdates from "./Member/MinistryUpdates"
-import CommunicationHub from "./Member/CommunicationHub"
-import { useAuthContext } from "../context/useAuthcontext"
-import Navbar from "./Member/NavBar"
+import CalenderSection from "../CalenderSection";
+import MinistryUpdates from "../MinistryUpdates"
+import CommunicationHub from "../CommunicationHub"
 const ResourceCenter = () => {
-    const { user } = useAuthContext();
 
     const studyMaterials = [
         { name: "November Newsletter", url: "/downloads/november-newsletter.pdf" },
@@ -33,13 +30,12 @@ const ResourceCenter = () => {
 
 
     return (
-        <div className="max-w-7xl mx-auto p-8">
-            <Navbar user={user} />
-            <div className="grid grid-cols-2 gap-8 mb-8 mt-16">
+        <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2  gap-8 mb-8 mt-16">
                 <CalenderSection />
                 <MinistryUpdates />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-xl shadow-sm">
                     <h4 className="font-medium mb-3">Latest Sermons</h4>
                     <ul className="space-y-2">
