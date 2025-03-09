@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BellIcon, LogOutIcon, MenuIcon } from "lucide-react";
 import { useLogout } from "../../hooks/userLogoutHook";
+import { NavLink } from "react-router-dom";
 
 const NavBar = ({ onMenuToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,14 +44,15 @@ const NavBar = ({ onMenuToggle }) => {
         {/* Dropdown Menu */}
         {menuOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2">
-            <button
+            <NavLink
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
               aria-label="Notifications"
               title="Notifications"
+              to={'/member/user-notifications'}
             >
               <BellIcon className="w-5 h-5 mr-2 text-blue-600" />
               Notifications
-            </button>
+            </NavLink>
             <button
               className="flex items-center px-4 py-2 hover:bg-red-100 w-full text-left text-red-600"
               onClick={handleLogout}
