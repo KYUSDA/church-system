@@ -11,13 +11,16 @@ const DashboardHome = () => {
     const { user } = useAuthContext();
     const [userData, setUserData] = useState();
 
+
     useEffect(() => {
+        if (!user) return; 
         const fakeData = {
             role: "member, family leader, church elder, department leader, patron",
             familyLocated: "Nyeri Family Group"
         };
         setUserData(fakeData);
     }, [user.id]);
+
     return (
         <div className="flex w-full">
             <div className='w-full'>
