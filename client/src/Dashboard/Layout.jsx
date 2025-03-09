@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/Sidebar";
+import ChatBot from "./chatBot";
 
 const DashboardLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,6 +29,7 @@ const DashboardLayout = ({ children }) => {
           {/* Dashboard content */}
           <div className={`px-4`}>
             {children}
+            <ChatBot />
           </div>
         </div>
       </div>
