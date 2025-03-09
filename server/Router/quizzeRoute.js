@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createQuiz } from "../Controlers/quizzes";
+import { createQuiz } from "../Controlers/quizzes.js";
 const quizzeRoute = Router();
 
 quizzeRoute.route("/create-quizze").post(createQuiz);
