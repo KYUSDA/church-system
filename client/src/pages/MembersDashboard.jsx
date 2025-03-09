@@ -8,12 +8,14 @@ import LessonDiscussion from "./LessonDiscussion";
 import BibleTrivia from "./BibleTrivia";
 import Family from "./Family";
 import { useLogout } from "../hooks/userLogoutHook";
+import { getBaseUrl } from "../utils/api";
 
 const MembersDashboard = () => {
 	const { user } = useAuthContext();
 	const [userData, setUserData] = useState();
 	const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1024);
 	const { logout } = useLogout();
+	const baseUrl = getBaseUrl();
 
 	// handle logout
 	const HandleLogout = () =>{
@@ -32,7 +34,7 @@ const MembersDashboard = () => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/user/${user.id}`;
+			const url = `${baseUrl}/user/${user.id}`;
 			const resp = await fetch(url);
 			const data = await resp.json();
 			setUserData(data);
