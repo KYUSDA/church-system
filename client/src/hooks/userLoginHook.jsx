@@ -8,7 +8,7 @@ export const useLogin = () => {
     const login = async (email, password, rememberMe) => {
         setError(null);
         setLoading(true);
-        const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/member/signIn`;
+        const url = `http://localhost:8000/kyusda/v1/member/signIn`;
         const resp = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
