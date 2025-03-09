@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { redirect } from "react-router-dom";
 import { useAuthContext } from "../context/useAuthcontext";
+import { getBaseUrl } from "../utils/api";
 export const useSignUp = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const { dispatch } = useAuthContext();
+    const baseUrl = getBaseUrl();
 
   const clearError = () => {
     setError(null);
@@ -22,7 +24,7 @@ export const useSignUp = () => {
   ) => {
     setError(null);
     setLoading(true);
-    const url = `https://kyusdabackend-ghbbf8a8fvete4ax.southafricanorth-01.azurewebsites.net/kyusda/v1/member/signUp`;
+    const url = `${baseUrl}member/signUp`;
     const resp = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
