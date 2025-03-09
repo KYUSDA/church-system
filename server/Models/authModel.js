@@ -4,6 +4,29 @@ import pkg from "validator";
 import { genSalt, hash, compare } from "bcrypt";
 import { randomBytes, createHash } from "crypto";
 const { isEmail } = pkg;
+
+// type IUser = {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   registration: string;
+//   course: string;
+//   year: number;
+//   phoneNumber: string;
+//   avatar?:{
+//     avatar_id: String;
+//     avatar_url: String;
+//   };
+//   password: string;
+//   passwordConfirm?: string;
+//   role: "member" | "elder" | "admin";
+//   familyLocated?: string;
+//   passwordresetToken?: string;
+//   resetTokenSetAt?: Date;
+//   resetTokenexpires?: Date;
+// };
+
+
 const authSchema = new Schema({
   firstName: {
     type: String,
@@ -29,6 +52,9 @@ const authSchema = new Schema({
   course: {
     type: String,
     required: [true, "please enter your course"],
+  },
+  avatar:{
+    type: String
   },
   year: {
     type: Number,
