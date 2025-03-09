@@ -15,6 +15,7 @@
   "author": "samuel kamotho",
   "license": "ISC",
   "dependencies": {
+    "@sanity/client": "^6.28.2",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
