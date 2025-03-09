@@ -22,7 +22,8 @@ import BibleTrivia from "./Dashboard/pages/BibleTrivia";
 import Family from "./Dashboard/pages/Family";
 import DashboardLayout from "./Dashboard/Layout";
 import ProtectedRoute from "./Dashboard/components/ProtectedRoutes";
-import QuizzesPage from "./Dashboard/pages/LessonDiscussion";
+import QuizzesPage from "./Dashboard/pages/quizzesPage";
+import NotificationsPage from "./Dashboard/pages/Notifications";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -59,6 +60,7 @@ const Home = () => {
     <Route path="/member/defend-your-faith" element={<ProtectedRoute><DashboardLayout><QuizzesPage /></DashboardLayout></ProtectedRoute>} />
     <Route path="/member/bibleTrivia" element={<ProtectedRoute><DashboardLayout><BibleTrivia /></DashboardLayout></ProtectedRoute>} />
     <Route path="/member/family" element={<ProtectedRoute><DashboardLayout><Family /></DashboardLayout></ProtectedRoute>} />
+    <Route path="/member/user-notifications" element={<ProtectedRoute><DashboardLayout><NotificationsPage /></DashboardLayout></ProtectedRoute>} />
     </Routes>
   );
 };
