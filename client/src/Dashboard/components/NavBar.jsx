@@ -7,6 +7,9 @@ const NavBar = ({ onMenuToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { logout } = useLogout();
 
+
+ 
+
   const handleLogout = () => {
     logout();
     setMenuOpen(false);
