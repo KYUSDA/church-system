@@ -3,12 +3,41 @@ import CommunitySection from '../CommunitySection'
 import PersonalGoals from '../PersonalGoals'
 import { useAuthContext } from '../../context/useAuthcontext'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import Tooltip from "@mui/material/Tooltip"
+import LeaderboardSection from '../leaderBoard'
 
 const DashboardHome = () => {
     const { user } = useAuthContext();
     const [userData, setUserData] = useState();
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubscription = async () => {
+        if (!email) {
+            setMessage("Please enter a valid email.");
+            return;
+        }
+
+        try {
+            const response = await fetch("https://example.com/api/subscribe-devotions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            if (response.ok) {
+                setMessage("Subscription successful! You'll receive daily devotions.");
+                setEmail(""); // Clear input after successful subscription
+            } else {
+                setMessage("Failed to subscribe. Please try again.");
+            }
+        } catch (error) {
+            console.error("Subscription error:", error);
+            setMessage("An error occurred. Please try again later.");
+        }
+    };
 
 
     useEffect(() => {
@@ -73,35 +102,31 @@ const DashboardHome = () => {
 
                 {/* Content Sections */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Devotions Section */}
-                    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                        <h3 className="text-xl font-semibold mb-4">Recent Devotions</h3>
-                        <div className="space-y-4">
-                            {/* Devotion Cards */}
-                            <div className="p-4 bg-gray-50 rounded-lg">
-                                <h4 className="font-semibold">Morning Devotion</h4>
-                                <p className="text-sm text-gray-600 mt-2">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </p>
-                                <div className="flex justify-between items-center mt-3 text-sm">
-                                    <span className="text-blue-600">John Doe</span>
-                                    <span className="text-gray-500">3 hours ago</span>
-                                </div>
-                            </div>
-                            <div className="p-4 bg-gray-50 rounded-lg">
-                                <h4 className="font-semibold">Morning Devotion</h4>
-                                <p className="text-sm text-gray-600 mt-2">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </p>
-                                <div className="flex justify-between items-center mt-3 text-sm">
-                                    <span className="text-blue-600">John Doe</span>
-                                    <span className="text-gray-500">3 hours ago</span>
-                                </div>
-                            </div>
+                    {/* Subscription Section */}
+                    <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+                        <h4 className="text-lg font-semibold mb-2">Subscribe for Daily Devotions</h4>
+                        <p className="text-sm text-gray-600 mb-3">
+                            Enter your email to receive devotions directly to your inbox.
+                        </p>
+                        <div className="flex gap-2">
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email"
+                                className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <button
+                                onClick={handleSubscription}
+                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                            >
+                                Subscribe
+                            </button>
                         </div>
+                        {message && <p className="mt-2 text-sm text-red-700">{message}</p>}
                     </div>
-
-
+    
+                    {/* Personal Goals Section */}
                     <PersonalGoals />
 
 
@@ -111,23 +136,8 @@ const DashboardHome = () => {
                     <CommunitySection />
 
                     {/* Family Group Section */}
-                    <div className="bg-purple-100 rounded-xl shadow-lg p-6">
-                        <h3 className="text-xl font-semibold mb-4">Your Family Group</h3>
-                        <div className="text-center py-8">
-                            <img
-                                src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
-                                alt="Family Group"
-                                className="mx-auto h-48"
-                            />
-                            <h4 className="font-semibold mt-4">Family Group Allocated</h4>
-                            <p className="text-gray-600">{userData?.familyLocated}</p>
-                            <Link
-                                to={`/${userData?.familyLocated}`}
-                                className="mt-4 inline-block px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-                            >
-                                View Details
-                            </Link>
-                        </div>
+                    <div className="p-6">
+                        <LeaderboardSection />
                     </div>
                 </div>
             </div>
