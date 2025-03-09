@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { redirect } from "react-router-dom";
 import { useAuthContext } from "../context/useAuthcontext";
+import { getBaseUrl } from "../utils/api";
 export const useLogin = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
     const { dispatch } = useAuthContext();
+    const baseUrl = getBaseUrl();
+
+
     const login = async (email, password, rememberMe) => {
         setError(null);
         setLoading(true);
-        const url = `http://localhost:8000/kyusda/v1/member/signIn`;
+        const url = `${baseUrl}/member/signIn`;
         const resp = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
