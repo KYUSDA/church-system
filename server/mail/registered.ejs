@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Kirinyaga Adventist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+        .social-icons img {
+            width: 24px;
+            margin: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Image -->
+        <div class="header">
+            <img src="<%= data.imageUrl %>" alt="Welcome Image">
+        </div>
+
+        <!-- Welcome Title -->
+        <div class="title">
+            Welcome to Kirinyaga Adventist!
+        </div>
+
+        <!-- Welcome Message -->
+        <div class="content">
+            <p>Dear <%= data.name %>,</p>
+            <p>We are thrilled to welcome you to the Kirinyaga Adventist Church family! It is a blessing to have you as part of our community where we worship, grow, and serve together.</p>
+            <p>We look forward to sharing this journey of faith with you. Please feel free to explore our website, attend our weekly services, and get involved in different ministries.</p>
+
+            <p>If you have any questions or need assistance, don't hesitate to reach out to us.</p>
+
+            <p>Click the button below to explore your account and learn more about our community:</p>
+
+            <div style="text-align: center;">
+                <a href="<%= data.dashboardUrl %>" class="button">Go to Your Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🙏 Stay connected with us</p>
+
+            <!-- Social Media Links -->
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100083015178066" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                </a>
+                <a href="https://x.com/kyusdachurch?s=08" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                </a>                
+                <a href="https://www.youtube.com/@kyusdachurch9822" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube">
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
