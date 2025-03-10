@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { BellIcon, LogOutIcon, MenuIcon } from "lucide-react";
 import { useLogout } from "../../hooks/userLogoutHook";
 import { NavLink } from "react-router-dom";
+import useUserData from "./userdata";
 
 const NavBar = ({ onMenuToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { logout } = useLogout();
-
+  const { userData } = useUserData(); 
 
  
 
@@ -26,7 +27,7 @@ const NavBar = ({ onMenuToggle }) => {
         >
           <MenuIcon className="w-6 h-6 text-gray-700" />
         </button>
-        <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">Good Morning 😊!</h1>
+        <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">Good Morning {userData.firstName} 😊!</h1>
       </div>
 
       {/* Right side: Avatar with Dropdown */}
@@ -38,7 +39,7 @@ const NavBar = ({ onMenuToggle }) => {
           title="User Menu"
         >
           <img
-            src="https://i.pinimg.com/originals/68/e1/e1/68e1e137959d363f172dc3cc50904669.jpg"
+            src={userData.avatar.url}
             alt="User Avatar"
             className="h-8 w-8 rounded-full object-cover"
           />
