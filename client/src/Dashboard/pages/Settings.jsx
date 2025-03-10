@@ -1,87 +1,57 @@
 import { useAuthContext } from "../../context/useAuthcontext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi"; // Pen icon for avatar
 import ProfilePic from "../../assets/profileImage.png";
 import { getBaseUrl } from "../../utils/api";
+import useUserData from "../components/userdata";
+import toast from "react-hot-toast";
 
 const Settings = () => {
   const { user } = useAuthContext();
-  const [userData, setUserData] = useState();
-  const [file, setFile] = useState();
+  const {userData,setUserData} = useUserData();
+  const [preview, setPreview] = useState();
   const baseUrl = getBaseUrl();
 
-  useEffect(() => {
-    const getData = async () => {
-      if (!user) return;
-      const url = `${baseUrl}/user/${user.id}`;
-      const resp = await fetch(url);
-      const data = await resp.json();
-      setUserData(data);
-    };
-    getData();
-  }, [user, baseUrl]);
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
-
-    // Set the selected file in state
-    setFile(selectedFile);
-
+  
+    setPreview(URL.createObjectURL(selectedFile));
+  
     const formData = new FormData();
     formData.append("file", selectedFile);
-
+  
     try {
-      // Assuming the backend is configured to handle image uploads directly
-      const uploadUrl = `${baseUrl}/user/${user.id}`;
-      const updateData = { ...userData, profilePic: "" }; // Remove previous image URL (if any)
-
-      // Upload the file and get the image URL
-      const uploadResponse = await fetch(uploadUrl, {
+      const uploadUrl = `${baseUrl}/user/update-avatar/${user.id}`;
+  
+      const response = await fetch(uploadUrl, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updateData), // Update user data without image first
+        body: formData,
       });
-
-      if (uploadResponse.ok) {
-        // Now, update the profile with the image URL (backend should return the image URL)
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-
-        const imageUploadResponse = await fetch(uploadUrl, {
-          method: "POST",
-          body: formData,
-        });
-        
-        const imageData = await imageUploadResponse.json();
-        if (imageData.success) {
-          // Update the profile with the new image URL
-          const updatedUserData = { ...userData, profilePic: imageData.imageUrl };
-          await fetch(uploadUrl, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedUserData),
-          });
-
-          // Update state with the new image URL
-          setUserData(updatedUserData);
-        }
+  
+      const data = await response.json();
+  
+      if (data.avatar?.url) {
+        setUserData((prev) => ({ ...prev, avatar: data.avatar.url }));
+        toast.success("Profile picture updated successfully!");
+      } else {
+        toast.error("Failed to update profile picture.");
       }
     } catch (error) {
       console.error("Error updating profile picture", error);
+      toast.error("An error occurred while updating the profile picture.");
     }
   };
+  
+
 
   return (
     <div className="p-6 flex flex-col items-center max-w-3xl mx-auto">
       {/* Profile Picture Section */}
       <div className="relative w-32 h-32">
         <img
-          src={userData?.profilePic || ProfilePic}
+          src={preview || userData?.avatar.url || ProfilePic}
           alt="Profile"
           className="w-32 h-32 rounded-full object-cover border-2 border-gray-300 shadow-lg"
         />
