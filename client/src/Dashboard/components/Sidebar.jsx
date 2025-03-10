@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink} from "react-router-dom";
-import { useAuthContext } from "../../context/useAuthcontext";
 import { X, LayoutDashboard, BookOpen, ShieldCheck, HelpCircle, Send, Settings } from "lucide-react";
-import { getBaseUrl } from "../../utils/api";
+import useUserData from "./userdata";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-  const { user } = useAuthContext();
-  const [userData, setUserData] = useState(null);
-  const baseUrl = getBaseUrl();
 
-  useEffect(() => {
-    const getData = async () => {
-      if (!user || !user.id) return;
-      const url = `${baseUrl}/user/${user.id}`;
-      const resp = await fetch(url);
-      const data = await resp.json();
-      setUserData(data);
-    };
-    getData();
-  }, [user]);
+	const { userData } = useUserData();
+ 
 
   const navItems = [
     { path: "/member/dashboard", name: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
@@ -49,12 +37,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 			<div className="p-4 flex flex-col justify-between h-[calc(100%-5rem)]">
 			  <div className="flex items-center space-x-4 mb-6">
 				<img
-				  src="https://i.pinimg.com/originals/68/e1/e1/68e1e137959d363f172dc3cc50904669.jpg"
+				  src={userData?.avatar.url}
 				  alt="Profile"
 				  className="h-12 w-12 rounded-full object-cover"
 				/>
 				<div>
-				  <h3 className="font-semibold truncate overflow-hidden whitespace-nowrap max-w-[10rem]">{user?.email}</h3>
+				  <h3 className="font-semibold truncate overflow-hidden whitespace-nowrap max-w-[10rem]">{userData?.email}</h3>
 				  <p className="text-sm text-gray-500">{userData?.role}</p>
 				</div>
 			  </div>
