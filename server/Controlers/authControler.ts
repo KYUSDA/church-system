@@ -3,6 +3,7 @@ import { createHash } from "crypto";
 import pkg from "jsonwebtoken";
 import { Response, Request } from "express";
 import { sendMail } from "../utils/mail";
+import { redis } from "../utils/redis";
 
 
 const { sign } = pkg;
@@ -29,7 +30,7 @@ const memberSignUp = async (req:Request, resp: Response) => {
     const data ={
       email: memberRegistered.email,
       name: memberRegistered.firstName,
-      imageUrl: "https://i.pinimg.com/736x/33/16/10/331610141886c70b54639b700b697487.jpg",
+      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
       dashboardUrl: "http://localhost:3000/dashboard"
     }
     // send email
@@ -69,6 +70,10 @@ const memberSignIn = async (req:Request, resp: Response) => {
     const id = loggedMember._id;
     const tk = createJWT(id.toString(), rememberMe);
     resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
+
+    // add user to redis session
+    await redis.set("user", JSON.stringify(loggedMember));
+
     resp.status(200).json({
       id,
       status: "success",
@@ -80,6 +85,26 @@ const memberSignIn = async (req:Request, resp: Response) => {
       status: "failure",
       err: (err as Error).message,
     });
+  }
+};
+
+
+// logout
+const memberLogout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("kyuSdaMember");
+
+    const redisUser = req.user?._id as string;
+      if (redisUser) {
+        console.log("User session deleted from redis");
+        await redis.del(redisUser);
+      } else {
+        console.log(`user: ${redisUser} not found in redis`);
+      }
+
+      res.status(200).json({ success: true, message: "User logged out" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -95,13 +120,13 @@ const memberResetToken = async (req:Request, resp: Response) => {
     //save to database
     await getMember.save({ validateBeforeSave: false });
     const resetUrl = `${req.protocol}://localhost:3000/resetPassword`;
-    const message = `sorry,we heard you lost your password, don't worry click here to reset it:`;
+    const message = `Forgotten password? Don't worry click here to reset it:`;
 
     const data={
       url: resetUrl,
       name: getMember.firstName,
       message,
-      imageUrl: "https://i.pinimg.com/736x/33/16/10/331610141886c70b54639b700b697487.jpg"
+      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s"
     }
     await sendMail({
       email: getMember.email,
@@ -154,6 +179,7 @@ const resetPassword = async (req:Request, resp: Response) => {
 export default {
   memberSignUp,
   memberSignIn,
+  memberLogout,
   memberResetToken,
   resetPassword,
 };
