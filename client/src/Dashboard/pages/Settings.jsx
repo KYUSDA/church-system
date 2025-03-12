@@ -29,8 +29,15 @@ const Settings = () => {
         method: "PUT",
         body: formData,
       });
-  
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Server Error:", errorText);
+        return;
+      }
+
       const data = await response.json();
+
   
       if (data.avatar?.url) {
         setUserData((prev) => ({ ...prev, avatar: data.avatar.url }));
