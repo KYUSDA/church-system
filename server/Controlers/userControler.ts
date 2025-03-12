@@ -81,7 +81,7 @@ export const updateUserAvatar = async (req: Request, res: Response) => {
   try {
     const { avatar } = req.body;
     const { id } = req.params; // Get user ID from params
-
+    console.log(avatar);
     const user = await authModel.findById(id);
     if (!user) {
      res.status(404).json({ success: false, message: "User not found. Please login again" });
