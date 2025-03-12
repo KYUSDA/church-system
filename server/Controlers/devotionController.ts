@@ -38,7 +38,7 @@ export const subscribeDevotion = async (req: Request, res: Response): Promise<vo
             data: { 
                 email,
                 date: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" }),
-                imageUrl: "https://i.pinimg.com/736x/33/16/10/331610141886c70b54639b700b697487.jpg",
+                imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
             }
         });
 
@@ -130,7 +130,7 @@ export const unsubscribeDevotion = async (req: Request, res: Response): Promise<
             template: "unsubscribe.ejs",
             data: { 
                 email,
-                imageUrl: "https://i.pinimg.com/736x/33/16/10/331610141886c70b54639b700b697487.jpg",
+                imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
             }
         });
 
@@ -194,7 +194,7 @@ export const resubscribe = async (req: Request, res: Response): Promise<void> =>
             data: { 
                 email,
                 date: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" }),
-                imageUrl: "https://i.pinimg.com/736x/33/16/10/331610141886c70b54639b700b697487.jpg",
+                imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
             }
         });
 
