@@ -9,7 +9,6 @@ import abouts from './abouts'
 import contact from './contact'
 import families from "./families"
 import announcements from './announcements'
-import quizzes from './quizzes'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -24,7 +23,6 @@ export default createSchema({
     abouts, 
      contact,
      families,
-     quizzes,
      announcements
     /* Your types here! */
   ]),
