@@ -1,20 +1,46 @@
 import React, { useState } from "react";
+import { getBaseUrl } from "../../utils/api";
+import { toast } from "sonner";
 
 const PrayerRequests = () => {
+
+  const baseUrl = getBaseUrl();
+  const [isLoading, setisLoading] = useState(false);
+
+
   const [formData, setFormData] = useState({
     name: "",
-    request: "",
+    prayerRequest: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Prayer Request Submitted:", formData);
-    setFormData({ name: "", request: "" });
-    alert("Your prayer request has been submitted.");
+    setisLoading(true);
+    const url = `${baseUrl}/prayers/prayerRequest`;
+
+    try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (response.ok) {
+    toast.success("Prayer Request Submitted!");
+    setFormData({ name: "", prayerRequest: "" });
+    }else{
+    toast.error("Failed to Submit Prayer Request!");
+    setisLoading(false);
+    }}
+    catch (error) {
+      console.error("Prayer Request Failed:", error);
+      toast.error("Failed to Submit Prayer Request!");
+    }
   };
 
   return (
@@ -38,8 +64,8 @@ const PrayerRequests = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold mb-2">Prayer Request</label>
           <textarea
-            name="request"
-            value={formData.request}
+            name="prayerRequest"
+            value={formData.prayerRequest}
             onChange={handleChange}
             rows={4}
             required
@@ -48,7 +74,7 @@ const PrayerRequests = () => {
           ></textarea>
         </div>
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-          Submit Request
+         {isLoading ? "Submitting..." : "Submit Prayer Request"}
         </button>
       </form>
     </div>
