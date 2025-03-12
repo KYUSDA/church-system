@@ -27,7 +27,7 @@ const NavBar = ({ onMenuToggle }) => {
         >
           <MenuIcon className="w-6 h-6 text-gray-700" />
         </button>
-        <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">Good Morning {userData.firstName} 😊!</h1>
+        <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">Good Morning {userData?.firstName} 😊!</h1>
       </div>
 
       {/* Right side: Avatar with Dropdown */}
@@ -39,7 +39,7 @@ const NavBar = ({ onMenuToggle }) => {
           title="User Menu"
         >
           <img
-            src={userData.avatar.url}
+            src={userData?.avatar.url}
             alt="User Avatar"
             className="h-8 w-8 rounded-full object-cover"
           />
