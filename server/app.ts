@@ -7,6 +7,7 @@ import userRoute from "./Router/userRouter";
 import familyRoute from "./Router/familiesRouter";
 import quizzeRoute from "./Router/quizzeRoute";
 import devotionRoute from "./Router/devotionRoute";
+import prayerRequestRouter from "./Router/prayerRoute";
 
 
 const app = express();
@@ -35,6 +36,7 @@ app.use("/kyusda/v1/user", userRoute);
 app.use("/kyusda/v1/family/", familyRoute);
 app.use("/kyusda/v1/quizzes/",quizzeRoute);
 app.use('/kyusda/v1/devotion/',devotionRoute);
+app.use("/kyusda/v1/prayers/", prayerRequestRouter);
 
 
 export default app;
