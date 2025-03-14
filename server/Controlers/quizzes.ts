@@ -11,14 +11,14 @@ import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 
 
-export const createQuiz = async (req: Request, res: Response) : Promise<void> => {
+export const createQuiz = async (req: Request, res: Response, next: NextFunction)  => {
     try {
         let { title, image, description, questions, week, completed } = req.body;
 
         // Basic validation
         if (!title || !description || !questions || !week || !image ) {
-             res.status(400).json({ error: "Title is required and must be a string." });
-        }else{
+             return next(new ErrorHandler("Title is required and must be a string.",400));
+        }
        
         // upload image to cloudinary
         if(image){
@@ -66,16 +66,16 @@ export const createQuiz = async (req: Request, res: Response) : Promise<void> =>
         }
 
         // set on redis
-        const redisData = await redis.set("quizzes", JSON.stringify(result));
+        const redisData = await redis.set(result._id.toString(), JSON.stringify(result));
         if (!redisData) {
-            console.error("Error setting quiz data on Redis");
+            return next(new ErrorHandler("Error setting quiz data on Redis",400));
         }
 
          res.status(201).json({ message: "Quiz created successfully", data: result });
-    }
+    
     } catch (error) {
         console.error("Error creating quiz:", error);
-         res.status(500).json({ error: "Internal Server Error" });
+        return next(new ErrorHandler("Internal Server Error",500));
     }
 };
 
@@ -103,13 +103,13 @@ export const getQuiz = catchAsyncErrors(async (req: Request, res: Response, next
 
 
 // return  quizzes
-export const getCompletedQuizzes = async (req: Request, res: Response) : Promise<void> => {
+export const getCompletedQuizzes = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const quizzes = await quizModel.find();
+        const quizzes = await quizModel.find({completed: true});
          res.status(200).json({ data: quizzes });
     } catch (error) {
         console.error("Error fetching completed quizzes:", error);
-         res.status(500).json({ error: "Internal Server Error" });
+        return next(new ErrorHandler("Internal Server Error",500));
     }
 };
 
@@ -119,18 +119,17 @@ export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Respons
     try {
         const { quizId, correctAnswers, userAnswers } = req.body;
 
-        // Check if user is logged in
-        const userId = req?.user?._id;
+       // Check if user is logged in
+       const userId = req?.user?.id;
+       if (!userId) {
+           return next(new ErrorHandler("Unauthorized: User not logged in", 401));
+       }
 
-        if (!userId) {
-            return next(new ErrorHandler("Unauthorized: User not logged in",401));
-        }
-
-        const user = await authModel.findById(userId).select("email");
-
-        if (!user) {
-             return next(new ErrorHandler("User not found",404));
-        }
+       const user = await authModel.findById(userId).select("-password");
+  
+       if (!user) {
+         return next(new ErrorHandler(`user: ${userId} not found`, 404));
+       }
 
         // Fetch quiz details (Assuming a Quiz model exists)
         const quiz = await quizModel.findById(quizId);
@@ -188,3 +187,36 @@ export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Respons
         return next(new ErrorHandler(error.message, 400)); 
     }
 });
+
+
+// get results
+export const getUserResults = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        const userId = req.user?.id; 
+
+        if (!userId) {
+            return next(new ErrorHandler("User not authenticated", 401));
+        }
+
+        const results = await quizResultModel.find({ user: userId })
+            .populate({
+                path: "quiz",
+                select: "title description week" // Fetch only quiz title & description
+            })
+            .select("scorePercentage quiz"); // Select necessary fields
+
+        if (!results.length) {
+            return next(new ErrorHandler("No results found for this user", 404));
+        }
+
+        res.status(200).json({
+            message: "User results found",
+            results
+        });
+        
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+});
+
