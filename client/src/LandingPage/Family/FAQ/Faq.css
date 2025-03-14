@@ -1,0 +1,167 @@
+
+.faqs {
+  background-color: #255760;;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 50px; /* Add padding to prevent overlap with footer */
+  position: relative; /* Ensures proper stacking order */
+}
+
+.container {
+  /* height: 500px; */
+  margin: auto;
+  height: auto; /* Allow container to adjust height dynamically */
+  padding-bottom: 20px; /* Add space for content expansion */
+}
+
+.heading {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 32px;
+  color: #fff;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Column Grid Layout */
+.col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  gap: 20px;
+}
+
+/* Individual FAQ Box Styles */
+.faq {
+  box-shadow: 3px 13px 24px -1px rgba(20, 20, 20, 0.75);
+  -webkit-box-shadow: 3px 13px 24px -1px rgba(20, 20, 20, 0.75);
+  -moz-box-shadow: 3px 13px 24px -1px rgba(20, 20, 20, 0.75);
+  padding-bottom: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+/* Question Section */
+.faq .question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--fourth-color);
+  padding: 1rem;
+  color: #0e2125;
+}
+
+.faq .question h3 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Answer Section Styling */
+.faq .answer {
+  overflow: hidden;
+  max-height: 0; /* Hidden by default */
+  opacity: 0;
+  padding: 0 15px; /* Horizontal padding for better spacing */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+  border-radius: 5px;
+  margin-top: 5px; /* Space between question and answer */
+  color: #eee; 
+  font-size: 1rem; 
+  line-height: 1.5; 
+}
+
+/* Visible Answer (Toggled Open) */
+.faq .answer.show {
+  max-height: 300px;
+  opacity: 1;
+  padding: 10px 15px;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Hidden Answer */
+.faq .answer.hide {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 15px; /* Maintain horizontal padding while hidden */
+}
+
+/* Miscellaneous */
+.faq .answer p {
+  padding-top: 1rem;
+  line-height: 1.6;
+}
+
+/* Active FAQ State */
+.faq.active .answer {
+  max-height: 300px;
+}
+
+/* || Media Queries */
+
+/* General styles for small screens */
+@media (max-width: 768px) {
+  /* Adjust question font size */
+  .faq .question h3 {
+      font-size: 1rem;
+  }
+
+  /* Adjust answer font size */
+  .faq .answer {
+      font-size: 0.9rem; 
+      line-height: 1.4;
+  }
+  .faq .question {
+      padding: 0.8rem;
+  }
+
+  .faq .answer {
+      padding: 8px 10px; 
+  }
+
+  /* Adjust heading size */
+  .heading {
+      font-size: 24px;
+  }
+
+  /* Grid column layout for narrower screens */
+  .col {
+      grid-template-columns: 1fr; /* Single-column layout on small screens */
+      gap: 15px; 
+  }
+}
+
+
+
+/* General styles for medium screens */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .faq .question h3 {
+      font-size: 1.2rem;
+  }
+  .faq .answer {
+      font-size: 1rem; 
+      line-height: 1.5;
+  }
+
+  /* Adjust padding for the question container */
+  .faq .question {
+      padding: 1rem;
+  }
+  .faq .answer {
+      padding: 10px 15px; 
+  }
+
+  /* Adjust heading size for medium screens */
+  .heading {
+      font-size: 28px;
+  }
+
+  /* Grid layout adjustments for medium screens */
+  .col {
+      grid-template-columns: repeat(2, 1fr); /* Two-column layout */
+      gap: 20px; 
+  }
+}
