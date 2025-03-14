@@ -1,9 +1,10 @@
 import { Schema as _Schema, Document, model, Model } from "mongoose";
 const Schema = _Schema;
 import pkg from "validator";
-import { genSalt, hash, compare } from "bcrypt";
+import bcrypt, { genSalt, hash } from "bcrypt";
 import { randomBytes, createHash } from "crypto";
 const { isEmail } = pkg;
+import jwt  from "jsonwebtoken";
 
 export interface IUser extends Document {
   firstName: string;
@@ -25,6 +26,8 @@ export interface IUser extends Document {
   resetTokenSetAt?: Date;
   resetTokenexpires?: Date;
   resetToken(): Promise<string>;
+  comparePasswords: (password: string) => Promise<boolean>;
+  signAccessToken: () => string,
 };
 
 export interface IUserModel extends Model<IUser> {
@@ -112,24 +115,11 @@ authSchema.pre("save", async function (next) {
   next();
 });
 
-//login member
-authSchema.statics.login = async function (
-  email: string,
-  password: string
-): Promise<IUser> {
-  const member = await this.findOne({ email });
 
-  if (!member) {
-    throw new Error("Incorrect email");
-  }
-
-  const auth = await compare(password, member.password);
-  if (!auth) {
-    throw new Error("Incorrect password");
-  }
-
-  return member;
-};
+//compare passwords
+authSchema.methods.comparePasswords = async function(password: string) {
+    return await bcrypt.compare(password, this.password);
+}
 
 
 //send the reset Token
@@ -139,6 +129,11 @@ authSchema.methods.resetToken = async function (): Promise<string> {
   this.resetTokenexpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour expiration
   return token;
 };
+
+//sign access token
+authSchema.methods.signAccessToken = function(): string {
+  return jwt.sign({id: this.id}, process.env.ACCESS_TOKEN as string, {expiresIn: "60m"})
+}
 
 
 const authModel = model<IUser, IUserModel>("member", authSchema);
