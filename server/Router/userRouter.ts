@@ -10,7 +10,7 @@ import {
 const userRouter = Router();
 userRouter.route("/getUsers").get(getAll);
 userRouter.route("/createUser").post(createUser);
-userRouter.route("/update-avatar/:id").put(updateUserAvatar);
+userRouter.put("/update-avatar/:id",updateUserAvatar);
 userRouter.route("/:id").get(getOne).patch(updateUser).delete(deleteUser);
 
 export default userRouter;
