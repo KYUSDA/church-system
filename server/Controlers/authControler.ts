@@ -1,9 +1,13 @@
 import memberAuth from "../Models/authModel";
 import { createHash } from "crypto";
 import pkg from "jsonwebtoken";
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import { sendMail } from "../utils/mail";
 import { redis } from "../utils/redis";
+import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
+import ErrorHandler from "../utils/ErrorHandler";
+import authModel from "../Models/authModel";
+import { sendToken } from "../utils/jwt";
 
 
 const { sign } = pkg;
@@ -63,38 +67,74 @@ const memberSignUp = async (req:Request, resp: Response) => {
   }
 };
 
-const memberSignIn = async (req:Request, resp: Response) => {
-  try {
-    const { email, password, rememberMe } = req.body;
-    const loggedMember = await memberAuth.login(email, password);
-    const id = loggedMember._id;
-    const tk = createJWT(id.toString(), rememberMe);
-    resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
+// const memberSignIn = async (req:Request, resp: Response) => {
+//   try {
+//     const { email, password, rememberMe } = req.body;
+//     const loggedMember = await memberAuth.login(email, password);
+//     const id = loggedMember._id;
 
-    // add user to redis session
-    await redis.set("user", JSON.stringify(loggedMember));
+//     const tk = createJWT(id.toString(), rememberMe);
+//     resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
 
-    resp.status(200).json({
-      id,
-      status: "success",
-      email: loggedMember.email,
-      tk,
-    });
-  } catch (err) {
-    resp.status(404).json({
-      status: "failure",
-      err: (err as Error).message,
-    });
+//     // add user to redis session
+//     await redis.set(id.toString(), JSON.stringify(loggedMember));
+
+//     resp.status(200).json({
+//       id,
+//       status: "success",
+//       email: loggedMember.email,
+//       tk,
+//     });
+//   } catch (err) {
+//     resp.status(404).json({
+//       status: "failure",
+//       err: (err as Error).message,
+//     });
+//   }
+// };
+
+export const memberSignIn = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { password, email } = req.body;
+      console.log(password,email)
+      if (!password || !email) {
+        return next(new ErrorHandler("Please provide all the fields", 400));
+      }
+
+      const user = await authModel.findOne({ email });
+      if (!user) {
+        return next(new ErrorHandler("email or password is invalid", 400));
+      }
+
+      const passwordCorrect = await user.comparePasswords(password);
+      if (!passwordCorrect) {
+        return next(new ErrorHandler("email or password is invalid", 400));
+      }
+
+      //create cookies
+      try {
+        await sendToken(user, res);
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
   }
-};
+);
+
 
 
 // logout
-const memberLogout = async (req: Request, res: Response) => {
+const memberLogout = catchAsyncErrors( async (req: Request, res: Response,next:NextFunction) => {
   try {
-    res.clearCookie("kyuSdaMember");
 
-    const redisUser = req.user?._id as string;
+     // clear cookies
+     res.cookie("access_token", "", { maxAge: 1 });
+   
+     const redisUser = req.user?.id;
+     console.log("User ID from request:", redisUser);
       if (redisUser) {
         console.log("User session deleted from redis");
         await redis.del(redisUser);
@@ -103,10 +143,10 @@ const memberLogout = async (req: Request, res: Response) => {
       }
 
       res.status(200).json({ success: true, message: "User logged out" });
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+  } catch (error:any) {
+    return next(new ErrorHandler(error.message, 400)); 
   }
-};
+});
 
 const memberResetToken = async (req:Request, resp: Response) => {
   try {
