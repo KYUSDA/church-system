@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap');
+
+/* || RESET */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BASIC STYLES */
+
+body, html{
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: #efefef;
+    color: #000;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul, li, img, i{
+    transition: all .3s ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-weight: 700;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+}
+
+
+.donate-btn {
+    border: none;
+    outline: none;
+    background-color: #255760;
+    color: #eee;
+    border-radius: 7px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+  }
+  
+  .donate-btn:hover {
+    transform: translateY(-3px);
+  }
+  
+  .button-span {
+    color: #aaa;
+  }
+  
+
+
+/* Keyframes for slide-up animation */
+/* Define the slide-up keyframes */
+@keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Create a reusable class for the animation */
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out;
+    animation-fill-mode: forwards; 
+  }
+  
+  
+  
+
+
+/* HERO SECTION */
+.hero-section{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)) ,url(./assets/hero-1.JPG);
+}
+
+.hero-text{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.hero-section h1{
+    font-size: 50px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-section p{
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 20px 0 40px 0;
+    line-height: 1.7;
+}
+
+.hero-text a{
+    background-color: rgb(107,0,62);
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+
+
+/* ABOUT US SECTION */
+.about-us{
+    padding: 100px 100px;
+    background-color: #fff;
+    color: #000;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    text-align: center;
+}
+
+.about-us-left, .about-us-right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.left, .right{
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 5px;
+    width: 250px;
+    height: 200px;	
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.left i, .right i{
+    font-size: 40px;
+    color: rgb(107,0,62);
+}
+
+.left img, .right img{
+    width: 150px;
+}
+
+.about-us-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.about-us-center h2{
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.about-us-center .blockquote{
+    font-weight: 500;
+    line-height: 1.7;    
+}
+
+.about-us-center h1{
+    font-size: 60px;
+    font-weight: 400;
+    color: rgb(107,0,62);
+}
