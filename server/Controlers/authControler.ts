@@ -1,6 +1,5 @@
 import memberAuth from "../Models/authModel";
-import { createHash } from "crypto";
-import pkg from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { Response, Request, NextFunction } from "express";
 import { sendMail } from "../utils/mail";
 import { redis } from "../utils/redis";
@@ -8,91 +7,171 @@ import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import authModel from "../Models/authModel";
 import { sendToken } from "../utils/jwt";
+import validator from 'validator'
+import jwt from 'jsonwebtoken'
+import { IUser } from "../Models/authModel";
 
 
-const { sign } = pkg;
+interface IRegisterUser{
+    firstName: string;
+    lastName: string;
+    email: string;
+    registration: string;
+    course:string;
+    year: string;
+    phoneNumber: string;
+    scores: number;
+    password: string;
+    familyLocated?: string;
+    avatar?: string;
+}
 
-let maxAge = 60 * 60;
-let extendedMaxAge = 3 * 24 * 60 * 60;
 
-
-const createJWT = (id: string, rememberMe: boolean): string => {
-  const tokenMaxAge = rememberMe ? extendedMaxAge : maxAge;
-  return sign({ id }, process.env.SECRET as string, {
-    expiresIn: tokenMaxAge,
-  });
-};
-
-const memberSignUp = async (req:Request, resp: Response) => {
-  try {
-    const memberRegistered = await memberAuth.create(req.body);
-    const id = memberRegistered._id;
-    //generate token and pass the cookie inside.
-    const tk = createJWT(id.toString(), false);
-    resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
-
-    const data ={
-      email: memberRegistered.email,
-      name: memberRegistered.firstName,
-      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
-      dashboardUrl: "http://localhost:3000/dashboard"
-    }
-    // send email
-    sendMail({
-      subject: "Welcome to KyuSDA",
-      template: "registered.ejs",
-      email: memberRegistered.email,
-      data
-    });
-
-    resp.status(200).json({
-      id: id,
-      status: "Registratio Succesfull",
-      email: memberRegistered.email,
-      tk,
-    });
-  } catch (error: any) {
-    const errorResponse = {
-      status: "failure",
-      error: error.message,
-    };
-
-    if (error.code === 11000) {
-      const duplicateField = Object.keys(error.keyValue)[0];
-      const duplicateValue = error.keyValue[duplicateField];
-      errorResponse.error = `Duplicate ${duplicateField}: ${duplicateValue} already exists`;
-    }
-
-    resp.status(404).json(errorResponse);
-  }
-};
-
-// const memberSignIn = async (req:Request, resp: Response) => {
-//   try {
-//     const { email, password, rememberMe } = req.body;
-//     const loggedMember = await memberAuth.login(email, password);
-//     const id = loggedMember._id;
-
-//     const tk = createJWT(id.toString(), rememberMe);
-//     resp.cookie("kyuSdaMember", tk, { httpOnly: true, maxAge: maxAge * 1000 });
-
-//     // add user to redis session
-//     await redis.set(id.toString(), JSON.stringify(loggedMember));
-
-//     resp.status(200).json({
-//       id,
-//       status: "success",
-//       email: loggedMember.email,
-//       tk,
-//     });
-//   } catch (err) {
-//     resp.status(404).json({
-//       status: "failure",
-//       err: (err as Error).message,
-//     });
-//   }
+// const createJWT = (id: string, rememberMe: boolean): string => {
+//   const tokenMaxAge = rememberMe ? extendedMaxAge : maxAge;
+//   return sign({ id }, process.env.SECRET as string, {
+//     expiresIn: tokenMaxAge,
+//   });
 // };
 
+
+// register
+export const memberSignUp = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { firstName,lastName,registration,year,course, email, password, phoneNumber } = req.body as IRegisterUser;
+
+      if (!firstName || !lastName || !registration || !year || !course || !email || !password  || !phoneNumber) {
+        return next(new ErrorHandler("Please provide all the inputs", 400));
+      }
+
+      //validate email
+      const isValidEmail = validator.isEmail(email);
+      if (!isValidEmail) {
+        return next(new ErrorHandler("Incorrect email format", 400));
+      }
+
+      //validate password
+      const isValidPassword = validator.isStrongPassword(password);
+      if (!isValidPassword) {
+        return next(
+          new ErrorHandler(
+            "Password should be at least 8 characters, have at least one uppercase letter, one numerical value and one special character",
+            400
+          )
+        );
+      }
+
+      const isEmailExist = await authModel.findOne({ email });
+      if (isEmailExist) {
+        return next(new ErrorHandler("Email already exists", 409));
+      }
+
+      const user = {
+        firstName,
+        lastName,
+        course,
+        year,
+        registration,
+        phoneNumber,
+        email,
+        password
+      };
+
+      const activationToken = createActivationToken(user);
+      const activationCode = activationToken.activationCode;
+
+      const data = { 
+        firstName,
+        email,
+        password,
+        imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
+        dashboardUrl: "http://localhost:3000/dashboard",
+        activationCode 
+        };
+
+      try {
+        await sendMail({
+          template: "registered.ejs",
+          subject: "Welcome to KyuSDA",
+          data,
+          email: user.email,
+        });
+
+        res.status(201).json({
+          success: true,
+          message: `Activation code sent to ${user.email}`,
+          activationToken: activationToken.token,
+        });
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+
+//create activation token
+interface IActivationToken {
+  activationCode: string;
+  token: string;
+}
+
+const createActivationToken = (user: any): IActivationToken => {
+  const activationCode = Math.floor(Math.random() * 9000 + 1000).toString(); // 4-digit code
+  const token = jwt.sign(
+    { user, activationCode },
+    process.env.ACTIVATION_SECRET as string,
+    {
+      expiresIn: "5m",
+    }
+  );
+
+  return { activationCode, token };
+};
+
+//Activate user
+export const ActivateUser = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { activation_token, activation_code } = req.body;
+
+      const verifyToken = jwt.verify(
+        activation_token,
+        process.env.ACTIVATION_SECRET as string
+      ) as { user: IUser; activationCode: string };
+
+      if (activation_code !== verifyToken.activationCode) {
+        return next(new ErrorHandler("Activation code not valid", 400));
+      }
+
+      const newUser = verifyToken.user;
+      const user = await authModel.create({
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        registration: newUser.registration,
+        course: newUser.course,
+        year: newUser.year,
+        phoneNumber: newUser.phoneNumber,
+        scores: newUser.scores,
+        password: newUser.password,
+        email: newUser.email,
+        avatar: newUser.avatar || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"
+      });
+
+      res
+        .status(201)
+        .json({ success: true, message: "User created successfully", user });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+
+// login
 export const memberSignIn = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -148,77 +227,77 @@ const memberLogout = catchAsyncErrors( async (req: Request, res: Response,next:N
   }
 });
 
-const memberResetToken = async (req:Request, resp: Response) => {
-  try {
-    const { email } = req.body;
-    //generate a token from methods
-    let getMember = await memberAuth.findOne({ email });
-    if (!getMember) {
-      throw new Error("Member not found");
-    }
-    const tokenGen = await getMember.resetToken();
-    //save to database
-    await getMember.save({ validateBeforeSave: false });
-    const resetUrl = `${req.protocol}://localhost:3000/resetPassword`;
-    const message = `Forgotten password? Don't worry click here to reset it:`;
 
-    const data={
-      url: resetUrl,
-      name: getMember.firstName,
-      message,
-      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s"
-    }
-    await sendMail({
-      email: getMember.email,
-      subject: "Reset Password Token",
-      template: "resetPassword.ejs",
-      data
-    });
-    resp.status(200).json({
-      status: "success",
-      resetToken: tokenGen,
-      message,
-    });
-  } catch (err) {
-    resp.status(404).json({
-      status: "failure",
-      err,
-    });
-  }
-};
 
-const resetPassword = async (req:Request, resp: Response) => {
+export const memberResetToken = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+  const { email } = req.body;
+  if (!email) return next(new ErrorHandler("Email is required", 400));
+
+  const getMember = await memberAuth.findOne({ email });
+  if (!getMember) return next(new ErrorHandler("Member not found", 404));
+
+  const tokenGen = await getMember.resetToken();
+  await getMember.save({ validateBeforeSave: false });
+
+  const resetUrl = `${process.env.FRONTEND_URL}/resetPassword/${tokenGen}`;
+  const message = `Forgotten password? Don't worry, click here to reset it:`;
+
+  const data = {
+    url: resetUrl,
+    name: getMember.firstName,
+    message,
+    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
+  };
+
+  await sendMail({
+    email: getMember.email,
+    subject: "Reset Password Token",
+    template: "resetPassword.ejs",
+    data,
+  }).catch(err => next(new ErrorHandler("Email could not be sent", 500)));
+
+  res.status(200).json({
+    status: "success",
+    resetToken: tokenGen,
+    message,
+  });
+});
+
+export const resetPassword = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
   const tk = req.params.token;
-  try {
-    const hashToken = createHash("sha256").update(tk).digest("hex");
-    const getMember = await memberAuth.findOne({
-      passwordResetToken: hashToken,
-      resetTokenExpires: { $gt: Date.now() },
-    });
-    if (getMember) {
-      getMember.password = req.body.password;
-      getMember.passwordConfirm = req.body.passwordConfirm;
-      getMember.resetTokenSetAt = new Date();
-      getMember.passwordresetToken = undefined;
-      getMember.resetTokenexpires = undefined;
-      await getMember.save();
-      resp.status(200).json({
-        status: "success",
-        message: "password updated successfully",
-        redirect: "signIn",
-      });
-    }
-  } catch (err) {
-    resp.status(404).json({
-      status: "fail",
-      err,
-    });
-  }
-};
+  if (!tk) return next(new ErrorHandler("Token is required", 400));
+
+  const getMember = await memberAuth.findOne({
+    resetTokenExpires: { $gt: Date.now() }, // Ensure token has not expired
+  });
+
+  if (!getMember || !getMember.passwordResetToken) return next(new ErrorHandler("Token is invalid or has expired", 400));
+
+  // 🔹 Use bcrypt.compare to check token validity
+  const isMatch = await bcrypt.compare(tk, getMember.passwordResetToken);
+  console.log("Received Token:", tk);
+  console.log("Stored Hashed Token in DB:", getMember.passwordResetToken);
+  console.log("Does Token Match?:", isMatch);
+
+  if (!isMatch) return next(new ErrorHandler("Token is invalid or has expired", 400));
+
+  getMember.password = req.body.password;
+  getMember.passwordResetToken = undefined;
+  getMember.resetTokenExpires = undefined;
+
+  await getMember.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Password updated successfully",
+    redirect: "signIn",
+  });
+});
 
 export default {
   memberSignUp,
   memberSignIn,
+  ActivateUser,
   memberLogout,
   memberResetToken,
   resetPassword,
