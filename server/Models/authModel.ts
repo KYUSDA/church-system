@@ -1,8 +1,8 @@
 import { Schema as _Schema, Document, model, Model } from "mongoose";
 const Schema = _Schema;
 import pkg from "validator";
-import bcrypt, { genSalt, hash } from "bcrypt";
-import { randomBytes, createHash } from "crypto";
+import bcrypt from "bcrypt";
+import { randomBytes } from "crypto";
 const { isEmail } = pkg;
 import jwt  from "jsonwebtoken";
 
@@ -14,17 +14,20 @@ export interface IUser extends Document {
   course: string;
   year: number;
   phoneNumber: string;
+  scores?: number;
+  easyNumber?:number;
+  mediumNumber?:number;
+  hardNumber?:number;
   avatar?:{
     public_id: String;
     url: String;
   };
   password: string;
-  passwordConfirm?: string;
   role: "member" | "elder" | "admin";
   familyLocated?: string;
-  passwordresetToken?: string;
+  passwordResetToken?: string;
   resetTokenSetAt?: Date;
-  resetTokenexpires?: Date;
+  resetTokenExpires?: Date;
   resetToken(): Promise<string>;
   comparePasswords: (password: string) => Promise<boolean>;
   signAccessToken: () => string,
@@ -72,22 +75,26 @@ const authSchema = new Schema<IUser>({
     type: String,
     required: [true, "please enter your phone number"],
   },
+  scores: {
+    type: Number,
+    default: 0,
+  },
+  easyNumber: {
+    type: Number,
+    default: 0,
+  },
+  mediumNumber: {
+    type: Number,
+    default: 0,
+  },
+  hardNumber: {
+    type: Number,
+    default: 0,
+  },
   password: {
     type: String,
     required: [true, "please enter your password"],
     minlength: [8, "please enter 8 or more characters"],
-  },
-  passwordConfirm: {
-    type: String,
-    required: function (this: IUser) {
-      return this.isNew; // Only required when creating a new user
-    },
-    validate: {
-      validator: function (this: IUser, el: string): boolean {
-        return el === this.password;
-      },
-      message: `Enter the correct password confirmation`,
-    },
   },
   
   familyLocated: {
@@ -99,22 +106,21 @@ const authSchema = new Schema<IUser>({
     enum: ["member", "elder", "admin"],
     default: "member",
   },
-  passwordresetToken: String,
+  passwordResetToken: String,
   resetTokenSetAt: Date,
-  resetTokenexpires: Date,
+  resetTokenExpires: Date,
 });
 
-//hash password
-authSchema.pre("save", async function (next) {
+
+
+//bcrypt hash password
+authSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+    return next();
   }
-  const salt = await genSalt();
-  this.password = await hash(this.password, salt);
-  this.passwordConfirm = undefined;
-  next();
-});
 
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
 //compare passwords
 authSchema.methods.comparePasswords = async function(password: string) {
@@ -122,13 +128,20 @@ authSchema.methods.comparePasswords = async function(password: string) {
 }
 
 
-//send the reset Token
+// reset token
 authSchema.methods.resetToken = async function (): Promise<string> {
   const token = randomBytes(32).toString("hex");
-  this.passwordresetToken = createHash("sha256").update(token).digest("hex");
-  this.resetTokenexpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour expiration
-  return token;
+  const saltRounds = 10;
+
+  this.passwordResetToken = await bcrypt.hash(token, saltRounds);  // Hash the token
+  this.resetTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1-hour expiration
+
+  console.log("Generated Token (Plain):", token);
+  console.log("Stored Hashed Token:", this.passwordResetToken);
+
+  return token;  // Send the plain token in the email
 };
+
 
 //sign access token
 authSchema.methods.signAccessToken = function(): string {
