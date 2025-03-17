@@ -3,17 +3,15 @@ import { getBaseUrl } from "../../services/authService";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
-interface TUser {
+export interface TUser {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  registration: string;
-  course: string;
-  year: string;
-  role: string;
-  phoneNumber: string;
-  avatar: { url: string };
+  easyNumber: number;
+  mediumNumber: number;
+  hardNumber: number;
+  avatar?: { url: string };
 }
 const useUserData = () => {
   const authState = useSelector((state:RootState) => state.auth);
