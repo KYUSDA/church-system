@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink} from "react-router-dom";
-import { X, LayoutDashboard, BookOpen, ShieldCheck, HelpCircle, Send, Settings } from "lucide-react";
+import { X, LayoutDashboard, BookOpen, ShieldCheck, HelpCircle, Send, MessageCircleQuestion } from "lucide-react";
 import useUserData from "./userdata";
 
 interface SidebarProps {
@@ -10,8 +10,9 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
-	const { userData } = useUserData();
+	const { user } = useUserData();
  
+	const fullname = user?.firstName + ' ' + user?.lastName;
 
   const navItems = [
     { path: "/member/dashboard", name: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
@@ -19,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     { path: "/member/defend-your-faith", name: "Defend Your Faith", icon: <ShieldCheck className="w-5 h-5" /> },
     { path: "/member/bibleTrivia", name: "Bible Trivia", icon: <HelpCircle className="w-5 h-5" /> },
     { path: "/member/submit-prayer-request", name: "Prayer Requests", icon: <Send className="w-5 h-5" /> },
-    { path: "/member/settings", name: "Settings", icon: <Settings className="w-5 h-5" /> },
+    { path: "/member/communication-center", name: "Communication Center", icon: <MessageCircleQuestion className="w-5 h-5" /> },
   ];
 
 	return (
@@ -42,13 +43,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 			<div className="p-4 flex flex-col justify-between h-[calc(100%-5rem)]">
 			  <div className="flex items-center space-x-4 mb-6">
 				<img
-				  src={userData?.avatar.url}
+				  src={user?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
 				  alt="Profile"
 				  className="h-12 w-12 rounded-full object-cover"
 				/>
 				<div>
-				  <h3 className="font-semibold truncate overflow-hidden whitespace-nowrap max-w-[10rem]">{userData?.email}</h3>
-				  <p className="text-sm text-gray-500">{userData?.role}</p>
+				  <h3 className="font-semibold truncate overflow-hidden whitespace-nowrap max-w-[10rem]">{fullname}</h3>
 				</div>
 			  </div>
 	
