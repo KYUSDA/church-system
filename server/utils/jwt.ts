@@ -31,10 +31,10 @@ export const sendToken = async (user: IUser, res: Response) => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    registration: user.registration,
-    course: user.course,
-    year: user.year,
-    phoneNumber: user.phoneNumber,
+    scores: user.scores,
+    easyNumber: user.easyNumber,
+    mediumNumber: user.mediumNumber,
+    hardNumber: user.hardNumber,
     avatar: user.avatar?.url || null,
   };
 
