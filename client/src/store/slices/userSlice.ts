@@ -1,16 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TUser } from "../../Dashboard/components/userdata";
 
-interface User {
-  // Define the properties of the user object here
-  id: string;
-  name: string;
-  email: string;
-}
 
 interface AuthState {
   accessToken: string | null;
   isAuthenticated: boolean;
-  user: User | null;
+  user: TUser | null;
 }
 
 const initialState: AuthState = {
@@ -23,7 +18,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ user: User; accessToken: string }>) => {
+    login: (state, action: PayloadAction<{ user: TUser; accessToken: string }>) => {
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
       state.isAuthenticated = true;
@@ -33,8 +28,16 @@ export const authSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
     },
-  },
-});
+    updateTrivias: (state, action: PayloadAction<{ key: string; number: number }>) => {
+      if (state.user && action.payload.key in state.user) {
+        state.user = {
+          ...state.user,
+          [action.payload.key]: action.payload.number,
+        };
+      }
+    },
 
-export const { login, logout } = authSlice.actions;
+}});
+
+export const { login, logout,updateTrivias } = authSlice.actions;
 export default authSlice.reducer;
