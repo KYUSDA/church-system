@@ -157,3 +157,91 @@ export const updateUserAvatar =catchAsyncErrors (async (req: MulterRequest, res:
     return next(new ErrorHandler(error.message, 400));
   }
 });
+
+
+
+// update user score
+export const updateScore = catchAsyncErrors(async(req:Request, res:Response, next:NextFunction) => {
+  try {
+
+    const {scores} = req.body;
+
+    if(!scores) {
+      return next(new ErrorHandler("Please enter your score", 400));
+    }
+
+    // check user  id
+    const userId = req.user?.id;
+    if(!userId) {
+      return next(new ErrorHandler("Please login to update your score", 401));
+    }
+
+    // check user
+    const user = await authModel.findById(userId);
+    if(!user) {
+      return next(new ErrorHandler("User not found. Please login again", 404));
+    }
+
+    // update user score
+    user.scores = scores;
+    await user.save();
+
+    res.status(200).json({ success: true, user, message: "Score updated" });
+  } catch (error:any) {
+    return next(new ErrorHandler(error.message, 400));
+    
+  }
+})
+
+// get all scores
+export const getAllScores = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await authModel
+      .find({}, "firstName scores _id") // Select only needed fields
+      .sort({ scores: -1 })
+      .limit(10);
+
+    res.status(200).json({ success: true, users });
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400));
+  }
+});
+
+
+
+// update trivia numbers
+export const updateTriviaNumbers = catchAsyncErrors(async(req:Request, res:Response, next:NextFunction) => {
+  try {
+
+    const { level, number } = req.body;
+    if(!level || !number){
+      return next(new ErrorHandler("Please enter level and number", 400));
+    }
+
+    // check user id
+    const userId = req.user?.id;
+    if(!userId){
+      return next(new ErrorHandler("Please login to update trivia numbers", 401));
+    }
+
+    const user = await authModel.findById(userId);
+    if(!user){
+      return next(new ErrorHandler("User not found. Please login again", 404));
+    }
+
+    // check level and update fields
+    if(level === "easy"){
+      user.easyNumber = number;
+    } else if(level === "medium"){
+      user.mediumNumber = number;
+    } else if(level === "hard"){
+      user.hardNumber = number;
+    }
+
+    await user.save();
+    res.status(200).json({ success: true, user, message: "Trivia numbers updated" });
+    
+  } catch (error:any) {
+    return next(new ErrorHandler(error.message, 400)); 
+  }
+})
