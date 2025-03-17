@@ -1,6 +1,6 @@
 import CalenderSection from "../ui/CalenderSection";
 import MinistryUpdates from "../ui/MinistryUpdates"
-import CommunicationHub from "../ui/CommunicationHub"
+import CommunicationHub from "../ui/reportIssue"
 const ResourceCenter = () => {
 
     const studyMaterials = [
