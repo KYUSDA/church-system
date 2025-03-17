@@ -10,6 +10,5 @@ export const userRegisterSchema = yup.object().shape({
           course: yup.string().required("Course is required"),
           year: yup.string().required("Year is required"),
           password: yup.string().min(8, "Must be 8 chars").required("Password required"),
-          passwordConfirm: yup.string().oneOf([yup.ref("password")], "Passwords must match").required("Required"),
           phoneNumber: yup.string().required("Phone number is required"),
 })
