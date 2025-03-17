@@ -7,10 +7,12 @@ authRoute.route("/signUp").post(memberAuth.memberSignUp);
 
 authRoute.post("/signIn", memberAuth.memberSignIn);
 
+authRoute.post("/activate-me",memberAuth.ActivateUser);
+
 authRoute.post("/logout", requireAuth, memberAuth.memberLogout);
 
 authRoute.route("/resetToken").post(memberAuth.memberResetToken);
 
-authRoute.route("/resetPassword/:token").patch(memberAuth.resetPassword);
+authRoute.patch("/resetPassword/:token", memberAuth.resetPassword);
 
 export default authRoute;
