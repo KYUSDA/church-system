@@ -35,13 +35,11 @@ interface formData{
   year: string;
   phoneNumber: string;
   password:string;
-  passwordConfirm: string;
   policyAccepted: false,
 }
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [registerUser, { isLoading, error }] = useAuthSignupMutation();
 
   // Destructuring Formik
@@ -65,7 +63,6 @@ const SignUp = () => {
       year: "",
       phoneNumber: "",
       password: "",
-      passwordConfirm: "",
       policyAccepted: false,
     },
     validationSchema: userRegisterSchema,
@@ -84,7 +81,7 @@ const SignUp = () => {
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box sx={{ mt: 5, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Box sx={{ mt: 50, display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlined />
             </Avatar>
@@ -193,27 +190,7 @@ const SignUp = () => {
                   ),
                 }}
               />
-              <TextField
-                label="Confirm Password"
-                type={showConfirmPassword ? "text" : "password"}
-                fullWidth
-                margin="normal"
-                name="passwordConfirm"
-                value={values.passwordConfirm}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.passwordConfirm && Boolean(errors.passwordConfirm)}
-                helperText={touched.passwordConfirm && errors.passwordConfirm}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              
               <FormControlLabel
                 control={
                   <Checkbox
