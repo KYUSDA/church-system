@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AnalyticsSection from '../ui/AnalyticsSection';
 import CommunitySection from '../ui/CommunitySection';
 import PersonalGoals from '../ui/PersonalGoals';
 import useUserData from '../components/userdata';
@@ -52,9 +51,9 @@ const DashboardHome: React.FC = () => {
     <div className="flex w-full">
       <div className='w-full'>
         <h1 className="text-2xl font-bold text-gray-900 text-center mt-2 lg:hidden">Good Morning 😊!</h1>
-        <AnalyticsSection />
+       
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 my-8">
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 max-sm:flex-col">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900">
