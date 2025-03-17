@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+
+import { HandHelping, BookOpen, MessageCircle } from "lucide-react"; // Importing icons
+import { useState } from "react";
 import { getBaseUrl } from "../../services/authService";
 import { toast } from "sonner";
 
 const PrayerRequests = () => {
+
   const baseUrl = getBaseUrl();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
     prayerRequest: "",
   });
 
@@ -35,7 +37,7 @@ const PrayerRequests = () => {
       });
       if (response.ok) {
         toast.success("Prayer Request Submitted!");
-        setFormData({ name: "", prayerRequest: "" });
+        setFormData({ prayerRequest: "" });
       } else {
         toast.error("Failed to Submit Prayer Request!");
         setIsLoading(false);
@@ -46,55 +48,79 @@ const PrayerRequests = () => {
     }
   };
 
+
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen px-4 py-8 space-y-8 lg:space-y-0 lg:space-x-8">
-      {/* Left Side: Encouraging Words */}
-      <div className="lg:w-1/2 text-center lg:text-left p-6 bg-blue-50 rounded-lg shadow-lg">
-        <img
-          src="https://i.pinimg.com/736x/d7/b5/10/d7b51016b17782784d7f3d79eacbeda6.jpg"
-          alt="Encouraging words"
-          className="w-full h-64 object-cover rounded-md mb-4"
-        />
-        <h2 className="text-2xl font-bold mb-4">Encouragement Through Prayer</h2>
-        <p className="text-gray-700">
-          Prayer is a sacred privilege that connects us with God, allowing us to speak with Him as a friend and receive His guidance, strength, and peace. No matter our burdens, anxieties, or joys, we are invited to bring everything before Him. God welcomes us into His presence, promising to hear and answer our prayers in ways that are for our ultimate good.
-        </p>
-        <p className="mt-4 text-gray-700">
-          Through prayer, we can live in the light of Christ’s presence, finding courage, wisdom, and comfort in every circumstance. It is a spiritual necessity that strengthens us against temptation and fills our lives with divine grace. No matter where we are—amid daily tasks, trials, or moments of solitude—our prayers rise to heaven, never burdening or wearying God.
-        </p>
+    <div className="max-w-5xl mx-auto p-6">
+      {/* Banner Section */}
+      <div className="bg-gradient-to-r from-blue-400 to-teal-400 text-center py-12 rounded-lg shadow-md">
+        <h1 className="text-4xl font-bold text-white">Daily Prayer Motivation</h1>
+        <p className="text-sm text-gray-100 mt-2">Prayer does not bring God down to us, but brings us up to Him.</p>
       </div>
 
-      {/* Right Side: Prayer Request Form */}
-      <div className="lg:w-1/2 p-6 bg-white rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-6 text-center">Submit a Prayer Request</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Your Name (Optional)</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-              className="w-full px-3 py-2 border rounded-md"
-            />
+      {/* Services Highlights */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+        <div className="flex items-center p-4 bg-white shadow-lg rounded-lg">
+          <HandHelping size={40} className="text-blue-600 mr-4" />
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900">Praise & Worship</h3>
+            <p className="text-gray-600 mt-2">
+              Lift your voice and heart in gratitude. Worship brings us closer to God.
+            </p>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Prayer Request</label>
-            <textarea
-              name="prayerRequest"
+        </div>
+        <div className="flex items-center p-4 bg-white shadow-lg rounded-lg">
+          <BookOpen size={40} className="text-green-600 mr-4" />
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900">Rejoice in Prayer</h3>
+            <p className="text-gray-600 mt-2">
+              Build a daily habit of prayer and experience the power of God's presence.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center p-4 bg-white shadow-lg rounded-lg">
+          <MessageCircle size={40} className="text-purple-600 mr-4" />
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900">Exhortation</h3>
+            <p className="text-gray-600 mt-2">
+              Be encouraged and strengthened by God's word every morning.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Service Section */}
+      <div className="mt-12 flex flex-col md:flex-row items-center gap-8">
+        <img 
+          src="https://i.pinimg.com/736x/d7/b5/10/d7b51016b17782784d7f3d79eacbeda6.jpg" 
+          alt="Praying in Church" 
+          className="w-full md:w-1/2 rounded-lg shadow-lg"
+        />
+        <div className="md:w-1/2">
+          <h2 className="text-3xl font-bold text-gray-900">Start Your Day with Prayer</h2>
+          <p className="text-gray-700 mt-4">
+            Every morning is an opportunity to deepen your connection with God. Set aside time to pray, reflect, and receive His guidance.
+          </p>
+          <p className="text-gray-700 mt-4">
+            Join us in a journey of faith. Let’s make prayer a lifestyle, not just a routine. Submit your prayer request, and we will stand with you in prayer.
+          </p>
+
+          {/* Prayer Request Form */}
+          <form onSubmit={handleSubmit}>
+          <div className="mt-6">
+            <textarea 
               value={formData.prayerRequest}
               onChange={handleChange}
+              name="prayerRequest"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your prayer request here..."
               rows={4}
-              required
-              placeholder="Enter your prayer request"
-              className="w-full px-3 py-2 border rounded-md"
             ></textarea>
+             <button type="submit" className="mt-4 px-6 py-3 w-full bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+            {isLoading ? "Submitting..." : "Submit a Prayer Request"}
+            </button>
           </div>
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-            {isLoading ? "Submitting..." : "Submit Prayer Request"}
-          </button>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
