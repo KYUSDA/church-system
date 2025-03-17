@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BellIcon, LogOutIcon, MenuIcon } from "lucide-react";
+import { BellIcon, Settings, LogOutIcon, MenuIcon,HelpCircle } from "lucide-react";
 import { useLogout } from "../../hooks/userLogoutHook";
 import { NavLink } from "react-router-dom";
 import useUserData from "./userdata";
@@ -8,12 +8,17 @@ interface NavBarProps {
   onMenuToggle: () => void;
 }
 
+const getTimeOfDayGreeting = () => {
+  const currentHour = new Date().getHours();
+  if (currentHour < 12) return "Good Morning";
+  if (currentHour < 18) return "Good Afternoon";
+  return "Good Evening";
+};
+
 const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { handleLogout } = useLogout();
-  const { userData } = useUserData(); 
-
- 
+  const { user } = useUserData(); 
 
   const logout = () => {
     handleLogout();
@@ -31,7 +36,9 @@ const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
         >
           <MenuIcon className="w-6 h-6 text-gray-700" />
         </button>
-        <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">Good Morning {userData?.firstName} 😊!</h1>
+        <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">
+          {getTimeOfDayGreeting()}, {user?.firstName} 😊
+        </h1>
       </div>
 
       {/* Right side: Avatar with Dropdown */}
@@ -43,7 +50,7 @@ const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
           title="User Menu"
         >
           <img
-            src={userData?.avatar.url}
+            src={user?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
             alt="User Avatar"
             className="h-8 w-8 rounded-full object-cover"
           />
@@ -60,6 +67,24 @@ const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
             >
               <BellIcon className="w-5 h-5 mr-2 text-blue-600" />
               Notifications
+            </NavLink>
+            <NavLink
+              className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
+              aria-label="settings"
+              title="settings"
+              to={'/member/settings'}
+            >
+              <Settings className="w-5 h-5 mr-2 text-blue-600" />
+              Settings
+            </NavLink>
+            <NavLink
+              className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
+              aria-label="Report Issue"
+              title="Report Issue"
+              to={'/member/report-issue'}
+            >
+              <HelpCircle className="w-5 h-5 mr-2 text-blue-600" />
+              Report Issue
             </NavLink>
             <button
               className="flex items-center px-4 py-2 hover:bg-red-100 w-full text-left text-red-600"
