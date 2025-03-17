@@ -71,6 +71,12 @@
         a:hover {
             text-decoration: underline;
         }
+        .activation-code {
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +94,12 @@
 
         <!-- Welcome Message -->
         <div class="content">
-            <p>Dear <%= data.name %>,</p>
+            <p>Dear <%= data.firstName %>,</p>
+            <p>
+                <!-- activationcode -->
+                Your activation code is <span class="activation-code"><%= data.activationCode %></span>
+                The code expires in 5 minutes, be sure to use it before expiration. Thank You.
+            </p>
             <p>We are thrilled to welcome you to the Kirinyaga Adventist Church family! It is a blessing to have you as part of our community where we worship, grow, and serve together.</p>
             <p>We look forward to sharing this journey of faith with you. Please feel free to explore our website, attend our weekly services, and get involved in different ministries.</p>
 
