@@ -105,7 +105,7 @@ export const getQuiz = catchAsyncErrors(async (req: Request, res: Response, next
 // return  quizzes
 export const getCompletedQuizzes = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const quizzes = await quizModel.find({completed: true});
+        const quizzes = await quizModel.find({completed: false});
          res.status(200).json({ data: quizzes });
     } catch (error) {
         console.error("Error fetching completed quizzes:", error);
