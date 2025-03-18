@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Prayer Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            width: 50%;
+            max-width: 200px;
+            display: block; 
+            margin: 0 auto; 
+            border-radius: 50%;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .social-icons img {
+            width: 24px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <img src="<%= data.imageUrl %>" alt="Welcome Image">
+        </div>
+
+        <div class="title">New Prayer Request</div>
+
+        <p>CC: Prayer Department.</p>
+        
+        <p>You have received a new prayer request.</p>
+        <div class="content">
+            <% if (data.name) { %>
+                <p><strong>From:</strong> <%= data.name %></p>
+            <% } %>
+            <p><strong>Prayer Request:</strong> <%= data.prayerRequest %></p>
+        </div>
+        <div style="text-align: center;">
+            <a href="<%= data.dashboardLink %>" class="button">View Request</a>
+        </div>
+        <div class="footer">
+            <p>🙏 Kirinyaga Adventist | Called to Serve</p>
+            <div class="social-icons">
+                <a href="https://facebook.com" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                </a>
+                <a href="https://twitter.com" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                </a>
+                <a href="https://youtube.com" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube">
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

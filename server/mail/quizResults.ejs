@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Quiz Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+        .content {
+            font-size: 16px;
+            color: #555;
+            margin: 20px 0;
+        }
+        .score {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .wrong {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">Quiz Results: <%= data.quizTitle %></div>
+
+        <div class="content">
+            <p>You have completed the quiz <b><%= data.quizTitle %></b>.</p>
+            <p>You answered <b><%= data.correctCount %></b> out of <b><%= data.totalQuestions %></b> questions correctly.</p>
+            <p>Your score: <span class="score"><%= data.scorePercentage %>%</span></p>
+        </div>
+
+        <!-- Table displaying the user's answers -->
+        <table>
+            <tr>
+                <th>Question</th>
+                <th>Your Answer</th>
+                <th>Correct Answer</th>
+                <th>Result</th>
+            </tr>
+            <% data.questions.forEach((question, index) => { %>
+                <tr>
+                    <td><%= question.questionText %></td>
+                    <td><%= data.userAnswers[index] %></td>
+                    <td><%= data.correctAnswers[index] %></td>
+                    <td class="<%= data.userAnswers[index] === data.correctAnswers[index] ? 'correct' : 'wrong' %>">
+                        <%= data.userAnswers[index] === data.correctAnswers[index] ? '✅ Correct' : '❌ Wrong' %>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+
+        <a class="button" href="<%= data.reviewLink %>">Review Your Answers</a>
+
+        <div class="footer">
+            <p>Thank you for participating!</p>
+            <p>Kirinyaga Adventist | Called to Serve</p>
+        </div>
+    </div>
+
+</body>
+</html>

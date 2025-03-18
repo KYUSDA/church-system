@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Quiz Available: Defend Your Faith</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            width: 50%;
+            max-width: 200px;
+            display: block; 
+            margin: 0 auto; 
+            border-radius: 12px;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+       
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #007BFF;
+        }
+        .bible-verse {
+            font-size: 18px;
+            font-style: italic;
+            font-weight: bold;
+            color: #007BFF;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        .quiz-link {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .quiz-link a {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .quiz-link a:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+        .social-icons img {
+            width: 24px;
+            margin: 5px;
+        }
+        .unsubscribe {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Image -->
+        <div class="header">
+            <img src="<%= data.imageUrl %>" alt="Quiz Image">
+        </div>
+
+        <!-- Quiz Title -->
+        <div class="title">
+            <%= data.title %>
+        </div>
+
+        <!-- Bible Verse -->
+        <div class="bible-verse">
+            "Study to shew thyself approved unto God, a workman that needeth not to be ashamed, rightly dividing the word of truth." - 2 Timothy 2:15
+        </div>
+
+        <!-- Content Message -->
+        <div class="content">
+            God has given us His word that we may become acquainted with its teachings and know for ourselves what He requires of us. When the lawyer came to Jesus with the inquiry, 
+            <strong>“What shall I do to inherit eternal life?”</strong> the Saviour referred him to the Scriptures, saying: 
+            <strong>“What is written in the law? how readest thou?”</strong> 
+
+            Ignorance will not excuse young or old, nor release them from the punishment due for the transgression of God's law; because there is in their hands a faithful presentation 
+            of that law and of its principles and claims. It is not enough to have good intentions; it is not enough to do what a man thinks is right or what the minister tells him is right. 
+
+            His soul's salvation is at stake, and he should search the Scriptures for himself. However strong may be his convictions, however confident he may be that the minister knows 
+            what is truth, this is not his foundation. He has a chart pointing out every waymark on the heavenward journey, and he ought not to guess at anything. <strong>GC 598.1</strong>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="quiz-link">
+            <a href="<%= data.dashboardUrl %>">Defend Your Faith</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>📚 Stay engaged and keep learning!</p>
+            <p>Kirinyaga Adventist | Called to Serve</p>
+            <p>You are receiving this email because your email <span>
+                <%= data.email %> </span> is subscribed to our quiz notifications.</p>
+
+            <!-- Social Media Links -->
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100083015178066" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                </a>
+                <a href="https://x.com/kyusdachurch?s=08" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                </a>                
+                <a href="https://www.youtube.com/@kyusdachurch9822" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube">
+                </a>
+            </div>
+
+            <p class="unsubscribe">
+                <a href="#">Unsubscribe</a> | 
+                <a href="#">Manage Preferences</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+import { Router } from "express";
+import memberAuth from "../Controlers/authControler";
+import requireAuth from "../middleware/authmiddleware";
+const authRoute = Router();
+
+authRoute.route("/signUp").post(memberAuth.memberSignUp);
+
+authRoute.post("/signIn", memberAuth.memberSignIn);
+
+authRoute.post("/activate-me",memberAuth.ActivateUser);
+
+authRoute.post("/logout", requireAuth, memberAuth.memberLogout);
+
+authRoute.route("/resetToken").post(memberAuth.memberResetToken);
+
+authRoute.patch("/resetPassword/:token", memberAuth.resetPassword);
+
+export default authRoute;

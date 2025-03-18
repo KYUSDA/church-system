@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Devotional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            width: 50%;
+            max-width: 200px;
+            display: block; 
+            margin: 0 auto; 
+            border-radius: 50%;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+        .verse {
+            text-align: center;
+            font-size: 18px;
+            font-style: italic;
+            color: #555;
+            margin: 15px 0;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+        .social-icons img {
+            width: 24px;
+            margin: 5px;
+        }
+        .unsubscribe {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Image -->
+        <div class="header">
+            <img src="<%= data.imageUrl %>" alt="Devotional Image">
+        </div>
+
+        <!-- Devotional Title -->
+        <div class="title">
+            <%= data.title %>
+        </div>
+
+        <!-- Date -->
+        <p style="text-align: center; color: #777; font-size: 14px;"><%= data.date %></p>
+
+        <!-- Bible Verse -->
+        <div class="verse">
+            <%= data.verse %>
+        </div>
+
+        <!-- Devotional Content -->
+        <div class="content">
+            <%= data.content %>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>📖 Devotional Compiled from the Writings of Ellen White</p>
+            <p>Kirinyaga Adventist | Called to Serve</p>
+            <p>You are receiving these email because user with email <span>
+                <%= data.email %> </span> subscribed to the daily devotional.</a>.
+            </span></p>
+
+            <!-- Social Media Links -->
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100083015178066" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                </a>
+                <a href="https://x.com/kyusdachurch?s=08" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                </a>                
+                <a href="https://www.youtube.com/@kyusdachurch9822" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube">
+                </a>
+            </div>
+
+            <p class="unsubscribe">
+                <a href="#">Unsubscribe</a> | 
+                <a href="#">Change Subscriber Options</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
