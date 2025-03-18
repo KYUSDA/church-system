@@ -20,8 +20,8 @@ interface IRegister{
     year: string;
     phoneNumber: string;
     password:string;
-    passwordConfirm: string;
     policyAccepted: false,
+    activationToken: string;
 }
 
 interface LoginResponse {
@@ -31,12 +31,13 @@ interface LoginResponse {
       email: string;
       firstName: string;
       lastName: string;
-      registration: string;
-        course: string;
-        year: number;
-        phoneNumber: string;
     };
     accessToken: string;
+  }
+
+  interface TActivate {
+    activation_code: string;
+    activation_token: string;
   }
 
 
@@ -45,7 +46,7 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
     endpoints: (builder) => ({
         // register
-        authSignup: builder.mutation<IRegister,Partial<IRegister>>({
+        authSignup: builder.mutation<IRegister,Omit<IRegister, "activationToken">>({
             query: (data) => ({
                 url: '/member/signUp',
                 method: 'POST',
@@ -69,12 +70,24 @@ export const api = createApi({
                 method: 'POST',
             }),
         }),
+
+        // activate user
+        activateUser: builder.mutation<LoginResponse, TActivate>({
+            query: ({activation_code, activation_token}) =>({
+                url: "/member/activate-me",
+                method: "POST",
+                body: {activation_code,activation_token}
+            })
+        }),
+
+
     }),
 });
 
 export const { 
     useAuthSignupMutation,
     useAuthLoginMutation,
-    useAuthLogoutMutation
+    useAuthLogoutMutation,
+    useActivateUserMutation,
 } = api;
 
