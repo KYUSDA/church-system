@@ -101,7 +101,7 @@ const DashboardHome: React.FC = () => {
         {/* Content Sections */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Subscription Section */}
-          <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+          <div className="mt-6 bg-white rounded-xl p-4 shadow-lg">
             <h4 className="text-lg font-semibold mb-2">Subscribe for Daily Devotions</h4>
             <p className="text-sm text-gray-600 mb-3">
               Enter your email to receive devotions directly to your inbox.
