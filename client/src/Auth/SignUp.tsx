@@ -23,6 +23,9 @@ import "react-phone-input-2/lib/style.css";
 import AuthLayout from "./AuthLayout.js";
 import { useAuthSignupMutation } from "../services/authService";
 import { userRegisterSchema } from "../utils/registerSchema";
+import { useContextFunc } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const theme = createTheme();
 
@@ -40,7 +43,9 @@ interface formData{
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [registerUser, { isLoading, error }] = useAuthSignupMutation();
+  const [registerUser, { isLoading}] = useAuthSignupMutation();
+  const {setActivationToken} = useContextFunc();
+  const navigate = useNavigate();
 
   // Destructuring Formik
   const {
@@ -68,10 +73,22 @@ const SignUp = () => {
     validationSchema: userRegisterSchema,
     onSubmit: async (values:formData) => {
       try {
-        await registerUser(values).unwrap();
-        // Handle successful registration (e.g., redirect to login page)
-      } catch (err) {
-        console.error("Registration failed:", err);
+        const response = await registerUser(values).unwrap();
+        if(response){
+          if(response.activationToken){
+            setActivationToken(response.activationToken); 
+            navigate('/activate-me');
+            toast.success("Registration Success");
+          }
+        }else{
+          toast.error("Registration failed");
+        }
+      } catch (err:any) {
+        if (err?.status === 409 || err?.data?.message?.includes("already exists")) {
+          toast.error(err.data.message);
+        } else {
+          toast.error("Registration failed, please try again.");
+        }
       }
     },
   });
@@ -88,6 +105,7 @@ const SignUp = () => {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
+          
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <TextField
                 label="First Name"
@@ -211,7 +229,6 @@ const SignUp = () => {
               >
                 Sign Up
               </Button>
-              {error && <Typography color="error">{JSON.stringify(error)}</Typography>}
               <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
                 <Typography variant="body2">
                   Already have an account?{" "}
