@@ -8,9 +8,9 @@ export interface TUser {
   firstName: string;
   lastName: string;
   email: string;
-  easyNumber: number;
-  mediumNumber: number;
-  hardNumber: number;
+  easyNumber?: number;
+  mediumNumber?: number;
+  hardNumber?: number;
   avatar?: { url: string };
 }
 const useUserData = () => {
