@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/slices/userSlice";
 import { useAuthLoginMutation } from "../services/authService";
+import { toast } from "sonner";
 
 interface FormData {
   email: string;
@@ -34,11 +35,12 @@ export const useLogin = () => {
             accessToken,
           })
         );
-
+        toast.success("Login successful");
         navigate("/member/dashboard");
       }
     } catch (err: any) {
       setError(err?.data?.message || "Login failed");
+      toast.error(err?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
