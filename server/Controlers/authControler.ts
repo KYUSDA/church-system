@@ -67,6 +67,12 @@ export const memberSignUp = catchAsyncErrors(
         return next(new ErrorHandler("Email already exists", 409));
       }
 
+      // check if registration exists
+      const isRegistrationExist = await authModel.findOne({registration});
+      if (isRegistrationExist) {
+        return next(new ErrorHandler("Registration already exists", 409));
+      }
+
       const user = {
         firstName,
         lastName,
