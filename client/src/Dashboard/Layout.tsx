@@ -28,7 +28,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           {/* Navbar */}
           <NavBar onMenuToggle={toggleSidebar} />
           {/* Dashboard content */}
-          <div className={`px-4`}>
+          <div className={`px-4 bg-blue-50`}>
             <Toaster />
             {children}
             <ChatBot />
