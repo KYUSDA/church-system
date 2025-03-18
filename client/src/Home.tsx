@@ -27,6 +27,7 @@ import TriviaPage from "./Dashboard/pages/trivias/triviaPage";
 import TriviaProps from "./Dashboard/pages/trivias/triviasProp";
 import CommunicationHub from "./Dashboard/ui/communicationCenter";
 import ReportIssue from "./Dashboard/ui/reportIssue";
+import Verification from "./Auth/verifyAccount";
 
 const Home = () => {
   return (
@@ -34,6 +35,7 @@ const Home = () => {
       <Route path="/" element={<MainPage />}></Route>
       <Route path="/signUp" element={<SignUp /> }></Route>
       <Route path="/signIn" element={<SignInSide />}></Route>
+      <Route path="/activate-me" element={<Verification />}></Route>
       <Route path="/resetToken" element={<ResetInSide />}></Route>
       <Route path="/resetPassword" element={<Newpassword />}></Route>
       <Route path="/families" element={<Layout><Families /></Layout>}></Route>
