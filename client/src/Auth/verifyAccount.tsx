@@ -1,0 +1,130 @@
+import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
+import { VscWorkspaceTrusted } from "react-icons/vsc";
+import "../../style.css";
+import { useContextFunc } from "../context/authContext";
+import { useActivateUserMutation } from "../services/authService";
+import AuthLayout from "./AuthLayout";
+
+interface verifyNumber {
+  "0": string;
+  "1": string;
+  "2": string;
+  "3": string;
+}
+
+export default function Verification() {
+  const { activationToken } = useContextFunc();
+  const [activateUser] = useActivateUserMutation();
+
+  const navigate = useNavigate();
+  const [invalidError, setInvalidError] = useState(false);
+  const inputRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
+  const [verifyNumber, setVerifyNumber] = useState<verifyNumber>({
+    0: "",
+    1: "",
+    2: "",
+    3: "",
+  });
+
+  const verificationHandler = async () => {
+    const activation_code = Object.values(verifyNumber).join("");
+    console.log(activationToken);
+    if (!activationToken) {
+      setInvalidError(true);
+      return;
+    }
+
+    try {
+      const response = await activateUser({ activation_code, activation_token: activationToken });
+
+      if (response) {
+        navigate("/signIn");
+        toast.success("Activation successful");
+      } else {
+        toast.error("Activation failed");
+        setInvalidError(true);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+      setInvalidError(true);
+    }
+  };
+
+  const handleInputChange = (index: number, value: string) => {
+    setInvalidError(false);
+    const newVerifyNumber = { ...verifyNumber, [index]: value };
+    setVerifyNumber(newVerifyNumber);
+
+    if (value === "" && index > 0) {
+      inputRefs[index - 1].current?.focus();
+    } else if (value.length === 1 && index < 3) {
+      inputRefs[index + 1].current?.focus();
+    } else if (
+      value.length === 1 &&
+      Object.values(verifyNumber).every((num) => num !== "")
+    ) {
+      inputRefs[index].current?.blur();
+
+      verificationHandler();
+    }
+  };
+  return (
+    <AuthLayout>
+    <div className=" w-full flex items-center justify-center h-min-screen">
+      <div className="bg-white rounded-md shadow-md shadow-gray-400 max-w-md w-full p-6 max-md:py-4 max-500:p-2 mx-2">
+        <h2 className="text-purple-900 text-center text-2xl max-md:text-xl max-500:text-lg mb-2 font-bold max-md:font-semibold">
+          Verify Account
+        </h2>
+        <div className="w-full flex justify-center mb-10">
+          <div className="w-[60px] h-[60px] max-md:w-[50px] max-md:h-[50px] max-500:w-[45px] max-500:h-[45px] rounded-full bg-purple-900 flex items-center justify-center text-white">
+            <VscWorkspaceTrusted size={30} />
+          </div>
+        </div>
+        <div className="flex justify-around w-full mb-4">
+          {Object.keys(verifyNumber).map((key, index) => (
+            <input
+              type="number"
+              key={key}
+              className={`w-[50px] h-[50px] max-500:w-[40px] max-500:h-[40px] bg-transparent border-[3px] text-black rounded-[10px] grid place-items-center text-[28px] focus:border-purple-700 focus:border ${invalidError ? "shake border-red-500" : "border-[#0000004a]"}`}
+              ref={inputRefs[index]}
+              value={verifyNumber[key as keyof verifyNumber]}
+              onChange={(e) => handleInputChange(index, e.target.value)}
+              maxLength={1}
+            />
+          ))}
+        </div>
+
+        <div className="flex w-full justify-center">
+          <button
+            className={`flex flex-row justify-center items-center py-3 px-6 rounded-full cursor-pointer bg-purple-900 min-h-[45px] w-full text-base font-poppins font-semibold mt-5 text-white`}
+            onClick={verificationHandler}
+          >
+            Verify OTP
+          </button>
+        </div>
+        <br />
+        <h5 className="text-center pt-4 font-poppins [14px] text-black">
+          Go back to sign in?
+          <span
+            className="text-purple-900 hover:underline pl-1 cursor-pointer"
+            onClick={() => navigate("/signIn")}
+          >
+            Sign in
+          </span>
+        </h5>
+      </div>
+    </div>
+    </AuthLayout>
+  );
+}
