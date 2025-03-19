@@ -31,6 +31,9 @@ interface LoginResponse {
       email: string;
       firstName: string;
       lastName: string;
+      scores?: string;
+      year: number;
+      familyLocated?: string;
     };
     accessToken: string;
   }
@@ -38,6 +41,11 @@ interface LoginResponse {
   interface TActivate {
     activation_code: string;
     activation_token: string;
+  }
+
+  interface TIssue{
+    title: string;
+    description: string;
   }
 
 
@@ -80,6 +88,15 @@ export const api = createApi({
             })
         }),
 
+        // report issue
+        reportIssue: builder.mutation<any, TIssue>({
+            query: (data) => ({
+                url: '/user/report-issue',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+
 
     }),
 });
@@ -89,5 +106,6 @@ export const {
     useAuthLoginMutation,
     useAuthLogoutMutation,
     useActivateUserMutation,
+    useReportIssueMutation,
 } = api;
 
