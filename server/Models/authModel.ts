@@ -25,6 +25,7 @@ export interface IUser extends Document {
   password: string;
   role: "member" | "elder" | "admin";
   familyLocated?: string;
+  createdAt: Date;
   passwordResetToken?: string;
   resetTokenSetAt?: Date;
   resetTokenExpires?: Date;
@@ -106,10 +107,11 @@ const authSchema = new Schema<IUser>({
     enum: ["member", "elder", "admin"],
     default: "member",
   },
+  createdAt: { type: Date, default: Date.now },
   passwordResetToken: String,
   resetTokenSetAt: Date,
   resetTokenExpires: Date,
-});
+},{timestamps: true});
 
 
 
