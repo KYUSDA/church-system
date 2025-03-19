@@ -2,18 +2,31 @@ import { useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import { MdOutlineReportProblem, MdOutlineBugReport, MdDesignServices } from "react-icons/md";
 import { RiFunctionLine } from "react-icons/ri";
-
+import { useReportIssueMutation } from "../../services/authService";
+import { toast } from "sonner";
 const ReportIssue = () => {
+  const [issueTitle, setIssueTitle] = useState("");
   const [reportIssue, setReportIssue] = useState("");
+  const [reportIssueMutation] = useReportIssueMutation();
 
-  const handleReportIssue = () => {
-    if (!reportIssue.trim()) return;
-    console.log("Reporting issue:", reportIssue);
-    setReportIssue("");
+  const handleReportIssue = async () => {
+    if (!issueTitle.trim() || !reportIssue.trim()) return;
+   
+    // Send the issue report to the server
+    const res = await reportIssueMutation({ title: issueTitle, description: reportIssue });
+    if (res) {
+      toast.success("Issue reported successfully!");
+      setIssueTitle("");
+      setReportIssue("");
+    }else{
+      toast.error("Failed to report");
+      
+    }
+   
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6  ">
+    <div className="max-w-3xl mx-auto p-6">
       {/* Report Issue Header */}
       <h3 className="text-2xl font-bold text-gray-900 flex items-center space-x-2 mb-4">
         <MdOutlineReportProblem className="text-red-600 text-2xl" />
@@ -45,6 +58,19 @@ const ReportIssue = () => {
           <MdOutlineReportProblem className="text-red-600" />
           <span>Describe the issue</span>
         </h4>
+        
+        <div>
+          <label className="block text-sm font-semibold text-gray-600">Issue Title</label>
+        <input
+          type="text"
+          placeholder="Issue Title"
+          value={issueTitle}
+          onChange={(e) => setIssueTitle(e.target.value)}
+          className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-red-500 mb-2"
+        />
+         </div>
+         <div>
+         <label className="block text-sm font-semibold text-gray-600">Issue Description</label>
         <textarea
           placeholder="Provide a detailed description of the issue..."
           value={reportIssue}
@@ -52,6 +78,7 @@ const ReportIssue = () => {
           className="w-full mt-2 p-2 border rounded-lg focus:ring-2 focus:ring-red-500"
           rows={4}
         />
+        </div>
         <button
           onClick={handleReportIssue}
           className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center space-x-2"
