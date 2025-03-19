@@ -8,6 +8,10 @@ export interface TUser {
   firstName: string;
   lastName: string;
   email: string;
+  scores?: string;
+  year?: number;
+  familyLocated?: string;
+  createdAt?: string;
   easyNumber?: number;
   mediumNumber?: number;
   hardNumber?: number;
