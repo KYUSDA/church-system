@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getBaseUrl } from "../../../services/authService";
+import Loader from "../../components/loader";
 
 interface Quiz {
   _id: string;
@@ -19,6 +20,11 @@ interface CompletedQuiz {
 const QuizzesPage: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [completedQuizzes, setCompletedQuizzes] = useState<CompletedQuiz[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000);
+  }, []);
   const baseUrl = getBaseUrl();
   const navigate = useNavigate();
 
@@ -62,6 +68,7 @@ const QuizzesPage: React.FC = () => {
 
   return (
     <div className="p-6">
+       <Loader isLoading={loading} text="Get things ready..." />
       <h1 className="text-2xl font-bold mb-4 text-center">Defend Your Faith - Weekly Quizzes</h1>
 
       {/* Current Quizzes */}
@@ -93,7 +100,7 @@ const QuizzesPage: React.FC = () => {
       </div>
 
       {/* Completed Quizzes */}
-      <div className="mt-8 p-4 border rounded-lg shadow-md bg-gray-100">
+      <div className="mt-8 p-4 border rounded-lg shadow-md bg-white">
         <h2 className="text-xl font-semibold mb-4">Completed Quizzes</h2>
         {completedQuizzes.length > 0 ? (
           <ul className="space-y-2">
