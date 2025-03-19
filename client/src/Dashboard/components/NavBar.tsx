@@ -8,7 +8,7 @@ interface NavBarProps {
   onMenuToggle: () => void;
 }
 
-const getTimeOfDayGreeting = () => {
+export const getTimeOfDayGreeting = () => {
   const currentHour = new Date().getHours();
   if (currentHour < 12) return "Good Morning";
   if (currentHour < 18) return "Good Afternoon";
@@ -70,12 +70,12 @@ const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
             </NavLink>
             <NavLink
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
-              aria-label="settings"
-              title="settings"
+              aria-label="Account"
+              title="Account"
               to={'/member/settings'}
             >
               <Settings className="w-5 h-5 mr-2 text-blue-600" />
-              Settings
+              Account
             </NavLink>
             <NavLink
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"

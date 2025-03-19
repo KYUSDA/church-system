@@ -15,4 +15,6 @@ authRoute.route("/resetToken").post(memberAuth.memberResetToken);
 
 authRoute.patch("/resetPassword/:token", memberAuth.resetPassword);
 
+authRoute.patch("/change-password", requireAuth, memberAuth.changePassword);
+
 export default authRoute;

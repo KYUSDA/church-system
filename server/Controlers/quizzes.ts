@@ -9,6 +9,7 @@ import { quizResultModel } from "../Models/ResultsModel";
 import cloudinary from "cloudinary";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
+import { userQuizProgressModel } from "../Models/userQuizModel";
 
 
 export const createQuiz = async (req: Request, res: Response, next: NextFunction)  => {
@@ -102,39 +103,54 @@ export const getQuiz = catchAsyncErrors(async (req: Request, res: Response, next
 });
 
 
-// return  quizzes
-export const getCompletedQuizzes = async (req: Request, res: Response, next: NextFunction) => {
+
+// return quizzes
+export const getQuizzes = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const quizzes = await quizModel.find({completed: false});
-         res.status(200).json({ data: quizzes });
+        const userId = req?.user?.id;
+        if (!userId) {
+            return next(new ErrorHandler("Unauthorized: User not logged in", 401));
+        }
+
+        // Get all quizzes
+        const quizzes = await quizModel.find();
+
+        // Get quizzes user has completed
+        const completedQuizzes = await userQuizProgressModel.find({ user: userId }).select("quiz");
+
+        // Filter out completed quizzes
+        const completedQuizIds = completedQuizzes.map((q) => q.quiz.toString());
+        const availableQuizzes = quizzes.filter(q => !completedQuizIds.includes(q._id.toString()));
+
+        res.status(200).json({ quizzes: availableQuizzes });
     } catch (error) {
-        console.error("Error fetching completed quizzes:", error);
-        return next(new ErrorHandler("Internal Server Error",500));
+        return next(new ErrorHandler("Error fetching quizzes", 500));
     }
 };
 
 
+
 // send results to user
-export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Response , next:NextFunction) => {
+export const sendQuizResults = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { quizId, correctAnswers, userAnswers } = req.body;
 
-       // Check if user is logged in
-       const userId = req?.user?.id;
-       if (!userId) {
-           return next(new ErrorHandler("Unauthorized: User not logged in", 401));
-       }
+        // Check if user is logged in
+        const userId = req?.user?.id;
+        if (!userId) {
+            return next(new ErrorHandler("Unauthorized: User not logged in", 401));
+        }
 
-       const user = await authModel.findById(userId).select("-password");
-  
-       if (!user) {
-         return next(new ErrorHandler(`user: ${userId} not found`, 404));
-       }
+        const user = await authModel.findById(userId).select("-password");
 
-        // Fetch quiz details (Assuming a Quiz model exists)
+        if (!user) {
+            return next(new ErrorHandler(`User: ${userId} not found`, 404));
+        }
+
+        // Fetch quiz details
         const quiz = await quizModel.findById(quizId);
         if (!quiz) {
-            return next(new ErrorHandler("Quiz not found",404 ));
+            return next(new ErrorHandler("Quiz not found", 404));
         }
 
         // Calculate score
@@ -158,6 +174,13 @@ export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Respons
             createdAt: new Date(),
         });
 
+        // Save user quiz progress
+        await userQuizProgressModel.findOneAndUpdate(
+            { user: userId, quiz: quizId }, 
+            { completed: true },
+            { upsert: true, new: true } // Create if not exists
+        );
+
         // Prepare email data
         const emailData = {
             quizTitle: quiz?.title,
@@ -171,22 +194,96 @@ export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Respons
         };
 
         // Send email with results
-        if(user)
-        await sendMail({
-            email: user.email,
-            subject: "Your Quiz Results",
-            template: "quizResults.ejs",
-            data: emailData,
-        });
+        if (user) {
+            await sendMail({
+                email: user.email,
+                subject: "Your Quiz Results",
+                template: "quizResults.ejs",
+                data: emailData,
+            });
+        }
 
-        // update complete to true
-        await quizModel.findByIdAndUpdate(quizId, { completed: true });
-
-    res.status(200).json({ message: "Quiz results saved and emailed successfully", data: result });
-    } catch (error:any) {
-        return next(new ErrorHandler(error.message, 400)); 
+        res.status(200).json({ message: "Quiz results saved and emailed successfully", data: result });
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
     }
 });
+
+
+
+// send results to user
+// export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Response , next:NextFunction) => {
+//     try {
+//         const { quizId, correctAnswers, userAnswers } = req.body;
+
+//        // Check if user is logged in
+//        const userId = req?.user?.id;
+//        if (!userId) {
+//            return next(new ErrorHandler("Unauthorized: User not logged in", 401));
+//        }
+
+//        const user = await authModel.findById(userId).select("-password");
+  
+//        if (!user) {
+//          return next(new ErrorHandler(`user: ${userId} not found`, 404));
+//        }
+
+//         // Fetch quiz details (Assuming a Quiz model exists)
+//         const quiz = await quizModel.findById(quizId);
+//         if (!quiz) {
+//             return next(new ErrorHandler("Quiz not found",404 ));
+//         }
+
+//         // Calculate score
+//         let correctCount = 0;
+//         correctAnswers.forEach((answer: string, index: number) => {
+//             if (answer === userAnswers[index]) correctCount++;
+//         });
+
+//         const totalQuestions = correctAnswers.length;
+//         const scorePercentage = Math.round((correctCount / totalQuestions) * 100);
+
+//         // Save results to DB
+//         const result = await quizResultModel.create({
+//             user: userId,
+//             quiz: quizId,
+//             correctAnswers,
+//             userAnswers,
+//             scorePercentage,
+//             correctCount,
+//             totalQuestions,
+//             createdAt: new Date(),
+//         });
+
+//         // Prepare email data
+//         const emailData = {
+//             quizTitle: quiz?.title,
+//             correctCount,
+//             totalQuestions,
+//             scorePercentage,
+//             userAnswers,
+//             correctAnswers,
+//             questions: quiz?.questions,
+//             reviewLink: `${process.env.CLIENT_URL}/quiz-results/${result._id}`,
+//         };
+
+//         // Send email with results
+//         if(user)
+//         await sendMail({
+//             email: user.email,
+//             subject: "Your Quiz Results",
+//             template: "quizResults.ejs",
+//             data: emailData,
+//         });
+
+//         // update complete to true
+//         await quizModel.findByIdAndUpdate(quizId, { completed: true });
+
+//     res.status(200).json({ message: "Quiz results saved and emailed successfully", data: result });
+//     } catch (error:any) {
+//         return next(new ErrorHandler(error.message, 400)); 
+//     }
+// });
 
 
 // get results

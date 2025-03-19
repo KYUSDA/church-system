@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createQuiz, getCompletedQuizzes, getQuiz, getUserResults, sendQuizResults } from "../Controlers/quizzes";
+import { createQuiz, getQuiz, getQuizzes, getUserResults, sendQuizResults } from "../Controlers/quizzes";
 import requireAuth from "../middleware/authmiddleware";
 const quizzeRoute = Router();
 
@@ -9,7 +9,7 @@ quizzeRoute.get("/get-quizze/:id",getQuiz);
 
 quizzeRoute.get("/get-results",requireAuth, getUserResults);
 
-quizzeRoute.get("/get-quizzes", getCompletedQuizzes);
+quizzeRoute.get("/get-quizzes", requireAuth,getQuizzes);
 
 quizzeRoute.post("/forward-results", requireAuth, sendQuizResults);
 

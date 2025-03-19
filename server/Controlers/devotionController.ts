@@ -4,8 +4,9 @@ import cron from "node-cron";
 import fs from 'fs'
 import path from "path";
 // import { getDevotionalForDate } from "../utils/extractDevotional";
-import { Request,Response } from "express";
+import { NextFunction, Request,Response } from "express";
 import { fileURLToPath } from "url";
+import ErrorHandler from "../utils/ErrorHandler";
 
 // Define __dirname manually
 const __filename = fileURLToPath(import.meta.url);
@@ -53,7 +54,7 @@ export const subscribeDevotion = async (req: Request, res: Response): Promise<vo
 
 
 // Schedule Devotional Emails Every Day at 7:00 AM
-// cron.schedule("*/5 * * * *", async () => {
+// cron.schedule("*/2 * * * *", async () => {
 //     try {
 //         console.log("⏳ Running scheduled devotional email task...");
 
@@ -143,27 +144,27 @@ export const unsubscribeDevotion = async (req: Request, res: Response): Promise<
 }
 
 // get one subsriber
-export const getOneSubscriber = async (req: Request, res: Response): Promise<void> => {
+export const getSubscriberByEmail = async (req: Request, res: Response, next:NextFunction)=> {
     try {
-        const id = req.params.id;
+        const email = req.user?.email; // Get email from the authenticated user
 
-        if (!id) {
-             res.status(400).json({ message: "Id not valid" });
+        if (!email) {
+            return next(new ErrorHandler("User email not found",401 ));
         }
 
-        const subscriber = await devotionModel.findById(id);    
+        const subscriber = await devotionModel.findOne({ email });
 
         if (!subscriber) {
-             res.status(404).json({ message: "Subscriber not found" });
-        }else{
-            res.status(200).json({ subscriber });
+            res.status(200).json({ subscribed: false });
+        } else {
+            res.status(200).json({ subscribed: true });
         }
-
-    } catch (error) {
-        console.error("❌ Error getting subscriber:", error);
-         res.status(500).json({ message: "Internal server error" });
+        
+    } catch (error:any) {
+        return next(new ErrorHandler(error.message, 400)); 
     }
-}
+};
+
 
 
 // resubscribe

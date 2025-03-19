@@ -162,6 +162,7 @@ export const ActivateUser = catchAsyncErrors(
         year: newUser.year,
         phoneNumber: newUser.phoneNumber,
         scores: newUser.scores,
+        familyLocated: newUser.familyLocated,
         password: newUser.password,
         email: newUser.email,
         avatar: newUser.avatar || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"
@@ -300,11 +301,33 @@ export const resetPassword = catchAsyncErrors(async (req: Request, res: Response
   });
 });
 
+
+// change password
+export const changePassword = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+  const { oldPassword, newPassword } = req.body;
+  if (!oldPassword || !newPassword) return next(new ErrorHandler("Please provide all fields", 400));
+
+  const user = await memberAuth.findById(req.user?.id).select("+password");
+  if (!user) return next(new ErrorHandler("User not found", 404));
+
+  const isMatch = await user.comparePasswords(oldPassword);
+  if (!isMatch) return next(new ErrorHandler("Password is incorrect", 400));
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Password updated successfully",
+  });
+});
+
 export default {
   memberSignUp,
   memberSignIn,
   ActivateUser,
   memberLogout,
+  changePassword,
   memberResetToken,
   resetPassword,
 };
