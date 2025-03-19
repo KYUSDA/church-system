@@ -30,11 +30,11 @@ const ResourceCenter = () => {
 
     return (
         <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2  gap-8 mb-8 mt-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2  gap-8 my-8">
                 <CalenderSection />
                 <MinistryUpdates />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-8">
                 <div className="bg-white p-4 rounded-xl shadow-sm">
                     <h4 className="font-medium mb-3">Latest Sermons</h4>
                     <ul className="space-y-2">
