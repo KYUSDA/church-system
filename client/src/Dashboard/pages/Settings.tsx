@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiEdit2 } from "react-icons/fi"; // Pen icon for avatar
+import { FiEdit2 } from "react-icons/fi";
 import ProfilePic from "../../assets/profileImage.png";
 import { getBaseUrl } from "../../services/authService";
 import useUserData from "../components/userdata";
@@ -9,7 +9,8 @@ const Settings = () => {
   const { userData, user, setUserData } = useUserData();
   const [preview, setPreview] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const baseUrl = getBaseUrl();
 
@@ -59,28 +60,42 @@ const Settings = () => {
   };
 
   const handlePasswordChange = async () => {
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      toast.error("All fields are required.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match.");
       return;
     }
 
     try {
-      const response = await fetch(`${baseUrl}/user/change-password`, {
-        method: "PUT",
+      setLoading(true);
+      const response = await fetch(`${baseUrl}/member/change-password`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user?.id, newPassword: password }),
+        body: JSON.stringify({ 
+          oldPassword, 
+          newPassword 
+        }),
+        credentials: "include",
       });
 
       if (response.ok) {
         toast.success("Password updated successfully!");
-        setPassword("");
+        setOldPassword("");
+        setNewPassword("");
         setConfirmPassword("");
       } else {
-        toast.error("Failed to update password.");
+        const errorData = await response.json();
+        toast.error(errorData.message || "Failed to update password.");
       }
     } catch (error) {
       console.error("Error updating password:", error);
-      toast.error("An error occurred while updating the password.");
+      toast.error("Failed to update password.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -139,11 +154,21 @@ const Settings = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Change Password</h2>
         <div className="grid grid-cols-1 gap-4">
           <div>
+            <label className="block text-gray-700 font-semibold">Old Password</label>
+            <input
+              type="password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter old password"
+            />
+          </div>
+          <div>
             <label className="block text-gray-700 font-semibold">New Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter new password"
             />
@@ -160,9 +185,10 @@ const Settings = () => {
           </div>
           <button
             onClick={handlePasswordChange}
-            className="w-full mt-4 bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            className="w-full mt-4 bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+            disabled={loading}
           >
-            Update Password
+            {loading ? "Updating..." : "Update Password"}
           </button>
         </div>
       </div>
