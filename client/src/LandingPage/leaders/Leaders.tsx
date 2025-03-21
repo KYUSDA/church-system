@@ -1,21 +1,21 @@
 
-import ibra from "../../assets/ibra.jpg";
-import hannah from "../../assets/hannah.jpg";
 import salaton from "../../assets/Salaton.jpg";
-import pstotula from "../../assets/pastorkyusda.jpeg";
-import eldersam from "../../assets/Eldersam.jpg";
 import joshua from "../../assets/Joshua pic.jpg";
+import maxwell from "../../assets/maxwell.jpg";
+import biko from "../../assets/biko.jpg";
+import brown from "../../assets/brown.jpg";
+import pastor from "../../assets/pastor.jpg"
 
 const leaders = [
-  { src: pstotula, name: "Nicanor Otula", role: "Pastor" },
+  { src: pastor, name: "Willis Obegi", role: "Pastor" },
 ];
 
 const otherLeaders = [
-  { src: eldersam, name: "Samuel Omweri", role: "First Elder" },
-  { src: ibra, name: "Ibrahim Kimwecha", role: "Elder" },
-  { src: hannah, name: "Hannah Njoki", role: "ALO Leader" },
-  { src: joshua, name: "Joshua Hamisi", role: "Elder" },
+  { src: joshua, name: "Joshua Hamisi", role: "First Elder" },
   { src: salaton, name: "Chris Salaton", role: "Elder" },
+  { src: maxwell, name: "Maxwell Achola", role: "Elder" },
+  { src: biko, name: "Steve Biko", role: "Elder" },
+  { src: brown, name: "Llyod Brown", role: "Elder" },
 ];
 
 function Leaders() {
