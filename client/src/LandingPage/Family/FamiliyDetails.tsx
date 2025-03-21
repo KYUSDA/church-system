@@ -1,7 +1,7 @@
-
-import { useLocation, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { urlFor } from '../../utils/client';
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { client, urlFor } from "../../utils/client";
+import Loader from "../../Dashboard/components/loader";
 
 interface Family {
   _id: string;
@@ -20,14 +20,45 @@ const Breadcrumbs = ({ family }: { family: Family }) => (
 );
 
 const SingleFamily = () => {
-  const location = useLocation();
-  const familyId = location.pathname.split('/')[2];
-  const family = useSelector((state: { families: { families: Family[] } }) => state?.families?.families)?.find((fam) => fam?._id === familyId);
+  const { id } = useParams<{ id: string }>();
+  const [family, setFamily] = useState<Family | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2000);
+}, []);
+
+  useEffect(() => {
+    const fetchFamily = async () => {
+      try {
+        const query = `*[_type == "families" && _id == "${id}"][0]`;
+        const data = await client.fetch(query);
+        setFamily(data);
+      } catch (error) {
+        console.error("Error fetching family details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFamily();
+  }, [id]);
+
+  if (loading) {
+    return <Loader isLoading={loading} text="Get things ready..." />
+  }
+
+  if (!family) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-red-600">Family not found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-12">
       {/* Breadcrumbs */}
-      {family && <Breadcrumbs family={family} />}
+      <Breadcrumbs family={family} />
 
       {/* Header Section */}
       <section className="container mx-auto grid md:grid-cols-2 gap-6 px-4 items-center">
@@ -36,20 +67,27 @@ const SingleFamily = () => {
           <p className="mt-4 text-gray-600 text-lg leading-relaxed">{family?.description}</p>
         </div>
         <div className="flex justify-center">
-          <img src={urlFor(family?.imgUrl).url()} alt="Family" className="w-full max-w-md rounded-lg shadow-xl" />
+          <img
+            src={urlFor(family?.imgUrl).url()}
+            alt="Family"
+            className="w-full max-w-md rounded-lg shadow-xl"
+          />
         </div>
       </section>
 
       {/* Map Section */}
-    <section className="py-12 px-4 w-full flex flex-col items-center text-center">
-    <div className="w-3/4 max-w-7xl">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Location</h2>
-        <div className="w-full">
-        <img src={urlFor(family?.locationUrl).url()} alt="Family Location" className="w-full rounded-lg shadow-md" />
+      <section className="py-12 px-4 w-full flex flex-col items-center text-center">
+        <div className="w-3/4 max-w-7xl">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Location</h2>
+          <div className="w-full">
+            <img
+              src={urlFor(family?.locationUrl).url()}
+              alt="Family Location"
+              className="w-full rounded-lg shadow-md"
+            />
+          </div>
         </div>
-    </div>
-    </section>
-
+      </section>
     </div>
   );
 };
