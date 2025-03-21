@@ -11,6 +11,7 @@ export interface TUser {
   scores?: string;
   year?: number;
   familyLocated?: string;
+  birthday?: Date;
   createdAt?: string;
   easyNumber?: number;
   mediumNumber?: number;
