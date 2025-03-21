@@ -17,4 +17,6 @@ authRoute.patch("/resetPassword/:token", memberAuth.resetPassword);
 
 authRoute.patch("/change-password", requireAuth, memberAuth.changePassword);
 
+authRoute.patch("/update-birthday", requireAuth, memberAuth.updateUserBirthday);
+
 export default authRoute;
