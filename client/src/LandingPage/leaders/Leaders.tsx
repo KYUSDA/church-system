@@ -5,6 +5,7 @@ import maxwell from "../../assets/maxwell.jpg";
 import biko from "../../assets/biko.jpg";
 import brown from "../../assets/brown.jpg";
 import pastor from "../../assets/pastor.jpg"
+import chriss from "../../assets/chriss.jpg"
 
 const leaders = [
   { src: pastor, name: "Willis Obegi", role: "Pastor" },
@@ -12,10 +13,10 @@ const leaders = [
 
 const otherLeaders = [
   { src: joshua, name: "Joshua Hamisi", role: "First Elder" },
-  { src: salaton, name: "Chris Salaton", role: "Elder" },
+  { src: chriss, name: "Chris Salaton", role: "Elder" },
   { src: maxwell, name: "Maxwell Achola", role: "Elder" },
   { src: biko, name: "Steve Biko", role: "Elder" },
-  { src: brown, name: "Llyod Brown", role: "Elder" },
+  { src: brown, name: "Lloyd  Brown", role: "Elder" },
 ];
 
 function Leaders() {
@@ -33,7 +34,7 @@ function Leaders() {
       <div className="flex justify-center mb-8">
         {leaders.map(({ src, name, role }, index) => (
           <div key={index} className="p-4 w-48 text-center">
-            <img src={src} alt={name} className="w-32 h-32 mx-auto rounded-full object-cover" />
+            <img src={src} alt={name} className="w-32 h-32 mx-auto rounded-full object-cover object-top" />
             <h5 className="text-lg font-semibold mt-4">{name}</h5>
             <p className="text-gray-500">{role}</p>
           </div>
