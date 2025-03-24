@@ -14,7 +14,7 @@ export interface IUser extends Document {
   course: string;
   year: number;
   phoneNumber: string;
-  birthday: Date;
+  birthday?: Date;
   scores?: number;
   easyNumber?:number;
   mediumNumber?:number;
@@ -79,7 +79,6 @@ const authSchema = new Schema<IUser>({
   },
   birthday: {
     type: Date,
-    required:true,
   },
   scores: {
     type: Number,
