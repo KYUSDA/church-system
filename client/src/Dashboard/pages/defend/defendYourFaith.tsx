@@ -32,11 +32,17 @@ const QuizzesPage: React.FC = () => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await fetch(`${baseUrl}/quizzes/get-quizzes`);
+        const response = await fetch(
+          `${baseUrl}/quizzes/get-quizzes`,
+          {
+            credentials: "include",
+          }
+        );
+       
         if (!response.ok) throw new Error("Failed to fetch quizzes");
 
         const data = await response.json();
-        setQuizzes(Array.isArray(data.data) ? data.data : []);
+        setQuizzes(Array.isArray(data.quizzes) ? data.quizzes : []);
       } catch (error) {
         console.error("Error fetching quizzes:", error);
         setQuizzes([]);
