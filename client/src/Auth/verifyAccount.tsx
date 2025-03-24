@@ -35,32 +35,28 @@ export default function Verification() {
 
   const verificationHandler = async () => {
     const activation_code = Object.values(verifyNumber).join("");
-    console.log(activationToken);
+    
     if (!activationToken) {
       setInvalidError(true);
       return;
     }
-
+  
     try {
-      const response = await activateUser({ activation_code, activation_token: activationToken });
-
-      if (response) {
-        navigate("/signIn");
+      const response = await activateUser({ activation_code, activation_token: activationToken }).unwrap();
+  
+      if (response) { // Ensure response contains success status
         toast.success("Activation successful");
+        navigate("/signIn");
       } else {
         toast.error("Activation failed");
         setInvalidError(true);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("An unexpected error occurred");
-      }
+      toast.error("An unexpected error occurred");
       setInvalidError(true);
     }
   };
-
+  
   const handleInputChange = (index: number, value: string) => {
     setInvalidError(false);
     const newVerifyNumber = { ...verifyNumber, [index]: value };

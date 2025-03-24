@@ -19,6 +19,8 @@ const SignInSide = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [touchedEmail, setTouchedEmail] = useState(false);
+  const [touchedPassword, setTouchedPassword] = useState(false);
   const { loginUser, error } = useLogin();
 
   interface formData {
@@ -36,6 +38,8 @@ const SignInSide = () => {
     await loginUser(values);
     setEmail("");
     setPassword("");
+    setTouchedEmail(false);
+    setTouchedPassword(false);
   };
 
   const isFormValid = email.trim() !== "" && password.trim() !== "";
@@ -64,8 +68,9 @@ const SignInSide = () => {
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                error={email === ""}
-                helperText={email === "" ? "Email is required" : ""}
+                onBlur={() => setTouchedEmail(true)} // Mark as touched when leaving the field
+                error={touchedEmail && email.trim() === ""}
+                helperText={touchedEmail && email.trim() === "" ? "Email is required" : ""}
               />
 
               <TextField
@@ -78,8 +83,9 @@ const SignInSide = () => {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={password === ""}
-                helperText={password === "" ? "Password is required" : ""}
+                onBlur={() => setTouchedPassword(true)} // Mark as touched when leaving the field
+                error={touchedPassword && password.trim() === ""}
+                helperText={touchedPassword && password.trim() === "" ? "Password is required" : ""}
                 InputProps={{
                   endAdornment: (
                     <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">

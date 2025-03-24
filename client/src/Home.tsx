@@ -28,6 +28,16 @@ import TriviaProps from "./Dashboard/pages/trivias/triviasProp";
 import CommunicationHub from "./Dashboard/ui/communicationCenter";
 import ReportIssue from "./Dashboard/ui/reportIssue";
 import Verification from "./Auth/verifyAccount";
+import UserList from "./Admin/Pages/User/UserList";
+import Newuser from "./Admin/Pages/User/Newuser";
+import FamilyList from "./Admin/Pages/Family/FamilyList";
+import NewFamily from "./Admin/Pages/Family/NewFamily";
+import NewDepartment from "./Admin/Pages/Department/NewDepartment";
+import DepartmentList from "./Admin/Pages/Department/DepartmentList";
+import ADepartment from "./Admin/Pages/Department/Department";
+import AFamily from "./Admin/Pages/Family/Family";
+import Users from "./Admin/Pages/User/Users";
+import AdminLayout from "./Admin/Pages/Layout";
 
 const Home = () => {
   return (
@@ -46,7 +56,7 @@ const Home = () => {
       <Route path="/church-gallery" element={<Layout><KyuSda /></Layout>} />
       <Route path="/kirinyaga-adventist-privacy-policy" element={<Layout><PrivacyPolicy /></Layout>} />
       <Route path="/kirinyaga-adventist-terms-and-conditions" element={<Layout><Terms /></Layout>} />
-      {/* dashboard */}
+      {/* user dashboard */}
       <Route path="/member/dashboard" element={<ProtectedRoute><DashboardLayout><DashboardHome /></DashboardLayout></ProtectedRoute>}/>
       <Route path="/member/resources" element={<ProtectedRoute><DashboardLayout><ResourceCenter /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/settings" element={<ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>} />
@@ -60,6 +70,18 @@ const Home = () => {
       <Route path="/member/user-notifications" element={<ProtectedRoute><DashboardLayout><NotificationsPage /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/report-issue" element={<ProtectedRoute><DashboardLayout><ReportIssue /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/communication-center" element={<ProtectedRoute><DashboardLayout><CommunicationHub /></DashboardLayout></ProtectedRoute>} />
+
+      {/* admin dashboard */}
+            <Route path="/admin" element={<AdminLayout><Home /></AdminLayout>} />
+            <Route path="/admin/users" element={<AdminLayout><UserList /></AdminLayout>} />
+            <Route path="/admin/user/:id" element={<AdminLayout><Users /></AdminLayout>} />
+            <Route path="/admin/newUser" element={<AdminLayout><Newuser /></AdminLayout>} />
+            <Route path="/admin/department/:id" element={<AdminLayout><ADepartment /></AdminLayout>} />
+            <Route path="/admin/family/:id" element={<AdminLayout><AFamily /></AdminLayout>} />
+            <Route path="/admin/departments" element={<AdminLayout><DepartmentList /></AdminLayout>} />
+            <Route path="/admin/families" element={<AdminLayout><FamilyList /></AdminLayout>} />
+            <Route path="/admin/newDepart" element={<AdminLayout><NewDepartment /></AdminLayout>} />
+            <Route path="/admin/newFamily" element={<AdminLayout><NewFamily /></AdminLayout>} />
     </Routes>
   );
 };

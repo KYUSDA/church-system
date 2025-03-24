@@ -2,20 +2,20 @@ import { useState, useEffect } from "react";
 import { TUser } from "../components/userdata";
 import { getBaseUrl } from "../../services/authService";
 
-const SubscriptionSection = ({ user }:{user: TUser}) => {
+const SubscriptionSection = ({ user }: { user: TUser }) => {
   const [email, setEmail] = useState(user?.email || "");
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [loading, setLoading] = useState(true); // Track loading state
+  const [subscribing, setSubscribing] = useState(false); // Track subscription process
   const [message, setMessage] = useState("");
-    const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl();
 
   useEffect(() => {
     const checkSubscription = async () => {
       try {
         const response = await fetch(`${baseUrl}/devotion/getOneSubscriber`, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           credentials: "include",
         });
 
@@ -23,6 +23,8 @@ const SubscriptionSection = ({ user }:{user: TUser}) => {
         setIsSubscribed(data.subscribed);
       } catch (error) {
         console.error("Error checking subscription:", error);
+      } finally {
+        setLoading(false); // Stop loading after request finishes
       }
     };
 
@@ -35,24 +37,27 @@ const SubscriptionSection = ({ user }:{user: TUser}) => {
       return;
     }
 
+    setSubscribing(true); // Start subscribing process
+    setMessage("");
+
     try {
       const response = await fetch(`${baseUrl}/devotion/subscribe-devotions`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       if (response.ok) {
         setMessage("Subscription successful! You'll receive daily devotions.");
-        setIsSubscribed(true); // Update button state
+        setIsSubscribed(true);
       } else {
         setMessage("Failed to subscribe. Please try again.");
       }
     } catch (error) {
       console.error("Subscription error:", error);
       setMessage("An error occurred. Please try again later.");
+    } finally {
+      setSubscribing(false); // End subscribing process
     }
   };
 
@@ -69,14 +74,18 @@ const SubscriptionSection = ({ user }:{user: TUser}) => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
           className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          disabled={isSubscribed} // Disable input if subscribed
+          disabled={isSubscribed || subscribing} // Disable if subscribed or subscribing
         />
         <button
           onClick={handleSubscription}
-          className={`px-4 py-2 rounded-lg transition ${isSubscribed ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"}`}
-          disabled={isSubscribed} // Disable button if subscribed
+          className={`px-4 py-2 rounded-lg transition ${
+            isSubscribed || loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+          disabled={isSubscribed || loading || subscribing} // Disable while checking/subscribing
         >
-          {isSubscribed ? "Subscribed" : "Subscribe"}
+          {loading ? "Checking..." : subscribing ? "Subscribing..." : isSubscribed ? "Subscribed" : "Subscribe"}
         </button>
       </div>
       {message && <p className="mt-2 text-sm text-red-700">{message}</p>}

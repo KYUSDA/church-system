@@ -18,8 +18,17 @@ import image16 from "../../assets/alo2.JPG";
 import image17 from "../../assets/Aloamo.JPG";
 import image18 from "../../assets/Gordonteam.JPG";
 import image19 from "../../assets/vickyteam.JPG";
+import { useEffect, useState } from "react";
+import Loader from "../../Dashboard/components/loader";
 
 const KyuSda = () => {
+   const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      setTimeout(() => setLoading(false), 2000);
+  }, []);
+
+
   const galleryImages = [
     {
       img: image1,
@@ -85,7 +94,9 @@ const KyuSda = () => {
       <h2 className="text-center text-2xl md:text-4xl font-bold my-8 md:mt-12 md:mb-12">
         Our <span className="text-blue-500">Church</span> Gallery
       </h2>
-
+  
+    <Loader isLoading={loading} text="Get Gallery ready..." />
+  
       <WSPGallery galleryImages={galleryImages} />
     </div>
   );

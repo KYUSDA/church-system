@@ -1,6 +1,14 @@
+import { useEffect, useState } from "react";
 import CalenderSection from "../ui/CalenderSection";
 import MinistryUpdates from "../ui/MinistryUpdates"
+import Loader from "../components/loader";
 const ResourceCenter = () => {
+
+     const [loading, setLoading] = useState(true);
+    
+      useEffect(() => {
+        setTimeout(() => setLoading(false), 1000);
+      }, []);
 
     const studyMaterials = [
         { name: "November Newsletter", url: "/downloads/november-newsletter.pdf" },
@@ -30,6 +38,7 @@ const ResourceCenter = () => {
 
     return (
         <div>
+             <Loader isLoading={loading} text="Get things ready..." />
             <div className="grid grid-cols-1 sm:grid-cols-2  gap-8 my-8">
                 <CalenderSection />
                 <MinistryUpdates />

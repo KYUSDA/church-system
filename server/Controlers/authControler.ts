@@ -157,15 +157,12 @@ export const ActivateUser = catchAsyncErrors(
       const user = await authModel.create({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
+        email: newUser.email,
         registration: newUser.registration,
         course: newUser.course,
         year: newUser.year,
         phoneNumber: newUser.phoneNumber,
-        scores: newUser.scores,
-        familyLocated: newUser.familyLocated,
-        password: newUser.password,
-        email: newUser.email,
-        avatar: newUser.avatar || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"
+        password: newUser.password
       });
 
       res
@@ -213,26 +210,35 @@ export const memberSignIn = catchAsyncErrors(
 
 
 // logout
-const memberLogout = catchAsyncErrors( async (req: Request, res: Response,next:NextFunction) => {
+const memberLogout = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
   try {
+    // Clear cookies
+    res.cookie("access_token", "", { maxAge: 1 });
 
-     // clear cookies
-     res.cookie("access_token", "", { maxAge: 1 });
-   
-     const redisUser = req.user?.id;
-     console.log("User ID from request:", redisUser);
-      if (redisUser) {
-        console.log("User session deleted from redis");
+    const redisUser = req.user?.id;
+    console.log("Full request user object:", req.user);
+    console.log("User ID from request:", redisUser);
+
+    if (redisUser) {
+      const exists = await redis.exists(redisUser);
+      console.log(`Redis Key Exists Before Deletion: ${exists}`);
+
+      if (exists) {
         await redis.del(redisUser);
+        console.log("User session deleted from redis");
       } else {
-        console.log(`user: ${redisUser} not found in redis`);
+        console.log(`User ID ${redisUser} was not found in Redis`);
       }
+    } else {
+      console.log(`User ID is undefined, cannot delete from Redis`);
+    }
 
-      res.status(200).json({ success: true, message: "User logged out" });
-  } catch (error:any) {
-    return next(new ErrorHandler(error.message, 400)); 
+    res.status(200).json({ success: true, message: "User logged out" });
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400));
   }
 });
+
 
 
 
@@ -304,23 +310,74 @@ export const resetPassword = catchAsyncErrors(async (req: Request, res: Response
 
 // change password
 export const changePassword = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
-  const { oldPassword, newPassword } = req.body;
-  if (!oldPassword || !newPassword) return next(new ErrorHandler("Please provide all fields", 400));
-
-  const user = await memberAuth.findById(req.user?.id).select("+password");
-  if (!user) return next(new ErrorHandler("User not found", 404));
-
-  const isMatch = await user.comparePasswords(oldPassword);
-  if (!isMatch) return next(new ErrorHandler("Password is incorrect", 400));
-
-  user.password = newPassword;
-  await user.save();
-
-  res.status(200).json({
-    status: "success",
-    message: "Password updated successfully",
-  });
+  try {
+    const { oldPassword, newPassword } = req.body;
+    if (!oldPassword || !newPassword) return next(new ErrorHandler("Please provide all fields", 400));
+  
+    const user = await memberAuth.findById(req.user?.id).select("+password");
+    if (!user) return next(new ErrorHandler("User not found", 404));
+  
+    const isMatch = await user.comparePasswords(oldPassword);
+    if (!isMatch) return next(new ErrorHandler("Password is incorrect", 400));
+  
+    user.password = newPassword;
+    await user.save();
+  
+    const data ={
+      name: user.firstName,
+      date: Date.now(),
+      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
+      dashboardUrl: `${process.env.CLIENT_URL}/member/settings`
+    }
+  
+    // send email to user
+    await sendMail({
+      email: user.email,
+      subject: "Password Changed Successfully",
+      template: "passwordChanged.ejs",
+      data,
+    })
+  
+    res.status(200).json({
+      status: "success",
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    return next(new ErrorHandler("Error fetching quizzes", 500));
+  }
 });
+
+
+
+export const updateUserBirthday = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+ try {
+   const { birthday } = req.body;
+
+   console.log(birthday);
+   
+   if (!birthday) return next(new ErrorHandler("Birthday is required", 400));
+ 
+   // Validate birthday
+   const today = new Date();
+   const birthDate = new Date(birthday);
+   if (birthDate > today) {
+     return next(new ErrorHandler("Please enter a valid date of birth", 400));
+   }
+ 
+   const user = await memberAuth.findByIdAndUpdate(req.user?.id, { birthday }, { new: true });
+ 
+   if (!user) return next(new ErrorHandler("User not found", 404));
+ 
+   res.status(200).json({
+     status: "success",
+     message: "Birthday updated successfully",
+     user,
+   });
+ } catch (error) {
+  return next(new ErrorHandler("Error fetching quizzes", 500));
+ }
+});
+
 
 export default {
   memberSignUp,
@@ -328,6 +385,7 @@ export default {
   ActivateUser,
   memberLogout,
   changePassword,
+  updateUserBirthday,
   memberResetToken,
   resetPassword,
 };

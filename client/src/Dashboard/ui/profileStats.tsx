@@ -45,7 +45,7 @@ const ProfileStats = ({ user }: {user:TUser}) => {
                 </Tooltip>
               ))
             ) : (
-              <span>No badges</span>
+              <span>No badges yet</span>
             )}
           </span>
         </div>

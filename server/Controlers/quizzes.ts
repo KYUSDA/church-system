@@ -103,6 +103,54 @@ export const getQuiz = catchAsyncErrors(async (req: Request, res: Response, next
 });
 
 
+export const getAllQuizzes = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // Fetch all quizzes from the database
+        const quizzes = await quizModel.find();
+
+        res.status(200).json({ quizzes });
+    } catch (error) {
+        return next(new ErrorHandler("Error fetching quizzes", 500));
+    }
+};
+
+
+
+export const getAvailableQuiz = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req?.user?.id; 
+
+    if(!userId){
+        return next(new ErrorHandler("Unauthorized: User not logged in", 401));
+    }
+
+    // Fetch the latest active quiz
+    const quiz = await quizModel.findOne({ completed: false });
+
+    if (!quiz) {
+      return next(new ErrorHandler("No active quiz available.",404))
+    }
+
+    // Check if user has completed this quiz
+    const userProgress = await userQuizProgressModel.findOne({
+      user: userId,
+      quizId: quiz._id,
+      completed: true,
+    });
+
+    if (userProgress) {
+      return next(new ErrorHandler("Quiz already completed",200))
+    }
+
+    // Return the quiz if the user hasn't completed it
+    res.status(200).json({ quiz });
+  } catch (error) {
+    return next(new ErrorHandler("Error fetching quizzes", 500));
+  }
+};
+
+
+
 
 // return quizzes
 export const getQuizzes = async (req: Request, res: Response, next: NextFunction) => {
@@ -211,79 +259,6 @@ export const sendQuizResults = catchAsyncErrors(async (req: Request, res: Respon
 
 
 
-// send results to user
-// export const sendQuizResults =catchAsyncErrors(async (req: Request, res: Response , next:NextFunction) => {
-//     try {
-//         const { quizId, correctAnswers, userAnswers } = req.body;
-
-//        // Check if user is logged in
-//        const userId = req?.user?.id;
-//        if (!userId) {
-//            return next(new ErrorHandler("Unauthorized: User not logged in", 401));
-//        }
-
-//        const user = await authModel.findById(userId).select("-password");
-  
-//        if (!user) {
-//          return next(new ErrorHandler(`user: ${userId} not found`, 404));
-//        }
-
-//         // Fetch quiz details (Assuming a Quiz model exists)
-//         const quiz = await quizModel.findById(quizId);
-//         if (!quiz) {
-//             return next(new ErrorHandler("Quiz not found",404 ));
-//         }
-
-//         // Calculate score
-//         let correctCount = 0;
-//         correctAnswers.forEach((answer: string, index: number) => {
-//             if (answer === userAnswers[index]) correctCount++;
-//         });
-
-//         const totalQuestions = correctAnswers.length;
-//         const scorePercentage = Math.round((correctCount / totalQuestions) * 100);
-
-//         // Save results to DB
-//         const result = await quizResultModel.create({
-//             user: userId,
-//             quiz: quizId,
-//             correctAnswers,
-//             userAnswers,
-//             scorePercentage,
-//             correctCount,
-//             totalQuestions,
-//             createdAt: new Date(),
-//         });
-
-//         // Prepare email data
-//         const emailData = {
-//             quizTitle: quiz?.title,
-//             correctCount,
-//             totalQuestions,
-//             scorePercentage,
-//             userAnswers,
-//             correctAnswers,
-//             questions: quiz?.questions,
-//             reviewLink: `${process.env.CLIENT_URL}/quiz-results/${result._id}`,
-//         };
-
-//         // Send email with results
-//         if(user)
-//         await sendMail({
-//             email: user.email,
-//             subject: "Your Quiz Results",
-//             template: "quizResults.ejs",
-//             data: emailData,
-//         });
-
-//         // update complete to true
-//         await quizModel.findByIdAndUpdate(quizId, { completed: true });
-
-//     res.status(200).json({ message: "Quiz results saved and emailed successfully", data: result });
-//     } catch (error:any) {
-//         return next(new ErrorHandler(error.message, 400)); 
-//     }
-// });
 
 
 // get results

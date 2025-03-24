@@ -4,6 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Loader from '../../Dashboard/components/loader';
 
 const Departments = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -24,6 +25,10 @@ const Departments = () => {
     );
   }
 
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2000);
+}, []);
+
   // Fetch departments data on mount
   useEffect(() => {
     const query = '*[_type == "departments"]';
@@ -43,9 +48,7 @@ const Departments = () => {
 
       {/* Loader */}
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <ClipLoader color="#4F46E5" size={50} />
-        </div>
+        <Loader isLoading={loading} text="Get things ready..." />
       ) : (
         <div className="mx-auto px-12 mb-12">
           {/* Grid layout for the cards */}

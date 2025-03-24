@@ -4,6 +4,7 @@ import { client,urlFor } from '../../utils/client';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { ClipLoader } from 'react-spinners';
+import Loader from '../../Dashboard/components/loader';
 
 export const Families = () => {
   const [Families, setFamilies] = useState<Family[]>([]);
@@ -24,6 +25,10 @@ export const Families = () => {
   }
 
   useEffect(() => {
+    setTimeout(() => setLoading(false), 2000);
+}, []);
+
+  useEffect(() => {
     const query = '*[_type == "families"]';
     client.fetch(query).then((data) => {
       const familyData = findUniqueById(data);
@@ -40,9 +45,7 @@ export const Families = () => {
 
       {/* ClipLoader Spinner */}
       {loading && (
-        <div className="flex justify-center items-center my-8">
-          <ClipLoader color="#3B82F6" size={50} />
-        </div>
+         <Loader isLoading={loading} text="Get things ready..." />
       )}
 
       {/* Families List */}
