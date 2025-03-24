@@ -157,15 +157,12 @@ export const ActivateUser = catchAsyncErrors(
       const user = await authModel.create({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
+        email: newUser.email,
         registration: newUser.registration,
         course: newUser.course,
         year: newUser.year,
         phoneNumber: newUser.phoneNumber,
-        scores: newUser.scores,
-        familyLocated: newUser.familyLocated,
-        password: newUser.password,
-        email: newUser.email,
-        avatar: newUser.avatar || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"
+        password: newUser.password
       });
 
       res
