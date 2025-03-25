@@ -1,85 +1,76 @@
 import departmentModel from "../Models/departmentModel";
-import { Response,Request } from "express";
+import { Response, Request, NextFunction } from "express";
+import { sanity } from "../utils/sanityClient";
+import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
+import ErrorHandler from "../utils/ErrorHandler";
 
+const getDepartmentDetails = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
+  const { departmentName } = req.body;
 
-const getDepartmentDetails = async (req:Request, resp:Response) => {
-  try {
-    const { departmentName } = req.body;
-    const getData = await departmentModel.findOne({
-      name: departmentName,
-    });
-    resp.status(200).json({
-      status: "success",
-      data: getData,
-    });
-  } catch (err) {
-    resp.status(404).json({
-      status: "failure",
-      err: (err as Error).message,
-    });
-  }
-};
+  // Query Sanity for the department details
+  const query = `*[_type == "department" && name == $departmentName][0]`;
+  const getData = await sanity.fetch(query, { departmentName });
 
-const getAllDepartments = async (req:Request, resp: Response) => {
-  try {
-    const departments = await departmentModel.find();
-    resp.status(200).json(departments);
-  } catch (err) {
-    resp.status(404).json(err);
+  if (!getData) {
+    return next(new ErrorHandler("Department not found", 404));
   }
-};
 
-const deleteDepertment = async (req:Request, resp: Response) => {
-  try {
-    console.log("server deleting data");
-    const id = req.params.id;
-    console.log(id);
-    const deletedDep = await departmentModel.findByIdAndDelete(id);
-    console.log(deletedDep);
-    resp.status(204).json({
-      status: "deleted",
-      data: [],
-    });
-  } catch (err) {
-    resp.status(404).json(err);
-  }
-};
-const updateDepartment = async (req:Request, resp:Response) => {
-  try {
-    const id = req.params.id;
-    console.log(id, req.body, "from update claim");
-    const updateDepartment = await departmentModel.findByIdAndUpdate(
-      id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    console.log(id, updateDepartment);
-    resp.status(201).json({
-      status: "success",
-      data: {
-        updateDepartment,
-      },
-    });
-  } catch (err) {
-    resp.status(404).json({
-      status: "failure",
-      error: err,
-    });
-  }
-};
+  resp.status(200).json({
+    status: "success",
+    data: getData,
+  });
+});
 
-const createDep = async (req:Request, resp:Response) => {
-  try {
-    const depart = await departmentModel.create(req.body);
-    console.log(depart);
-    resp.status(200).json(depart);
-  } catch (err) {
-    resp.status(404).json(err);
+const getAllDepartments = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
+  const query = '*[_type == "departments"]';
+  const departments = await sanity.fetch(query);
+
+  if (!departments) {
+    return next(new ErrorHandler("No departments found", 404));
   }
-};
+
+  resp.status(200).json(departments);
+});
+
+const deleteDepertment = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
+  const id = req.params.id;
+  const deleted = await sanity.delete(id);
+
+  if (!deleted) {
+    return next(new ErrorHandler("Department not found", 404));
+  }
+
+  resp.status(204).json({
+    status: "deleted",
+    data: [],
+  });
+});
+
+const updateDepartment = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
+  const id = req.params.id;
+  const updatedDepartment = await sanity.patch(id).set(req.body).commit();
+
+  if (!updatedDepartment) {
+    return next(new ErrorHandler("Department not found", 404));
+  }
+
+  resp.status(201).json({
+    status: "success",
+    data: {
+      updatedDepartment,
+    },
+  });
+});
+
+const createDep = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
+  const depart = await departmentModel.create(req.body);
+
+  if (!depart) {
+    return next(new ErrorHandler("Failed to create department", 400));
+  }
+
+  resp.status(200).json(depart);
+});
 
 export default {
   getDepartmentDetails,
