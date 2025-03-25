@@ -10,6 +10,7 @@ export interface TUser {
   email: string;
   scores?: string;
   year?: number;
+  role: string;
   familyLocated?: string;
   birthday?: Date;
   createdAt?: string;
