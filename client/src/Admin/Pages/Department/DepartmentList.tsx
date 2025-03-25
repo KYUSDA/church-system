@@ -1,16 +1,28 @@
 import { Link } from 'react-router-dom';
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { TDepartment, useGetDepartmentsQuery } from '../../services/userServices';
+import {PencilLine} from 'lucide-react';
+import { urlFor } from '../../../utils/client';
 
 const DepartmentList: React.FC = () => {
-  const dispatch = useDispatch();
-  const departments = useSelector((state: any) => state.department.departments);
+  const { data: departmentsData } = useGetDepartmentsQuery(); 
+  const [data, setData] = useState<TDepartment[]>([]);
 
   useEffect(() => {
-    // getDepartments(dispatch);
-  }, [dispatch]);
+    if (departmentsData && Array.isArray(departmentsData)) {
+      const formattedData = departmentsData.map((dept) => ({
+        _id: dept._id,
+        title: dept.title,
+        imgUrl: urlFor(dept.imgUrl).url(),
+        description: dept.description || "No description",
+        link: dept.link || "#",
+      }));
+
+      setData(formattedData);
+    }
+  }, [departmentsData]);
 
   const handleDelete = (id: string) => {
     // deleteDepartment(id, dispatch);
@@ -19,52 +31,65 @@ const DepartmentList: React.FC = () => {
   const columns = [
     { field: "_id", headerName: "Department ID", width: 220 },
     {
-      field: "name",
+      field: "title",
       headerName: "Department Name",
       width: 200,
-      renderCell: (params: any) => {
-        return (
-          <div className="flex items-center">
-            <img
-              className="w-8 h-8 rounded-full object-cover mr-2"
-              src={params.row.img}
-              alt=""
-            />
-            {params.row.name}
-          </div>
-        );
-      },
+      renderCell: (params: any) => (
+        <div className="flex items-center">
+          <img
+            className="w-8 h-8 rounded-full object-cover mr-2"
+            src={params.row.imgUrl}
+            alt={params.row.title}
+          />
+          {params.row.title}
+        </div>
+      ),
     },
-    { field: "head", headerName: "Department Head", width: 120 },
-    { field: "elder", headerName: "Elder Incharge", width: 120 },
-    { field: "event", headerName: "Upcoming Event", width: 120 },
-    { field: "project", headerName: "Project", width: 120 },
+    {
+      field: "description",
+      headerName: "Description",
+      width: 300,
+      renderCell: (params: any) => (
+        <div className="text-gray-600 truncate ">{params.row.description}</div>
+      ),
+    },
+    {
+      field: "link",
+      headerName: "Link",
+      width: 200,
+      renderCell: (params: any) => (
+        <a href={
+          params.row.link
+        } target="_blank" rel="noreferrer">
+          {params.row.link}
+        </a>
+      ),
+    },
+ 
     {
       field: "action",
       headerName: "Action",
       width: 150,
-      renderCell: (params: any) => {
-        return (
-          <div className="flex items-center">
-            <Link to={`/department/${params.row._id}`}>
-              <button className="border-none rounded-lg px-2 py-1 bg-green-600 text-white cursor-pointer mr-4">
-                Edit
-              </button>
-            </Link>
-            <DeleteOutline
-              className="text-red-500 cursor-pointer"
-              onClick={() => handleDelete(params.row._id)}
-            />
-          </div>
-        );
-      },
+      renderCell: (params: any) => (
+        <div className="flex justify-center items-center space-x-4 w-full h-full">
+          <Link to={`/admin/department/${params.row._id}`}>
+          <PencilLine 
+          className="text-green-500 cursor-pointer"
+          />
+          </Link>
+          <DeleteOutline
+            className="text-red-500 cursor-pointer"
+            onClick={() => handleDelete(params.row._id)}
+          />
+        </div>
+      ),
     },
   ];
 
   return (
     <div className="flex-4">
       <DataGrid
-        rows={departments}
+        rows={data ?? []}
         disableRowSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
