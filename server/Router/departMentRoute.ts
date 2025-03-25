@@ -4,12 +4,12 @@ const departDetail = Router();
 departDetail
   .route("/:id")
   .delete(departmentDetail.deleteDepertment)
-  .patch(departmentDetail.updateDepartment);
 
 departDetail.route("/createDep").post(departmentDetail.createDep);
+departDetail.patch("/update-department/:id", departmentDetail.updateDepartment);
 
 departDetail
-  .route("/getAll")
+  .route("/get-all-departments")
   .get(departmentDetail.getAllDepartments)
   .post(departmentDetail.getDepartmentDetails);
 
