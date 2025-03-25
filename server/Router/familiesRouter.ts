@@ -11,7 +11,8 @@ const familyRouter = Router();
 
 familyRouter.route("/getFamilies").get(getAll);
 familyRouter.route("/createFamily").post(createFamily);
+familyRouter.patch("/update-family/:id", updateFamily);
 
-familyRouter.route("/:id").get(getOne).patch(updateFamily).delete(deleteFamily);
+familyRouter.route("/:id").get(getOne).delete(deleteFamily);
 
 export default familyRouter;
