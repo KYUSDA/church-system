@@ -6,7 +6,7 @@ import WidgetSm from './WidgetSm';
 import { userData } from '../DummyData/Dummy';
 import { userRequest } from './requestMethods';
 
-const Home = () => {
+const AdminDashboard = () => {
   const [userStats, setUserStats] = useState<{ name: string; "Active User": number }[]>([]);
   const MONTHS = useMemo(
     () => [
@@ -53,4 +53,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AdminDashboard;
