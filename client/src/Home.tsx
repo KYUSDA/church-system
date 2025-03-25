@@ -34,10 +34,11 @@ import FamilyList from "./Admin/Pages/Family/FamilyList";
 import NewFamily from "./Admin/Pages/Family/NewFamily";
 import NewDepartment from "./Admin/Pages/Department/NewDepartment";
 import DepartmentList from "./Admin/Pages/Department/DepartmentList";
-import ADepartment from "./Admin/Pages/Department/Department";
-import AFamily from "./Admin/Pages/Family/Family";
-import Users from "./Admin/Pages/User/Users";
+import ADepartment from "./Admin/Pages/Department/updateDepartment";
+import AFamily from "./Admin/Pages/Family/updateFamily";
+import Users from "./Admin/Pages/User/editUser";
 import AdminLayout from "./Admin/Pages/Layout";
+import AdminDashboard from "./Admin/components/userStats";
 
 const Home = () => {
   return (
@@ -72,15 +73,15 @@ const Home = () => {
       <Route path="/member/communication-center" element={<ProtectedRoute><DashboardLayout><CommunicationHub /></DashboardLayout></ProtectedRoute>} />
 
       {/* admin dashboard */}
-            <Route path="/admin" element={<AdminLayout><Home /></AdminLayout>} />
+            <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
             <Route path="/admin/users" element={<AdminLayout><UserList /></AdminLayout>} />
-            <Route path="/admin/user/:id" element={<AdminLayout><Users /></AdminLayout>} />
+            <Route path="/admin/users/:id" element={<AdminLayout><Users /></AdminLayout>} />
             <Route path="/admin/newUser" element={<AdminLayout><Newuser /></AdminLayout>} />
-            <Route path="/admin/department/:id" element={<AdminLayout><ADepartment /></AdminLayout>} />
-            <Route path="/admin/family/:id" element={<AdminLayout><AFamily /></AdminLayout>} />
             <Route path="/admin/departments" element={<AdminLayout><DepartmentList /></AdminLayout>} />
-            <Route path="/admin/families" element={<AdminLayout><FamilyList /></AdminLayout>} />
+            <Route path="/admin/department/:id" element={<AdminLayout><ADepartment /></AdminLayout>} />
             <Route path="/admin/newDepart" element={<AdminLayout><NewDepartment /></AdminLayout>} />
+            <Route path="/admin/families" element={<AdminLayout><FamilyList /></AdminLayout>} />
+            <Route path="/admin/family/:id" element={<AdminLayout><AFamily /></AdminLayout>} />
             <Route path="/admin/newFamily" element={<AdminLayout><NewFamily /></AdminLayout>} />
     </Routes>
   );
