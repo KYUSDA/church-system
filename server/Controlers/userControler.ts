@@ -1,66 +1,67 @@
 import Member from "../Models/authModel";
 import { NextFunction, Request, Response } from "express";
 import { Multer } from "multer";
+import cloudinary from "cloudinary";
+import authModel from "../Models/authModel";
+import ErrorHandler from "../utils/ErrorHandler";
+import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
 }
 
-import cloudinary from "cloudinary";
-import authModel from "../Models/authModel";
-import ErrorHandler from "../utils/ErrorHandler";
-import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
-export async function getAll(req: Request, resp: Response) {
-  try {
-    const query = req.query.new;
-    const users = query
-      ? await Member.find().sort({ _id: -1 }).limit(5)
-      : await Member.find();
-    resp.status(200).json({
-      status: "success",
-      users,
-      message: "All registered users",
-    });
-  } catch (err) {
-    resp.status(404).json({
-      status: "failure",
-      error: err,
-    });
-  }
-}
+// get all members
+export const getAll = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+  const users = await authModel.find().select("-password"); // Exclude password for security
 
-export async function getOne(req:Request, resp: Response) {
+  if(!users){
+    return next(new ErrorHandler("No users found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    users,
+    message: "All registered users retrieved successfully",
+  });
+});
+
+
+
+export const getOne = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
-    console.log(id);
     const getOneUser = await Member.findById(id);
-    resp.status(200).json(getOneUser);
-  } catch (err) {
-    resp.status(404).json(err);
-  }
-}
 
-export async function updateUser(req:Request, resp:Response) {
-  console.log(req.body);
+    if (!getOneUser) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    resp.status(200).json(getOneUser);
+  } catch (err: any) {
+    return next(new ErrorHandler(err.message, 400));
+  }
+});
+
+export const updateUser = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const updatedUser = await Member.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
     });
-    resp.status(201).json({
+
+    if (!updatedUser) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    resp.status(200).json({
       status: "success",
-      user: {
-        updatedUser,
-      },
+      user: updatedUser,
     });
-  } catch (err) {
-    resp.status(404).json({
-      status: "failure",
-      error: err,
-    });
+  } catch (err: any) {
+    return next(new ErrorHandler(err.message, 400));
   }
-}
+});
 
 export async function deleteUser(req:Request, resp:Response) {
   try {
