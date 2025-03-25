@@ -1,78 +1,111 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { DeleteOutline } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
+import { DeleteOutline } from "@mui/icons-material";
+import { useGetFamiliesQuery } from "../../services/userServices";
+import { TFamily } from "../../services/userServices";
+import { urlFor } from "../../../utils/client";
+import {PencilLine} from 'lucide-react';
 
 const FamilyList: React.FC = () => {
-    const dispatch = useDispatch();
-    const families = useSelector((state: any) => state.family.families);
+  const { data: familyData, isLoading, error } = useGetFamiliesQuery();
+  const [data, setData] = useState<TFamily[]>([]);
 
-    useEffect(() => {
-        // getFamilies(dispatch);
-    }, [dispatch]);
+  useEffect(() => {
+    if (familyData && Array.isArray(familyData)) {
+      const formattedData = familyData.map((dept) => ({
+        _id: dept._id,
+        title: dept.title,
+        imgUrl: dept.imgUrl ? urlFor(dept.imgUrl).url() : "/kyu.jpg",
+        description: dept.description || "No description available",
+        locationUrl: dept.locationUrl ? urlFor(dept.locationUrl).url() : null,
+        tags: dept.tags || [],
+        link: dept.link || "#",
+      }));
 
-    const handleDelete = (id: string) => {
-        // deleteFamily(id, dispatch);
-    };
+      setData(formattedData);
+    }
+  }, [familyData]);
 
-    const columns = [
-        { field: "_id", headerName: "Claim ID", width: 220 },
-        {
-            field: "name",
-            headerName: "Family Name",
-            width: 200,
-            renderCell: (params: any) => {
-                return (
-                    <div className="flex items-center">
-                        <img className="w-8 h-8 rounded-full object-cover mr-2" src={params.row.img} alt="" />
-                        {params.row.name}
-                    </div>
-                );
-            },
-        },
-        { field: "elder", headerName: "Elder Incharge", width: 120 },
-        { field: "head", headerName: "Family Head", width: 120 },
-        { field: "location", headerName: "Located", width: 120 },
-        { field: "bio", headerName: "Bio", width: 120 },
-        {
-            field: "action",
-            headerName: "Action",
-            width: 150,
-            renderCell: (params: any) => {
-                return (
-                    <div className="flex items-center">
-                        <Link to={`/family/${params.row._id}`}>
-                            <button className="border-none rounded-lg px-2 py-1 bg-green-600 text-white cursor-pointer mr-4">
-                                Edit
-                            </button>
-                        </Link>
-                        <DeleteOutline
-                            className="text-red-600 cursor-pointer"
-                            onClick={() => handleDelete(params.row._id)}
-                        />
-                    </div>
-                );
-            },
-        },
-    ];
+  const handleDelete = (id: string) => {
+    console.log(`Delete family with ID: ${id}`);
+    // Implement delete logic here
+  };
 
-    return (
-        <div className="flex-4">
-            <DataGrid
-                rows={families}
-                disableRowSelectionOnClick
-                columns={columns}
-                getRowId={(row) => row._id}
-                initialState={{
-                    pagination: {
-                        paginationModel: { pageSize: 8 },
-                    },
-                }}
-                checkboxSelection
-            />
+  const columns = [
+    { field: "_id", headerName: "Claim ID", width: 220 },
+    {
+      field: "title",
+      headerName: "Family Name",
+      width: 200,
+      renderCell: (params: any) => (
+        <div className="flex items-center">
+          <img
+            className="w-8 h-8 rounded-full object-cover mr-2"
+            src={params.row.imgUrl}
+            alt={params.row.title}
+          />
+          {params.row.title}
         </div>
-    );
+      ),
+    },
+    { field: "description", headerName: "Description", width: 200 },
+    { field: "link", headerName: "Link", width: 150 },
+    {
+      field: "locationUrl",
+      headerName: "Location Image",
+      width: 120,
+      renderCell: (params: any) =>
+        params.row.locationUrl ? (
+          <img
+            className="w-8 h-8 rounded object-cover"
+            src={params.row.locationUrl}
+            alt="Location"
+          />
+        ) : (
+          "No Image"
+        ),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 150,
+      renderCell: (params: any) => (
+        <div className="flex justify-center items-center space-x-4 w-full h-full">
+          <Link to={`/admin/family/${params.row._id}`}>
+          <PencilLine 
+          className="text-green-500 cursor-pointer"
+          />
+          </Link>
+          <DeleteOutline
+            className="text-red-600 cursor-pointer"
+            onClick={() => handleDelete(params.row._id)}
+          />
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div className="flex-4">
+      {isLoading && <p>Loading families...</p>}
+      {error && <p>Error fetching families!</p>}
+      {!isLoading && !error && (
+        <DataGrid
+          rows={data || []}
+          disableRowSelectionOnClick
+          columns={columns}
+          getRowId={(row) => row._id}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 8 },
+            },
+          }}
+          checkboxSelection
+        />
+      )}
+    </div>
+  );
 };
 
 export default FamilyList;
