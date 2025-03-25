@@ -34,6 +34,7 @@ export const sendToken = async (user: IUser, res: Response) => {
     scores: user.scores,
     year: user.year,
     familyLocated: user.familyLocated,
+    role: user.role,
     birthday: user.birthday,
     createdAt: user.createdAt,
     easyNumber: user.easyNumber,
