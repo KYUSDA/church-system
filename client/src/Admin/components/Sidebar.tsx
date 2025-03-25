@@ -21,7 +21,7 @@ const Sidebar: React.FC = () => {
         <div className="mb-4">
           <h3 className="text-sm text-gray-400">Dashboard</h3>
           <ul className="list-none p-1">
-            <Link to="/admin" className="no-underline">
+            <Link to="/admin/dashboard" className="no-underline">
               <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200 bg-gray-200">
                 <LineStyle className="mr-2 text-lg" />
                 Home
