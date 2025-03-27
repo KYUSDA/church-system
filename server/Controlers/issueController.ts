@@ -9,6 +9,7 @@ interface Issue{
     user: string;
     title: string;
     description: string;
+    isRead: false;
 }
 
 // create issues
@@ -73,4 +74,55 @@ export const createIssue = catchAsyncErrors(async(req:Request,res:Response,next:
     } catch (error:any) {
         return next(new ErrorHandler(error.message, 400));
     }
+})
+
+
+
+// get all issues
+export const getIssues = catchAsyncErrors(async(req:Request,res:Response,next:NextFunction) =>{
+
+    const data = await IssueModel.find();
+    if(!data){
+        return next(new ErrorHandler("Issues not found",404))
+    }
+
+    res.status(200).json({success:true, data, message: "issues found"})
+
+})
+
+// get one issue
+export const getIssue = catchAsyncErrors(async(req:Request,res:Response,next:NextFunction) =>{
+    const id = req.params.id;
+
+    if(!id){
+        return next(new ErrorHandler("Please provide isRead parameter", 400));
+    }
+
+   const issue = await IssueModel.findById(id);
+   if(!issue){
+    return next(new ErrorHandler("Issue not found", 404));
+}
+      
+    res.status(200).json(issue)
+})
+
+
+// update issue as read 
+export const updateIssue = catchAsyncErrors(async(req:Request,res:Response,next:NextFunction) =>{
+    const id = req.params.id;
+
+
+    if(!id){
+        return next(new ErrorHandler("Please provide isRead parameter", 400));
+    }
+
+    // check the issue using id
+    const issue = await IssueModel.findById(id);
+    if(!issue){
+        return next(new ErrorHandler("Issue not found", 404));
+    }
+    // update field
+    const response = await IssueModel.findByIdAndUpdate(id, {isRead: true},{new:true});
+
+    res.status(200).json({success:true, message: "Issue updated successfully", response})
 })
