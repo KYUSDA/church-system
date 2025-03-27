@@ -12,12 +12,21 @@ export interface TUser{
     course: string;
     year: string;
     phoneNumber: string;
+    scores: number;
+    birthday: Date;
     role: string;
     familyLocated: string;
+    createdAt: Date;
     avatar:{
         url: string;
     }
 }
+
+export interface GetMembersResponse {
+    status: string;
+    users: TUser[];
+  }
+
 
 export type TDepartment = {
     _id: string;
@@ -38,10 +47,7 @@ export type TDepartment = {
   }
   
   
-interface GetMembersResponse {
-    status: string;
-    users: TUser[];
-  }
+
 
 
   export interface TIssue{
@@ -49,6 +55,14 @@ interface GetMembersResponse {
     title:string;
     description:string;
     isRead: boolean;
+    user: string;
+    createdAt: Date;
+    replies: [{
+        _id: string;
+        userId: string;
+        message: string;
+        createdAt: Date;
+    }] | [];
    }
 
 
