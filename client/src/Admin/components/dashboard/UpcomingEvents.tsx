@@ -2,7 +2,7 @@ import { Calendar } from "lucide-react";
 
 const UpcomingEvents = () => {
   return (
-    <div className="p-6 bg-gradient-to-r from-indigo-400 to-indigo-600 shadow-md rounded-lg text-white">
+    <div className="p-6 bg-gradient-to-r from-teal-400 to-teal-600 shadow-md rounded-lg text-white">
       <div className="flex items-center gap-4">
         <Calendar size={28} />
         <h3 className="text-lg font-semibold">Upcoming Events</h3>
