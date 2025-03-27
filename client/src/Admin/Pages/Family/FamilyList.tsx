@@ -5,7 +5,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { useGetFamiliesQuery } from "../../services/userServices";
 import { TFamily } from "../../services/userServices";
 import { urlFor } from "../../../utils/client";
-import {PencilLine} from 'lucide-react';
+import { PencilLine } from "lucide-react";
 
 const FamilyList: React.FC = () => {
   const { data: familyData, isLoading, error } = useGetFamiliesQuery();
@@ -33,32 +33,34 @@ const FamilyList: React.FC = () => {
   };
 
   const columns = [
-    { field: "_id", headerName: "Claim ID", width: 220 },
+    { field: "_id", headerName: "Claim ID", minWidth: 200, flex: 1 },
     {
       field: "title",
       headerName: "Family Name",
-      width: 200,
+      minWidth: 200,
+      flex: 1,
       renderCell: (params: any) => (
         <div className="flex items-center">
           <img
-            className="w-8 h-8 rounded-full object-cover mr-2"
+            className="w-10 h-10 rounded-full object-cover mr-2"
             src={params.row.imgUrl}
             alt={params.row.title}
           />
-          {params.row.title}
+          <span className="truncate">{params.row.title}</span>
         </div>
       ),
     },
-    { field: "description", headerName: "Description", width: 200 },
-    { field: "link", headerName: "Link", width: 150 },
+    { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
+    { field: "link", headerName: "Link", minWidth: 150, flex: 1 },
     {
       field: "locationUrl",
-      headerName: "Location Image",
-      width: 120,
+      headerName: "Location",
+      minWidth: 120,
+      flex: 1,
       renderCell: (params: any) =>
         params.row.locationUrl ? (
           <img
-            className="w-8 h-8 rounded object-cover"
+            className="w-12 h-12 rounded object-cover"
             src={params.row.locationUrl}
             alt="Location"
           />
@@ -68,41 +70,41 @@ const FamilyList: React.FC = () => {
     },
     {
       field: "action",
-      headerName: "Action",
-      width: 150,
+      headerName: "Actions",
+      minWidth: 120,
+      flex: 1,
       renderCell: (params: any) => (
-        <div className="flex justify-center items-center space-x-4 w-full h-full">
+        <div className="flex justify-center items-center space-x-4">
           <Link to={`/admin/family/${params.row._id}`}>
-          <PencilLine 
-          className="text-green-500 cursor-pointer"
-          />
+            <PencilLine className="text-green-500 cursor-pointer" />
           </Link>
-          <DeleteOutline
-            className="text-red-600 cursor-pointer"
-            onClick={() => handleDelete(params.row._id)}
-          />
+          <button onClick={() => handleDelete(params.row._id)} className="text-red-600 cursor-pointer">
+            <DeleteOutline />
+          </button>
         </div>
       ),
     },
   ];
 
   return (
-    <div className="flex-4">
-      {isLoading && <p>Loading families...</p>}
-      {error && <p>Error fetching families!</p>}
+    <div className="flex flex-col h-full p-4 bg-white shadow-md rounded-lg">
+      {error && <p className="text-red-500">Error fetching families!</p>}
       {!isLoading && !error && (
-        <DataGrid
-          rows={data || []}
-          disableRowSelectionOnClick
-          columns={columns}
-          getRowId={(row) => row._id}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 8 },
-            },
-          }}
-          checkboxSelection
-        />
+        <div className="max-w-full">
+        <div className="min-w-[900px]">
+          <DataGrid
+            rows={data || []}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSizeOptions={[5, 10]}
+            pagination
+            disableRowSelectionOnClick
+            checkboxSelection
+            className="w-full"
+          />
+        </div>
+      </div>
+      
       )}
     </div>
   );
