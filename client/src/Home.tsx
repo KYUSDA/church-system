@@ -38,7 +38,10 @@ import ADepartment from "./Admin/Pages/Department/updateDepartment";
 import AFamily from "./Admin/Pages/Family/updateFamily";
 import Users from "./Admin/Pages/User/editUser";
 import AdminLayout from "./Admin/Pages/Layout";
-import AdminDashboard from "./Admin/components/userStats";
+import AdminDashboard from "./Admin/components/dash";
+import Messages from "./Admin/Pages/notifications/messages";
+import ReplyIssue from "./Admin/Pages/notifications/replyIssue";
+import Calendar from "./Admin/components/calendar";
 
 const Home = () => {
   return (
@@ -82,7 +85,10 @@ const Home = () => {
             <Route path="/admin/newDepart" element={<AdminLayout><NewDepartment /></AdminLayout>} />
             <Route path="/admin/families" element={<AdminLayout><FamilyList /></AdminLayout>} />
             <Route path="/admin/family/:id" element={<AdminLayout><AFamily /></AdminLayout>} />
+            <Route path="/admin/calendar" element={<AdminLayout><Calendar /></AdminLayout>} />
             <Route path="/admin/newFamily" element={<AdminLayout><NewFamily /></AdminLayout>} />
+            <Route path="/admin/messages" element={<AdminLayout><Messages /></AdminLayout>} />
+            <Route path="/admin/messages/reply/:id" element={<AdminLayout><ReplyIssue /></AdminLayout>} />
     </Routes>
   );
 };
