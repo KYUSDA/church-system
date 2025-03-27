@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react';
 import { TDepartment, useGetDepartmentsQuery } from '../../services/userServices';
 import {PencilLine} from 'lucide-react';
 import { urlFor } from '../../../utils/client';
+import Loader from "../../../Dashboard/components/loader";
 
 const DepartmentList: React.FC = () => {
   const { data: departmentsData } = useGetDepartmentsQuery(); 
   const [data, setData] = useState<TDepartment[]>([]);
-
+  
   useEffect(() => {
     if (departmentsData && Array.isArray(departmentsData)) {
       const formattedData = departmentsData.map((dept) => ({
