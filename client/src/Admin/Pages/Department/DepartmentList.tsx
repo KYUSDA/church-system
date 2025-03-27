@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom';
-import { DataGrid } from "@mui/x-data-grid";
-import { DeleteOutline } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { TDepartment, useGetDepartmentsQuery } from '../../services/userServices';
-import {PencilLine} from 'lucide-react';
+import { PencilLine, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { urlFor } from '../../../utils/client';
-import Loader from "../../../Dashboard/components/loader";
 
 const DepartmentList: React.FC = () => {
-  const { data: departmentsData } = useGetDepartmentsQuery(); 
+  const { data: departmentsData } = useGetDepartmentsQuery();
   const [data, setData] = useState<TDepartment[]>([]);
-  
+  const [search, setSearch] = useState("");
+  const [sortField, setSortField] = useState("title");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
+  const departmentsPerPage = 5;
+
   useEffect(() => {
     if (departmentsData && Array.isArray(departmentsData)) {
       const formattedData = departmentsData.map((dept) => ({
@@ -20,87 +23,136 @@ const DepartmentList: React.FC = () => {
         description: dept.description || "No description",
         link: dept.link || "#",
       }));
-
       setData(formattedData);
     }
   }, [departmentsData]);
+
+  const handleSort = (field: keyof TDepartment) => {
+    const order = sortField === field && sortOrder === "asc" ? "desc" : "asc";
+    setSortField(field);
+    setSortOrder(order);
+    setData((prevData) =>
+      [...prevData].sort((a, b) =>
+        order === "asc" ? (a[field] > b[field] ? 1 : -1) : (a[field] < b[field] ? 1 : -1)
+      )
+    );
+  };
+
+  const handleSelect = (id: string) => {
+    setSelectedDepartments((prev) =>
+      prev.includes(id) ? prev.filter((deptId) => deptId !== id) : [...prev, id]
+    );
+  };
 
   const handleDelete = (id: string) => {
     // deleteDepartment(id, dispatch);
   };
 
-  const columns = [
-    { field: "_id", headerName: "Department ID", width: 220 },
-    {
-      field: "title",
-      headerName: "Department Name",
-      width: 200,
-      renderCell: (params: any) => (
-        <div className="flex items-center">
-          <img
-            className="w-8 h-8 rounded-full object-cover mr-2"
-            src={params.row.imgUrl}
-            alt={params.row.title}
-          />
-          {params.row.title}
-        </div>
-      ),
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      width: 300,
-      renderCell: (params: any) => (
-        <div className="text-gray-600 truncate ">{params.row.description}</div>
-      ),
-    },
-    {
-      field: "link",
-      headerName: "Link",
-      width: 200,
-      renderCell: (params: any) => (
-        <a href={
-          params.row.link
-        } target="_blank" rel="noreferrer">
-          {params.row.link}
-        </a>
-      ),
-    },
- 
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params: any) => (
-        <div className="flex justify-center items-center space-x-4 w-full h-full">
-          <Link to={`/admin/department/${params.row._id}`}>
-          <PencilLine 
-          className="text-green-500 cursor-pointer"
-          />
-          </Link>
-          <DeleteOutline
-            className="text-red-500 cursor-pointer"
-            onClick={() => handleDelete(params.row._id)}
-          />
-        </div>
-      ),
-    },
-  ];
+  const filteredData = data.filter(
+    (dept) =>
+      dept.title.toLowerCase().includes(search.toLowerCase()) ||
+      dept.description.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const indexOfLastDept = currentPage * departmentsPerPage;
+  const indexOfFirstDept = indexOfLastDept - departmentsPerPage;
+  const currentDepartments = filteredData.slice(indexOfFirstDept, indexOfLastDept);
+  const totalPages = Math.ceil(filteredData.length / departmentsPerPage);
 
   return (
-    <div className="flex-4">
-      <DataGrid
-        rows={data ?? []}
-        disableRowSelectionOnClick
-        columns={columns}
-        getRowId={(row) => row._id}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 8 },
-          },
-        }}
-        checkboxSelection
-      />
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-gray-900">Department Management</h2>
+      <div className="flex justify-between items-center">
+        <input
+          type="text"
+          placeholder="Search by title or description"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        />
+      </div>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden mt-4">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3">
+                  <input
+                    type="checkbox"
+                    checked={selectedDepartments.length === data.length}
+                    onChange={() =>
+                      setSelectedDepartments(selectedDepartments.length === data.length ? [] : data.map((dept) => dept._id))
+                    }
+                  />
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer flex items-center"
+                  onClick={() => handleSort("title")}
+                >
+                  Department {sortField === "title" && (sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {currentDepartments.map((dept) => (
+                <tr key={dept._id} className="hover:bg-gray-100">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <input type="checkbox" checked={selectedDepartments.includes(dept._id)} onChange={() => handleSelect(dept._id)} />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap max-w-[100px] overflow-hidden">
+                  <div className="text-gray-600 truncate">{dept._id}</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <img
+                        className="w-8 h-8 rounded-full object-cover mr-2"
+                        src={urlFor(dept.imgUrl).url()}
+                        alt={dept.title}
+                      />
+                      {dept.title}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap max-w-[200px] overflow-hidden">
+                    <div className="text-gray-600 truncate">{dept.description}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <a href={dept.link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
+                      {dept.link}
+                    </a>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex space-x-3">
+                      <Link to={`/admin/department/${dept._id}`} className="text-blue-600 hover:text-blue-800">
+                        <PencilLine className="h-5 w-5" />
+                      </Link>
+                      <button 
+                        className="text-red-600 hover:text-red-800"
+                        onClick={() => handleDelete(dept._id)}
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`px-4 py-2 mx-1 border rounded-full ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-blue-600"}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
