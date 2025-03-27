@@ -14,10 +14,17 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-const Sidebar: React.FC = () => {
-  return (
-    <div className="flex-1 bg-gray-50 sticky top-[50px]">
-      <div className="p-5 text-gray-600">
+const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () => void }) => {
+      return (
+        <div
+          className={`fixed inset-y-0 left-0 bg-gray-50 w-64 p-5 text-gray-600 transition-transform transform lg:relative lg:translate-x-0 ${
+            isOpen ? "translate-x-0 z-[100]" : "-translate-x-full"
+          }`}
+        >
+          {/* Close Button on Mobile */}
+          <button className="lg:hidden absolute top-4 right-4 text-gray-600" onClick={closeSidebar}>
+            ✖
+          </button>
         <div className="mb-4">
           <h3 className="text-sm text-gray-400">Dashboard</h3>
           <ul className="list-none p-1">
@@ -27,10 +34,6 @@ const Sidebar: React.FC = () => {
                 Home
               </li>
             </Link>
-            <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
-              <Timeline className="mr-2 text-lg" />
-              Analytics
-            </li>
           </ul>
         </div>
         <div className="mb-4">
@@ -54,10 +57,10 @@ const Sidebar: React.FC = () => {
                 Families
               </li>
             </Link>
-            <Link to="/admin/calender" className="no-underline">
+            <Link to="/admin/calendar" className="no-underline">
               <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
                 <CalendarViewDayOutlined className="mr-2 text-lg" />
-                Calender
+                Calendar
               </li>
             </Link>
           </ul>
@@ -69,14 +72,13 @@ const Sidebar: React.FC = () => {
               <MailOutline className="mr-2 text-lg" />
               Mail
             </li>
-            <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
-              <DynamicFeed className="mr-2 text-lg" />
-              Feedback
-            </li>
+        
+            <Link to="/admin/messages" className="no-underline">
             <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
               <ChatBubbleOutline className="mr-2 text-lg" />
               Messages
             </li>
+            </Link>
           </ul>
         </div>
         <div className="mb-4">
@@ -86,10 +88,7 @@ const Sidebar: React.FC = () => {
               <WorkOutline className="mr-2 text-lg" />
               Manage
             </li>
-            <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
-              <Timeline className="mr-2 text-lg" />
-              Analytics
-            </li>
+         
             <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
               <Report className="mr-2 text-lg" />
               Reports
@@ -97,7 +96,6 @@ const Sidebar: React.FC = () => {
           </ul>
         </div>
       </div>
-    </div>
   );
 };
 
