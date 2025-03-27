@@ -38,11 +38,18 @@ export type TDepartment = {
   }
   
   
-
 interface GetMembersResponse {
     status: string;
     users: TUser[];
   }
+
+
+  export interface TIssue{
+    _id: string;
+    title:string;
+    description:string;
+    isRead: boolean;
+   }
 
 
 export const adminApi = createApi({
@@ -71,6 +78,12 @@ export const adminApi = createApi({
             }),
         }),
 
+        // get issues
+        getIssues: builder.query<TIssue,void>({
+            query: () => ({
+                url: '/user/get-issues',
+            }),
+        }),
 
     })
 })
@@ -79,5 +92,6 @@ export const adminApi = createApi({
 export const { 
     useGetMembersQuery,
     useGetDepartmentsQuery,
-    useGetFamiliesQuery
+    useGetFamiliesQuery,
+    useGetIssuesQuery,
  } = adminApi;
