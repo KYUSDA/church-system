@@ -17,16 +17,16 @@ const FamilyList: React.FC = () => {
 
   useEffect(() => {
     if (familyData && Array.isArray(familyData)) {
-      const formattedData = familyData.map((family) => ({
-        _id: family._id,
-        title: family.title,
-        imgUrl: family.imgUrl ? urlFor(family.imgUrl).url() : "/kyu.jpg",
-        description: family.description || "No description available",
-        locationUrl: family.locationUrl ? urlFor(family.locationUrl).url() : null,
-        tags: family.tags || [],
-        link: family.link || "#",
-      }));
-      setData(formattedData);
+      setData(
+        familyData.map((family) => ({
+          _id: family._id,
+          title: family.title,
+          imgUrl: family.imgUrl ? urlFor(family.imgUrl).url() : "/kyu.jpg",
+          description: family.description || "No description available",
+          tags: family.tags || [],
+          link: family.link || "#",
+        }))
+      );
     }
   }, [familyData]);
 
@@ -36,27 +36,31 @@ const FamilyList: React.FC = () => {
     setSortOrder(order);
     setData((prevData) =>
       [...prevData].sort((a, b) =>
-        order === "asc" ? ((a[field] ?? "") > (b[field] ?? "") ? 1 : -1) : ((a[field] ?? "") < (b[field] ?? "") ? 1 : -1)
+        order === "asc"
+          ? (Array.isArray(a[field]) ? a[field].join(", ") : a[field] ?? "").localeCompare(Array.isArray(b[field]) ? b[field].join(", ") : b[field] ?? "")
+          : (Array.isArray(b[field]) ? b[field].join(", ") : b[field] ?? "").localeCompare(Array.isArray(a[field]) ? a[field].join(", ") : a[field] ?? "")
       )
     );
   };
 
-  const handleSelect = (id: string) => {
-    setSelectedFamilies((prev) =>
-      prev.includes(id) ? prev.filter((familyId) => familyId !== id) : [...prev, id]
-    );
+  const toggleSelectAll = () => {
+    if (selectedFamilies.length === data.length) {
+      setSelectedFamilies([]);
+    } else {
+      setSelectedFamilies(data.map((family) => family._id));
+    }
   };
 
-  const handleDelete = (id: string) => {
-    console.log(`Delete family with ID: ${id}`);
-    // Implement delete logic here
+  const toggleSelect = (id: string) => {
+    setSelectedFamilies((prev) =>
+      prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
+    );
   };
 
   const filteredData = data.filter(
     (family) =>
       family.title.toLowerCase().includes(search.toLowerCase()) ||
-      family.description.toLowerCase().includes(search.toLowerCase()) ||
-      (family.tags && family.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())))
+      family.description.toLowerCase().includes(search.toLowerCase())
   );
 
   const indexOfLastFamily = currentPage * familiesPerPage;
@@ -64,135 +68,95 @@ const FamilyList: React.FC = () => {
   const currentFamilies = filteredData.slice(indexOfFirstFamily, indexOfLastFamily);
   const totalPages = Math.ceil(filteredData.length / familiesPerPage);
 
-  if (isLoading) return <div className="text-center py-8">Loading families...</div>;
-  if (error) return <div className="text-red-500 text-center py-8">Error fetching families!</div>;
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Family Management</h2>
-      <div className="flex justify-between items-center">
-        <input
-          type="text"
-          placeholder="Search by name, description or tags"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        />
-      </div>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden mt-4">
-      <div className="overflow-x-auto w-full">
-        <table className="w-full min-w-max divide-y divide-gray-200">
+    <div className="bg-white rounded-xl shadow-sm p-6">
+     <h2 className="text-2xl font-bold text-gray-900">Family Management</h2>
+   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+     <div className="relative w-full">
+     
+     <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-2 pl-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent my-4"
+          />
+        </div>
 
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3">
+        <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="p-3 text-left">
+                <input
+                  type="checkbox"
+                  checked={selectedFamilies.length === data.length}
+                  onChange={toggleSelectAll}
+                />
+              </th>
+              <th className="p-3 text-left">ID</th>
+              <th className="p-3 text-left flex items-center gap-1 cursor-pointer" onClick={() => handleSort("title")}>
+                Family Name {sortField === "title" && (sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}
+              </th>
+              <th className="p-3 text-left">Image</th>
+              <th className="p-3 text-left">Description</th>
+              <th className="p-3 text-left">Tags</th>
+              <th className="p-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {currentFamilies.map((family) => (
+              <tr key={family._id} className="border-t border-gray-100 hover:bg-gray-100">
+                <td className="p-3 text-gray-600">
                   <input
                     type="checkbox"
-                    checked={selectedFamilies.length === data.length && data.length > 0}
-                    onChange={() =>
-                      setSelectedFamilies(selectedFamilies.length === data.length ? [] : data.map((family) => family._id))
-                    }
-                    disabled={data.length === 0}
+                    checked={selectedFamilies.includes(family._id)}
+                    onChange={() => toggleSelect(family._id)}
                   />
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer flex items-center"
-                  onClick={() => handleSort("title")}
-                >
-                  Family Name {sortField === "title" && (sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </td>
+                <td className="p-3 text-gray-600 truncate max-w-[100px]">{family._id}</td>
+                <td className="p-3 text-gray-600">{family.title}</td>
+                <td className="p-3">
+                  <img className="w-10 h-10 rounded-full object-cover" src={family.imgUrl} alt={family.title} />
+                </td>
+                <td className="p-3 text-gray-600 truncate max-w-xs">{family.description}</td>
+                <td className="p-3">
+                  <div className="flex flex-wrap gap-1">
+                    {family.tags.map((tag, index) => (
+                      <span key={index} className="px-2 py-1 bg-gray-200 text-xs rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </td>
+                <td className="p-3 flex gap-2">
+                  <Link to={`/admin/family/${family._id}`} className="text-blue-600 hover:text-blue-800">
+                    <PencilLine className="h-5 w-5" />
+                  </Link>
+                  <button className="text-red-600 hover:text-red-800">
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentFamilies.map((family) => (
-                <tr key={family._id} className="hover:bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <input 
-                      type="checkbox" 
-                      checked={selectedFamilies.includes(family._id)} 
-                      onChange={() => handleSelect(family._id)} 
-                    />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap max-w-[100px] overflow-hidden text-sm text-gray-500">
-                    <div className="text-gray-600 truncate">{family._id}</div>
-                    </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <img
-                        className="w-10 h-10 rounded-full object-cover mr-2"
-                        src={family.imgUrl}
-                        alt={family.title}
-                      />
-                      <span className="truncate">{family.title}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap max-w-[200px] overflow-hidden text-sm text-gray-500">
-                    <div className="truncate">{family.description}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex flex-wrap gap-1">
-                      {family.tags?.map((tag, index) => (
-                        <span key={index} className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {family.locationUrl ? (
-                      <img
-                        className="w-12 h-12 rounded object-cover"
-                        src={family.locationUrl}
-                        alt="Location"
-                      />
-                    ) : (
-                      <span className="text-gray-400">No Image</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <a href={family.link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
-                      {family.link}
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex space-x-2">
-                      <Link to={`/admin/family/${family._id}`} className="text-blue-600 hover:text-blue-800">
-                        <PencilLine className="h-5 w-5" />
-                      </Link>
-                      <button 
-                        className="text-red-600 hover:text-red-800"
-                        onClick={() => handleDelete(family._id)}
-                      >
-                        <Trash2 className="h-5 w-5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
-      {filteredData.length === 0 && (
-        <div className="text-center py-8 text-gray-500">No families found</div>
-      )}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 gap-2">
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index + 1}
             onClick={() => setCurrentPage(index + 1)}
-            className={`px-4 py-2 mx-1 border rounded-full ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-blue-600"}`}
+            className={`px-4 py-2 rounded-lg ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white border text-blue-600"}`}
           >
             {index + 1}
           </button>
         ))}
       </div>
+    </div>
+     </div>
     </div>
   );
 };
