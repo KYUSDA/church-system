@@ -31,6 +31,7 @@ interface LoginResponse {
       email: string;
       firstName: string;
       lastName: string;
+      role: string;
       scores?: string;
       year: number;
       familyLocated?: string;
