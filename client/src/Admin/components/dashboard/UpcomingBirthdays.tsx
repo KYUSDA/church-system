@@ -3,13 +3,16 @@ import { Calendar, MessageCircle } from "lucide-react";
 import { useGetMembersQuery } from "../../services/userServices";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 dayjs.extend(isBetween);
+dayjs.extend(isSameOrAfter);
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+dayjs.extend(isSameOrBefore);
 
 interface Member {
   firstName: string;
   lastName: string;
-  birthday: string;
+  birthday: string | null; // Allow null if the field is missing
 }
 
 const getUpcomingBirthdays = (members: Member[]): Member[] => {
@@ -17,12 +20,16 @@ const getUpcomingBirthdays = (members: Member[]): Member[] => {
   const startOfWeek = today.startOf("week");
   const endOfWeek = today.endOf("week");
 
-  return members.filter((user) =>
-    dayjs(user.birthday).isBetween(startOfWeek, endOfWeek, null, "[]")
-  );
+  return members.filter((user) => {
+    if (!user.birthday) return false; // Skip users without a birthday field
+
+    const birthday = dayjs(user.birthday);
+    // Check if the birthday is within the current week, and if it is the same date or in the future
+    return birthday.isSameOrAfter(startOfWeek) && birthday.isSameOrBefore(endOfWeek);
+  });
 };
 
-const UpcomingBirthdays = () => {
+const UpcomingBirthdays: React.FC = () => {
   const { data: membersData } = useGetMembersQuery();
   const [birthdays, setBirthdays] = useState<{ name: string; date: string }[]>([]);
 
@@ -32,7 +39,7 @@ const UpcomingBirthdays = () => {
         membersData.users.map((user) => ({
           firstName: user.firstName,
           lastName: user.lastName,
-          birthday: user.birthday instanceof Date ? user.birthday.toISOString() : user.birthday, // Convert Date to string
+          birthday: user.birthday instanceof Date ? user.birthday.toISOString() : user.birthday, // Ensure date is in string format
         }))
       ).map((user) => ({
         name: `${user.firstName} ${user.lastName}`,
