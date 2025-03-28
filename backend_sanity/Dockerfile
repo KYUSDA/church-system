@@ -8,11 +8,11 @@ WORKDIR /app
 COPY package.json .
 RUN npm install
 
-# Copy the rest of the backend code
+# Copy the rest of the Sanity code
 COPY . .
 
-# Expose port 5000 (or whatever port your server uses)
-EXPOSE 5000
+# Expose port 3333 (Sanity Studio’s default port)
+EXPOSE 3333
 
-# Start the server
-CMD ["npm", "start"]
+# Start Sanity Studio
+CMD ["npm", "run", "start"]

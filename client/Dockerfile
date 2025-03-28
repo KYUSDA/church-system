@@ -1,25 +1,25 @@
-# Use official Node.js runtime as base image
-FROM node:18 AS build
+# Start with a Node.js image (like picking a base OS with Node pre-installed)
+FROM node:18
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json package-lock.json ./
+COPY package.json .
 RUN npm install
 
-# Copy the rest of the frontend code
+# Copy the rest of your React app
 COPY . .
 
-# Build the Vite app for production
+# Build the React app for production
 RUN npm run build
 
-# Use Nginx to serve the built app
+# Use a lightweight web server to serve the built app
 FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=0 /app/build /usr/share/nginx/html
 
-# Expose port 80 for Nginx
+# Expose port 80 (where the app will be served)
 EXPOSE 80
 
-# Start Nginx
+# Start the web server
 CMD ["nginx", "-g", "daemon off;"]
