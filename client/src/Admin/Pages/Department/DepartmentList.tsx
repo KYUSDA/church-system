@@ -44,10 +44,6 @@ const DepartmentList: React.FC = () => {
     );
   };
 
-  const handleDelete = (id: string) => {
-    // deleteDepartment(id, dispatch);
-  };
-
   const filteredData = data.filter(
     (dept) =>
       dept.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -60,99 +56,67 @@ const DepartmentList: React.FC = () => {
   const totalPages = Math.ceil(filteredData.length / departmentsPerPage);
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Department Management</h2>
-      <div className="flex justify-between items-center">
-        <input
-          type="text"
-          placeholder="Search by title or description"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        />
-      </div>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden mt-4">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3">
-                  <input
-                    type="checkbox"
-                    checked={selectedDepartments.length === data.length}
-                    onChange={() =>
-                      setSelectedDepartments(selectedDepartments.length === data.length ? [] : data.map((dept) => dept._id))
-                    }
-                  />
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer flex items-center"
-                  onClick={() => handleSort("title")}
-                >
-                  Department {sortField === "title" && (sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentDepartments.map((dept) => (
-                <tr key={dept._id} className="hover:bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <input type="checkbox" checked={selectedDepartments.includes(dept._id)} onChange={() => handleSelect(dept._id)} />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap max-w-[100px] overflow-hidden">
-                  <div className="text-gray-600 truncate">{dept._id}</div></td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <img
-                        className="w-8 h-8 rounded-full object-cover mr-2"
-                        src={urlFor(dept.imgUrl).url()}
-                        alt={dept.title}
-                      />
-                      {dept.title}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap max-w-[200px] overflow-hidden">
-                    <div className="text-gray-600 truncate">{dept.description}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <a href={dept.link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
-                      {dept.link}
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex space-x-3">
-                      <Link to={`/admin/department/${dept._id}`} className="text-blue-600 hover:text-blue-800">
-                        <PencilLine className="h-5 w-5" />
-                      </Link>
-                      <button 
-                        className="text-red-600 hover:text-red-800"
-                        onClick={() => handleDelete(dept._id)}
-                      >
-                        <Trash2 className="h-5 w-5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="bg-white rounded-xl shadow-sm p-6">
+     <h2 className="text-2xl font-bold text-gray-900">Department Management</h2>
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+      <div className="relative w-full">
+      <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-2 pl-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent my-4"
+          />
         </div>
+      <div className="overflow-x-auto">
+      <table className="w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="p-3"><input type="checkbox" /></th>
+              <th className="p-3 text-left">ID</th>
+              <th className="p-3 text-left cursor-pointer" onClick={() => handleSort("title")}> 
+                <div className="flex items-center gap-1">Department {sortField === "title" && (sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}</div>
+              </th>
+              <th className="p-3 text-left">Image</th>
+              <th className="p-3 text-left">Description</th>
+              <th className="p-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {currentDepartments.map((dept) => (
+              <tr key={dept._id} className="border-t border-gray-100 hover:bg-gray-100">
+                <td className="p-3"><input type="checkbox" checked={selectedDepartments.includes(dept._id)} onChange={() => handleSelect(dept._id)} /></td>
+                <td className="p-3 truncate max-w-[100px]">{dept._id}</td>
+                <td className="p-3 text-gray-600">{dept.title}</td>
+                <td className="p-3"><img className="w-10 h-10 rounded-full" src={urlFor(dept.imgUrl).url()} alt={dept.title} /></td>
+                <td className="p-3 text-gray-600 truncate max-w-xs">{dept.description}</td>
+                <td className="p-3 flex gap-2">
+                  <Link to={`/admin/department/${dept._id}`} className="text-blue-600 hover:text-blue-800">
+                    <PencilLine className="h-5 w-5" />
+                  </Link>
+                  <button className="text-red-600 hover:text-red-800">
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 gap-2">
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index + 1}
             onClick={() => setCurrentPage(index + 1)}
-            className={`px-4 py-2 mx-1 border rounded-full ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-blue-600"}`}
+            className={`px-4 py-2 rounded-lg ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white border text-blue-600"}`}
           >
             {index + 1}
           </button>
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 };
