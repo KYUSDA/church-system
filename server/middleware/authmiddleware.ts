@@ -32,5 +32,15 @@ export const requireAuth = catchAsyncErrors(async(req: Request, res: Response, n
     }
 })
 
+//authorize middleware
+export const authorizeRoles = (...roles: string[]) => {
+    return async(req: Request, res: Response, next: NextFunction) => {
+        if(!req.user || !roles.includes(req.user.role)) {
+            return next(new ErrorHandler(`The role: ${req.user?.role} is not allowed`, 403));
+        }
+        next();
+    }
+}
+
 
 export default requireAuth;
