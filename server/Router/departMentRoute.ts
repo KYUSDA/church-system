@@ -1,16 +1,17 @@
 import { Router } from "express";
 import departmentDetail from "../Controlers/departmentControler";
+import requireAuth,{ authorizeRoles } from "../middleware/authmiddleware";
 const departDetail = Router();
 departDetail
   .route("/:id")
-  .delete(departmentDetail.deleteDepertment)
+  .delete(requireAuth,authorizeRoles("admin"),departmentDetail.deleteDepertment)
 
-departDetail.route("/createDep").post(departmentDetail.createDep);
-departDetail.patch("/update-department/:id", departmentDetail.updateDepartment);
+departDetail.post("/createDep",requireAuth, authorizeRoles("admin"), departmentDetail.createDep);
+departDetail.patch("/update-department/:id",requireAuth, authorizeRoles("admin"), departmentDetail.updateDepartment);
 
 departDetail
   .route("/get-all-departments")
-  .get(departmentDetail.getAllDepartments)
-  .post(departmentDetail.getDepartmentDetails);
+  .get(requireAuth,authorizeRoles("admin"), departmentDetail.getAllDepartments)
+  .post(requireAuth,authorizeRoles("admin"), departmentDetail.getDepartmentDetails);
 
 export default departDetail;
