@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { TUser, useGetMembersQuery } from "../../services/userServices";
 import { PencilLine, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 
-export default function UserList() {
-  const [data, setData] = useState<TUser[]>([]);
+const UserList: React.FC = () => {
   const { data: membersData } = useGetMembersQuery();
+  const [data, setData] = useState<TUser[]>([]);
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState("firstName");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -36,6 +36,14 @@ export default function UserList() {
     );
   };
 
+  const handleSelectAll = () => {
+    if (selectedUsers.length === data.length) {
+      setSelectedUsers([]);
+    } else {
+      setSelectedUsers(data.map(user => user._id));
+    }
+  };
+
   const filteredData = data.filter(
     (user) =>
       user.firstName.toLowerCase().includes(search.toLowerCase()) ||
@@ -48,78 +56,141 @@ export default function UserList() {
   const totalPages = Math.ceil(filteredData.length / usersPerPage);
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">User Management</h2>
-      <div className="flex justify-between items-center">
-        <input
-          type="text"
-          placeholder="Search by name or email"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        />
-      </div>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden mt-4">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3">
-                  <input
-                    type="checkbox"
-                    checked={selectedUsers.length === data.length}
-                    onChange={() =>
-                      setSelectedUsers(selectedUsers.length === data.length ? [] : data.map((user) => user._id))
-                    }
-                  />
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer flex items-center"
-                  onClick={() => handleSort("email")}
-                >
-                  Email {sortField === "email" && (sortOrder === "asc" ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Church Role</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentUsers.map((user) => (
-                <tr key={user._id} className="hover:bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <input type="checkbox" checked={selectedUsers.includes(user._id)} onChange={() => handleSelect(user._id)} />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{user._id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{user.firstName}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
-                  <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
-                    <Link to={`/admin/users/${user._id}`} className="text-blue-600 hover:text-blue-800 mr-2">
-                      <PencilLine className="h-5 w-5" />
-                    </Link>
-                    <button className="text-red-600 hover:text-red-800">
-                      <Trash2 className="h-5 w-5" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mx-auto w-full">
+      <div className="flex flex-col space-y-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">User Management</h2>
+        
+        <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-2 pl-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
         </div>
-      </div>
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => setCurrentPage(index + 1)}
-            className={`px-4 py-2 mx-1 border rounded-full ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-blue-600"}`}
-          >
-            {index + 1}
-          </button>
-        ))}
+
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <div className="inline-block min-w-full align-middle">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <input
+                      type="checkbox"
+                      checked={selectedUsers.length === data.length && data.length > 0}
+                      onChange={handleSelectAll}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
+                    ID
+                  </th>
+                  <th 
+                    scope="col" 
+                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer min-w-[180px]"
+                    onClick={() => handleSort("email")}
+                  >
+                    <div className="flex items-center">
+                      Email
+                      {sortField === "email" && (
+                        sortOrder === "asc" ? 
+                        <ChevronUp className="ml-1 h-4 w-4" /> : 
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      )}
+                    </div>
+                  </th>
+                  <th 
+                    scope="col" 
+                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer min-w-[120px]"
+                    onClick={() => handleSort("firstName")}
+                  >
+                    <div className="flex items-center">
+                      First Name
+                      {sortField === "firstName" && (
+                        sortOrder === "asc" ? 
+                        <ChevronUp className="ml-1 h-4 w-4" /> : 
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      )}
+                    </div>
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
+                    Church Role
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {currentUsers.map((user) => (
+                  <tr key={user._id} className="hover:bg-gray-50">
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <input
+                        type="checkbox"
+                        checked={selectedUsers.includes(user._id)}
+                        onChange={() => handleSelect(user._id)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      />
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-500 max-w-[120px] truncate">
+                      {user._id}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-500 min-w-[180px]">
+                      {user.email}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-500 min-w-[120px]">
+                      {user.firstName}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-500 min-w-[120px]">
+                      {user.role}
+                    </td>
+                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[100px]">
+                      <div className="flex space-x-2">
+                        <Link
+                          to={`/admin/users/${user._id}`}
+                          className="text-blue-600 hover:text-blue-900"
+                        >
+                          <PencilLine className="h-5 w-5" />
+                        </Link>
+                        <button
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          <Trash2 className="h-5 w-5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {filteredData.length === 0 && (
+          <div className="text-center py-8 text-gray-500">No users found</div>
+        )}
+
+        <div className="flex justify-center mt-4">
+          <nav className="flex items-center gap-1">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`px-3 py-1 rounded-md text-sm font-medium ${
+                  currentPage === index + 1
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default UserList;
