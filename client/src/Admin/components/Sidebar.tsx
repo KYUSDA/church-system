@@ -94,10 +94,12 @@ const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () =
       <div className="mb-4">
         <h3 className="text-sm text-gray-400">Notifications</h3>
         <ul className="list-none p-1">
+        <Link to="/admin/prayers" className="no-underline">
           <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
             <MailOutline className="mr-2 text-lg" />
-            Mail
+            Prayer Requests
           </li>
+          </Link>
           <Link to="/admin/messages" className="no-underline">
             <li
               className={`p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200 ${
@@ -115,14 +117,18 @@ const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () =
       <div className="mb-4">
         <h3 className="text-sm text-gray-400">Staff</h3>
         <ul className="list-none p-1">
+          <Link to="/admin/admin-manage" className="no-underline">
           <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
             <WorkOutline className="mr-2 text-lg" />
             Manage
           </li>
+          </Link>
+          <Link to="/admin/reports" className="no-underline">
           <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
             <Report className="mr-2 text-lg" />
             Reports
           </li>
+          </Link>
         </ul>
       </div>
     </div>
