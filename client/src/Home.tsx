@@ -40,8 +40,11 @@ import Users from "./Admin/Pages/User/editUser";
 import AdminLayout from "./Admin/Pages/Layout";
 import AdminDashboard from "./Admin/components/dash";
 import Messages from "./Admin/Pages/notifications/messages";
-import ReplyIssue from "./Admin/Pages/notifications/replyIssue";
 import Calendar from "./Admin/components/calendar";
+import Reports from "./Admin/Pages/reports";
+import AdminsManage from "./Admin/Pages/adminsmanage";
+import Profile from "./Admin/components/profile";
+import Prayers from "./Admin/Pages/prayers";
 
 const Home = () => {
   return (
@@ -76,19 +79,22 @@ const Home = () => {
       <Route path="/member/communication-center" element={<ProtectedRoute><DashboardLayout><CommunicationHub /></DashboardLayout></ProtectedRoute>} />
 
       {/* admin dashboard */}
-            <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
-            <Route path="/admin/users" element={<AdminLayout><UserList /></AdminLayout>} />
-            <Route path="/admin/users/:id" element={<AdminLayout><Users /></AdminLayout>} />
-            <Route path="/admin/newUser" element={<AdminLayout><Newuser /></AdminLayout>} />
-            <Route path="/admin/departments" element={<AdminLayout><DepartmentList /></AdminLayout>} />
-            <Route path="/admin/department/:id" element={<AdminLayout><ADepartment /></AdminLayout>} />
-            <Route path="/admin/newDepart" element={<AdminLayout><NewDepartment /></AdminLayout>} />
-            <Route path="/admin/families" element={<AdminLayout><FamilyList /></AdminLayout>} />
-            <Route path="/admin/family/:id" element={<AdminLayout><AFamily /></AdminLayout>} />
-            <Route path="/admin/calendar" element={<AdminLayout><Calendar /></AdminLayout>} />
-            <Route path="/admin/newFamily" element={<AdminLayout><NewFamily /></AdminLayout>} />
-            <Route path="/admin/messages" element={<AdminLayout><Messages /></AdminLayout>} />
-            <Route path="/admin/messages/reply/:id" element={<AdminLayout><ReplyIssue /></AdminLayout>} />
+            <Route path="/admin/dashboard" element={<ProtectedRoute><AdminLayout><AdminDashboard /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute><AdminLayout><UserList /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/users/:id" element={<ProtectedRoute><AdminLayout><Users /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/newUser" element={<ProtectedRoute><AdminLayout><Newuser /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/departments" element={<ProtectedRoute><AdminLayout><DepartmentList /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/department/:id" element={<ProtectedRoute><AdminLayout><ADepartment /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/newDepart" element={<ProtectedRoute><AdminLayout><NewDepartment /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/families" element={<ProtectedRoute><AdminLayout><FamilyList /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/family/:id" element={<ProtectedRoute><AdminLayout><AFamily /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/calendar" element={<ProtectedRoute><AdminLayout><Calendar /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/newFamily" element={<ProtectedRoute><AdminLayout><NewFamily /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/messages" element={<ProtectedRoute><AdminLayout><Messages /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/reports" element={<ProtectedRoute><AdminLayout><Reports /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/prayers" element={<ProtectedRoute><AdminLayout><Prayers /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/admin-manage" element={<ProtectedRoute><AdminLayout><AdminsManage /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/admin-profile" element={<ProtectedRoute><AdminLayout><Profile /></AdminLayout></ProtectedRoute>} />
     </Routes>
   );
 };
