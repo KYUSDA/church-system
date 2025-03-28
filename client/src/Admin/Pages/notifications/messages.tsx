@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetIssuesQuery, TIssue } from "../../services/userServices";
 import { ChatBubbleOutline, Reply, Close, Menu } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../services/userServices";
 
 function Messages() {
@@ -68,7 +67,7 @@ function Messages() {
     }
   };
 
-  if (isLoading) return <div className="text-center p-4">Loading...</div>;
+
   if (error) return <div className="text-center text-red-500 p-4">Error fetching messages</div>;
 
   return (
