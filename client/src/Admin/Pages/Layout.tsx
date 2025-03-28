@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
+import {Toaster} from 'sonner'
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -21,7 +22,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <Topbar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
         {/* Page Content Wrapper */}
-        <div className="flex-1 p-4 bg-gray-100">
+        <div className="flex-1  p-4 bg-gray-100">
+        <Toaster position="top-center" richColors />
           <div className="flex-1 flex flex-col">{children}</div>
         </div>
       </div>
