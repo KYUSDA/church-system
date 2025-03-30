@@ -9,11 +9,11 @@ export interface TUser {
   lastName: string;
   email: string;
   scores?: string;
-  year?: number;
+  year: number;
   role: string;
   familyLocated?: string;
-  birthday?: Date;
-  createdAt?: string;
+  birthday: Date;
+  createdAt: string;
   easyNumber?: number;
   mediumNumber?: number;
   hardNumber?: number;
@@ -32,7 +32,7 @@ const useUserData = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${baseUrl}/user/${user.id}`, {
+        const response = await fetch(`${baseUrl}/user/get-user/${user.id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
