@@ -10,7 +10,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 w-64 h-screen text-white transform transition-transform duration-300 ease-in-out 
+        className={`fixed left-0 top-0 w-64 h-screen overflow-y-auto overflow-x-hidden text-white transform transition-transform duration-300 ease-in-out 
         ${isSidebarOpen ? "translate-x-0 z-[100]" : "-translate-x-full"} lg:translate-x-0`}
       >
         <Sidebar isOpen={isSidebarOpen} closeSidebar={() => setIsSidebarOpen(false)} />
