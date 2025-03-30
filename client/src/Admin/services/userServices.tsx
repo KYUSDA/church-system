@@ -65,6 +65,13 @@ export type TDepartment = {
     }] | [];
    }
 
+    export interface TPrayerRequest {
+        _id: string;
+        prayerRequest: string;
+        date: string;
+        name: string;
+    }
+
 
 export const adminApi = createApi({
     reducerPath: 'adminApi',
@@ -99,6 +106,13 @@ export const adminApi = createApi({
             }),
         }),
 
+        // get all prayers
+        getPrayers: builder.query<TPrayerRequest[],void>({
+            query: () => ({
+                url: '/prayers/getAllPrayerRequests',
+            }),
+        }),
+
     })
 })
 
@@ -108,4 +122,5 @@ export const {
     useGetDepartmentsQuery,
     useGetFamiliesQuery,
     useGetIssuesQuery,
+    useGetPrayersQuery,
  } = adminApi;
