@@ -32,6 +32,7 @@ export const useLogin = () => {
           login({
             user,
             accessToken,
+            expiresIn: 3600, 
           })
         );
 
