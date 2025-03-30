@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useGetIssuesQuery, TIssue } from "../../services/userServices";
+import {  TIssue } from "../../services/userServices";
 import { ChatBubbleOutline, Reply, Close, Menu } from "@mui/icons-material";
 import { BASE_URL } from "../../services/userServices";
 
 function Messages() {
-  const { data, error, isLoading } = useGetIssuesQuery();
+
   const [issues, setIssues] = useState<TIssue[]>([]);
   const [filter, setFilter] = useState<"all" | "read" | "unread">("all");
   const [selectedIssue, setSelectedIssue] = useState<TIssue | null>(null);
@@ -67,8 +67,6 @@ function Messages() {
     }
   };
 
-
-  if (error) return <div className="text-center text-red-500 p-4">Error fetching messages</div>;
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-100">
