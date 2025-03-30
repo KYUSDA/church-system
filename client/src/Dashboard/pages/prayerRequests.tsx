@@ -3,6 +3,7 @@ import { HandHelping, BookOpen, MessageCircle } from "lucide-react"; // Importin
 import { useState } from "react";
 import { getBaseUrl } from "../../services/authService";
 import { toast } from "sonner";
+import prayer from "../../assets/prayer.jpg";
 
 const PrayerRequests = () => {
 
@@ -34,6 +35,7 @@ const PrayerRequests = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       if (response.ok) {
         toast.success("Prayer Request Submitted!");
@@ -90,7 +92,7 @@ const PrayerRequests = () => {
       {/* Main Service Section */}
       <div className="mt-12 flex flex-col md:flex-row items-center gap-8">
         <img 
-          src="https://i.pinimg.com/736x/d7/b5/10/d7b51016b17782784d7f3d79eacbeda6.jpg" 
+          src={prayer}
           alt="Praying in Church" 
           className="w-full md:w-1/2 rounded-lg shadow-lg"
         />
