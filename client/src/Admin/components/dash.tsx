@@ -4,10 +4,12 @@ import Leaderboard from "./dashboard/Leaderboard";
 import UpcomingBirthdays from "./dashboard/UpcomingBirthdays";
 import QuickActions from "./dashboard/QuickActions";
 import UpcomingEvents from "./dashboard/UpcomingEvents";
+import SessionExpiryNotifier from "../../Dashboard/components/SessionExpired";
 
 const AdminDashboard = () => {
   return (
     <div className="p-6 space-y-6">
+      <SessionExpiryNotifier />
       <StatsOverview />
       <Analytics  />
       <Leaderboard />
