@@ -32,6 +32,8 @@ interface LoginResponse {
       firstName: string;
       lastName: string;
       role: string;
+      birthday:Date;
+      createdAt: string;
       scores?: string;
       year: number;
       familyLocated?: string;
