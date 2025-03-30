@@ -7,6 +7,7 @@ import ProfileStats from '../ui/profileStats';
 import SubscriptionSection from '../ui/devotionSubscription';
 import { getTimeOfDayGreeting } from '../components/NavBar';
 import BirthdayModal from '../../Auth/birthday';
+import SessionExpiryNotifier from '../components/SessionExpired';
 
 const DashboardHome: React.FC = () => {
   const { user } = useUserData();
@@ -38,6 +39,7 @@ const DashboardHome: React.FC = () => {
 
   return (
     <div className="flex w-full">
+      <SessionExpiryNotifier />
       <BirthdayModal isOpen={showModal} onClose={handleCloseModal} />
       <div className='w-full'>
         <h1 className="text-2xl font-bold text-gray-900 text-center mt-2 lg:hidden">
