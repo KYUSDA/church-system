@@ -79,6 +79,7 @@ const authSchema = new Schema<IUser>({
   },
   birthday: {
     type: Date,
+    default: null,
   },
   scores: {
     type: Number,
