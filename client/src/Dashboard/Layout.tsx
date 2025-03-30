@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/Sidebar";
 import ChatBot from "./ui/chatBot";
-import { Toaster } from 'sonner';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,7 +28,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <NavBar onMenuToggle={toggleSidebar} />
           {/* Dashboard content */}
           <div className={`px-4 bg-blue-50 h-full overflow-y-auto `}>
-            <Toaster />
             {children}
             <ChatBot />
           </div>
