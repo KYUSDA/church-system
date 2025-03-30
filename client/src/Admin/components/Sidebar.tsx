@@ -11,13 +11,14 @@ import {
   WorkOutline,
   Report,
 } from "@mui/icons-material";
+import { HelpCircleIcon, Mail } from 'lucide-react';
 
 const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () => void }) => {
   const location = useLocation(); // Get the current route
 
   return (
     <div
-      className={`fixed inset-y-0 left-0 bg-gray-50 w-64 p-5 text-gray-600 transition-transform transform lg:relative lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 bg-gray-50 w-64 p-5 text-gray-600  transition-transform transform lg:relative lg:translate-x-0 ${
         isOpen ? "translate-x-0 z-[100]" : "-translate-x-full"
       }`}
     >
@@ -94,12 +95,6 @@ const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () =
       <div className="mb-4">
         <h3 className="text-sm text-gray-400">Notifications</h3>
         <ul className="list-none p-1">
-        <Link to="/admin/prayers" className="no-underline">
-          <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
-            <MailOutline className="mr-2 text-lg" />
-            Prayer Requests
-          </li>
-          </Link>
           <Link to="/admin/messages" className="no-underline">
             <li
               className={`p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200 ${
@@ -109,6 +104,39 @@ const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () =
               <ChatBubbleOutline className="mr-2 text-lg" />
               Messages
             </li>
+          </Link>
+          <Link to="/admin/create-notification" className="no-underline">
+            <li
+              className={`p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200 ${
+                location.pathname === "/admin/create-notification" ? "bg-gray-300 font-semibold" : ""
+              }`}
+            >
+              <Mail className="mr-2 text-lg" />
+              Bulk Emails
+            </li>
+          </Link>
+        </ul>
+      </div>
+
+              {/* more functionalities */}
+      <div className="mb-4">
+        <h3 className="text-sm text-gray-400">Actions</h3>
+        <ul className="list-none p-1">
+        <Link to="/admin/prayers" className="no-underline">
+          <li className={`p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200 ${
+                location.pathname === "/admin/prayers" ? "bg-gray-300 font-semibold" : ""
+              }`}>
+            <MailOutline className="mr-2 text-lg" />
+            Prayer Requests
+          </li>
+          </Link>
+          <Link to="/admin/weekly-quiz" className="no-underline">
+          <li className={`p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200 ${
+                location.pathname === "/admin/weekly-quiz" ? "bg-gray-300 font-semibold" : ""
+              }`}>
+            <HelpCircleIcon className="mr-2 text-lg" />
+            Weekly Quiz
+          </li>
           </Link>
         </ul>
       </div>
@@ -123,12 +151,7 @@ const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () =
             Manage
           </li>
           </Link>
-          <Link to="/admin/reports" className="no-underline">
-          <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
-            <Report className="mr-2 text-lg" />
-            Reports
-          </li>
-          </Link>
+         
         </ul>
       </div>
     </div>
