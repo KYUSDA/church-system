@@ -45,6 +45,8 @@ import Reports from "./Admin/Pages/reports";
 import AdminsManage from "./Admin/Pages/adminsmanage";
 import Profile from "./Admin/components/profile";
 import Prayers from "./Admin/Pages/prayers";
+import QuizAdminPanel from "./Admin/Pages/defend/weeklyQuiz";
+import NotificationPage from "./Admin/Pages/notifications/createnotifactions";
 
 const Home = () => {
   return (
@@ -91,7 +93,8 @@ const Home = () => {
             <Route path="/admin/calendar" element={<ProtectedRoute><AdminLayout><Calendar /></AdminLayout></ProtectedRoute>} />
             <Route path="/admin/newFamily" element={<ProtectedRoute><AdminLayout><NewFamily /></AdminLayout></ProtectedRoute>} />
             <Route path="/admin/messages" element={<ProtectedRoute><AdminLayout><Messages /></AdminLayout></ProtectedRoute>} />
-            <Route path="/admin/reports" element={<ProtectedRoute><AdminLayout><Reports /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/create-notification" element={<ProtectedRoute><AdminLayout><NotificationPage /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/weekly-quiz" element={<ProtectedRoute><AdminLayout><QuizAdminPanel /></AdminLayout></ProtectedRoute>} />
             <Route path="/admin/prayers" element={<ProtectedRoute><AdminLayout><Prayers /></AdminLayout></ProtectedRoute>} />
             <Route path="/admin/admin-manage" element={<ProtectedRoute><AdminLayout><AdminsManage /></AdminLayout></ProtectedRoute>} />
             <Route path="/admin/admin-profile" element={<ProtectedRoute><AdminLayout><Profile /></AdminLayout></ProtectedRoute>} />
