@@ -19,17 +19,13 @@
 
 import mongoose from "mongoose";
 
-// Use the environment variable directly in the function
 export const connectDb = async () => {
   try {
     const url = process.env.MONGODB_URI as string;
-    await mongoose.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(url); // No options needed in Mongoose 6+
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    throw error; // Re-throw the error to be handled by the caller
+    throw error;
   }
 };
