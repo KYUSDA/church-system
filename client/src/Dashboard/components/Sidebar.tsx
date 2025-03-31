@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink} from "react-router-dom";
-import { X, LayoutDashboard, BookOpen, ShieldCheck, HelpCircle, Send, BookCheck } from "lucide-react";
+import { X, LayoutDashboard, BookOpen, ShieldCheck, HelpCircle, Send, BookCheck, Calendar } from "lucide-react";
 import useUserData from "./userdata";
 
 interface SidebarProps {
@@ -17,10 +17,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const navItems = [
     { path: "/member/dashboard", name: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
     { path: "/member/resources", name: "Resources", icon: <BookOpen className="w-5 h-5" /> },
+    { path: "/member/my-calendar", name: "My Calendar", icon: <Calendar className="w-5 h-5" /> },
     { path: "/member/defend-your-faith", name: "Defend Your Faith", icon: <ShieldCheck className="w-5 h-5" /> },
     { path: "/member/bibleTrivia", name: "Bible Trivia", icon: <BookCheck className="w-5 h-5" /> },
     { path: "/member/submit-prayer-request", name: "Prayer Requests", icon: <Send className="w-5 h-5" /> },
-    { path: "/member/report-issue", name: "Report Issue", icon: <HelpCircle className="w-5 h-5" /> },
   ];
 
 	return (
