@@ -4,8 +4,8 @@ FROM node:18
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package.json .
+# Copy package.json and package-lock.json (if exists)
+COPY package.json package-lock.json* ./
 RUN npm install
 
 # Copy the rest of the Sanity code

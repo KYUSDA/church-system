@@ -3,28 +3,24 @@ version: '3.8'
 services:
   # React Frontend (client)
   client:
-    build: ./client  # Uses Dockerfile in client/
+    build: ./client
     ports:
-      - "5173:80"    # Maps 5173 (your FRONTEND_URL port) to Nginx’s 80
+      - "5173:80"
     environment:
       - CLIENT_URL=http://localhost:5173
       - FRONTEND_URL=http://localhost:5173
     volumes:
-      - ./client:/app  # Syncs code for development (optional)
+      - ./client:/app
 
   # Express Backend (server)
   server:
-    build: ./server  # Uses Dockerfile in server/
+    build: ./server
     ports:
-      - "8000:8000"  # Maps 8000 (your PORT) to server’s 8000
+      - "8000:8000"
     environment:
-      # Port
       - PORT=8000
-      # MongoDB (updated to use container name 'mongo')
       - MONGODB_URI=mongodb://mongo:27017/kyusda
-      # Redis (using your Upstash URL)
       - REDIS_URL=rediss://default:AeBaAAIjcDE4MzNkNDY1YThmYTU0YmM0OGJjZTI0ZGMxZDRlMGFhYnAxMA@first-flamingo-57434.upstash.io:6379
-      # SMTP for emails
       - SMTP_HOST=smtp.gmail.com
       - SMTP_PORT=587
       - SMTP_SERVICE=gmail
@@ -32,14 +28,11 @@ services:
       - SMTP_PASSWORD=wjyb fnvn vepa ztlt
       - PRAYER_DEPARTMENT_EMAIL=westscrip6378@gmail.com
       - ADMIN_EMAIL=westscrip6378@gmail.com
-      # URLs
       - CLIENT_URL=http://localhost:5173
       - FRONTEND_URL=http://localhost:5173
-      # Cloudinary
       - CLOUDINARY_CLOUD_NAME=ndekei
       - CLOUDINARY_API_KEY=936296614289215
       - CLOUDINARY_API_SECRET=6lC__lNWQfnACkSqG3FW52XiL1g
-      # Tokens
       - ACCESS_TOKEN=8AFPq0jR4O1z4lnJXoiOXOe6Emw69rP5WF2IarVQeFI=
       - ACCESS_TOKEN_EXPIRES=60
       - SECRET=kyusda2024secreteVALUETokenfb42c0f97adbfdb4c1d9e23e20bbf8f4a5a43028afe788419a0c29e2ae31ccb8
@@ -47,15 +40,27 @@ services:
     depends_on:
       - mongo
     # volumes:
-      # - ./server:/app  # Syncs code for development (optional)
+    #   - ./server:/app
+
+  # Sanity Studio (backend_sanity)
+  sanity:
+    build: ./backend_sanity
+    ports:
+      - "3333:3333"  # Maps 3333 on your machine to 3333 in container
+    environment:
+      - SANITY_PROJECT_ID=sgmu0lrq
+      - SANITY_DATASET=production
+      - SANITY_API_TOKEN=sk0MvfKD103oqOs5PGzZMThedbLgDAsg1ojGTfBQdQdJMk3Jb9CpMgCp9Xv9YZDXBlYt3zFKN4hQOBSEMWcZAnICVAQZNydbTlMDl34Z7NGr8yB88fqIFFyw8nJmvwCtpAObFbFTreM1YTwcpIArWi4cBPZYM1l3FesmbB3U4xq9lrxjtRjZ
+    # volumes:
+    #   - ./backend_sanity:/app  # Uncomment for development
 
   # MongoDB
   mongo:
     image: mongo:latest
     ports:
-      - "27017:27017"  # Exposes MongoDB port
+      - "27017:27017"
     volumes:
-      - mongo-data:/data/db  # Persists MongoDB data
+      - mongo-data:/data/db
 
 volumes:
-  mongo-data:  # Named volume for MongoDB
+  mongo-data:
