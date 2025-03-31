@@ -47,6 +47,7 @@ import Profile from "./Admin/components/profile";
 import Prayers from "./Admin/Pages/prayers";
 import QuizAdminPanel from "./Admin/Pages/defend/weeklyQuiz";
 import NotificationPage from "./Admin/Pages/notifications/createnotifactions";
+import EventCalendar from "./Dashboard/ui/calendarEvents";
 
 const Home = () => {
   return (
@@ -78,6 +79,7 @@ const Home = () => {
       <Route path="/member/submit-prayer-request" element={<ProtectedRoute><DashboardLayout><PrayerRequests /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/user-notifications" element={<ProtectedRoute><DashboardLayout><NotificationsPage /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/report-issue" element={<ProtectedRoute><DashboardLayout><ReportIssue /></DashboardLayout></ProtectedRoute>} />
+      <Route path="/member/my-calendar" element={<ProtectedRoute><DashboardLayout><EventCalendar /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/communication-center" element={<ProtectedRoute><DashboardLayout><CommunicationHub /></DashboardLayout></ProtectedRoute>} />
 
       {/* admin dashboard */}
