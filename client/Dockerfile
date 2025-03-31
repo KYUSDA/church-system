@@ -1,25 +1,27 @@
-# Start with a Node.js image (like picking a base OS with Node pre-installed)
-FROM node:18
+# Stage 1: Build the React app
+FROM node:18 AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package.json .
+# Copy package.json and package-lock.json (if it exists)
+COPY package.json package-lock.json* ./
 RUN npm install
 
 # Copy the rest of your React app
 COPY . .
 
-# Build the React app for production
+# Build the React app for production (Vite outputs to 'dist')
 RUN npm run build
 
-# Use a lightweight web server to serve the built app
+# Stage 2: Serve the built app with Nginx
 FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
 
-# Expose port 80 (where the app will be served)
+# Copy the built files from the 'builder' stage (Vite outputs to 'dist', not 'build')
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Expose port 80 (Nginx default)
 EXPOSE 80
 
-# Start the web server
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,33 +1,61 @@
 version: '3.8'
 
 services:
+  # React Frontend (client)
   client:
-    build: ./client
+    build: ./client  # Uses Dockerfile in client/
     ports:
-      - "80:80"
-    depends_on:
-      - server
-
-  server:
-    build: ./server
-    ports:
-      - "5000:5000"
+      - "5173:80"    # Maps 5173 (your FRONTEND_URL port) to Nginx’s 80
     environment:
-      - MONGO_URI=mongodb://mongo:27017/churchdb
+      - CLIENT_URL=http://localhost:5173
+      - FRONTEND_URL=http://localhost:5173
+    volumes:
+      - ./client:/app  # Syncs code for development (optional)
+
+  # Express Backend (server)
+  server:
+    build: ./server  # Uses Dockerfile in server/
+    ports:
+      - "8000:8000"  # Maps 8000 (your PORT) to server’s 8000
+    environment:
+      # Port
+      - PORT=8000
+      # MongoDB (updated to use container name 'mongo')
+      - MONGODB_URI=mongodb://mongo:27017/kyusda
+      # Redis (using your Upstash URL)
+      - REDIS_URL=rediss://default:AeBaAAIjcDE4MzNkNDY1YThmYTU0YmM0OGJjZTI0ZGMxZDRlMGFhYnAxMA@first-flamingo-57434.upstash.io:6379
+      # SMTP for emails
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_SERVICE=gmail
+      - SMTP_EMAIL=samuel202mwangi@gmail.com
+      - SMTP_PASSWORD=wjyb fnvn vepa ztlt
+      - PRAYER_DEPARTMENT_EMAIL=westscrip6378@gmail.com
+      - ADMIN_EMAIL=westscrip6378@gmail.com
+      # URLs
+      - CLIENT_URL=http://localhost:5173
+      - FRONTEND_URL=http://localhost:5173
+      # Cloudinary
+      - CLOUDINARY_CLOUD_NAME=ndekei
+      - CLOUDINARY_API_KEY=936296614289215
+      - CLOUDINARY_API_SECRET=6lC__lNWQfnACkSqG3FW52XiL1g
+      # Tokens
+      - ACCESS_TOKEN=8AFPq0jR4O1z4lnJXoiOXOe6Emw69rP5WF2IarVQeFI=
+      - ACCESS_TOKEN_EXPIRES=60
+      - SECRET=kyusda2024secreteVALUETokenfb42c0f97adbfdb4c1d9e23e20bbf8f4a5a43028afe788419a0c29e2ae31ccb8
+      - ACTIVATION_SECRET=11009876543210
     depends_on:
       - mongo
+    # volumes:
+      # - ./server:/app  # Syncs code for development (optional)
 
-  sanity:
-    build: ./backend_sanity
-    ports:
-      - "3333:3333"
-
+  # MongoDB
   mongo:
     image: mongo:latest
     ports:
-      - "27017:27017"
+      - "27017:27017"  # Exposes MongoDB port
     volumes:
-      - mongo-data:/data/db
+      - mongo-data:/data/db  # Persists MongoDB data
 
 volumes:
-  mongo-data:
+  mongo-data:  # Named volume for MongoDB
