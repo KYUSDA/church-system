@@ -85,42 +85,8 @@ export async function createUser(req:Request, resp:Response) {
   }
 }
 
-//update user avatar
-// export const updateUserAvatar = async (req: Request, res: Response) => {
-//   try {
-//     const { avatar } = req.body;
-//     const { id } = req.params; // Get user ID from params
-//     console.log(avatar);
-//     const user = await authModel.findById(id);
-//     if (!user) {
-//      res.status(404).json({ success: false, message: "User not found. Please login again" });
-//     }
 
-//     if (avatar && user) {
-//       // Delete the old avatar from Cloudinary (if exists)
-//       if (user.avatar?.public_id) {
-//         await cloudinary.v2.uploader.destroy(user.avatar.public_id.toString());
-//       }
-
-//       // Upload new avatar to Cloudinary
-//       const myCloud = await cloudinary.v2.uploader.upload(avatar, { folder: "Avatars" });
-
-//       // Update user's avatar data
-//       user.avatar = {
-//         public_id: myCloud.public_id,
-//         url: myCloud.secure_url,
-//       };
-
-//       await user.save();
-//     }
-
-//     res.status(200).json({ success: true, user, message: "User profile updated" });
-//   } catch (err) {
-//     console.error(err);
-//    res.status(500).json({ success: false, messsage:"Internal Server Error" });
-// };
-
-
+// update user avatar
 export const updateUserAvatar =catchAsyncErrors (async (req: MulterRequest, res: Response, next:NextFunction) => {
 
   try {
