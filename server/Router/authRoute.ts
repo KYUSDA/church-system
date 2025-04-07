@@ -11,6 +11,8 @@ authRoute.post("/activate-me",memberAuth.ActivateUser);
 
 authRoute.post("/logout", requireAuth, memberAuth.memberLogout);
 
+authRoute.post("/update-accesstoken", memberAuth.UpdateAccessToken);
+
 authRoute.route("/resetToken").post(memberAuth.memberResetToken);
 
 authRoute.patch("/resetPassword/:token", memberAuth.resetPassword);
