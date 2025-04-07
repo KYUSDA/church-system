@@ -12,7 +12,7 @@ export const useLogout = () => {
     const handleLogout = async () => {
         try {
             await axios.post(`${baseUrl}/member/logout`, {}, { withCredentials: true });
-
+            localStorage.setItem("birthdayModalSeen", "false"); // Reset birthday modal
             // Clear Redux state
             dispatch(logout());
 

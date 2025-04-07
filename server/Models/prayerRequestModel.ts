@@ -3,12 +3,12 @@ import mongoose, { model } from 'mongoose'
 interface IPrayerRequest{
     name?: string;
     prayerRequest: string;
-    date?: Date;
+    date: Date;
 }
 
 
 
-export const prayerSchema = new mongoose.Schema({
+export const prayerSchema = new mongoose.Schema<IPrayerRequest>({
     name:{
         type: String,
     },

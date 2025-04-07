@@ -9,6 +9,8 @@ import {
   Typography,
   IconButton,
   Box,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff, LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { useLogin } from "../hooks/userLoginHook";
@@ -21,7 +23,7 @@ const SignInSide = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [touchedEmail, setTouchedEmail] = useState(false);
   const [touchedPassword, setTouchedPassword] = useState(false);
-  const { loginUser, error } = useLogin();
+  const { loginUser, error, isLoading } = useLogin();
 
   interface formData {
     email: string;
@@ -113,7 +115,7 @@ const SignInSide = () => {
                 fullWidth
                 variant="contained"
                 className="mt-3 mb-2"
-                disabled={!isFormValid}
+                disabled={!isFormValid || isLoading} // Disable button while loading
               >
                 Sign In
               </Button>
@@ -126,6 +128,12 @@ const SignInSide = () => {
           </Box>
         </Box>
       </Box>
+
+      {/* Loading Spinner (Backdrop) */}
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={Boolean(isLoading)}>
+        <CircularProgress color="inherit" size={50} />
+        <Typography variant="h6">Signing in...</Typography>
+      </Backdrop>
     </AuthLayout>
   );
 };

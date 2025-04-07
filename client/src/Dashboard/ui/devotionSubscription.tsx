@@ -41,7 +41,7 @@ const SubscriptionSection = ({ user }: { user: TUser }) => {
     setMessage("");
 
     try {
-      const response = await fetch(`${baseUrl}/devotion/subscribe-devotions`, {
+      const response = await fetch(`${baseUrl}/devotion/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

@@ -34,10 +34,20 @@ import FamilyList from "./Admin/Pages/Family/FamilyList";
 import NewFamily from "./Admin/Pages/Family/NewFamily";
 import NewDepartment from "./Admin/Pages/Department/NewDepartment";
 import DepartmentList from "./Admin/Pages/Department/DepartmentList";
-import ADepartment from "./Admin/Pages/Department/Department";
-import AFamily from "./Admin/Pages/Family/Family";
-import Users from "./Admin/Pages/User/Users";
+import ADepartment from "./Admin/Pages/Department/updateDepartment";
+import AFamily from "./Admin/Pages/Family/updateFamily";
+import Users from "./Admin/Pages/User/editUser";
 import AdminLayout from "./Admin/Pages/Layout";
+import AdminDashboard from "./Admin/components/dash";
+import Messages from "./Admin/Pages/notifications/messages";
+import Calendar from "./Admin/components/calendar";
+import Reports from "./Admin/Pages/reports";
+import AdminsManage from "./Admin/Pages/adminsmanage";
+import Profile from "./Admin/components/profile";
+import Prayers from "./Admin/Pages/prayers";
+import QuizAdminPanel from "./Admin/Pages/defend/weeklyQuiz";
+import NotificationPage from "./Admin/Pages/notifications/createnotifactions";
+import EventCalendar from "./Dashboard/ui/calendarEvents";
 
 const Home = () => {
   return (
@@ -69,19 +79,27 @@ const Home = () => {
       <Route path="/member/submit-prayer-request" element={<ProtectedRoute><DashboardLayout><PrayerRequests /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/user-notifications" element={<ProtectedRoute><DashboardLayout><NotificationsPage /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/report-issue" element={<ProtectedRoute><DashboardLayout><ReportIssue /></DashboardLayout></ProtectedRoute>} />
+      <Route path="/member/my-calendar" element={<ProtectedRoute><DashboardLayout><EventCalendar /></DashboardLayout></ProtectedRoute>} />
       <Route path="/member/communication-center" element={<ProtectedRoute><DashboardLayout><CommunicationHub /></DashboardLayout></ProtectedRoute>} />
 
       {/* admin dashboard */}
-            <Route path="/admin" element={<AdminLayout><Home /></AdminLayout>} />
-            <Route path="/admin/users" element={<AdminLayout><UserList /></AdminLayout>} />
-            <Route path="/admin/user/:id" element={<AdminLayout><Users /></AdminLayout>} />
-            <Route path="/admin/newUser" element={<AdminLayout><Newuser /></AdminLayout>} />
-            <Route path="/admin/department/:id" element={<AdminLayout><ADepartment /></AdminLayout>} />
-            <Route path="/admin/family/:id" element={<AdminLayout><AFamily /></AdminLayout>} />
-            <Route path="/admin/departments" element={<AdminLayout><DepartmentList /></AdminLayout>} />
-            <Route path="/admin/families" element={<AdminLayout><FamilyList /></AdminLayout>} />
-            <Route path="/admin/newDepart" element={<AdminLayout><NewDepartment /></AdminLayout>} />
-            <Route path="/admin/newFamily" element={<AdminLayout><NewFamily /></AdminLayout>} />
+            <Route path="/admin/dashboard" element={<ProtectedRoute><AdminLayout><AdminDashboard /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute><AdminLayout><UserList /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/users/:id" element={<ProtectedRoute><AdminLayout><Users /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/newUser" element={<ProtectedRoute><AdminLayout><Newuser /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/departments" element={<ProtectedRoute><AdminLayout><DepartmentList /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/department/:id" element={<ProtectedRoute><AdminLayout><ADepartment /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/newDepart" element={<ProtectedRoute><AdminLayout><NewDepartment /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/families" element={<ProtectedRoute><AdminLayout><FamilyList /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/family/:id" element={<ProtectedRoute><AdminLayout><AFamily /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/calendar" element={<ProtectedRoute><AdminLayout><Calendar /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/newFamily" element={<ProtectedRoute><AdminLayout><NewFamily /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/messages" element={<ProtectedRoute><AdminLayout><Messages /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/create-notification" element={<ProtectedRoute><AdminLayout><NotificationPage /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/weekly-quiz" element={<ProtectedRoute><AdminLayout><QuizAdminPanel /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/prayers" element={<ProtectedRoute><AdminLayout><Prayers /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/admin-manage" element={<ProtectedRoute><AdminLayout><AdminsManage /></AdminLayout></ProtectedRoute>} />
+            <Route path="/admin/admin-profile" element={<ProtectedRoute><AdminLayout><Profile /></AdminLayout></ProtectedRoute>} />
     </Routes>
   );
 };

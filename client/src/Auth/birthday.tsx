@@ -16,7 +16,7 @@ export default function BirthdayModal({ isOpen, onClose }: BirthdayModalProps) {
   const baseUrl = getBaseUrl();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowCloseButton(true), 5000);
+    const timer = setTimeout(() => setShowCloseButton(true), 8000);
     return () => clearTimeout(timer);
   }, []);
 
