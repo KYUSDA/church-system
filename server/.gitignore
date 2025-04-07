@@ -2,3 +2,4 @@
 .env
 config.env
 /dist
+/uploads
