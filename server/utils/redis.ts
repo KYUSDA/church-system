@@ -8,10 +8,7 @@ if (!redisUrl) {
 }
 
 export const redis = new Redis(redisUrl, {
-  tls: {
-    rejectUnauthorized: false, // ✅ Required for Upstash
-  },
-  retryStrategy: (times) => Math.min(times * 50, 2000), 
+  retryStrategy: (times) => Math.min(times * 50, 2000),
 });
 
 redis.on("connect", () => {
@@ -21,31 +18,3 @@ redis.on("connect", () => {
 redis.on("error", (err) => {
   console.error("❌ Redis Connection Error:", err.message);
 });
-
-// import Redis from "ioredis";
-// import 'dotenv/config';
-
-// const redisUrl = process.env.REDIS_URL || "";
-
-// export let redis: Redis | null = null;
-
-// try {
-//   if (!redisUrl) throw new Error("❌ Redis connection failed");
-
-//   redis = new Redis(redisUrl, {
-//     tls: {
-//       rejectUnauthorized: false, // ✅ Required for Upstash
-//     },
-//     retryStrategy: (times) => Math.min(times * 50, 2000),
-//   });
-
-//   redis.on("connect", () => {
-//     console.log("✅ Redis Connected Successfully!");
-//   });
-
-//   redis.on("error", (err) => {
-//     console.error("❌ Redis Connection Error:", err.message);
-//   });
-// } catch (error) {
-//   console.error(error);
-// }
