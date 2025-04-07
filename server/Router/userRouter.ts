@@ -12,12 +12,17 @@ import {
 } from "../Controlers/userControler";
 import requireAuth, { authorizeRoles } from "../middleware/authmiddleware";
 import { createIssue, getIssue, getIssues, updateIssue } from "../Controlers/issueController";
+import multer from "multer";
+const upload = multer({ dest: "uploads/" });
+
 const userRouter = Router();
+
+
 userRouter.route("/get-user/:id").get(getOne);
 userRouter.route("/getUsers").get(requireAuth,authorizeRoles("admin"),getAll);
 userRouter.patch("/update-user/:id",updateUser);
 userRouter.route("/createUser").post(requireAuth, authorizeRoles("admin"),createUser);
-userRouter.put("/update-avatar/:id",updateUserAvatar);
+userRouter.put("/update-avatar/:id",upload.single("avatar"),updateUserAvatar);
 userRouter.put("/update-scores",requireAuth, updateScore);
 userRouter.put("/update-trivias",requireAuth,updateTriviaNumbers);
 userRouter.delete("/delete-user/:id",requireAuth, authorizeRoles("admin"),deleteUser)
