@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BellIcon, Settings, LogOutIcon, MenuIcon,HelpCircle } from "lucide-react";
 import { useLogout } from "../../hooks/userLogoutHook";
 import { NavLink } from "react-router-dom";
 import useUserData from "./userdata";
+import axios from "axios";
+import { BASE_URL } from "../../Admin/services/userServices";
 
 interface NavBarProps {
   onMenuToggle: () => void;
@@ -18,7 +20,31 @@ export const getTimeOfDayGreeting = () => {
 const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { handleLogout } = useLogout();
-  const { user } = useUserData(); 
+  const { user,userData } = useUserData(); 
+
+  const userId = user?.id; 
+
+  const [notifications, setNotifications] = useState([]);
+const [unreadCount, setUnreadCount] = useState(0);
+
+useEffect(() => {
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/notification/getAll-notification`, {
+        withCredentials: true,
+      });
+      setNotifications(response.data.notifications);
+      setUnreadCount(response.data.unreadCount || 0);
+    } catch (error) {
+      console.error("Failed to fetch notifications:", error);
+    }
+  };
+
+  if (userId) {
+    fetchNotifications();
+  }
+}, [userId]);
+
 
   const logout = () => {
     handleLogout();
@@ -50,7 +76,7 @@ const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
           title="User Menu"
         >
           <img
-            src={user?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
+            src={userData?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
             alt="User Avatar"
             className="h-8 w-8 rounded-full object-cover"
           />
@@ -67,6 +93,11 @@ const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
             >
               <BellIcon className="w-5 h-5 mr-2 text-blue-600" />
               Notifications
+              {unreadCount > 0 && (
+                <span className="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">
+                  {unreadCount}
+                </span>
+              )}
             </NavLink>
             <NavLink
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"

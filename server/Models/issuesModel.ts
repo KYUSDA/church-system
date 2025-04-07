@@ -4,6 +4,7 @@ interface TIssue {
     user: string;
     title: string;
     description: string;
+    isRead: boolean;
 }
 
 export const issuesSchema = new mongoose.Schema<TIssue>({
@@ -17,6 +18,10 @@ export const issuesSchema = new mongoose.Schema<TIssue>({
     description:{
         type: String,
         required: true
+    },
+    isRead:{
+        type: Boolean,
+        default: false
     }
 },{timestamps:true});
 

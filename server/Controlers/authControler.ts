@@ -6,9 +6,9 @@ import { redis } from "../utils/redis";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import authModel from "../Models/authModel";
-import { sendToken } from "../utils/jwt";
+import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 import validator from 'validator'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import { IUser } from "../Models/authModel";
 
 
@@ -214,6 +214,8 @@ const memberLogout = catchAsyncErrors(async (req: Request, res: Response, next: 
   try {
     // Clear cookies
     res.cookie("access_token", "", { maxAge: 1 });
+    res.cookie("refresh_token", "", { maxAge: 1 });
+    res.clearCookie("access_token", { path: "/" });
 
     const redisUser = req.user?.id;
     console.log("Full request user object:", req.user);
@@ -239,6 +241,51 @@ const memberLogout = catchAsyncErrors(async (req: Request, res: Response, next: 
   }
 });
 
+
+
+//update access-token
+export const UpdateAccessToken = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const refresh_token = req.cookies.refresh_token;
+      if (!refresh_token) {
+        return next(new ErrorHandler("Refresh token not found", 401));
+      }
+
+      const decoded = jwt.verify(
+        refresh_token,
+        process.env.REFRESH_TOKEN as string
+      ) as JwtPayload;
+      if (!decoded) {
+        return next(new ErrorHandler("Refresh token not found", 401));
+      }
+
+      //const user = userModel.findById(decoded.id);
+      const session = (await redis.get(decoded.id)) as string;
+      const user = JSON.parse(session);
+      req.user = user;
+
+      const accessToken = jwt.sign(
+        { id: user._id },
+        process.env.ACCESS_TOKEN as string,
+        { expiresIn: "60m" }
+      );
+      const refreshToken = jwt.sign(
+        { id: user._id },
+        process.env.REFRESH_TOKEN as string,
+        { expiresIn: "7d" }
+      );
+
+      //create new cookies
+      res.cookie("access_token", accessToken, accessTokenOptions);
+      res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
+      res.status(200).json({ success: true, accessToken });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
 
 
 
@@ -384,6 +431,7 @@ export default {
   memberSignIn,
   ActivateUser,
   memberLogout,
+  UpdateAccessToken,
   changePassword,
   updateUserBirthday,
   memberResetToken,

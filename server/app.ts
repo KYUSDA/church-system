@@ -10,6 +10,7 @@ import quizzeRoute from "./Router/quizzeRoute";
 import devotionRoute from "./Router/devotionRoute";
 import prayerRequestRouter from "./Router/prayerRoute";
 import cookieParser from 'cookie-parser';
+import notificationRouter from './Router/notificationRouter';
 
 const app = express();
 app.use(express.json());
@@ -52,6 +53,7 @@ app.use("/kyusda/v1/family/", familyRoute);
 app.use("/kyusda/v1/quizzes/",quizzeRoute);
 app.use('/kyusda/v1/devotion/',devotionRoute);
 app.use("/kyusda/v1/prayers/", prayerRequestRouter);
+app.use("/kyusda/v1/notification/", notificationRouter);
 
 //test 
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {

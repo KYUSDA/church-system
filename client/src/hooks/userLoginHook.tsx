@@ -13,7 +13,7 @@ interface FormData {
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [authLogin] = useAuthLoginMutation();
+  const [authLogin,{isLoading}] = useAuthLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,21 +22,28 @@ export const useLogin = () => {
     setLoading(true);
 
     try {
-      const resp = await authLogin(values).unwrap(); // ✅ Use unwrap() to handle errors
+      const resp = await authLogin(values).unwrap(); // ✅ Unwrap to handle errors
 
       if (resp) {
-        // ✅ Extract user and token from response
         const { user, accessToken } = resp;
 
-        // ✅ Dispatch to Redux store
+        // ✅ Store user data in Redux
         dispatch(
           login({
             user,
             accessToken,
+            expiresIn: 3600, 
           })
         );
+
         toast.success("Login successful");
-        navigate("/member/dashboard");
+
+        // ✅ Redirect based on role
+        if (user.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/member/dashboard");
+        }
       }
     } catch (err: any) {
       setError(err?.data?.message || "Login failed");
@@ -46,5 +53,5 @@ export const useLogin = () => {
     }
   };
 
-  return { loginUser, loading, error };
+  return { loginUser, loading, error,isLoading };
 };

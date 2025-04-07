@@ -5,7 +5,7 @@ const TriviaPage = () => {
   const navigate = useNavigate();
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-10 text-center text-gray-900">Trivia Levels</h1>
+      <h1 className="text-4xl font-bold mb-10  text-gray-900">Trivia Levels</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {[
           {
