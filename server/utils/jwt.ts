@@ -12,6 +12,7 @@ interface TokenOptions {
 }
 
 const accessTokenExpires = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "60");
+const refreshTokenExpires = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "7");
 
 export const accessTokenOptions: TokenOptions = {
   expires: new Date(Date.now() + accessTokenExpires * 60 * 1000),
@@ -21,9 +22,18 @@ export const accessTokenOptions: TokenOptions = {
   secure: process.env.NODE_ENV === "production",
 };
 
+// refersh to the access token expiration time in seconds
+export const refreshTokenOptions: TokenOptions = {
+  expires: new Date(Date.now() + refreshTokenExpires * 24 * 60 * 60 * 1000),
+  maxAge: refreshTokenExpires * 24 * 60 * 60 * 1000,
+  httpOnly: true,
+  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production",
+};
 
 export const sendToken = async (user: IUser, res: Response) => {
   const access_token = user.signAccessToken();
+  const refresh_token = user.signRefreshToken();
 
   // required fields
   const userData = {
@@ -48,6 +58,7 @@ export const sendToken = async (user: IUser, res: Response) => {
 
   // Set the access token cookie
   res.cookie("access_token", access_token, accessTokenOptions);
+   res.cookie("refresh_token", refresh_token, refreshTokenOptions);
 
   // Return only necessary user details
   res.json({
