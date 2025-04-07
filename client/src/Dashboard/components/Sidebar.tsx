@@ -10,7 +10,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
-	const { user } = useUserData();
+	const { user,userData } = useUserData();
  
 	const fullname = user?.firstName + ' ' + user?.lastName;
 
@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 			<div className="p-4 flex flex-col justify-between h-[calc(100%-5rem)]">
 			  <div className="flex items-center space-x-4 mb-6">
 				<img
-				  src={user?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
+				  src={userData?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
 				  alt="Profile"
 				  className="h-12 w-12 rounded-full object-cover"
 				/>
