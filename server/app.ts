@@ -12,7 +12,7 @@ import prayerRequestRouter from "./Router/prayerRoute";
 import cookieParser from 'cookie-parser';
 import notificationRouter from './Router/notificationRouter';
 
-export const app = express();
+const app = express();
 app.use(express.json());
 
 //body parser
@@ -72,4 +72,6 @@ app.use("/", (error: any, req: Request, res: Response, next: NextFunction) => {
   res.status(error.statusCode).json({success: false, message: error.message})
 })
 
+
+export default app;
 

@@ -8,9 +8,6 @@ import { NextFunction, Request,Response } from "express";
 import { fileURLToPath } from "url";
 import ErrorHandler from "../utils/ErrorHandler";
 
-// Define __dirname manually
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Subscribe to Devotions
 export const subscribeDevotion = async (req: Request, res: Response): Promise<void> => {
