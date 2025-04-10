@@ -8,7 +8,7 @@ import SessionExpiryNotifier from "../../Dashboard/components/SessionExpired";
 
 const AdminDashboard = () => {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 space-y-6">
       <SessionExpiryNotifier />
       <StatsOverview />
       <Analytics  />
