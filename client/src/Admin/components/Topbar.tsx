@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NotificationsNone, Menu, ArrowDropDown } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { BASE_URL } from "../services/userServices";
 import useUserData from "../../Dashboard/components/userdata";
 import { useLogout } from "../../hooks/userLogoutHook";
@@ -36,7 +36,7 @@ const Topbar = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
 
   if(!user) return null;
   return (
-    <div className="w-full h-14 bg-white sticky top-0 z-50 flex items-center px-5 justify-between shadow-md">
+       <div className="flex justify-between items-center sticky top-0 z-50 shadow-md bg-white border-b border-gray-200 px-4 py-3">
       {/* Menu Button for Small Screens */}
       {toggleSidebar && (
         <button className="lg:hidden text-gray-700" onClick={toggleSidebar}>
@@ -44,9 +44,13 @@ const Topbar = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
         </button>
       )}
 
-      <div className="font-bold text-2xl hidden text-blue-900 cursor-pointer lg:block">
-        KYUSDA ADMIN
-      </div>
+      
+      <NavLink to="/admin/dashboard" className="hidden space-x-3 lg:flex items-center">
+      <svg className="h-8 w-8 text-blue-600" viewBox="0 0 24 24">
+        <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3m6.82 6L12 12.72 5.18 9 12 5.28 18.82 9M17 16l-5 2.72L7 16v-3.73L12 15l5-2.73V16z"></path>
+      </svg>
+      <span className="text-xl font-bold">KYUSDA</span>
+      </NavLink>
 
       <div className="flex items-center space-x-4 ml-auto">
         {/* Notification Icon */}
