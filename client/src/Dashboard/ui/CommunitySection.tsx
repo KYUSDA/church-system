@@ -15,18 +15,31 @@ interface Member {
   birthday: string | null; // Allow null if the field is missing
 }
 
-const getUpcomingBirthdays = (members: Member[]): Member[] => {
+const getUpcomingBirthdays = (members: Member[]): { name: string; date: string }[] => {
   const today = dayjs();
   const startOfWeek = today.startOf("week");
   const endOfWeek = today.endOf("week");
 
-  return members.filter((user) => {
-    if (!user.birthday) return false; // Skip users without a birthday field
+  const birthdays: { name: string; date: string }[] = [];
+
+  members.forEach((user) => {
+    if (!user.birthday) return;
 
     const birthday = dayjs(user.birthday);
-    // Check if the birthday is within the current week, and if it is the same date or in the future
-    return birthday.isSameOrAfter(startOfWeek) && birthday.isSameOrBefore(endOfWeek);
+    const birthdayThisYear = birthday.year(today.year());
+
+    if (
+      birthdayThisYear.isSameOrAfter(startOfWeek, "day") &&
+      birthdayThisYear.isSameOrBefore(endOfWeek, "day")
+    ) {
+      birthdays.push({
+        name: `${user.firstName} ${user.lastName}`,
+        date: birthdayThisYear.format("MMMM D"),
+      });
+    }
   });
+
+  return birthdays;
 };
 
 const CommunitySection: React.FC = () => {
@@ -41,10 +54,7 @@ const CommunitySection: React.FC = () => {
           lastName: user.lastName,
           birthday: user.birthday instanceof Date ? user.birthday.toISOString() : user.birthday, // Ensure date is in string format
         }))
-      ).map((user) => ({
-        name: `${user.firstName} ${user.lastName}`,
-        date: dayjs(user.birthday).format("MMMM D"),
-      }));
+      );
       setBirthdays(upcoming);
     }
   }, [membersData]);
