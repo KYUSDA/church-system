@@ -5,6 +5,7 @@ import cloudinary from "cloudinary";
 import authModel from "../Models/authModel";
 import ErrorHandler from "../utils/ErrorHandler";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
+import { sendMail } from "../utils/mail";
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -212,3 +213,52 @@ export const updateTriviaNumbers = catchAsyncErrors(async(req:Request, res:Respo
     return next(new ErrorHandler(error.message, 400)); 
   }
 })
+
+
+
+export const sendBirthdayWishes = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+
+    if (!email || (Array.isArray(email) && email.length === 0)) {
+      return next(new ErrorHandler("Please provide at least one email address", 400));
+    }
+
+    // check if user is admin and is logged in
+    const userId = req.user?.id;
+    if (!userId) {
+      return next(new ErrorHandler("Please login to send birthday wishes", 401));
+    }
+
+    // Normalize to array (supports single email or multiple)
+    const emails = Array.isArray(email) ? email : [email];
+
+    const users = await authModel.find({ email: { $in: emails } });
+
+    if (users.length === 0) {
+      return next(new ErrorHandler("No users found for the provided emails", 404));
+    }
+
+    // Loop through each user and send personalized email
+    for (const user of users) {
+      const data = {
+        name: user.firstName,
+        birthday: user.birthday,
+        email: user.email,
+        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s',
+        dashboardUrl:`${process.env.FRONTEND_URL}/member/dashboard`,
+      };
+
+      await sendMail({
+        email: user.email,
+        subject: "Happy Birthday! 🎉",
+        template: "birthdayWishes.ejs",
+        data,
+      });
+    }
+
+    res.status(200).json({ success: true, message: "Birthday wishes sent successfully" });
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400));
+  }
+});
