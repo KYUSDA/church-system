@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/userLogoutHook";
-import axios from "axios"; 
+import axios from "axios";
 import { updateAuthToken } from "../../store/slices/userSlice";
 import { BASE_URL } from "../../Admin/services/userServices";
 
@@ -17,13 +17,13 @@ const SessionExpiryNotifier = () => {
     const refreshToken = async () => {
       try {
         const response = await axios.post(
-          `${BASE_URL}/member/update-accesstoken`, // Adjust the endpoint URL as per your setup
+          `${BASE_URL}/member/update-accesstoken`,
           {},
-          { withCredentials: true } // Ensure cookies (refresh_token) are sent
+          { withCredentials: true }
         );
         const { accessToken } = response.data;
-        const expiresAt = Date.now() + 60 * 60 * 1000; // 60 minutes from now
-        dispatch(updateAuthToken({ accessToken, expiresAt })); // Update Redux state
+        const newExpiresAt = Date.now() + 60 * 60 * 1000; // 60 minutes from now
+        dispatch(updateAuthToken({ accessToken, expiresAt: newExpiresAt })); // Update Redux state
         setIsExpired(false); // Reset expiration flag
       } catch (error) {
         console.error("Failed to refresh token:", error);
@@ -34,7 +34,8 @@ const SessionExpiryNotifier = () => {
 
     const checkTokenExpiry = () => {
       if (!expiresAt) return; // No token to check
-      const timeLeft = expiresAt - Date.now();
+      const expiresAtTime = typeof expiresAt === "string" ? Number(expiresAt) : expiresAt; // Ensure expiresAt is a number
+      const timeLeft = expiresAtTime - Date.now();
       if (timeLeft <= 0) {
         // Token has expired
         setIsExpired(true);
