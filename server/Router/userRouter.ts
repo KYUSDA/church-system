@@ -9,6 +9,7 @@ import {
   updateScore,
   getAllScores,
   updateTriviaNumbers,
+  sendBirthdayWishes,
 } from "../Controlers/userControler";
 import requireAuth, { authorizeRoles } from "../middleware/authmiddleware";
 import { createIssue, getIssue, getIssues, updateIssue } from "../Controlers/issueController";
@@ -26,6 +27,7 @@ userRouter.put("/update-avatar/:id",upload.single("avatar"),updateUserAvatar);
 userRouter.put("/update-scores",requireAuth, updateScore);
 userRouter.put("/update-trivias",requireAuth,updateTriviaNumbers);
 userRouter.delete("/delete-user/:id",requireAuth, authorizeRoles("admin"),deleteUser)
+userRouter.post("/celebrate-birthday", requireAuth, authorizeRoles("admin"), sendBirthdayWishes)
 
 // issues
 userRouter.post("/report-issue", requireAuth, createIssue);
