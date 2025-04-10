@@ -1,6 +1,7 @@
 
 
 import {createContext,Dispatch,SetStateAction,useContext,useState} from "react";
+import SessionExpiryNotifier from "../Dashboard/components/SessionExpired";
 
 
 interface IContext {
@@ -13,7 +14,6 @@ export const AppContext = createContext<IContext | undefined>(undefined);
 
 export default function ProviderFunction({children}: {children: React.ReactNode}) {
   const [activationToken, setActivationToken] = useState<string | null>(null);
-
 
 
   return (
