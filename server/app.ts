@@ -23,6 +23,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 // check if workflow is working
+// check if extraction well
 
 const allowedOrigins = [
   "http://localhost:5173",
