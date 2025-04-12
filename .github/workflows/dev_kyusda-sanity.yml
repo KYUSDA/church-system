@@ -71,5 +71,5 @@ jobs:
         with:
           app-name: 'kyusda-sanity'
           slot-name: 'Production'
-          package: ./release.zip
+          package: .
           verbose: true
