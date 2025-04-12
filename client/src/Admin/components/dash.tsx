@@ -4,7 +4,7 @@ import Leaderboard from "./dashboard/Leaderboard";
 import UpcomingBirthdays from "./dashboard/UpcomingBirthdays";
 import QuickActions from "./dashboard/QuickActions";
 import UpcomingEvents from "./dashboard/UpcomingEvents";
-import SessionExpiryNotifier from "../../Dashboard/components/SessionExpired";
+import SessionExpiryNotifier from "../../utils/SessionExpired";
 
 const AdminDashboard = () => {
   return (
