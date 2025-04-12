@@ -35,6 +35,9 @@ jobs:
         with:
           name: react-client
           path: client/build
+          
+      - name: Verify build output
+        run: ls -la client/build
 
   deploy:
     runs-on: ubuntu-latest
