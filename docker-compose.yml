@@ -30,6 +30,9 @@ services:
       - ADMIN_EMAIL=westscrip6378@gmail.com
       - CLIENT_URL=http://localhost:5173
       - FRONTEND_URL=http://localhost:5173
+      - SANITY_PROJECT_ID=sgmu0lrq
+      - SANITY_DATASET=production
+      - SANITY_API_TOKEN=sk0MvfKD103oqOs5PGzZMThedbLgDAsg1ojGTfBQdQdJMk3Jb9CpMgCp9Xv9YZDXBlYt3zFKN4hQOBSEMWcZAnICVAQZNydbTlMDl34Z7NGr8yB88fqIFFyw8nJmvwCtpAObFbFTreM1YTwcpIArWi4cBPZYM1l3FesmbB3U4xq9lrxjtRjZ
       - CLOUDINARY_CLOUD_NAME=ndekei
       - CLOUDINARY_API_KEY=936296614289215
       - CLOUDINARY_API_SECRET=6lC__lNWQfnACkSqG3FW52XiL1g
@@ -47,12 +50,8 @@ services:
     build: ./backend_sanity
     ports:
       - "3333:3333"  # Maps 3333 on your machine to 3333 in container
-    environment:
-      - SANITY_PROJECT_ID=sgmu0lrq
-      - SANITY_DATASET=production
-      - SANITY_API_TOKEN=sk0MvfKD103oqOs5PGzZMThedbLgDAsg1ojGTfBQdQdJMk3Jb9CpMgCp9Xv9YZDXBlYt3zFKN4hQOBSEMWcZAnICVAQZNydbTlMDl34Z7NGr8yB88fqIFFyw8nJmvwCtpAObFbFTreM1YTwcpIArWi4cBPZYM1l3FesmbB3U4xq9lrxjtRjZ
-    # volumes:
-    #   - ./backend_sanity:/app  # Uncomment for development
+    volumes:
+      - ./backend_sanity:/app  # Uncomment for development
 
   # MongoDB
   mongo:

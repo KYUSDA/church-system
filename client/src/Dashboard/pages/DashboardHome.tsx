@@ -7,7 +7,7 @@ import ProfileStats from '../ui/profileStats';
 import SubscriptionSection from '../ui/devotionSubscription';
 import { getTimeOfDayGreeting } from '../components/NavBar';
 import BirthdayModal from '../../Auth/birthday';
-import SessionExpiryNotifier from '../components/SessionExpired';
+import SessionExpiryNotifier from '../../utils/SessionExpired';
 
 const DashboardHome: React.FC = () => {
   const { user } = useUserData();
