@@ -1,0 +1,68 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy React app to Azure Web App - kyusda-client
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # or 22.x if your React app requires it
+
+      - name: Install and build client
+        working-directory: ./client
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-client
+          path: client/build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: react-client
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A3A9C4E516384A618DCF9A4FCDC93A12 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4DBD0980D82B4DA7B1C62730FE18A377 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F63111A8EC394AF5B779DB195F942ADD }}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'kyusda-client'
+          slot-name: 'Production'
+          package: .   
