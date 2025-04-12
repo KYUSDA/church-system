@@ -7,27 +7,25 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 w-64 h-screen overflow-y-auto overflow-x-hidden text-white transform transition-transform duration-300 ease-in-out 
-        ${isSidebarOpen ? "translate-x-0 z-[100]" : "-translate-x-full"} lg:translate-x-0`}
-      >
+        className={`fixed top-0 left-0 h-screen bg-white shadow-lg transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:w-64 ${
+          isSidebarOpen ? "translate-x-0 w-64 z-[100]" : "-translate-x-full"
+        }`}>
         <Sidebar isOpen={isSidebarOpen} closeSidebar={() => setIsSidebarOpen(false)} />
       </div>
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? "" : "lg:ml-64"}`}>
+      {/* <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? "" : "lg:ml-64"}`}> */}
+      <div className="flex flex-col flex-grow overflow-y-auto">
         {/* Topbar */}
         <Topbar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
         {/* Page Content Wrapper */}
-        <div className="flex-1  p-4 bg-gray-100">
-        <Toaster position="top-center" richColors />
-          <div className="flex-1 flex flex-col">{children}</div>
+          <div className="flex-1 flex flex-col p-2">{children}</div>
         </div>
       </div>
-    </div>
   );
 };
 

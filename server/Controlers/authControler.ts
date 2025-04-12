@@ -180,7 +180,7 @@ export const memberSignIn = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { password, email } = req.body;
-      console.log(password,email)
+     
       if (!password || !email) {
         return next(new ErrorHandler("Please provide all the fields", 400));
       }

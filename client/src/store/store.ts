@@ -19,7 +19,7 @@ import { adminApi } from "../Admin/services/userServices";
 const persistConfig = {
   key: "auth",
   storage,
-  whitelist: ["user", "accessToken", "isAuthenticated"],
+  whitelist: ["user", "accessToken", "isAuthenticated","expiresAt"],
 };
 
 const persistAuthReducer = persistReducer(persistConfig, authSlice);
