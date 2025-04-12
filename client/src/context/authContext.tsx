@@ -1,8 +1,6 @@
 
 
 import {createContext,Dispatch,SetStateAction,useContext,useState} from "react";
-import SessionExpiryNotifier from "../Dashboard/components/SessionExpired";
-
 
 interface IContext {
   activationToken: string | null;

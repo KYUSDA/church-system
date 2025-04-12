@@ -1,6 +1,6 @@
 // src/context/SessionProvider.tsx
 import React from "react";
-import SessionExpiryNotifier from "../Dashboard/components/SessionExpired";
+import SessionExpiryNotifier from "../utils/SessionExpired";
 
 const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
