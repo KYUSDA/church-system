@@ -49,6 +49,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Ensure a full repository checkout
+          repository: KYUSDA/church-system # Explicitly specify the repository
       - uses: actions/setup-node@v3
         with:
           node-version: '20'
