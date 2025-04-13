@@ -1,9 +1,11 @@
-name: Build and deploy Node.js app to Azure Web App - kyusda-sanity
+name: Build Sanity backend app - kyusda-sanity (Dev)
 
 on:
   push:
     branches:
       - dev
+    paths:
+      - 'backend_sanity/**'
   workflow_dispatch:
 
 jobs:
@@ -26,7 +28,7 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Zip artifact for deployment
+      - name: Zip artifact for future deployment
         working-directory: ./backend_sanity
         run: zip -r ../release.zip .
 
@@ -35,37 +37,3 @@ jobs:
         with:
           name: sanity-package
           path: ./release.zip
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: sanity-package
-
-      - name: Unzip artifact (optional)
-        run: unzip release.zip
-
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8DC721899B8B4F12AADCB98EEE389186 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6E8689F74ABE47C0A1DB6EC885082DD7 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_34DA169816AD4B238D1C53F5CF0DFA0C }}
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'kyusda-sanity'
-          slot-name: 'Production'
-          package: release.zip
