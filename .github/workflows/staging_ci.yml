@@ -1,0 +1,106 @@
+name: CI - Build and Test All Projects
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  # --- Client Build ---
+  build-client:
+    name: Build Client
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+
+  # --- Backend API Build ---
+  build-api:
+    name: Build Backend API
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+
+  # --- Sanity Studio Build ---
+  build-sanity:
+    name: Build Sanity Studio
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend_sanity
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+
+  # --- Auto PR to Staging after All Builds Pass ---
+  create-pr-to-staging:
+    name: Create PR to Staging
+    runs-on: ubuntu-latest
+    needs:
+      - build-client
+      - build-api
+      - build-sanity
+    steps:
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "CI: Auto PR from dev to staging"
+          base: staging
+          branch: dev
+          title: "CI: Auto PR from dev to staging"
+          body: |
+            This PR was automatically created after all CI builds passed on `dev`.
+
+  # --- Deploy to Staging (If PR from Dev to Staging is Merged) ---
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: create-pr-to-staging
+    if: github.event.pull_request.merged == 'true' # Only deploy after PR to Staging is merged
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'your-app-name'
+          slot-name: 'staging'
+          package: './' # Change if needed
+          
+  # --- Auto PR to Main after Deployment to Staging ---
+  create-pr-to-main:
+    name: Create PR to Main from Staging
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    steps:
+      - name: Create PR to Main
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "CI: Auto PR from staging to main after deployment"
+          base: main
+          branch: staging
+          title: "CI: Auto PR from staging to main"
+          body: |
+            This PR was automatically created after the deployment to `staging` was successful.
