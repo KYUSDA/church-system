@@ -37,11 +37,8 @@ jobs:
     needs: deploy-server
 
     steps:
-      - name: ⏬ Download Client Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: client-build
-          path: ./client/build
+      - name: ⏬ Checkout code
+        uses: actions/checkout@v4
 
       - name: 🔐 Azure Login
         uses: azure/login@v1
@@ -50,11 +47,17 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: 🔧 Build React App
+        run: |
+          cd client
+          npm ci
+          npm run build
+
       - name: 🚀 Deploy to Azure Web App (Client)
         uses: azure/webapps-deploy@v3
         with:
           app-name: kyusda-client
-          package: ./client/build
+          package: ./client
 
   deploy-sanity:
     name: Deploy Sanity to Production
@@ -62,11 +65,8 @@ jobs:
     needs: deploy-client
 
     steps:
-      - name: ⏬ Download Sanity Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: sanity-build
-          path: ./backend_sanity/dist  # adjust if your output path differs
+      - name: ⏬ Checkout code
+        uses: actions/checkout@v4
 
       - name: 🔐 Azure Login
         uses: azure/login@v1
@@ -75,8 +75,14 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: 🔧 Build Sanity Studio
+        run: |
+          cd sanity
+          npm ci
+          npm run build
+
       - name: 🚀 Deploy Sanity Studio
         uses: azure/webapps-deploy@v3
         with:
           app-name: kyusda-sanity
-          package: ./backend_sanity/dist
+          package: ./sanity
