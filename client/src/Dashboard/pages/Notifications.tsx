@@ -149,7 +149,7 @@ import React, { useEffect, useState } from "react";
 import { Mail, MailOpen, Menu, X as Close } from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from "../../Admin/services/userServices";
-import useUserData from "../components/userdata";
+import useUserData from "../../session/authData";
 
 interface Notification {
   id: string;
@@ -164,9 +164,9 @@ export default function NotificationsPage() {
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { user } = useUserData();
+  const { userData } = useUserData();
 
-  const userId = user?.id || null;
+  const userId = userData?.id || null;
 
   useEffect(() => {
     const fetchNotifications = async () => {
