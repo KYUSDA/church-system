@@ -57,7 +57,7 @@ const Home = () => {
       <Route path="/signIn" element={<SignInSide />}></Route>
       <Route path="/activate-me" element={<Verification />}></Route>
       <Route path="/resetToken" element={<ResetInSide />}></Route>
-      <Route path="/resetPassword" element={<Newpassword />}></Route>
+      <Route path="/resetPassword/:token" element={<Newpassword />}></Route>
       <Route path="/families" element={<Layout><Families /></Layout>}></Route>
       <Route path="/families/:id" element={<Layout><SingleFamily /></Layout>} />
       <Route path="/Departments" element={<Layout><Departments /></Layout>}></Route>
