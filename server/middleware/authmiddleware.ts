@@ -32,6 +32,50 @@ export const requireAuth = catchAsyncErrors(async(req: Request, res: Response, n
     }
 })
 
+export const requireRefreshToken = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const refresh_token = req.cookies.refresh_token;
+
+      if (!refresh_token) {
+        return next(
+          new ErrorHandler(
+            "Refresh token not found. Please log in again...",
+            401
+          )
+        );
+      }
+
+      const decoded = jwt.verify(
+        refresh_token,
+        process.env.REFRESH_TOKEN as string
+      ) as JwtPayload;
+
+      if (!decoded) {
+        return next(new ErrorHandler("Invalid refresh token", 401));
+      }
+
+      const user = await redis.get(decoded.id);
+      if (!user) {
+        return next(
+          new ErrorHandler("User session not found. Please log in again.", 404)
+        );
+      }
+
+      req.user = JSON.parse(user);
+      next();
+    } catch (error) {
+      return next(
+        new ErrorHandler(
+          "Refresh token expired or invalid. Please log in again.",
+          401
+        )
+      );
+    }
+  }
+);
+
+
 //authorize middleware
 export const authorizeRoles = (...roles: string[]) => {
     return async(req: Request, res: Response, next: NextFunction) => {
