@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BellIcon, Settings, LogOutIcon, MenuIcon,HelpCircle } from "lucide-react";
 import { useLogout } from "../../hooks/userLogoutHook";
 import { NavLink } from "react-router-dom";
-import useUserData from "./userdata";
+import useUserData from "../../session/authData";
 import axios from "axios";
 import { BASE_URL } from "../../Admin/services/userServices";
 
@@ -20,9 +20,9 @@ export const getTimeOfDayGreeting = () => {
 const NavBar: React.FC<NavBarProps> = ({ onMenuToggle }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { handleLogout } = useLogout();
-  const { user,userData } = useUserData(); 
+  const { userData } = useUserData(); 
 
-  const userId = user?.id; 
+  const userId = userData?.id; 
 
   const [notifications, setNotifications] = useState([]);
 const [unreadCount, setUnreadCount] = useState(0);
@@ -63,7 +63,7 @@ useEffect(() => {
           <MenuIcon className="w-6 h-6 text-gray-700" />
         </button>
         <h1 className="hidden text-2xl font-bold text-gray-900 lg:flex">
-          {getTimeOfDayGreeting()}, {user?.firstName} 😊
+          {getTimeOfDayGreeting()}, {userData?.firstName} 😊
         </h1>
       </div>
 
@@ -76,7 +76,10 @@ useEffect(() => {
           title="User Menu"
         >
           <img
-            src={userData?.avatar?.url || "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"}
+            src={
+              userData?.avatar?.url ||
+              "https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg"
+            }
             alt="User Avatar"
             className="h-8 w-8 rounded-full object-cover"
           />
@@ -89,7 +92,7 @@ useEffect(() => {
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
               aria-label="Notifications"
               title="Notifications"
-              to={'/member/user-notifications'}
+              to={"/member/user-notifications"}
             >
               <BellIcon className="w-5 h-5 mr-2 text-blue-600" />
               Notifications
@@ -103,7 +106,7 @@ useEffect(() => {
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
               aria-label="Account"
               title="Account"
-              to={'/member/settings'}
+              to={"/member/settings"}
             >
               <Settings className="w-5 h-5 mr-2 text-blue-600" />
               Account
@@ -112,7 +115,7 @@ useEffect(() => {
               className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
               aria-label="Report Issue"
               title="Report Issue"
-              to={'/member/report-issue'}
+              to={"/member/report-issue"}
             >
               <HelpCircle className="w-5 h-5 mr-2 text-blue-600" />
               Report Issue
