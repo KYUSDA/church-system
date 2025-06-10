@@ -6,29 +6,29 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ProviderFunction from "./context/authContext";
-import SessionProvider from "./context/sessionProvider";
 import { Toaster } from "sonner";
+import SessionGuard from "./session/sessionGuard";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ProviderFunction>
-          <SessionProvider>
-            <Toaster
-              position="top-right"
-              richColors
-              closeButton
-              toastOptions={{
-                duration: 5000,
-                style: {
-                  fontSize: "16px",
-                  borderRadius: "8px",
-                },
-              }}
-            />
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+            toastOptions={{
+              duration: 5000,
+              style: {
+                fontSize: "16px",
+                borderRadius: "8px",
+              },
+            }}
+          />
+          <SessionGuard>
             <Home />
-          </SessionProvider>
+          </SessionGuard>
         </ProviderFunction>
       </PersistGate>
     </Provider>
