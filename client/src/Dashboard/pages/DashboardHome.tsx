@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import CommunitySection from '../ui/CommunitySection';
+import BirthdayCard from "../ui/birthdayCard";
 import PersonalGoals from '../ui/PersonalGoals';
-import useUserData from '../components/userdata';
+import useUserData from '../../session/authData';
 import LeaderboardSection from '../ui/leaderBoard';
 import ProfileStats from '../ui/profileStats';
 import SubscriptionSection from '../ui/devotionSubscription';
 import { getTimeOfDayGreeting } from '../components/NavBar';
 import BirthdayModal from '../../Auth/birthday';
-import SessionExpiryNotifier from '../../utils/SessionExpired';
+import CalendarSection from '../ui/upcomingEvents';
 
 const DashboardHome: React.FC = () => {
-  const { user } = useUserData();
+  const { userData,user } = useUserData();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !userData) return;
 
     const hasSeenBirthdayModal = localStorage.getItem("birthdayModalSeen");
 
     // ✅ Check if birthday is null, undefined, or an invalid date
-    const isBirthdayValid = user.birthday && !isNaN(new Date(user.birthday).getTime());
+    const isBirthdayValid =
+      userData.birthday && !isNaN(new Date(userData.birthday).getTime());
 
     if (!isBirthdayValid) {
       if (!hasSeenBirthdayModal || hasSeenBirthdayModal === "false") {
@@ -28,36 +29,38 @@ const DashboardHome: React.FC = () => {
     } else {
       localStorage.setItem("birthdayModalSeen", "true"); // Prevent future pop-ups
     }
-  }, [user]);
+  }, [userData]);
 
   const handleCloseModal = () => {
     setShowModal(false);
     localStorage.setItem("birthdayModalSeen", "true");
   };
 
-  if (!user) return null;
+  if (!userData) return null;
 
   return (
-    <div className="flex w-full">
-      <SessionExpiryNotifier />
+    <div className="flex w-full px-4">
       <BirthdayModal isOpen={showModal} onClose={handleCloseModal} />
-      <div className='w-full'>
+      <div className="w-full">
         <h1 className="text-2xl font-bold text-gray-900 text-center mt-2 lg:hidden">
-          {getTimeOfDayGreeting()} {user.firstName} 😊
+          {getTimeOfDayGreeting()} {userData.firstName} 😊
         </h1>
 
-        <ProfileStats user={user} />
+        <ProfileStats user={userData} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <SubscriptionSection user={user} />
-          <PersonalGoals />
+        {/* upcoming events */}
+        <div className="grid grid-cols-1 my-6 lg:grid-cols-2 gap-8">
+          <CalendarSection />
+          <BirthdayCard />
         </div>
 
-        <div className="grid grid-cols-2 gap-8 m-4 max-lg:grid-cols-1">
-          <CommunitySection />
-          <div className="p-6">
-            <LeaderboardSection />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <PersonalGoals />
+          <LeaderboardSection />
+        </div>
+
+        <div>
+          <SubscriptionSection />
         </div>
       </div>
     </div>
