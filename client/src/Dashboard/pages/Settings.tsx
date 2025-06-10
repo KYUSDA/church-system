@@ -2,11 +2,11 @@ import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import ProfilePic from "../../assets/profileImage.png";
 import { getBaseUrl } from "../../services/authService";
-import useUserData from "../components/userdata";
+import useUserData from "../../session/authData";
 import { toast } from "sonner";
 
 const Settings = () => {
-  const { userData, user, setUserData } = useUserData();
+  const { userData, setUserData, refetchUser } = useUserData();
   const [preview, setPreview] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
@@ -23,14 +23,14 @@ const Settings = () => {
     const formData = new FormData();
     formData.append("avatar", selectedFile);
 
-    if (!user || !user.id) {
+    if (!userData || !userData.id) {
       toast.error("User not found. Please log in again.");
       return;
     }
 
     try {
       if (userData) {
-        const uploadUrl = `${baseUrl}/user/update-avatar/${user.id}`;
+        const uploadUrl = `${baseUrl}/user/update-avatar/${userData.id}`;
 
         const response = await fetch(uploadUrl, {
           method: "PUT",
@@ -49,6 +49,7 @@ const Settings = () => {
         if (data.user?.avatar?.url) {
           setUserData((prev: any) => ({ ...prev, avatar: data.user.avatar.url }));
           toast.success("Profile picture updated successfully!");
+          await refetchUser(); 
         } else {
           toast.error("Failed to update profile picture.");
         }
