@@ -1,35 +1,48 @@
 import { useState, useEffect } from "react";
-import { TUser } from "../components/userdata";
+import useUserData from "../../session/authData";
 import { getBaseUrl } from "../../services/authService";
 
-const SubscriptionSection = ({ user }: { user: TUser }) => {
-  const [email, setEmail] = useState(user?.email || "");
+const SubscriptionSection = () => {
+  const { userData, user } = useUserData();
+  const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [loading, setLoading] = useState(true); // Track loading state
-  const [subscribing, setSubscribing] = useState(false); // Track subscription process
+  const [loading, setLoading] = useState(true);
+  const [subscribing, setSubscribing] = useState(false);
   const [message, setMessage] = useState("");
   const baseUrl = getBaseUrl();
 
   useEffect(() => {
+    if (userData?.email) {
+      setEmail(userData.email);
+    }
+  }, [userData]);
+
+
+  useEffect(() => {
     const checkSubscription = async () => {
+      if (!email) return;
+
       try {
-        const response = await fetch(`${baseUrl}/devotion/getOneSubscriber`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${baseUrl}/devotion/getOneSubscriber/${encodeURIComponent(email)}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          }
+        );
 
         const data = await response.json();
         setIsSubscribed(data.subscribed);
       } catch (error) {
         console.error("Error checking subscription:", error);
       } finally {
-        setLoading(false); // Stop loading after request finishes
+        setLoading(false);
       }
     };
 
-    if (user) checkSubscription();
-  }, [user]);
+    checkSubscription();
+  }, [email]);
 
   const handleSubscription = async () => {
     if (!email) {
@@ -37,7 +50,7 @@ const SubscriptionSection = ({ user }: { user: TUser }) => {
       return;
     }
 
-    setSubscribing(true); // Start subscribing process
+    setSubscribing(true);
     setMessage("");
 
     try {
@@ -57,13 +70,15 @@ const SubscriptionSection = ({ user }: { user: TUser }) => {
       console.error("Subscription error:", error);
       setMessage("An error occurred. Please try again later.");
     } finally {
-      setSubscribing(false); // End subscribing process
+      setSubscribing(false);
     }
   };
 
   return (
     <div className="mt-6 bg-white rounded-xl p-4 shadow-lg">
-      <h4 className="text-lg font-semibold mb-2">Subscribe for Daily Devotions</h4>
+      <h4 className="text-lg font-semibold mb-2">
+        Subscribe for Daily Devotions
+      </h4>
       <p className="text-sm text-gray-600 mb-3">
         Enter your email to receive devotions directly to your inbox.
       </p>
@@ -74,7 +89,7 @@ const SubscriptionSection = ({ user }: { user: TUser }) => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
           className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          disabled={isSubscribed || subscribing} // Disable if subscribed or subscribing
+          disabled={isSubscribed || subscribing}
         />
         <button
           onClick={handleSubscription}
@@ -83,9 +98,15 @@ const SubscriptionSection = ({ user }: { user: TUser }) => {
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
-          disabled={isSubscribed || loading || subscribing} // Disable while checking/subscribing
+          disabled={isSubscribed || loading || subscribing}
         >
-          {loading ? "Checking..." : subscribing ? "Subscribing..." : isSubscribed ? "Subscribed" : "Subscribe"}
+          {loading
+            ? "Checking..."
+            : subscribing
+            ? "Subscribing..."
+            : isSubscribed
+            ? "Subscribed"
+            : "Subscribe"}
         </button>
       </div>
       {message && <p className="mt-2 text-sm text-red-700">{message}</p>}
