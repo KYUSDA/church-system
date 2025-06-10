@@ -1,124 +1,84 @@
-import { useEffect, useState } from "react";
-import CalenderSection from "../ui/CalenderSection";
-import MinistryUpdates from "../ui/MinistryUpdates"
-import Loader from "../components/loader";
-const ResourceCenter = () => {
+import { useState } from "react";
+import Sermons from "./library/sermons";
+import Songs from "./library/songs";
+import Books from "./library/books";
+import Lessons from "./library/lessons";
+import DiscoveryGuides from "./library/discoveryGuides";
 
-     const [loading, setLoading] = useState(true);
-    
-      useEffect(() => {
-        setTimeout(() => setLoading(false), 1000);
-      }, []);
+const tabs = [
+  { label: "Sermons", key: "sermons" },
+  { label: "Songs", key: "songs" },
+  { label: "Books", key: "books" },
+  { label: "Lessons", key: "lessons" },
+  { label: "Discovery Guides", key: "discoveryGuides" },
+];
 
-    const studyMaterials = [
-        { name: "November Newsletter", url: "/downloads/november-newsletter.pdf" },
-        { name: "Fundamental Beliefs", url: "/downloads/fundamental-beliefs.pdf" },
-        { name: "Devotional Guide 2024", url: "/downloads/devotional-guide-2024.pdf" },
-        { name: "Lesson Guide", url: "/downloads/lesson-guide" }
-    ];
+const LibraryPage = () => {
+  const [activeTab, setActiveTab] = useState("sermons");
 
-    const latestSermons = [
-        {
-            title: "Faith in Action",
-            date: "November 26, 2024",
-            youtubeUrl: "https://www.youtube.com/watch?v=abc123"
-        },
-        {
-            title: "The Power of Prayer",
-            date: "November 19, 2024",
-            youtubeUrl: "https://www.youtube.com/watch?v=def456"
-        },
-        {
-            title: "Walking in Grace",
-            date: "November 12, 2024",
-            youtubeUrl: "https://www.youtube.com/watch?v=ghi789"
-        },
-    ]
+  const renderContent = () => {
+    switch (activeTab) {
+      case "sermons":
+        return <Sermons />;
+      case "songs":
+        return <Songs />;
+      case "books":
+        return <Books />;
+      case "lessons":
+        return <Lessons />;
+      case "discoveryGuides":
+        return <DiscoveryGuides />;
+      default:
+        return <Sermons />;
+    }
+  };
 
-
-    return (
-        <div>
-             <Loader isLoading={loading} text="Get things ready..." />
-            <div className="grid grid-cols-1 sm:grid-cols-2  gap-8 my-8">
-                <CalenderSection />
-                <MinistryUpdates />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-8">
-                <div className="bg-white p-4 rounded-xl shadow-sm">
-                    <h4 className="font-medium mb-3">Latest Sermons</h4>
-                    <ul className="space-y-2">
-                        {/* Add sermon list items */}
-                        {latestSermons.map((sermon, index) => (
-                            <li
-                                key={index}
-                                className="flex justify-between items-center bg-gray-50 p-4 rounded-lg"
-                            >
-                                <div>
-                                    <strong>{sermon.title}</strong> - {sermon.date}
-                                </div>
-                                <a
-                                    href={sermon.youtubeUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-red-600 hover:text-red-800 flex items-center"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={2}
-                                        stroke="currentColor"
-                                        className="w-5 h-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M10.75 9.75v4.5l3.5-2.25-3.5-2.25zM12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
-                                        />
-                                    </svg>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="bg-white p-4 rounded-xl shadow-sm">
-                    <h4 className="font-medium mb-3">Study Materials</h4>
-                    <ul className="space-y-2">
-                        {/* Add study materials */}
-                        {studyMaterials.map((material, index) => (
-                            <li
-                                key={index}
-                                className="flex justify-between items-center bg-gray-50 p-4 rounded-lg"
-                            >
-                                <span className="font-medium">{material.name}</span>
-                                <a
-                                    href={material.url}
-                                    download
-                                    className="text-blue-600 hover:text-blue-800 flex items-center"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={2}
-                                        stroke="currentColor"
-                                        className="w-5 h-5 mr-2"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"
-                                        />
-                                    </svg>
-                                    Download
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Horizontal Navigation */}
+      {/* <nav className="bg-white shadow-sm border-b p-4">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-2 justify-start sm:justify-center">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`px-4 py-2 rounded-lg font-medium transition ${
+                activeTab === tab.key
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-gray-700 hover:bg-blue-100"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-    )
-}
+      </nav> */}
 
-export default ResourceCenter
+      {/* Filter Controls (optional) */}
+      <div className="flex justify-center my-8">
+        <div className="inline-flex rounded-md shadow-sm">
+          {tabs.map((tab, idx) => (
+        <button
+          key={tab.key}
+          onClick={() => setActiveTab(tab.key)}
+          type="button"
+          className={`px-4 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50
+            ${idx === 0 ? "rounded-l-lg" : ""}
+            ${idx === tabs.length - 1 ? "rounded-r-lg" : ""}
+            ${activeTab === tab.key ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-100"}
+            ${idx !== 0 ? "-ml-px" : ""}
+          `}
+        >
+          {tab.label}
+        </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="flex-1">{renderContent()}</main>
+    </div>
+  );
+};
+
+export default LibraryPage;
