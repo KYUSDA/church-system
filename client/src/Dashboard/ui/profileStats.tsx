@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { TUser } from "../components/userdata";
+import { TUser } from "../../session/authData";
 
 const ProfileStats = ({ user }: {user:TUser}) => {
   const [badges, setBadges] = useState(0);
@@ -27,7 +27,7 @@ const ProfileStats = ({ user }: {user:TUser}) => {
       <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Family Group</h3>
-          <span className="text-xl font-bold text-blue-600">
+          <span className="text-sm font-bold text-blue-600">
             {user?.familyLocated || "Not allocated"}
           </span>
         </div>
@@ -37,7 +37,7 @@ const ProfileStats = ({ user }: {user:TUser}) => {
       <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Badges</h3>
-          <span className="flex gap-1">
+          <span className="flex gap-1 text-blue-600">
             {badges > 0 ? (
               [...Array(badges)].map((_, index) => (
                 <Tooltip key={index} title={`Badge ${index + 1}`}>
