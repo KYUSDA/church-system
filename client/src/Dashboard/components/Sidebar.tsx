@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink} from "react-router-dom";
 import { X, LayoutDashboard, BookOpen, ShieldCheck, HelpCircle, Send, BookCheck, Calendar } from "lucide-react";
-import useUserData from "./userdata";
+import useUserData from "../../session/authData";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,9 +10,9 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
-	const { user,userData } = useUserData();
+	const { userData } = useUserData();
  
-	const fullname = user?.firstName + ' ' + user?.lastName;
+	const fullname = userData?.firstName + " " + userData?.lastName;
 
   const navItems = [
     { path: "/member/dashboard", name: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
