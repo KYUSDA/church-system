@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NotificationsNone, Menu, ArrowDropDown } from "@mui/icons-material";
 import { Link, NavLink } from "react-router-dom";
 import { BASE_URL } from "../services/userServices";
-import useUserData from "../../Dashboard/components/userdata";
+import useUserData from "../../session/authData";
 import { useLogout } from "../../hooks/userLogoutHook";
 
 const Topbar = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
