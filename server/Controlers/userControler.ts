@@ -31,7 +31,7 @@ export const getAll = catchAsyncErrors(async (req: Request, res: Response, next:
 export const getOne = catchAsyncErrors(async (req: Request, resp: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
-    const getOneUser = await Member.findById(id);
+    const getOneUser = await Member.findById(id).select("-password"); // Exclude password for security
 
     if (!getOneUser) {
       return next(new ErrorHandler("User not found", 404));
