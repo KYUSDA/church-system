@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getBaseUrl } from "../../services/authService";
-import useUserData from "../components/userdata";
+import useUserData from "../../session/authData";
 interface LeaderboardEntry {
   _id: number;
   firstName: string;
@@ -12,7 +12,7 @@ const LeaderboardSection = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [userName, setUserName] = useState<string | null>(null);
   const baseUrl = getBaseUrl();
-  const {user} = useUserData();
+  const { userData } = useUserData();
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -24,12 +24,12 @@ const LeaderboardSection = () => {
       }
     };
   
-    if (user) {
-      setUserName(user.firstName);
+    if (userData) {
+      setUserName(userData.firstName);
     }
   
     fetchLeaderboard();
-  }, [baseUrl, user]);
+  }, [baseUrl, userData]);
   
 
   return (
