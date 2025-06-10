@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import AuthLayout from './AuthLayout.js';
+import { getBaseUrl } from '../services/authService.js';
+import { toast } from 'sonner';
 
 const theme = createTheme();
 
@@ -22,28 +24,24 @@ interface ResetTokenResponse {
 export default function ResetInSide(props: ResetInSideProps) {
   const [email, setEmail] = useState<string>('');
   const [token, setToken] = useState<string>('');
+  const baseUrl = getBaseUrl();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setEmail('');
-    const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetToken`;
-    const resp = await fetch(url, {
+    const resp = await fetch(`${baseUrl}/member/resetToken`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     });
     const data: ResetTokenResponse = await resp.json();
-    console.log(data.resetToken);
     if (data.status === 'success') {
-      alert(`Password reset token sent successfully. Check your email.`);
+      toast.success(`Password reset token sent successfully. Check your email.`);
       setToken(data.resetToken);
-      localStorage.setItem('Reset token', data.resetToken);
     } else {
-      alert('Something went wrong.');
+      toast.error('Something went wrong.');
     }
   };
-
-  console.log(token);
 
   return (
     <AuthLayout>
