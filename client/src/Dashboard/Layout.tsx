@@ -23,16 +23,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Main content area */}
-        <div className="flex flex-col flex-grow overflow-y-auto">
-          {/* Navbar */}
-          <NavBar onMenuToggle={toggleSidebar} />
-          {/* Dashboard content */}
-          <div className={`px-4 bg-blue-50 h-full overflow-y-auto `}>
-            {children}
-            <ChatBot />
-          </div>
+      <div className="flex flex-col flex-grow overflow-y-auto">
+        {/* Navbar */}
+        <NavBar onMenuToggle={toggleSidebar} />
+        {/* Dashboard content */}
+        <div className={`bg-gray-50 h-full overflow-y-auto `}>
+          {children}
+          <ChatBot />
         </div>
       </div>
+    </div>
   );
 };
 
