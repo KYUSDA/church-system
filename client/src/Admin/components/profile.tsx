@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetMembersQuery } from "../services/userServices";
-import useUserData from "../../Dashboard/components/userdata";
+import useUserData from "../../session/authData";
 
 const Profile = () => {
   const { data: members, isLoading, error } = useGetMembersQuery();
