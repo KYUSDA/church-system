@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { IUser } from "../Models/authModel";
 import { redis } from "./redis";
-import 'dotenv/config';
+import "dotenv/config";
 
 interface TokenOptions {
   expires: Date;
@@ -38,27 +38,20 @@ export const sendToken = async (user: IUser, res: Response) => {
   // required fields
   const userData = {
     id: user._id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    scores: user.scores,
-    year: user.year,
-    familyLocated: user.familyLocated,
     role: user.role,
-    birthday: user.birthday,
-    createdAt: user.createdAt,
-    easyNumber: user.easyNumber,
-    mediumNumber: user.mediumNumber,
-    hardNumber: user.hardNumber,
-    avatar: user.avatar?.url || null,
   };
 
   // Store user session in Redis with expiration time
-  await redis.set(user._id as string, JSON.stringify(userData), "EX", accessTokenExpires * 60);
+  await redis.set(
+    user._id as string,
+    JSON.stringify(userData),
+    "EX",
+    accessTokenExpires * 60
+  );
 
   // Set the access token cookie
   res.cookie("access_token", access_token, accessTokenOptions);
-   res.cookie("refresh_token", refresh_token, refreshTokenOptions);
+  res.cookie("refresh_token", refresh_token, refreshTokenOptions);
 
   // Return only necessary user details
   res.json({
