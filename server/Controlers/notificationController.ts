@@ -35,7 +35,7 @@ export const createNotification = async (req: Request, res: Response, next: Next
 // Get all notifications for a specific user
 export const getAllNotifications = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = req.user?._id;
+    const userId = req.user?.id;
     if (!userId) {
       return next(new ErrorHandler("User ID is required", 400));
     }
@@ -70,14 +70,14 @@ export const getAllNotifications = async (req: Request, res: Response, next: Nex
 // Update notification state for a user
 export const updateNotificationState = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { notificationId, userId, isRead } = req.body;
+    const { notificationId, userId } = req.body;
     if (!notificationId || !userId) {
       return next(new ErrorHandler("Please provide all fields", 400));
     }
 
     const notificationState = await UserNotificationModel.findOneAndUpdate(
       { notificationId, userId },
-      { isRead},
+      { $set: { isRead: true } },
       { new: true }
     );
 

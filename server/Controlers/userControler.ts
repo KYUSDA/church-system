@@ -1,6 +1,5 @@
 import Member from "../Models/authModel";
 import { NextFunction, Request, Response } from "express";
-import { Multer } from "multer";
 import cloudinary from "cloudinary";
 import authModel from "../Models/authModel";
 import ErrorHandler from "../utils/ErrorHandler";
@@ -262,3 +261,72 @@ export const sendBirthdayWishes = catchAsyncErrors(async (req: Request, res: Res
     return next(new ErrorHandler(error.message, 400));
   }
 });
+
+
+
+// get all users with birthday from today to next 7 days
+export const getUpcomingBirthdays = catchAsyncErrors(
+  async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const today = new Date();                   // e.g. 2025‑06‑18
+      const nextWeek = new Date();
+      nextWeek.setDate(today.getDate() + 7);      // e.g. 2025‑06‑25
+
+      /*  aggregation pipeline
+          1. Build `nextBirthday` = birthday with THIS year's YYYY
+          2. If that day already passed, push it to next year
+          3. Keep docs whose `nextBirthday` is in [today … today+7]
+      */
+      const users = await authModel.aggregate([
+        {
+          $addFields: {
+            nextBirthday: {
+              $dateFromParts: {
+                year: today.getFullYear(),
+                month: { $month: "$birthday" },
+                day: { $dayOfMonth: "$birthday" },
+              },
+            },
+          },
+        },
+        {
+          $addFields: {
+            nextBirthday: {
+              $cond: [
+                { $lt: ["$nextBirthday", today] },
+                {
+                  $dateAdd: { startDate: "$nextBirthday", unit: "year", amount: 1 },
+                },
+                "$nextBirthday",
+              ],
+            },
+          },
+        },
+        {
+          $match: {
+            nextBirthday: { $gte: today, $lte: nextWeek },
+          },
+        },
+        {
+          $project: {
+            firstName: 1,
+            lastName: 1,
+            avatar: 1,
+            nextBirthday: 1,
+          },
+        },
+        { $sort: { nextBirthday: 1 } },
+      ]);
+
+      // if (users.length === 0)
+      //   return res
+      //     .status(404)
+      //     .json({ success: false, message: "No upcoming birthdays" });
+
+      res.status(200).json({ success: true, users });
+    } catch (err: any) {
+      next(new ErrorHandler(err.message, 500));
+    }
+  }
+);
+

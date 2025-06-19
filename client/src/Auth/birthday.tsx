@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { getBaseUrl } from "../services/authService";
 import { toast } from "sonner";
 

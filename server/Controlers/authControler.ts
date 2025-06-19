@@ -6,9 +6,9 @@ import { redis } from "../utils/redis";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import authModel from "../Models/authModel";
-import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
+import { sendToken } from "../utils/jwt";
 import validator from 'validator'
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { IUser } from "../Models/authModel";
 
 
@@ -196,11 +196,7 @@ export const memberSignIn = catchAsyncErrors(
       }
 
       //create cookies
-      try {
         await sendToken(user, res);
-      } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400));
-      }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -214,8 +210,6 @@ const memberLogout = catchAsyncErrors(async (req: Request, res: Response, next: 
   try {
     // Clear cookies
     res.cookie("access_token", "", { maxAge: 1 });
-    res.cookie("refresh_token", "", { maxAge: 1 });
-    res.clearCookie("access_token", { path: "/" });
 
     const redisUser = req.user?.id;
     console.log("Full request user object:", req.user);
@@ -242,53 +236,44 @@ const memberLogout = catchAsyncErrors(async (req: Request, res: Response, next: 
 });
 
 
+// Updated UpdateAccessToken
+// export const UpdateAccessToken = catchAsyncErrors(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       // req.user is already validated by requireRefreshToken middleware
+//       const user = req.user;
+//       if (!user || !user.id) {
+//         return next(new ErrorHandler("User not found", 401));
+//       }
+      
+//       // Generate new access token
+//       const accessToken = jwt.sign(
+//         { id: user.id },
+//         process.env.ACCESS_TOKEN as string,
+//         { expiresIn: `${ACCESS_TOKEN_MINUTES}m` }
+//       );
 
-//update access-token
-export const UpdateAccessToken = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const refresh_token = req.cookies.refresh_token;
-      if (!refresh_token) {
-        return next(new ErrorHandler("Refresh token not found", 401));
-      }
+//       const accessCookieOptions: TokenOptions = {
+//         expires: new Date(Date.now() + ACCESS_TOKEN_MINUTES * 60 * 1000),
+//         maxAge: ACCESS_TOKEN_MINUTES * 60 * 1000,
+//         httpOnly: true,
+//         path: '/',
+//         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+//         secure: process.env.NODE_ENV === "production",
+//       };
 
-      const decoded = jwt.verify(
-        refresh_token,
-        process.env.REFRESH_TOKEN as string
-      ) as JwtPayload;
-      if (!decoded) {
-        return next(new ErrorHandler("Refresh token not found", 401));
-      }
+//       res.cookie("access_token", accessToken, accessCookieOptions);
+//       res.status(200).json({ 
+//         success: true, 
+//         accessToken // For frontend validation
+//       });
+//     } catch (error: any) {
+//       return next(new ErrorHandler(error.message, 500));
+//     }
+//   }
+// );
 
-      //const user = userModel.findById(decoded.id);
-      const session = (await redis.get(decoded.id)) as string;
-      const user = JSON.parse(session);
-      req.user = user;
-
-      const accessToken = jwt.sign(
-        { id: user._id },
-        process.env.ACCESS_TOKEN as string,
-        { expiresIn: "60m" }
-      );
-      const refreshToken = jwt.sign(
-        { id: user._id },
-        process.env.REFRESH_TOKEN as string,
-        { expiresIn: "7d" }
-      );
-
-      //create new cookies
-      res.cookie("access_token", accessToken, accessTokenOptions);
-      res.cookie("refresh_token", refreshToken, refreshTokenOptions);
-
-      res.status(200).json({ success: true, accessToken });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, 400));
-    }
-  }
-);
-
-
-
+// reset token
 export const memberResetToken = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   if (!email) return next(new ErrorHandler("Email is required", 400));
@@ -431,7 +416,6 @@ export default {
   memberSignIn,
   ActivateUser,
   memberLogout,
-  UpdateAccessToken,
   changePassword,
   updateUserBirthday,
   memberResetToken,

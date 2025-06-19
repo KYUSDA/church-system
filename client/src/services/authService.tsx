@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { logout, updateAuthToken } from '../session/userSlice';
-import { AppDispatch, RootState } from '../store/store';
+import { logoutCompletely } from '../hooks/userLogoutHook';
 
-const BASE_URL = 'http://localhost:8000/kyusda/v1';
+export const BASE_URL = 'http://localhost:8000/kyusda/v1';
 
 export const getBaseUrl = () => {
     return BASE_URL;
@@ -31,7 +30,6 @@ interface LoginResponse {
       id: string;
       role: string;
     };
-    accessToken: string;
   }
 
   interface TActivate {
@@ -44,35 +42,28 @@ interface LoginResponse {
     description: string;
   }
 
-  interface RefreshTokenResponse {
-    success: boolean;
-    accessToken: string;
+  interface TNotification {
+    notifications: {
+      id: string;
+      title: string;
+      decription: string;
+      isRead: boolean;
+      createdAt: string;
+    }
+  }
+
+  interface Upcoming {
+    users: {
+      firstName: string;
+      lastName: string;
+      nextBirthday: string; // ISO string from API
+    };
   }
 
   const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
-    credentials: "include",
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.accessToken;
-      if (token) headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
+    credentials: "include"
   });
-
-  const refreshAccessToken = async (dispatch: AppDispatch) => {
-    try {
-      const res = await dispatch(
-        api.endpoints.updateAccessToken.initiate()
-      ).unwrap();
-      const expiresAt = Date.now() + 3600 * 1000;
-      dispatch(updateAuthToken({ accessToken: res.accessToken, expiresAt }));
-      return res.accessToken;
-    } catch (error) {
-      console.error("Failed to refresh access token:", error);
-      dispatch(logout());
-      return null;
-    }
-  };
 
   // Enhanced base query with automatic token refresh
   const baseQueryWithReauth: typeof baseQuery = async (
@@ -80,15 +71,19 @@ interface LoginResponse {
     api,
     extraOptions
   ) => {
+    
     let result = await baseQuery(args, api, extraOptions);
 
-    if (result.error && result.error.status === 401) {
-      const newToken = await refreshAccessToken(api.dispatch);
-      if (newToken) {
-        result = await baseQuery(args, api, extraOptions);
-      }
+    if (
+      result.error?.status === 401 &&
+      typeof result.error?.data === "object" &&
+      result.error?.data !== null &&
+      "message" in result.error.data &&
+      (result.error.data as { message?: string }).message === "TokenExpiredError"
+    ) {
+      await logoutCompletely(); // logout if token is actually expired
     }
-
+    
     return result;
   };
   
@@ -135,20 +130,28 @@ export const api = createApi({
       }),
     }),
 
-    // update access token
-    updateAccessToken: builder.mutation<RefreshTokenResponse, void>({
-      query: () => ({
-        url: "/member/update-accesstoken",
-        method: "POST",
-      }),
-    }),
-
     // report issue
     reportIssue: builder.mutation<any, TIssue>({
       query: (data) => ({
         url: "/user/report-issue",
         method: "POST",
         body: data,
+      }),
+    }),
+
+    // get all notification
+    getAllNotifications: builder.query<TNotification, void>({
+      query: () => ({
+        url: "/notification/getAll-notification",
+        method: "GET",
+      }),
+    }),
+
+    // get upcoming birthdays
+    getBirthdays: builder.query<Upcoming, void>({
+      query: () => ({
+        url: "/user/birthdays",
+        method: "GET",
       }),
     }),
   }),
@@ -159,7 +162,8 @@ export const {
     useAuthLoginMutation,
     useAuthLogoutMutation,
     useActivateUserMutation,
-    useUpdateAccessTokenMutation,
     useReportIssueMutation,
+    useGetAllNotificationsQuery,
+    useGetBirthdaysQuery
 } = api;
 

@@ -25,16 +25,10 @@ export const useLogin = () => {
       const resp = await authLogin(values).unwrap(); // ✅ Unwrap to handle errors
 
       if (resp) {
-        const { user, accessToken } = resp;
+        const { user } = resp;
 
         // ✅ Store user data in Redux
-        dispatch(
-          login({
-            user,
-            accessToken,
-            expiresIn: 3600,
-          })
-        );
+        dispatch(login({user}));
 
         toast.success("Login successful");
 

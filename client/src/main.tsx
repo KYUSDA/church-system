@@ -26,9 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               },
             }}
           />
-          <SessionGuard>
-            <Home />
-          </SessionGuard>
+          <Home />
         </ProviderFunction>
       </PersistGate>
     </Provider>

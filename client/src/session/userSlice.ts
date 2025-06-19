@@ -1,23 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface User{
+import { jwtDecode, JwtPayload } from "jwt-decode";
+interface User {
   id: string;
   role: string;
 }
 
 interface AuthState {
-  accessToken: string | null;
   isAuthenticated: boolean;
   user: User | null;
-  expiresAt: number | null;
+  sessionExpired: boolean;
+  logoutReason: string | null;
 }
 
 const initialState: AuthState = {
-  accessToken: null,
   isAuthenticated: false,
   user: null,
-  expiresAt: null,
+  sessionExpired: false,
+  logoutReason: null,
 };
+
 
 export const authSlice = createSlice({
   name: "auth",
@@ -27,21 +28,28 @@ export const authSlice = createSlice({
       state,
       action: PayloadAction<{
         user: User;
-        accessToken: string;
-        expiresIn: number;
       }>
     ) => {
       state.user = action.payload.user;
-      state.accessToken = action.payload.accessToken;
       state.isAuthenticated = true;
-      state.expiresAt = Date.now() + action.payload.expiresIn * 1000;
+      state.sessionExpired = false;
+      state.logoutReason = null;
     },
-    logout: (state) => {
+    logout: (
+      state,
+      action: PayloadAction<{ reason?: string; showAlert?: boolean }>
+    ) => {
       state.user = null;
-      state.accessToken = null;
       state.isAuthenticated = false;
-      state.expiresAt = null;
+      state.sessionExpired = action.payload.showAlert || false;
+      state.logoutReason = action.payload.reason || null;
     },
+
+    clearSessionAlert: (state) => {
+      state.sessionExpired = false;
+      state.logoutReason = null;
+    },
+
     updateTrivias: (
       state,
       action: PayloadAction<{ key: string; number: number }>
@@ -53,16 +61,8 @@ export const authSlice = createSlice({
         };
       }
     },
-    updateAuthToken: (
-      state,
-      action: PayloadAction<{ accessToken: string; expiresAt: number }>
-    ) => {
-      state.accessToken = action.payload.accessToken;
-      state.expiresAt = action.payload.expiresAt;
-    },
   },
 });
-
-export const { login, logout, updateTrivias, updateAuthToken } =
+export const { login, logout, updateTrivias,clearSessionAlert } =
   authSlice.actions;
 export default authSlice.reducer;

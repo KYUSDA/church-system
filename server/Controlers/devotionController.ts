@@ -8,6 +8,7 @@ import { NextFunction, Request,Response } from "express";
 import { fileURLToPath } from "url";
 import ErrorHandler from "../utils/ErrorHandler";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
+import authModel from "../Models/authModel";
 
 
 // Subscribe to Devotions
@@ -148,7 +149,14 @@ export const getSubscriberByEmail = async (
   next: NextFunction
 ) => {
   try {
+    // Extract email from request parameters
     const email = req.params.email;
+
+    // check if email exists
+    const isEmail = await authModel.findOne({email});
+    if (!isEmail) {
+      return next(new ErrorHandler("Email not found", 404));
+    }
 
     if (!email) {
       return next(new ErrorHandler("Email parameter is required", 400));

@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 
 interface notification {
     title: string;
-    decription: string;
+    description: string;
     
 }
 
@@ -12,7 +12,7 @@ export const notifySchema = new mongoose.Schema<notification>({
         type: String,
         required: true,
     },
-    decription: {
+    description: {
         type: String,
         required: true,
     }

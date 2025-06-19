@@ -12,7 +12,7 @@ interface MobileNavbarProps {
 const MobileNavbar: React.FC<MobileNavbarProps> = ({ menuOpen, setMenuOpen }) => {
 
   const { handleLogout } = useLogout();
-  const { userData } = useUserData();
+  const { user } = useUserData();
 
   const handleLogOut = () => {
     handleLogout();
@@ -52,7 +52,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ menuOpen, setMenuOpen }) =>
         </Link>
 
         {/* Auth Buttons */}
-        {userData?.email ? (
+        {user ? (
           <div className="flex flex-col gap-3">
             <Link to="/member" className="nav-link">
               Dashboard

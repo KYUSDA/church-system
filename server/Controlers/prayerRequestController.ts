@@ -53,7 +53,7 @@ export const createPrayerRequest = catchAsyncErrors(async (req:Request, res:Resp
 export const getAllPrayerRequests = async (req:Request, res:Response) => {
   try {
     const prayerRequests = await prayerModel.find({});
-    res.status(200).json({ prayerRequests });
+    res.status(200).json(prayerRequests);
   } catch (error) {
     console.error("❌ Error getting all prayer requests:", error);
     res.status(500).json({ message: "Internal server error" });

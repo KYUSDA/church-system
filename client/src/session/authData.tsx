@@ -23,20 +23,15 @@ export interface TUser {
 const useUserData = () => {
   const authState = useSelector((state: RootState) => state.auth);
   const user = authState.user as TUser | null;
-  const accessToken = authState.accessToken as string | null;
   const [userData, setUserData] = useState<TUser | null>(null);
   const baseUrl = getBaseUrl();
 
   const fetchUserData = async () => {
-    if (!user || !user.id || !accessToken) return;
+    if (!user || !user.id) return;
 
     try {
       const response = await fetch(`${baseUrl}/user/get-user/${user.id}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
         credentials: "include",
       });
 
@@ -53,7 +48,7 @@ const useUserData = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [user, baseUrl, accessToken]);
+  }, [user, baseUrl]);
 
   return { userData, setUserData, user, refetchUser: fetchUserData };
 };

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { client,urlFor } from '../../utils/client';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import { ClipLoader } from 'react-spinners';
-import Loader from '../../Dashboard/components/loader';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { client, urlFor } from "../../utils/client";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import { ClipLoader } from "react-spinners";
+import Loader from "../../Dashboard/user/components/loader";
 
 export const Families = () => {
   const [Families, setFamilies] = useState<Family[]>([]);
@@ -20,13 +20,15 @@ export const Families = () => {
 
   function findUniqueById(dataArray: Family[]): Family[] {
     return dataArray.filter((item, index, array) => {
-      return array.findIndex((otherItem) => otherItem.title === item.title) === index;
+      return (
+        array.findIndex((otherItem) => otherItem.title === item.title) === index
+      );
     });
   }
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
-}, []);
+  }, []);
 
   useEffect(() => {
     const query = '*[_type == "families"]';
@@ -44,9 +46,7 @@ export const Families = () => {
       </h2>
 
       {/* ClipLoader Spinner */}
-      {loading && (
-         <Loader isLoading={loading} text="Get things ready..." />
-      )}
+      {loading && <Loader isLoading={loading} text="Get things ready..." />}
 
       {/* Families List */}
       {!loading && (
@@ -58,7 +58,10 @@ export const Families = () => {
                 className="relative flex flex-col bg-white shadow-md rounded-lg overflow-hidden transition-shadow duration-300 hover:shadow-lg h-[350px]"
               >
                 {/* Image Section */}
-                <div className="bg-white shadow-lg shadow-gray-300 overflow-hidden" style={{ height: '42%' }}>
+                <div
+                  className="bg-white shadow-lg shadow-gray-300 overflow-hidden"
+                  style={{ height: "42%" }}
+                >
                   <LazyLoadImage
                     src={urlFor(family.imgUrl).url()}
                     alt={family.title}
@@ -69,8 +72,12 @@ export const Families = () => {
 
                 {/* Content Section */}
                 <div className="relative z-10 flex flex-col flex-grow p-4 bg-white">
-                  <h4 className="text-lg font-semibold mb-2 text-center">{family.title}</h4>
-                  <p className="text-sm text-gray-600 overflow-hidden line-clamp-3">{family.description}</p>
+                  <h4 className="text-lg font-semibold mb-2 text-center">
+                    {family.title}
+                  </h4>
+                  <p className="text-sm text-gray-600 overflow-hidden line-clamp-3">
+                    {family.description}
+                  </p>
 
                   {/* Tags */}
                   {family.tags.length > 0 && (

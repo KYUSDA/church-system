@@ -14,12 +14,13 @@ import {
 } from "redux-persist";
 
 import storage from "redux-persist/lib/storage";
-import { adminApi } from "../Admin/services/userServices";
+import { adminApi } from "../services/adminService";
 
 const persistConfig = {
   key: "auth",
   storage,
-  whitelist: ["user", "accessToken", "isAuthenticated", "expiresAt"],
+  whitelist: ["user", "isAuthenticated"],
+  blacklist: ["sessionExpired", "logoutReason"],
 };
 
 const persistAuthReducer = persistReducer(persistConfig, authSlice);
