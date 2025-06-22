@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, Check, BookOpen, Filter, Loader2 } from "lucide-react";
-import { BibleBook } from "./data/bibleData";
+import { BibleBook } from "../data/bibleData";
 
 interface ReadingCalendarProps {
   readChapters: Record<string, number[]>;

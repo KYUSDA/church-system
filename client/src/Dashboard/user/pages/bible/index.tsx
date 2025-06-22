@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, PenTool, Flame, Star, User as UserIcon } from "lucide-react";
+import { Calendar, Flame, Star, User as UserIcon } from "lucide-react";
 import Dashboard from "../../components/Dashboard";
-import ReadingCalendar from "../../components/ReadingCalendar";
-import Confetti from "../../components/Confetti";
-import { useLocalStorage } from "../../components/hooks/useLocalStorage";
+import ReadingCalendar from "../../components/utils/ReadingCalendar";
+import Confetti from "../../components/utils/Confetti";
 import {
   useUserReadingProgress,
   useUserStreak,
-} from "../../components/hooks/useUserData";
+} from "../../components/hooks/userProgress";
 import { bibleBooks } from "../../components/data/bibleData";
 import {
   getCurrentStreak,
   updateStreak,
 } from "../../components/utils/dateHelpers";
 
-type ActiveTab = "dashboard" | "calendar" | "journal";
+type ActiveTab = "dashboard" | "calendar";
 
 const BibleApp = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("dashboard");

@@ -6,6 +6,8 @@ import {
 } from "../../../../services/adminService";
 import { urlFor } from "../../../../utils/client";
 import { PencilLine, Trash2, ChevronUp, ChevronDown } from "lucide-react";
+import { getBaseUrl } from "../../../../services/authService";
+import { toast } from "sonner";
 
 const FamilyList: React.FC = () => {
   const { data: familyData, isLoading, error } = useGetFamiliesQuery();
@@ -16,6 +18,7 @@ const FamilyList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFamilies, setSelectedFamilies] = useState<string[]>([]);
   const familiesPerPage = 5;
+  const baseUrl = getBaseUrl();
 
   useEffect(() => {
     if (familyData && Array.isArray(familyData)) {
@@ -82,6 +85,26 @@ const FamilyList: React.FC = () => {
     indexOfLastFamily
   );
   const totalPages = Math.ceil(filteredData.length / familiesPerPage);
+
+  const deleteFamily = async (id: string) => {
+    try {
+      const response = await fetch(`${baseUrl}/family/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setData((prevData) => prevData.filter((family) => family._id !== id));
+        toast.success("Family deleted successfully");
+      } else if (response.status === 403) {
+        toast.error("Access Denied [Delete Family]");
+      } else {
+        toast.error("Failed to delete family");
+      }
+    } catch (error) {
+      console.error("Error deleting family:", error);
+    }
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6">
@@ -174,7 +197,9 @@ const FamilyList: React.FC = () => {
                       >
                         <PencilLine className="h-5 w-5" />
                       </Link>
-                      <button className="text-red-600 hover:text-red-800">
+                      <button 
+                      onClick={() => deleteFamily(family._id)}
+                      className="text-red-600 hover:text-red-800">
                         <Trash2 className="h-5 w-5" />
                       </button>
                     </td>

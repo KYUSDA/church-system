@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getBaseUrl } from "../../../../services/authService";
-import Loader from "../../components/loader";
+import Loader from "../../components/utils/loader";
 
 interface Quiz {
   _id: string;

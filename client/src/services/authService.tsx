@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logoutCompletely } from '../hooks/userLogoutHook';
+import { logout } from '../session/userSlice';
 
 export const BASE_URL = 'http://localhost:8000/kyusda/v1';
 
@@ -74,17 +75,10 @@ interface LoginResponse {
     
     let result = await baseQuery(args, api, extraOptions);
 
-    if (
-      result.error?.status === 401 &&
-      typeof result.error?.data === "object" &&
-      result.error?.data !== null &&
-      "message" in result.error.data &&
-      (result.error.data as { message?: string }).message === "TokenExpiredError"
-    ) {
-      await logoutCompletely(); // logout if token is actually expired
-    }
-    
-    return result;
+    if (result.error?.status === 401) {
+        api.dispatch(logout({ reason: "Session expired", showAlert: true }));
+      }
+      return result;
   };
   
 

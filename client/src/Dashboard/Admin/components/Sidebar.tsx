@@ -147,14 +147,6 @@ const Sidebar = ({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () =
             Weekly Quiz
           </li>
           </Link>
-   
-          <Link to="/admin/admin-manage" className="no-underline">
-          <li className="p-2 cursor-pointer flex items-center rounded-lg hover:bg-gray-200">
-            <WorkOutline className="mr-2 text-lg" />
-            Manage
-          </li>
-          </Link>
-
         </ul>
       </div>
 

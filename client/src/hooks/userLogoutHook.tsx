@@ -29,8 +29,9 @@ export const useLogout = () => {
 
 // logoutHelper.ts
 export const logoutCompletely = async () => {
+  const baseUrl = getBaseUrl();
   try {
-    await fetch("/member/logout", { credentials: "include" }); // baseUrl not needed if relative
+    await fetch(`${baseUrl}/member/logout`, { credentials: "include" });
     localStorage.setItem("birthdayModalSeen", "false");
 
     store.dispatch(logout({ reason: "Session expired", showAlert: true }));

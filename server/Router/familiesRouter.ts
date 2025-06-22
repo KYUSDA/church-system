@@ -7,13 +7,17 @@ import {
   deleteFamily,
 } from "../Controlers/family";
 import requireAuth,{ authorizeRoles } from "../middleware/authmiddleware";
+import { ALL, UserRole } from "../Models/authModel";
 
 const familyRouter = Router();
 
-familyRouter.route("/getFamilies").get(requireAuth, authorizeRoles("admin"), getAll);
-familyRouter.route("/createFamily").post(requireAuth, authorizeRoles("admin"),createFamily);
-familyRouter.patch("/update-family/:id", requireAuth, authorizeRoles("admin"), updateFamily);
+familyRouter.route("/getFamilies").get(requireAuth, authorizeRoles(...ALL), getAll);
+familyRouter.route("/createFamily").post(requireAuth, authorizeRoles(UserRole.SUPERADMIN),createFamily);
+familyRouter.patch("/update-family/:id", requireAuth, authorizeRoles(UserRole.SUPERADMIN), updateFamily);
 
-familyRouter.route("/:id").get(requireAuth, authorizeRoles("admin"),getOne).delete(authorizeRoles("admin"),deleteFamily);
+familyRouter
+  .route("/:id")
+  .get(requireAuth, authorizeRoles(UserRole.SUPERADMIN), getOne)
+  .delete(requireAuth,authorizeRoles(UserRole.SUPERADMIN), deleteFamily);
 
 export default familyRouter;

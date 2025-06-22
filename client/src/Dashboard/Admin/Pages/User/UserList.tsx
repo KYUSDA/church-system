@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import '../../App.css';
+import "../../App.css";
 import { TUser, useGetMembersQuery } from "../../../../services/adminService";
 import { PencilLine, Trash2, ChevronUp, ChevronDown } from "lucide-react";
+import { getBaseUrl } from "../../../../services/authService";
+import { toast } from "sonner";
 
 const UserList: React.FC = () => {
   const { data: membersData } = useGetMembersQuery();
@@ -13,6 +15,7 @@ const UserList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const usersPerPage = 5;
+  const baseUrl = getBaseUrl();
 
   useEffect(() => {
     if (membersData && Array.isArray(membersData.users)) {
@@ -61,6 +64,27 @@ const UserList: React.FC = () => {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredData.length / usersPerPage);
+
+  // delete user
+  const deleteuser = async (id: string) => {
+    try {
+      const response = await fetch(`${baseUrl}/user/delete-user/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.ok) {
+        setData((prevData) => prevData.filter((user) => user._id !== id));
+        setSelectedUsers((prev) => prev.filter((userId) => userId !== id));
+        toast.success("User deleted successfully");
+      } else if (response.status === 403) {
+        toast.error("Access Denied [Delete User]");
+      } else {
+        toast.error("Failed to delete user");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mx-auto w-full">
@@ -223,7 +247,10 @@ const UserList: React.FC = () => {
                         >
                           <PencilLine className="h-5 w-5" />
                         </Link>
-                        <button className="text-red-600 hover:text-red-900">
+                        <button
+                          onClick={() => deleteuser(user._id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
                           <Trash2 className="h-5 w-5" />
                         </button>
                       </div>

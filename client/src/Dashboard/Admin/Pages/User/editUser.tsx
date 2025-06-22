@@ -42,13 +42,22 @@ const Users: React.FC = () => {
     try {
       const response = await fetch(`${BASE_URL}/user/update-user/${user._id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(inputs),
       });
 
-      if (!response.ok) throw new Error("Failed to update user");
+      if (response.status === 403) {
+        toast.error("Access Denied [Update User]");
+        setIsLoading(false);
+        return;
+      } else if (!response.ok) {
+        toast.error("Failed to update user");
+        setIsLoading(false);
+        return;
+      }
       toast.success("User updated successfully!");
       setIsLoading(false);
       refetch(); // Refetch members data after update
@@ -120,12 +129,10 @@ const Users: React.FC = () => {
               value={inputs.role || ""}
             >
               <option value="" disabled>Select a role</option>
-              <option value="Member">Member</option>
+              <option value="member">Member</option>
               <option value="admin">Admin</option>
-              <option value="Elder">Elder</option>
-              <option value="Family Leader">Family Leader</option>
-              <option value="Deacon">Deacon</option>
-              <option value="Deaconess">Deaconess</option>
+              <option value="elder">Elder</option>
+              <option value="superadmin">Super Admin</option>
             </select>
           </div>
 

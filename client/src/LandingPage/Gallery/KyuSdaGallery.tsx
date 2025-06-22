@@ -19,7 +19,7 @@ import image17 from "../../assets/Aloamo.JPG";
 import image18 from "../../assets/Gordonteam.JPG";
 import image19 from "../../assets/vickyteam.JPG";
 import { useEffect, useState } from "react";
-import Loader from "../../Dashboard/user/components/loader";
+import Loader from "../../Dashboard/user/components/utils/loader";
 
 const KyuSda = () => {
   const [loading, setLoading] = useState(true);

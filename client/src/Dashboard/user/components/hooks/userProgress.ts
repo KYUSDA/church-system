@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../integrations/client";
 import useUserData from "../../../../session/authData";
+import { getProgress, getStreak, toggle } from "../utils/apiCalls";
+import { toast } from "sonner";
 
 export const useUserReadingProgress = () => {
   const { user } = useUserData(); // This will always have a user since they're logged in
@@ -21,15 +22,13 @@ export const useUserReadingProgress = () => {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from("reading_progress")
-        .select("book_name, chapter_number")
-        .eq("user_id", user.id);
+      const { data, error } = await getProgress();
 
       if (error) throw error;
 
       const progress: Record<string, number[]> = {};
-      data?.forEach(({ book_name, chapter_number }) => {
+      data?.forEach((item: { book_name: string; chapter_number: number }) => {
+        const { book_name, chapter_number } = item;
         if (!progress[book_name]) progress[book_name] = [];
         progress[book_name].push(chapter_number);
       });
@@ -43,53 +42,29 @@ export const useUserReadingProgress = () => {
   };
 
   const toggleChapter = async (bookName: string, chapterNumber: number) => {
-    if (!user?.id) {
-      console.error("No user found");
+    if (!user?.id) return false;
+
+    // Call backend no matter what
+    const { success } = await toggle(bookName, chapterNumber);
+    if (!success) {
+      toast.error("Server rejected update");
       return false;
     }
 
-    const currentChapters = readChapters[bookName] || [];
-    const isRead = currentChapters.includes(chapterNumber);
+    // Local optimistic update
+    setReadChapters((prev) => {
+      const chapters = prev[bookName] || [];
+      const isRead = chapters.includes(chapterNumber);
+      const next = isRead
+        ? chapters.filter((ch) => ch !== chapterNumber)
+        : [...chapters, chapterNumber].sort((a, b) => a - b);
 
-    try {
-      if (isRead) {
-        // Remove chapter from database
-        await supabase
-          .from("reading_progress")
-          .delete()
-          .eq("user_id", user.id)
-          .eq("book_name", bookName)
-          .eq("chapter_number", chapterNumber);
-      } else {
-        // Add chapter to database
-        await supabase.from("reading_progress").insert({
-          user_id: user.id,
-          book_name: bookName,
-          chapter_number: chapterNumber,
-          read_at: new Date().toISOString(), // Optional: track when chapter was read
-        });
-      }
+      return { ...prev, [bookName]: next };
+    });
 
-      // Update local state immediately for better UX
-      setReadChapters((prev: Record<string, number[]>) => {
-        const bookChapters = prev[bookName] || [];
-        const newChapters = isRead
-          ? bookChapters.filter((ch) => ch !== chapterNumber)
-          : [...bookChapters, chapterNumber].sort((a, b) => a - b);
-
-        return {
-          ...prev,
-          [bookName]: newChapters,
-        };
-      });
-
-      return !isRead;
-    } catch (error) {
-      console.error("Error updating reading progress:", error);
-      // Optionally, you could show a toast notification to the user here
-      return isRead; // Return original state if update failed
-    }
+    return true; 
   };
+  
 
   return {
     readChapters,
@@ -116,11 +91,7 @@ export const useUserStreak = () => {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from("user_streaks")
-        .select("current_streak, last_read_date")
-        .eq("user_id", user.id)
-        .maybeSingle();
+      const { data, error } = await getStreak();
 
       if (error && error.code !== "PGRST116") throw error;
 
@@ -144,12 +115,7 @@ export const useUserStreak = () => {
     const today = new Date().toISOString().split("T")[0];
 
     try {
-      await supabase.from("user_streaks").upsert({
-        user_id: user.id,
-        current_streak: newStreak,
-        last_read_date: today,
-        updated_at: new Date().toISOString(),
-      },{onConflict: 'user_id'});
+      await updateStreak(newStreak);
 
       setStreak(newStreak);
       setLastReadDate(today);

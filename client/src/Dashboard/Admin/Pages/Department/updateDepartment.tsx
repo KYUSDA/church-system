@@ -65,6 +65,7 @@ const ADepartment: React.FC = () => {
         `${BASE_URL}/department/update-department/${department._id}`,
         {
           method: "PATCH",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -72,7 +73,15 @@ const ADepartment: React.FC = () => {
         }
       );
 
-      if (!response.ok) throw new Error("Failed to update department");
+      if (response.status === 403) {
+        toast.error("Access Denied [Update department]");
+        setIsLoading(false);
+        return;
+      } else if (!response.ok) {
+        toast.error("Failed to update department");
+        setIsLoading(false);
+        return;
+      }
       toast.success("department updated successfully!");
       setIsLoading(false);
       refetch(); // Refetch members data after update

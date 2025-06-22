@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { client, urlFor } from "../../utils/client";
-import Loader from "../../Dashboard/user/components/loader";
+import Loader from "../../Dashboard/user/components/utils/loader";
 
 interface Family {
   _id: string;

@@ -16,9 +16,9 @@ import Messages from "../Dashboard/Admin/Pages/notifications/messages";
 import NotificationPage from "../Dashboard/Admin/Pages/notifications/createnotifactions";
 import QuizAdminPanel from "../Dashboard/Admin/Pages/defend/weeklyQuiz";
 import Prayers from "../Dashboard/Admin/Pages/prayers";
-import AdminsManage from "../Dashboard/Admin/Pages/adminsmanage";
 import Profile from "../Dashboard/Admin/components/profile";
 import Calendar from "../Dashboard/Admin/components/calendar";
+import NewResource from "../Dashboard/Admin/Pages/resources/newResource";
 
 export const Admin = (
   <>
@@ -173,21 +173,21 @@ export const Admin = (
       }
     />
     <Route
-      path="/admin/admin-manage"
-      element={
-        <ProtectedRoute>
-          <AdminLayout>
-            <AdminsManage />
-          </AdminLayout>
-        </ProtectedRoute>
-      }
-    />
-    <Route
       path="/admin/admin-profile"
       element={
         <ProtectedRoute>
           <AdminLayout>
             <Profile />
+          </AdminLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/admin/newResource"
+      element={
+        <ProtectedRoute>
+          <AdminLayout>
+            <NewResource />
           </AdminLayout>
         </ProtectedRoute>
       }

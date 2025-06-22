@@ -48,11 +48,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       name: "Bible App",
       icon: <BookOpen className="w-5 h-5" />,
     },
-    {
-      path: "/member/bibleTrivia",
-      name: "Bible Trivia",
-      icon: <BookCheck className="w-5 h-5" />,
-    },
+    // {
+    //   path: "/member/bibleTrivia",
+    //   name: "Bible Trivia",
+    //   icon: <BookCheck className="w-5 h-5" />,
+    // },
     {
       path: "/member/submit-prayer-request",
       name: "Prayer Requests",

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { TFamily, useGetFamiliesQuery } from "../../../../services/adminService";
+import {
+  TFamily,
+  useGetFamiliesQuery,
+} from "../../../../services/adminService";
 import { toast } from "sonner";
 import { getBaseUrl } from "../../../../services/authService";
 
@@ -60,6 +63,7 @@ const AFamily: React.FC = () => {
         `${BASE_URL}/family/update-family/${family._id}`,
         {
           method: "PATCH",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -67,7 +71,15 @@ const AFamily: React.FC = () => {
         }
       );
 
-      if (!response.ok) throw new Error("Failed to update family");
+      if (response.status === 403) {
+        toast.error("Access Denied [Update family]");
+        setIsLoading(false);
+        return;
+      } else if (!response.ok) {
+        toast.error("Failed to update family");
+        setIsLoading(false);
+        return;
+      }
       toast.success("Family updated successfully!");
       setIsLoading(false);
       refetch();

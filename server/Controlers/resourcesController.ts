@@ -14,8 +14,10 @@ interface MulterRequest extends Request {
 export const uploadResource =catchAsyncErrors(async (req: MulterRequest, res: Response) => {
   try {
     const { title, description, type, timeToRead } = req.body;
-    const file = req.file; // main file
-    const thumbFile = req.files?.thumbnail?.[0]; // optional thumbnail
+    const file = (req.files as any)?.file?.[0];
+    const thumbFile = (req.files as any)?.thumbnail?.[0];
+    
+    console.log(file, title, type);
 
     if (!file || !title || !type)
       return res

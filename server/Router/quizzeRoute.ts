@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { createQuiz, getAllQuizzes, getQuiz, getQuizzes, getUserResults, sendQuizResults } from "../Controlers/quizzes";
 import requireAuth, { authorizeRoles } from "../middleware/authmiddleware";
+import { UserRole } from "../Models/authModel";
 const quizzeRoute = Router();
 
-quizzeRoute.post("/create-quizze",requireAuth,authorizeRoles("admin"),createQuiz);
+quizzeRoute.post("/create-quizze",requireAuth,authorizeRoles(UserRole.SUPERADMIN),createQuiz);
 
 quizzeRoute.get("/get-quizze/:id",getQuiz);
 

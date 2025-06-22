@@ -8,6 +8,7 @@ import {
   updateCalendarEventById,
 } from "../Controlers/calendarControler";
 import requireAuth, { authorizeRoles } from "../middleware/authmiddleware";
+import { UserRole } from "../Models/authModel";
 
 export const calendarRouter = Router();
 
@@ -15,7 +16,7 @@ export const calendarRouter = Router();
 calendarRouter.post(
   "/event",
   requireAuth,
-  authorizeRoles("admin"),
+  authorizeRoles(UserRole.SUPERADMIN),
   createCalendarEvent
 );
 // api/calendar/getAll
@@ -28,7 +29,7 @@ calendarRouter.get("/event/:id", getCalendarEventById);
 calendarRouter.put(
   "/event/:id",
   requireAuth,
-  authorizeRoles("admin"),
+  authorizeRoles(UserRole.SUPERADMIN),
   updateCalendarEventById
 );
 
@@ -36,7 +37,7 @@ calendarRouter.put(
 calendarRouter.delete(
   "/event/:id",
   requireAuth,
-  authorizeRoles("admin"),
+  authorizeRoles(UserRole.SUPERADMIN),
   deleteCalendarEventById
 );
 
@@ -44,6 +45,6 @@ calendarRouter.delete(
 calendarRouter.delete(
   "/events",
   requireAuth,
-  authorizeRoles("admin"),
+  authorizeRoles(UserRole.SUPERADMIN),
   deleteAllCalendarEvents
 );

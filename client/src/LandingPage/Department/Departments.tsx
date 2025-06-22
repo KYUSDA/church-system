@@ -4,7 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import Loader from "../../Dashboard/user/components/loader";
+import Loader from "../../Dashboard/user/components/utils/loader";
 
 const Departments = () => {
   const [departments, setDepartments] = useState<Department[]>([]);

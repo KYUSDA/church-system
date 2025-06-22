@@ -5,6 +5,7 @@ const actions = [
   { name: "User", path: "/admin/newUser" },
   { name: "Department", path: "/admin/newDepart" },
   { name: "Family", path: "/admin/newFamily" },
+  { name: "Resource", path: "/admin/newResource" },
 ];
 
 const QuickActions = () => {

@@ -4,7 +4,7 @@ import { client, urlFor } from "../../utils/client";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { ClipLoader } from "react-spinners";
-import Loader from "../../Dashboard/user/components/loader";
+import Loader from "../../Dashboard/user/components/utils/loader";
 
 export const Families = () => {
   const [Families, setFamilies] = useState<Family[]>([]);
