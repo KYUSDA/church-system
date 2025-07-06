@@ -76,8 +76,16 @@ interface LoginResponse {
     let result = await baseQuery(args, api, extraOptions);
 
     if (result.error?.status === 401) {
+      const errorData = result.error.data as any;
+      console.log("401 error received:", errorData);
+      
+      // Check if it's actually a session/auth error
+      if (errorData?.message?.includes('Session') || 
+          errorData?.message?.includes('Authentication') || 
+          errorData?.message?.includes('Token')) {
         api.dispatch(logout({ reason: "Session expired", showAlert: true }));
       }
+    }
       return result;
   };
   
@@ -112,6 +120,16 @@ export const api = createApi({
       query: () => ({
         url: "/member/logout",
         method: "POST",
+      }),
+    }),
+
+    validateSession: builder.query<
+      { user: { id: string; role: string } },
+      void
+    >({
+      query: () => ({
+        url: "/member/validate-session",
+        method: "GET",
       }),
     }),
 
@@ -158,6 +176,7 @@ export const {
     useActivateUserMutation,
     useReportIssueMutation,
     useGetAllNotificationsQuery,
-    useGetBirthdaysQuery
+    useGetBirthdaysQuery,
+    useValidateSessionQuery
 } = api;
 
