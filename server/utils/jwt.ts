@@ -12,7 +12,7 @@ export interface TokenOptions {
   path?: string;
 }
 
-const ACCESS_TOKEN_MINUTES = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "60");
+const ACCESS_TOKEN_MINUTES = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "10");
 
 export const sendToken = async (user: IUser, res: Response) => {
   const access_token = user.signAccessToken(); // ≤ 60 min exp claim
@@ -29,8 +29,10 @@ export const sendToken = async (user: IUser, res: Response) => {
   res.cookie("access_token", access_token, cookieOptions);
 
   // add user in redis
-  await redis.set(
+  const redisExpiration = ACCESS_TOKEN_MINUTES * 60; // seconds
+  await redis.setex(
     String(user._id),
+    redisExpiration,
     JSON.stringify({ id: user._id, role: user.role })
   );
 
@@ -40,49 +42,3 @@ export const sendToken = async (user: IUser, res: Response) => {
     message: "Login successful",
   });
 };
-
-/* ───────────── Read env ­──────────── */
-// export const ACCESS_TOKEN_MINUTES = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "60"); // minutes
-// export const REFRESH_TOKEN_DAYS = parseInt(process.env.REFRESH_TOKEN_EXPIRES || "7"); // days
-
-// export const sendToken = async (user: IUser, res: Response) => {
-//   const access_token = user.signAccessToken(); // 60 min
-//   const refresh_token = user.signRefreshToken(); // 7 days
-
-//   const accessCookieOptions: TokenOptions = {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + ACCESS_TOKEN_MINUTES * 60 * 1000),
-//     maxAge: ACCESS_TOKEN_MINUTES * 60 * 1000,
-//     path: "/",
-//     secure: process.env.NODE_ENV === "production",
-//     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-//   };
-
-//   const refreshCookieOptions: TokenOptions = {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + REFRESH_TOKEN_DAYS * 24 * 60 * 60 * 1000),
-//     maxAge: REFRESH_TOKEN_DAYS * 24 * 60 * 60 * 1000,
-//     path: "/",
-//     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-//     secure: process.env.NODE_ENV === "production",
-//     // domain : ".example.com",
-//   };
-
-//   /* persist session in Redis for the refresh‑token lifetime */
-//   await redis.set(
-//     String(user._id),
-//     JSON.stringify({ id: user._id, role: user.role }),
-//     "EX",
-//     REFRESH_TOKEN_DAYS * 24 * 60 * 60
-//   );
-
-//   /* set cookies */
-//   res.cookie("access_token", access_token, accessCookieOptions);
-//   res.cookie("refresh_token", refresh_token, refreshCookieOptions);
-
-//   res.json({
-//     success: true,
-//     user: { id: user._id, role: user.role },
-//     message: "Login successful",
-//   });
-// };
