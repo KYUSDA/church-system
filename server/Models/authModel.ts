@@ -48,7 +48,6 @@ export interface IUser extends Document {
   resetToken(): Promise<string>;
   comparePasswords: (password: string) => Promise<boolean>;
   signAccessToken: () => string;
-  signRefreshToken: () => string;
 };
 
 export interface IUserModel extends Model<IUser> {
@@ -171,12 +170,7 @@ authSchema.methods.resetToken = async function (): Promise<string> {
 
 //sign access token
 authSchema.methods.signAccessToken = function(): string {
-  return jwt.sign({id: this.id}, process.env.ACCESS_TOKEN as string, {expiresIn: "60m"})
-}
-
-//sign refresh token
-authSchema.methods.signRefreshToken = function(): string {
-  return jwt.sign({id: this.id}, process.env.REFRESH_TOKEN as string, {expiresIn: "7d"});
+  return jwt.sign({id: this.id}, process.env.ACCESS_TOKEN as string, {expiresIn: "10m"})
 }
 
 const authModel = model<IUser, IUserModel>("member", authSchema);
