@@ -21,7 +21,7 @@ function Topbar() {
 
   const handleLogout = () => {
     authSlice.actions.logout();
-    navigate("/login");
+    navigate("/signIn");
   };
 
   return (

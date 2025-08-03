@@ -1,4 +1,11 @@
-import { Calendar, Clock, MapPin, Users, ChevronRight, Eye } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  ChevronRight,
+  Eye,
+} from "lucide-react";
 import { useEffect, useCallback, useState } from "react";
 import { getBaseUrl } from "../../../services/authService";
 import { toast } from "sonner";
@@ -59,32 +66,45 @@ const CalenderSection = () => {
         },
         credentials: "include",
       });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const data = await res.json();
       console.log("Fetched events:", data);
-      setEvents(data.events as CalendarEvent[]);
+      const eventsData = data?.events || [];
+      setEvents(Array.isArray(eventsData) ? eventsData : []);
     } catch (err) {
       console.error("Failed to load events:", err);
       toast.error("Could not load events");
+      setEvents([]); // Ensure events is always an array
     } finally {
       setLoading(false);
     }
-  }, [baseUrl]);
+  }, [baseUrl, token]);
 
   useEffect(() => {
     fetchEvents();
   }, [fetchEvents]);
 
   // Get upcoming events (next 5 events)
-  const upcomingEvents = events
-    .filter(event => dayjs(event.date).isAfter(dayjs(), 'day') || dayjs(event.date).isSame(dayjs(), 'day'))
-    .sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
-    .slice(0, 5);
+  const upcomingEvents = Array.isArray(events)
+    ? events
+        .filter(
+          (event) =>
+            (event && dayjs(event.date).isAfter(dayjs(), "day")) ||
+            dayjs(event.date).isSame(dayjs(), "day")
+        )
+        .sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))
+        .slice(0, 5)
+    : [];
 
   const formatEventDate = (dateString: string) => {
     const eventDate = dayjs(dateString);
     const today = dayjs();
-    const diffDays = eventDate.diff(today, 'day');
-    
+    const diffDays = eventDate.diff(today, "day");
+
     if (diffDays === 0) return "Today";
     if (diffDays === 1) return "Tomorrow";
     if (diffDays <= 7) return eventDate.format("dddd");
@@ -92,7 +112,7 @@ const CalenderSection = () => {
   };
 
   const getEventPriority = (event: CalendarEvent) => {
-    const diffDays = dayjs(event.date).diff(dayjs(), 'day');
+    const diffDays = dayjs(event.date).diff(dayjs(), "day");
     if (diffDays === 0) return "high";
     if (diffDays <= 3) return "medium";
     return "low";
@@ -126,7 +146,7 @@ const CalenderSection = () => {
           </TooltipProvider>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-3">
         {loading ? (
           <div className="space-y-3">
@@ -140,24 +160,24 @@ const CalenderSection = () => {
           <>
             {upcomingEvents.map((event, idx) => {
               const priority = getEventPriority(event);
-              const isToday = dayjs(event.date).isSame(dayjs(), 'day');
-              
+              const isToday = dayjs(event.date).isSame(dayjs(), "day");
+
               return (
                 <div key={event._id || idx}>
-                  <div 
+                  <div
                     className={`group relative p-4 rounded-lg border transition-all duration-200 hover:shadow-md cursor-pointer ${
-                      isToday 
-                        ? 'bg-primary/5 border-primary/20 hover:bg-primary/10' 
-                        : 'bg-card hover:bg-muted/50'
+                      isToday
+                        ? "bg-primary/5 border-primary/20 hover:bg-primary/10"
+                        : "bg-card hover:bg-muted/50"
                     }`}
                     onClick={() => navigate("/member/my-calendar")}
                   >
                     {/* Event Color Indicator */}
-                    <div 
+                    <div
                       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg"
-                      style={{ backgroundColor: event.color || '#3b82f6' }}
+                      style={{ backgroundColor: event.color || "#3b82f6" }}
                     />
-                    
+
                     <div className="flex items-start justify-between ml-3">
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center gap-2">
@@ -165,58 +185,67 @@ const CalenderSection = () => {
                             {event.title}
                           </h4>
                           {isToday && (
-                            <Badge variant="destructive" className="text-xs px-1.5 py-0.5">
+                            <Badge
+                              variant="destructive"
+                              className="text-xs px-1.5 py-0.5"
+                            >
                               Today
                             </Badge>
                           )}
                           {event.isHighWeek && (
-                            <Badge variant="secondary" className="text-xs px-1.5 py-0.5">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs px-1.5 py-0.5"
+                            >
                               High Week
                             </Badge>
                           )}
                         </div>
-                        
+
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Clock className="h-3 w-3" />
                             <span>{formatEventDate(event.date)}</span>
                           </div>
-                          
+
                           {event.theme && (
                             <div className="flex items-center gap-1">
                               <MapPin className="h-3 w-3" />
-                              <span className="truncate max-w-[120px]">{event.theme}</span>
+                              <span className="truncate max-w-[120px]">
+                                {event.theme}
+                              </span>
                             </div>
                           )}
-                          
+
                           {event.details.department.length > 0 && (
                             <div className="flex items-center gap-1">
                               <Users className="h-3 w-3" />
                               <span className="truncate max-w-[100px]">
-                                {event.details.department.join(', ')}
+                                {event.details.department.join(", ")}
                               </span>
                             </div>
                           )}
                         </div>
-                        
+
                         {event.hymn && (
                           <div className="text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
-                            <span className="font-medium">Hymn:</span> {event.hymn}
+                            <span className="font-medium">Hymn:</span>{" "}
+                            {event.hymn}
                           </div>
                         )}
                       </div>
-                      
+
                       <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0 ml-2" />
                     </div>
                   </div>
-                  
+
                   {idx < upcomingEvents.length - 1 && (
                     <Separator className="my-3" />
                   )}
                 </div>
               );
             })}
-            
+
             <div className="pt-2">
               <Button
                 variant="ghost"
@@ -224,7 +253,10 @@ const CalenderSection = () => {
                 onClick={() => navigate("/member/my-calendar")}
                 className="w-full justify-center gap-2 text-muted-foreground hover:text-foreground"
               >
-                View {events.length > 5 ? `${events.length - 5} more events` : 'full calendar'}
+                View{" "}
+                {Array.isArray(events) && events.length > 5
+                  ? `${events.length - 5} more events`
+                  : "full calendar"}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
