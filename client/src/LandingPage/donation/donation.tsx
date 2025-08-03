@@ -3,16 +3,16 @@ import React, { useState } from "react";
 const DonationPage: React.FC = () => {
  
   const events = [
-    { 
-      title: "Fundraiser for Our Mission",
-      badge: "Mission",
-      date: "April 27, 2025",
-      description: "Join us in supporting our church mission. Every contribution counts!"
-     },
+    // { 
+    //   title: "Fundraiser for Our Mission",
+    //   badge: "Mission",
+    //   date: "April 27, 2025",
+    //   description: "Join us in supporting our church mission. Every contribution counts!"
+    //  },
      {
       title: "Camp Meeting",
       badge: "Camp meeting",
-      date: "August 14, 2025",
+      date: "Sept 7th-13th, 2025",
       description: "Camp meeting event held every year. Every contribution counts"
      }
   ];
@@ -35,7 +35,7 @@ const DonationPage: React.FC = () => {
               <div className="mt-6 p-4 bg-gray-50 border-t-2 border-teal-500 rounded-md">
                 <h3 className="text-lg font-bold text-teal-700">Equity Bank Payment Details</h3>
                 <p className="text-gray-700 mt-2">Paybill: <span className="font-semibold">247247</span></p>
-                <p className="text-gray-700">Account Number: <span className="font-semibold">768769#MISSION</span></p>
+                <p className="text-gray-700">Account Number: <span className="font-semibold">768769#CAMP</span></p>
               </div>
             </div>
           ))}
