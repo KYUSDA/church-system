@@ -14,15 +14,15 @@ interface Event {
 
 const events: Event[] = [
   {
-    date: "Feb 12",
+    date: "Sept 7-13",
     time: "7.00 am",
-    title: "Online Money Challenge Collections for Mission",
+    title: "Camp Meeting at KYUSDA grounds. Welcome all!",
     details: "Event Details",
   },
   {
-    date: "Jan 3",
-    time: "8.00 am",
-    title: "Our Sponsorship Meetup Will Be Held Again",
+    date: "versevibe",
+    time: "launching soon",
+    title: "Join our versevibe community to grow your faith",
     details: "Event Details",
   },
 ];
