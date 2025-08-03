@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const DevotionSubscriptionFloat = () => {
   const { userData } = useUserData();
@@ -16,6 +18,8 @@ const DevotionSubscriptionFloat = () => {
   const [subscribing, setSubscribing] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const baseUrl = getBaseUrl();
+  const authState = useSelector((state: RootState) => state.auth);
+  const token = authState?.user?.data.tokens.accessToken;
 
   useEffect(() => {
     if (userData?.email) setEmail(userData.email);
@@ -28,7 +32,11 @@ const DevotionSubscriptionFloat = () => {
       try {
         const response = await fetch(
           `${baseUrl}/devotion/getOneSubscriber/${encodeURIComponent(email)}`,
-          { credentials: "include" }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const data = await response.json();
         setIsSubscribed(data.subscribed);

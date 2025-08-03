@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getBaseUrl } from "../services/authService";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 interface BirthdayModalProps {
   isOpen: boolean;
@@ -13,6 +15,8 @@ export default function BirthdayModal({ isOpen, onClose }: BirthdayModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const baseUrl = getBaseUrl();
+    const authState = useSelector((state: RootState) => state.auth);
+    const token = authState?.user?.data.tokens.accessToken;
 
   useEffect(() => {
     const timer = setTimeout(() => setShowCloseButton(true), 8000);
@@ -32,9 +36,9 @@ export default function BirthdayModal({ isOpen, onClose }: BirthdayModalProps) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
         },
-        body: JSON.stringify({ birthday }), 
-        credentials: "include",
+        body: JSON.stringify({ birthday }),
       });
   
       if (!response.ok) {

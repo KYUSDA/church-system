@@ -1,5 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Calendar as CalendarIcon, Clock, MapPin, Users, BookOpen, Music, Sparkles } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  MapPin,
+  Users,
+  BookOpen,
+  Music,
+  Sparkles,
+} from "lucide-react";
 import { toast } from "sonner";
 import { getBaseUrl } from "../../../services/authService";
 import { Calendar } from "@/components/ui/calendar";
@@ -13,6 +21,8 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export interface CalendarEvent {
   _id?: string;
@@ -38,22 +48,34 @@ const EventCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState(true);
   const baseUrl = getBaseUrl();
+  const authState = useSelector((state: RootState) => state.auth);
+  const token = authState?.user?.data?.tokens?.accessToken;
 
   const fetchEvents = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`${baseUrl}/calendar/events`, {
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
       });
-      const { events } = await res.json();
-      setEvents(events || []);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      const eventsData = data?.events || [];
+      setEvents(Array.isArray(eventsData) ? eventsData : []);
     } catch (err) {
       console.error("Failed to load events:", err);
       toast.error("Could not load events");
+      setEvents([]); // Ensure events is always an array
     } finally {
       setLoading(false);
     }
-  }, [baseUrl]);
+  }, [baseUrl, token]);
 
   useEffect(() => {
     fetchEvents();
@@ -61,12 +83,17 @@ const EventCalendar: React.FC = () => {
 
   // Get events for a specific date
   const getEventsForDate = (date: Date) => {
+    if (!Array.isArray(events)) return [];
     const dateStr = dayjs(date).format("YYYY-MM-DD");
-    return events.filter(event => dayjs(event.date).format("YYYY-MM-DD") === dateStr);
+    return events.filter(
+      (event) => event && dayjs(event.date).format("YYYY-MM-DD") === dateStr
+    );
   };
 
   // Get all event dates for highlighting
-  const eventDates = events.map(event => new Date(event.date));
+  const eventDates = Array.isArray(events)
+    ? events.map((event) => new Date(event.date))
+    : [];
 
   // Check if a date has events
   const hasEvents = (date: Date) => {
@@ -126,13 +153,17 @@ const EventCalendar: React.FC = () => {
           </div>
           <div className="pl-4 space-y-1">
             {event.verses.map((verse, idx) => (
-              <p key={idx} className="text-sm text-muted-foreground">{verse}</p>
+              <p key={idx} className="text-sm text-muted-foreground">
+                {verse}
+              </p>
             ))}
           </div>
         </div>
       )}
 
-      {(event.details.department.length > 0 || event.details.choristers.length > 0 || event.details.deacons.length > 0) && (
+      {(event.details.department.length > 0 ||
+        event.details.choristers.length > 0 ||
+        event.details.deacons.length > 0) && (
         <div className="space-y-2">
           <div className="flex items-center gap-1 text-xs font-medium">
             <Users className="h-3 w-3" />
@@ -141,17 +172,25 @@ const EventCalendar: React.FC = () => {
           <div className="pl-4 space-y-1">
             {event.details.department.length > 0 && (
               <div className="flex flex-wrap gap-1">
-                <span className="text-xs text-muted-foreground">Departments:</span>
+                <span className="text-xs text-muted-foreground">
+                  Departments:
+                </span>
                 {event.details.department.map((dept, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">{dept}</Badge>
+                  <Badge key={idx} variant="outline" className="text-xs">
+                    {dept}
+                  </Badge>
                 ))}
               </div>
             )}
             {event.details.choristers.length > 0 && (
               <div className="flex flex-wrap gap-1">
-                <span className="text-xs text-muted-foreground">Choristers:</span>
+                <span className="text-xs text-muted-foreground">
+                  Choristers:
+                </span>
                 {event.details.choristers.map((chorister, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">{chorister}</Badge>
+                  <Badge key={idx} variant="outline" className="text-xs">
+                    {chorister}
+                  </Badge>
                 ))}
               </div>
             )}
@@ -159,7 +198,9 @@ const EventCalendar: React.FC = () => {
               <div className="flex flex-wrap gap-1">
                 <span className="text-xs text-muted-foreground">Deacons:</span>
                 {event.details.deacons.map((deacon, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">{deacon}</Badge>
+                  <Badge key={idx} variant="outline" className="text-xs">
+                    {deacon}
+                  </Badge>
                 ))}
               </div>
             )}
@@ -180,91 +221,107 @@ const EventCalendar: React.FC = () => {
             </div>
             <Badge variant="outline" className="gap-1">
               <Sparkles className="h-3 w-3" />
-              {events.length} Events
+              {Array.isArray(events) ? events.length : 0} Events
             </Badge>
           </div>
         </CardHeader>
 
         <CardContent className="space-y-4">
-          <div className="grid lg:grid-cols-2 gap-6">
-            {/* Calendar */}
-            <div className="space-y-4">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={(date) => date && setSelectedDate(date)}
-                modifiers={{
-                  hasEvents: eventDates,
-                }}
-                modifiersStyles={{
-                  hasEvents: {
-                    backgroundColor: 'hsl(var(--primary))',
-                    color: 'hsl(var(--primary-foreground))',
-                    fontWeight: 'bold',
-                    borderRadius: '50%',
-                  },
-                }}
-                className="rounded-md border w-full"
-              />
-              
-              <div className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Highlighted dates have events
-                </p>
-              </div>
+          {loading ? (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-3"></div>
+              <p className="text-sm text-muted-foreground">
+                Loading calendar events...
+              </p>
             </div>
+          ) : (
+            <div className="grid lg:grid-cols-2 gap-6">
+              {/* Calendar */}
+              <div className="space-y-4">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={(date) => date && setSelectedDate(date)}
+                  modifiers={{
+                    hasEvents: eventDates,
+                  }}
+                  modifiersStyles={{
+                    hasEvents: {
+                      backgroundColor: "hsl(var(--primary))",
+                      color: "hsl(var(--primary-foreground))",
+                      fontWeight: "bold",
+                      borderRadius: "50%",
+                    },
+                  }}
+                  className="rounded-md border w-full"
+                />
 
-            {/* Events for selected date */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">
-                  {dayjs(selectedDate).format("MMMM D, YYYY")}
-                </h3>
-                {selectedDateEvents.length > 0 && (
-                  <Badge variant="secondary">
-                    {selectedDateEvents.length} event{selectedDateEvents.length !== 1 ? 's' : ''}
-                  </Badge>
-                )}
+                <div className="text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Highlighted dates have events
+                  </p>
+                </div>
               </div>
 
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {selectedDateEvents.length > 0 ? (
-                  selectedDateEvents.map((event, idx) => (
-                    <div key={event._id || idx}>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            className="w-full justify-start p-3 h-auto text-left"
-                          >
-                            <div className="space-y-1 w-full">
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium text-sm">{event.title}</span>
-                                {event.isHighWeek && (
-                                  <Sparkles className="h-4 w-4 text-yellow-500" />
-                                )}
+              {/* Events for selected date */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">
+                    {dayjs(selectedDate).format("MMMM D, YYYY")}
+                  </h3>
+                  {selectedDateEvents.length > 0 && (
+                    <Badge variant="secondary">
+                      {selectedDateEvents.length} event
+                      {selectedDateEvents.length !== 1 ? "s" : ""}
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {selectedDateEvents.length > 0 ? (
+                    selectedDateEvents.map((event, idx) => (
+                      <div key={event._id || idx}>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start p-3 h-auto text-left"
+                            >
+                              <div className="space-y-1 w-full">
+                                <div className="flex items-center justify-between">
+                                  <span className="font-medium text-sm">
+                                    {event.title}
+                                  </span>
+                                  {event.isHighWeek && (
+                                    <Sparkles className="h-4 w-4 text-yellow-500" />
+                                  )}
+                                </div>
+                                <p className="text-xs text-muted-foreground">
+                                  {event.theme}
+                                </p>
                               </div>
-                              <p className="text-xs text-muted-foreground">{event.theme}</p>
-                            </div>
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-80" align="start">
-                          <EventCard event={event} />
-                        </PopoverContent>
-                      </Popover>
-                      {idx < selectedDateEvents.length - 1 && <Separator />}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-80" align="start">
+                            <EventCard event={event} />
+                          </PopoverContent>
+                        </Popover>
+                        {idx < selectedDateEvents.length - 1 && <Separator />}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <CalendarIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                      <p className="text-sm font-medium">No events scheduled</p>
+                      <p className="text-xs mt-1">
+                        Select a highlighted date to view events
+                      </p>
                     </div>
-                  ))
-                ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <CalendarIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                    <p className="text-sm font-medium">No events scheduled</p>
-                    <p className="text-xs mt-1">Select a highlighted date to view events</p>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </CardContent>
       </Card>
     </div>

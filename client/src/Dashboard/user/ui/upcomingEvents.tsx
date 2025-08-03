@@ -15,6 +15,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 dayjs.extend(relativeTime);
 
@@ -42,12 +44,19 @@ const CalenderSection = () => {
   const [loading, setLoading] = useState(true);
   const baseUrl = getBaseUrl();
   const navigate = useNavigate();
+  const authState = useSelector((state: RootState) => state.auth);
+  const token = authState?.user?.data?.tokens?.accessToken;
 
   /* ---------- Fetch events from backend ---------- */
   const fetchEvents = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`${baseUrl}/calendar/events`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
         credentials: "include",
       });
       const data = await res.json();
