@@ -18,7 +18,7 @@ const DonationPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center px-2">
       {/* Left Section: Events */}
       <div className="w-full md:w-1/2">
        <h2 className="text-center text-2xl md:text-4xl font-bold my-8 md:mt-12 md:mb-16">
