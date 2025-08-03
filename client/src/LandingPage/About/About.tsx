@@ -10,7 +10,7 @@ const About = () => {
           About <span className="text-blue-500 font-medium">KYUSDA</span>
           <span className="block w-16 h-1 bg-blue-500 mt-1"></span>
         </h1>
-        <p className="text-lg text-gray-600 mt-4">
+        <p className="text-lg text-gray-600 mt-4 px-4">
           Discover who we are and what we stand for as a community of faith.
         </p>
       </header>
