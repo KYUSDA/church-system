@@ -1,7 +1,15 @@
-import { Tooltip } from "@mui/material";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import { Users, Award, Calendar, Star } from "lucide-react";
 import { TUser } from "../../../session/authData";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const ProfileStats = ({ user }: { user: TUser }) => {
   const [badges, setBadges] = useState(0);
@@ -22,46 +30,102 @@ const ProfileStats = ({ user }: { user: TUser }) => {
   }, [user]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 my-8">
-      {/* Family Group */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">Family Group</h3>
-          <span className="text-sm font-bold text-blue-600">
-            {user?.familyLocated || "Not allocated"}
-          </span>
-        </div>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+      <TooltipProvider>
+        {/* Family Group Card */}
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Family Group
+            </CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl font-bold">
+                {user?.familyLocated || "Not allocated"}
+              </div>
+              {user?.familyLocated && (
+                <Badge variant="secondary" className="ml-2">
+                  Active
+                </Badge>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Your assigned family group
+            </p>
+          </CardContent>
+        </Card>
 
-      {/* Badges */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">Badges</h3>
-          <span className="flex gap-1 text-blue-600">
-            {badges > 0 ? (
-              [...Array(badges)].map((_, index) => (
-                <Tooltip key={index} title={`Badge ${index + 1}`}>
-                  <span>⭐</span>
-                </Tooltip>
-              ))
-            ) : (
-              <span>No badges yet</span>
-            )}
-          </span>
-        </div>
-      </div>
+        {/* Badges Card */}
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Achievement Badges
+            </CardTitle>
+            <Award className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold mb-2">{badges}</div>
+            <div className="flex items-center gap-1 mb-2">
+              {badges > 0 ? (
+                [...Array(Math.min(badges, 5))].map((_, index) => (
+                  <Tooltip key={index}>
+                    <TooltipTrigger>
+                      <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>
+                        Badge {index + 1} - {(index + 1) * 100} points
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))
+              ) : (
+                <span className="text-sm text-muted-foreground">
+                  No badges yet
+                </span>
+              )}
+              {badges > 5 && (
+                <Badge variant="outline" className="ml-1">
+                  +{badges - 5}
+                </Badge>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Earned through quiz participation
+            </p>
+          </CardContent>
+        </Card>
 
-      {/* Most Valuable Member */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-        <div className="flex flex-col items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Most Valuable Member (MVM)
-          </h3>
-          <span className="text-xl font-bold text-blue-600">
-            {yearsActive} {yearsActive === 1 ? "year" : "years"}
-          </span>
-        </div>
-      </div>
+        {/* Most Valuable Member Card */}
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Years Active
+            </CardTitle>
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold mb-2">
+              {yearsActive} {yearsActive === 1 ? "year" : "years"}
+            </div>
+            <div className="flex items-center gap-2">
+              {yearsActive >= 1 && (
+                <Badge
+                  variant={yearsActive >= 5 ? "default" : "secondary"}
+                  className="text-xs"
+                >
+                  {yearsActive >= 5 ? "Veteran Member" : "Active Member"}
+                </Badge>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Member since {dayjs(user?.createdAt).format("YYYY")}
+            </p>
+          </CardContent>
+        </Card>
+      </TooltipProvider>
     </div>
   );
 };

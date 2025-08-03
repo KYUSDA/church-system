@@ -2,7 +2,6 @@ import memberAuth from "../Models/authModel";
 import bcrypt from "bcrypt";
 import { Response, Request, NextFunction } from "express";
 import { sendMail } from "../utils/mail";
-import { redis } from "../utils/redis";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import authModel from "../Models/authModel";
@@ -10,7 +9,7 @@ import { sendToken } from "../utils/jwt";
 import validator from "validator";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { IUser } from "../Models/authModel";
-import 'dotenv/config';
+import "dotenv/config";
 
 interface IRegisterUser {
   firstName: string;
@@ -211,45 +210,100 @@ export const memberSignIn = catchAsyncErrors(
       }
 
       //create cookies
-      await sendToken(user, res);
+      const userInstance = new sendToken();
+      const { accessToken, refreshToken } = await userInstance.createTokens(
+        user
+      );
+
+      // save refresh token in the db
+      if (!user.id) {
+        return next(new ErrorHandler("User ID is missing", 500));
+      }
+      if (!refreshToken) {
+        return next(new ErrorHandler("Refresh token is missing", 500));
+      }
+      await userInstance.saveRefreshToken(user.id, refreshToken);
+
+      // send tokens
+      const resp = {
+        tokens: {
+          accessToken,
+          refreshToken,
+        },
+        user: {
+          userId: user.id,
+          role: user.role,
+        },
+      };
+
+      res.status(200).json({
+        success: true,
+        message: "User logged in successfully",
+        data: resp,
+      });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
   }
 );
 
-// logout
-const memberLogout = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
+
+// refresh token
+export const refreshTokens = catchAsyncErrors(
+  async (user_id: string, refreshToken: string) => {
     try {
-      const redisUser = req.user?.id;
-      console.log("Full request user object:", req.user);
-      console.log("User ID from request:", redisUser);
-
-      // Clear Redis first (before clearing cookie)
-      if (redisUser) {
-        const exists = await redis.exists(redisUser);
-        console.log(`Redis Key Exists Before Deletion: ${exists}`);
-
-        if (exists) {
-          await redis.del(redisUser);
-          console.log("User session deleted from redis");
-        } else {
-          console.log(`User ID ${redisUser} was not found in Redis`);
-        }
-      } else {
-        console.log(`User ID is undefined, cannot delete from Redis`);
+      const user = await authModel.findById(user_id);
+      if (!user) {
+        throw new ErrorHandler("User not found", 404);
       }
 
-      // Clear cookies - use proper cookie clearing
-      res.clearCookie("access_token", {
-        httpOnly: true,
-        path: "/",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        secure: process.env.NODE_ENV === "production",
-      });
+      // Verify refresh token
+      if (!user.storedRefreshToken) {
+        throw new ErrorHandler("No refresh token stored for user", 401);
+      }
+      const isValid = await bcrypt.compare(
+        refreshToken,
+        user.storedRefreshToken
+      );
+      if (!isValid) {
+        throw new ErrorHandler("Invalid refresh token", 401);
+      }
 
-      res.status(200).json({ success: true, message: "User logged out" });
+      // Generate new tokens
+      const userInstance = new sendToken();
+      const { accessToken } = await userInstance.createTokens(
+        user
+      );
+
+      return {
+        success: true,
+        tokens: {
+          accessToken
+        },
+      };
+    } catch (error: any) {
+      throw new ErrorHandler(error.message, 400);
+    }
+  }
+);
+
+// logout
+export const memberLogout = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = req.user;
+
+      if (!user) {
+        return next(new ErrorHandler("User not authenticated", 401));
+      }
+
+      // Clear refresh token from database
+      await authModel.findByIdAndUpdate(user.id, { storedRefreshToken: null });
+
+      res.status(200).json({
+        success: true,
+        message: "User logged out successfully",
+      });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -282,8 +336,8 @@ export const validateSession = catchAsyncErrors(
       return next(new ErrorHandler("Invalid token payload", 401));
     }
 
-    const redisUser = await redis.get(decoded.id);
-    if (!redisUser) {
+    const userFound = await authModel.findById(decoded.id);
+    if (!userFound) {
       console.log(`User ${decoded.id} not found in Redis`);
       return next(
         new ErrorHandler("Session expired. Please log in again.", 401)
@@ -292,7 +346,7 @@ export const validateSession = catchAsyncErrors(
 
     // Optional: verify redis user matches JWT if needed
 
-    const user = JSON.parse(redisUser);
+    const user = userFound;
 
     return res.status(200).json({
       success: true,
@@ -300,7 +354,6 @@ export const validateSession = catchAsyncErrors(
     });
   }
 );
-
 
 // reset token
 export const memberResetToken = catchAsyncErrors(
@@ -458,6 +511,7 @@ export const updateUserBirthday = catchAsyncErrors(
 export default {
   memberSignUp,
   memberSignIn,
+  refreshTokens,
   ActivateUser,
   memberLogout,
   changePassword,

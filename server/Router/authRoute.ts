@@ -14,11 +14,10 @@ authRoute.post("/logout", requireAuth, memberAuth.memberLogout);
 authRoute.get("/validate-session", requireAuth, memberAuth.validateSession);
   
 
-// authRoute.post(
-//   "/update-accesstoken",
-//   requireRefreshToken,
-//   memberAuth.UpdateAccessToken
-// );
+authRoute.post(
+  "/update-accesstoken",
+  memberAuth.refreshTokens
+);
 
 authRoute.route("/resetToken").post(memberAuth.memberResetToken);
 

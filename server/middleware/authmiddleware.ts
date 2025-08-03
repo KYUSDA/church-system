@@ -1,51 +1,17 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { redis } from "../utils/redis.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import { catchAsyncErrors } from "./catchAsyncErrors.js";
-import { Roles } from '../Models/authModel.js';
-
-
-// export const requireAuth = catchAsyncErrors(
-//   async (req: Request, _res: Response, next: NextFunction) => {
-//     const access_token = req.cookies.access_token;
-//     console.log("Access token", access_token);
-//     if (!access_token) {
-//       throw new ErrorHandler("Session not found. Please log in again…", 401);
-//     }
-
-//     let decoded: JwtPayload;
-//     try {
-//       decoded = jwt.verify(
-//         access_token,
-//         process.env.ACCESS_TOKEN as string
-//       ) as JwtPayload;
-//     } catch (err: any) {
-//       if (err.name === "TokenExpiredError") {
-//         throw new ErrorHandler("TokenExpiredError", 401);
-//       }
-//       throw new ErrorHandler("Authentication failed", 401);
-//     }
-
-
-//     if (!decoded) {
-//       throw new ErrorHandler("Authentication failed", 401);
-//     }
-
-//     // Look user up in Redis; `decoded.id` must exist
-//     const user = await redis.get(decoded.id);
-//     if (!user) {
-//       throw new ErrorHandler("User session not found. Please log in", 404);
-//     }
-
-//     req.user = JSON.parse(user);
-//     next();
-//   }
-// );
+import authModel, { Roles } from "../Models/authModel.js";
 
 export const requireAuth = catchAsyncErrors(
   async (req: Request, _res: Response, next: NextFunction) => {
-    const access_token = req.cookies.access_token;
+    const authHeader = req.headers.authorization;
+    const access_token =
+      authHeader && authHeader.startsWith("Bearer ")
+        ? authHeader.substring(7)
+        : null;
+
     console.log("Access token present:", !!access_token);
 
     if (!access_token) {
@@ -70,25 +36,16 @@ export const requireAuth = catchAsyncErrors(
       throw new ErrorHandler("Invalid token payload", 401);
     }
 
-    // Look user up in Redis
-    const user = await redis.get(decoded.id);
+    // Fetch the full user object from the database using the decoded id
+    const user = await authModel.findById(decoded.id);
     if (!user) {
-      console.log(`User ${decoded.id} not found in Redis`);
-      throw new ErrorHandler("Session expired. Please log in again.", 401);
+      throw new ErrorHandler("User not found", 404);
     }
-
-    try {
-      req.user = JSON.parse(user);
-    } catch (parseError) {
-      console.log("Error parsing user from Redis:", parseError);
-      throw new ErrorHandler("Invalid session data. Please log in again.", 401);
-    }
+    req.user = user;
 
     next();
   }
 );
-
-
 
 // middleware/authorizeRoles.ts
 export const authorizeRoles = (...allowedRoles: Roles[]) => {
@@ -105,7 +62,6 @@ export const authorizeRoles = (...allowedRoles: Roles[]) => {
 
     next();
   };
-}
-
+};
 
 export default requireAuth;

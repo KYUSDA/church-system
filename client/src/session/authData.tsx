@@ -22,15 +22,16 @@ export interface TUser {
 
 const useUserData = () => {
   const authState = useSelector((state: RootState) => state.auth);
-  const user = authState.user as TUser | null;
+  const user = authState?.user?.data.user;
+  const userId = user?.userId;
   const [userData, setUserData] = useState<TUser | null>(null);
   const baseUrl = getBaseUrl();
 
   const fetchUserData = async () => {
-    if (!user || !user.id) return;
+    if (!user || !userId) return;
 
     try {
-      const response = await fetch(`${baseUrl}/user/get-user/${user.id}`, {
+      const response = await fetch(`${baseUrl}/user/get-user/${userId}`, {
         method: "GET",
         credentials: "include",
       });

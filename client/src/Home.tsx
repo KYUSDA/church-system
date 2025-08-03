@@ -1,9 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./App";
 import { AuthRoutes } from "./routes/auth";
-import {Landingpage} from "./routes/landingpage";
-import { User } from "./routes/user";
-import { Admin } from "./routes/admin";
+import { Landingpage } from "./routes/landingpage";
+import { DashboardRoutes } from "./routes/dashboard";
 
 const Home = () => {
   return (
@@ -13,10 +12,8 @@ const Home = () => {
       {AuthRoutes}
       {/* landing page */}
       {Landingpage}
-      {/* user dashboard */}
-      {User}
-      {/* admin dashboard */}
-      {Admin}
+      {/* unified dashboard routes */}
+      {DashboardRoutes}
     </Routes>
   );
 };

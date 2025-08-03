@@ -7,7 +7,6 @@ import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ProviderFunction from "./context/authContext";
 import { Toaster } from "sonner";
-import SessionGuard from "./hooks/useSessionGuard";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -26,9 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               },
             }}
           />
-          <SessionGuard>
-            <Home />
-          </SessionGuard>
+          <Home />
         </ProviderFunction>
       </PersistGate>
     </Provider>

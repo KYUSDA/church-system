@@ -20,7 +20,6 @@ const persistConfig = {
   key: "auth",
   storage,
   whitelist: ["user", "isAuthenticated"],
-  blacklist: ["sessionExpired", "logoutReason"],
 };
 
 const persistAuthReducer = persistReducer(persistConfig, authSlice);

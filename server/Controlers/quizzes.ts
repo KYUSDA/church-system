@@ -3,7 +3,6 @@ import { NextFunction, Request,Response } from "express";
 import 'dotenv/config'
 import { sendMail } from "../utils/mail";
 import authModel from "../Models/authModel";
-import { redis } from "../utils/redis";
 import quizModel from "../Models/quizModel";
 import { quizResultModel } from "../Models/ResultsModel";
 import cloudinary from "cloudinary";
@@ -64,12 +63,6 @@ export const createQuiz = async (req: Request, res: Response, next: NextFunction
                 template: "newQuiz.ejs",
                 data,
             });
-        }
-
-        // set on redis
-        const redisData = await redis.set(result._id.toString(), JSON.stringify(result));
-        if (!redisData) {
-            return next(new ErrorHandler("Error setting quiz data on Redis",400));
         }
 
          res.status(201).json({ message: "Quiz created successfully", data: result });

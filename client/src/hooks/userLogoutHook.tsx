@@ -14,7 +14,7 @@ export const useLogout = () => {
       await fetch(`${baseUrl}/member/logout`,{credentials: 'include'});
       localStorage.setItem("birthdayModalSeen", "false"); // Reset birthday modal
       // Clear Redux state
-      dispatch(logout({}));
+      dispatch(logout());
 
       // Redirect to SignIn
       navigate("/signIn");
@@ -34,7 +34,7 @@ export const logoutCompletely = async () => {
     await fetch(`${baseUrl}/member/logout`, { credentials: "include" });
     localStorage.setItem("birthdayModalSeen", "false");
 
-    store.dispatch(logout({ reason: "Session expired", showAlert: true }));
+    store.dispatch(logout());
   } catch (error) {
     console.error("Logout failed:", error);
   }

@@ -4,8 +4,7 @@ import PersonalGoals from "./PersonalGoals";
 import useUserData from "../../../session/authData";
 import LeaderboardSection from "./leaderBoard";
 import ProfileStats from "./profileStats";
-import SubscriptionSection from "./devotionSubscription";
-import { getTimeOfDayGreeting } from "../components/NavBar";
+import DevotionSubscriptionFloat from "./devotionSubscription";
 import BirthdayModal from "../../../Auth/birthday";
 import CalendarSection from "./upcomingEvents";
 
@@ -39,13 +38,13 @@ const DashboardHome: React.FC = () => {
   if (!userData) return null;
 
   return (
-    <div className="flex w-full px-4">
+    <div className="px-4">
       <BirthdayModal isOpen={showModal} onClose={handleCloseModal} />
-      <div className="w-full">
-        <h1 className="text-2xl font-bold text-gray-900 text-center mt-2 lg:hidden">
-          {getTimeOfDayGreeting()} {userData.firstName} 😊
-        </h1>
 
+      {/* Floating devotion subscription for non-subscribers */}
+      <DevotionSubscriptionFloat />
+
+      <div className="w-full">
         <ProfileStats user={userData} />
 
         {/* upcoming events */}
@@ -57,10 +56,6 @@ const DashboardHome: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <PersonalGoals />
           <LeaderboardSection />
-        </div>
-
-        <div>
-          <SubscriptionSection />
         </div>
       </div>
     </div>
