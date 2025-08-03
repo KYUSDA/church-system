@@ -13,7 +13,7 @@ const DonationPage: React.FC = () => {
       title: "Camp Meeting",
       badge: "Camp meeting",
       date: "Sept 7th-13th, 2025",
-      description: "Camp meeting event held every year. Every contribution counts"
+      description: "Our this year's camp meeting is one you want to attend. You can't afford to miss this!"
      }
   ];
 
