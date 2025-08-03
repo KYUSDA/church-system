@@ -23,12 +23,12 @@ interface Song {
   title: string;
   artist: string;
   album: string;
-  duration: string; // "mm:ss" – static label
+  duration: string; // “mm:ss” – static label
   albumArt: string;
   year: string;
   genre: string;
   isFavorite: boolean;
-  audioUrl: string; // NEW – actual MP3 / stream URL
+  audioUrl: string; // NEW – actual MP3 / stream URL
 }
 
 /** ────────── Helpers ────────── */
@@ -128,13 +128,11 @@ const Songs: React.FC = () => {
     const selected = songs.find((s) => s.id === id);
     if (!selected) return;
 
-    // if clicking the track that's already playing → pause/resume
+    // if clicking the track that’s already playing → pause
     if (currentlyPlaying === id) {
-      if (isPlaying) {
-        audioRef.current?.pause();
-      } else {
-        audioRef.current?.play();
-      }
+      audioRef.current?.pause();
+      setCurrentlyPlaying(null);
+      setCurrentTime(0);
       return;
     }
 
