@@ -91,7 +91,7 @@ const KyuSda = () => {
   return (
     <div className="my-6">
       <h2 className="text-center text-2xl md:text-4xl font-bold my-8 md:mt-12 md:mb-12">
-        Our <span className="text-blue-500">Church</span> Gallery
+        The <span className="text-blue-500">Memories</span> Archived
       </h2>
 
       <Loader isLoading={loading} text="Get Gallery ready..." />
