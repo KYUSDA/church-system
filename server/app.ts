@@ -31,7 +31,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://church-system-three.vercel.app/",
+  "https://church-system-three.vercel.app",
 ];
 
 app.use(
