@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CalendarEvent } from "../Dashboard/Admin/components/calendar";
 
-export const BASE_URL = "http://localhost:8000/kyusda/v1";
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export interface TUser {
   _id: string;
