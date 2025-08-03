@@ -12,13 +12,13 @@ export const useUserReadingProgress = () => {
 
   // Load user's reading progress from Supabase database
   useEffect(() => {
-    if (user?.id) {
+    if (user?.userId) {
       loadUserProgress();
     }
   }, [user]);
 
   const loadUserProgress = async () => {
-    if (!user?.id) return;
+    if (!user?.userId) return;
 
     setLoading(true);
     try {
@@ -42,7 +42,7 @@ export const useUserReadingProgress = () => {
   };
 
   const toggleChapter = async (bookName: string, chapterNumber: number) => {
-    if (!user?.id) return false;
+    if (!user?.userId) return false;
 
     // Call backend no matter what
     const { success } = await toggle(bookName, chapterNumber);
@@ -81,13 +81,13 @@ export const useUserStreak = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user?.id) {
+    if (user?.userId) {
       loadUserStreak();
     }
   }, [user]);
 
   const loadUserStreak = async () => {
-    if (!user?.id) return;
+    if (!user?.userId) return;
 
     setLoading(true);
     try {
@@ -107,7 +107,7 @@ export const useUserStreak = () => {
   };
 
   const updateStreak = async (newStreak: number) => {
-    if (!user?.id) {
+    if (!user?.userId) {
       console.error("No user found");
       return;
     }

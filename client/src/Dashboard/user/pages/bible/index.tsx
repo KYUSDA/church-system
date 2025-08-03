@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Flame, Star, User as UserIcon } from "lucide-react";
+import { Calendar, Flame, Star } from "lucide-react";
 import Dashboard from "../../components/Dashboard";
 import ReadingCalendar from "../../components/utils/ReadingCalendar";
 import Confetti from "../../components/utils/Confetti";
@@ -19,7 +19,7 @@ type ActiveTab = "dashboard" | "calendar";
 const BibleApp = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("dashboard");
   const [showConfetti, setShowConfetti] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [_mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const { readChapters, toggleChapter, loading } = useUserReadingProgress();
   const {

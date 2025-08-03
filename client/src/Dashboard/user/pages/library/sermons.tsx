@@ -1,46 +1,37 @@
-
 import React, { useState } from "react";
 import {
-  PlayCircleFilled,
-  CalendarToday,
-  AccessTime,
-  Person,
-  Close,
-} from "@mui/icons-material";
+  Card,
+  CardContent,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Play,
+  Calendar,
+  Clock,
+  User,
+  X,
+  Share2,
+  Download,
+  Heart,
+  Eye,
+} from "lucide-react";
 // @ts-ignore
 import YouTubeModule from "react-youtube";
+import { Sermon,sermons } from "@/Dummy/sermon";
 const YouTube = (YouTubeModule as any).default || YouTubeModule;
 
-interface Sermon {
-  id: number;
-  title: string;
-  preacher: string;
-  date: string;
-  duration: string;
-  thumbnail: string;
-  description: string;
-  category: string;
-  videoUrl: string; // YouTube video ID (e.g., "dQw4w9WgXcQ")
-}
 
 const Sermons: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<Sermon | null>(null);
-
-  const sermons: Sermon[] = [
-    {
-      id: 1,
-      title: "The Power of Faith",
-      preacher: "Pastor John Smith",
-      date: "2023-10-15",
-      duration: "45:22",
-      thumbnail: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad",
-      description: "Exploring how faith can move mountains...",
-      category: "Faith",
-      videoUrl: "7iChlFdTyKk",
-    },
-    // Add other sermons similarly with videoUrl
-  ];
-
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -50,96 +41,162 @@ const Sermons: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen my-4">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Sermons & Teachings
         </h1>
-        <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Biblical messages to inspire and transform your life
         </p>
       </div>
 
-      <div className="grid gap-8 px-4 md:grid-cols-2 lg:grid-cols-3">
+      {/* Sermons Grid */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {sermons.map((sermon) => (
-          <div
+          <Card
             key={sermon.id}
-            className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300"
+            className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-0 shadow-lg"
           >
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <img
-                className="h-48 w-full object-cover"
+                className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 src={sermon.thumbnail}
                 alt={sermon.title}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white">
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+              {/* Category Badge */}
+              <div className="absolute top-3 left-3">
+                <Badge
+                  variant="secondary"
+                  className="bg-white/90 text-gray-800 hover:bg-white"
+                >
                   {sermon.category}
-                </span>
+                </Badge>
               </div>
-              <button
+
+              {/* Play Button */}
+              <Button
                 onClick={() => setSelectedVideo(sermon)}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white hover:text-blue-300 transition-colors"
+                size="lg"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full w-12 h-12 bg-white/20 backdrop-blur-sm border-2 border-white/30 hover:bg-white/30 hover:scale-110 transition-all duration-300"
               >
-                <PlayCircleFilled style={{ fontSize: "3rem" }} />
-              </button>
+                <Play className="h-6 w-6 text-white ml-1" />
+              </Button>
+
+              {/* Stats */}
+              <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                <div className="flex items-center gap-1 text-white text-xs bg-black/30 rounded-full px-2 py-1">
+                  <Eye className="h-3 w-3" />
+                  {sermon.views}
+                </div>
+                <div className="flex items-center gap-1 text-white text-xs bg-black/30 rounded-full px-2 py-1">
+                  <Heart className="h-3 w-3" />
+                  {sermon.likes}
+                </div>
+              </div>
             </div>
 
-            <div className="flex-1 p-6 flex flex-col justify-between">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <CardContent className="p-6 space-y-4">
+              <div className="space-y-2">
+                <CardTitle className="text-xl leading-tight group-hover:text-blue-600 transition-colors">
                   {sermon.title}
-                </h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  <Person className="inline mr-1" fontSize="small" />
+                </CardTitle>
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <User className="h-4 w-4 mr-1" />
                   {sermon.preacher}
-                </p>
-                <p className="text-gray-600 mb-4 line-clamp-2">
-                  {sermon.description}
-                </p>
+                </div>
               </div>
-              <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
-                <div className="flex items-center">
-                  <CalendarToday className="mr-1" fontSize="small" />
+
+              <p className="text-sm text-muted-foreground line-clamp-2">
+                {sermon.description}
+              </p>
+
+              <div className="flex items-center justify-between pt-2 border-t">
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <Calendar className="h-3 w-3 mr-1" />
                   {formatDate(sermon.date)}
                 </div>
-                <div className="flex items-center">
-                  <AccessTime className="mr-1" fontSize="small" />
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3 mr-1" />
                   {sermon.duration}
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
-      {/* Modal */}
-      {selectedVideo && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
-          <div className="bg-white rounded-xl p-4 shadow-lg w-full max-w-2xl relative">
-            <button
-              onClick={() => setSelectedVideo(null)}
-              className="absolute top-3 right-3 text-gray-600 hover:text-red-500"
-            >
-              <Close />
-            </button>
-            <div className="aspect-w-16 aspect-h-9 w-full">
-              <YouTube
-                videoId={selectedVideo.videoUrl}
-                opts={{ width: "100%", height: "400" }}
-              />
-            </div>
-            <div className="mt-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-2">
-                {selectedVideo.title}
-              </h2>
-              <p className="text-sm text-gray-600">
-                {selectedVideo.description}
-              </p>
-            </div>
+      {/* Video Modal */}
+      <Dialog
+        open={!!selectedVideo}
+        onOpenChange={() => setSelectedVideo(null)}
+      >
+        <DialogContent className="max-w-4xl w-full p-0 overflow-hidden">
+          <div className="relative">
+            {selectedVideo && (
+              <>
+                <div className="aspect-video w-full">
+                  <YouTube
+                    videoId={selectedVideo.videoUrl}
+                    opts={{
+                      width: "100%",
+                      height: "100%",
+                      playerVars: {
+                        autoplay: 1,
+                        modestbranding: 1,
+                        rel: 0,
+                      },
+                    }}
+                    className="w-full h-full"
+                  />
+                </div>
+                <div className="p-6 space-y-4">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl">
+                      {selectedVideo.title}
+                    </DialogTitle>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <User className="h-4 w-4" />
+                        {selectedVideo.preacher}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        {formatDate(selectedVideo.date)}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {selectedVideo.duration}
+                      </div>
+                    </div>
+                  </DialogHeader>
+                  <DialogDescription className="text-base leading-relaxed">
+                    {selectedVideo.description}
+                  </DialogDescription>
+                  <div className="flex items-center gap-2 pt-4 border-t">
+                    <Button variant="outline" size="sm">
+                      <Share2 className="h-4 w-4 mr-2" />
+                      Share
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <Download className="h-4 w-4 mr-2" />
+                      Download
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <Heart className="h-4 w-4 mr-2" />
+                      Like ({selectedVideo.likes})
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
-        </div>
-      )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

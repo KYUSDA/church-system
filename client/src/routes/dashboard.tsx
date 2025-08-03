@@ -34,8 +34,6 @@ import QuizDetail from "../Dashboard/user/pages/defend/quizePage";
 import TriviaPage from "../Dashboard/user/pages/trivias/triviaPage";
 import TriviaProps from "../Dashboard/user/pages/trivias/triviasProp";
 import PrayerRequests from "../Dashboard/user/ui/prayerRequests";
-import NotificationsPage from "../Dashboard/user/ui/Notifications";
-import ReportIssue from "../Dashboard/user/ui/reportIssue";
 import EventCalendar from "../Dashboard/user/ui/calendarEvents";
 import ResourceCenter from "../Dashboard/user/ui/ResourceCenter";
 import BibleApp from "../Dashboard/user/pages/bible";
@@ -391,26 +389,6 @@ export const DashboardRoutes = (
         <MemberRoute>
           <UnifiedDashboard>
             <PrayerRequests />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/user-notifications"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <NotificationsPage />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/report-issue"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <ReportIssue />
           </UnifiedDashboard>
         </MemberRoute>
       }
