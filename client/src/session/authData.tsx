@@ -25,12 +25,17 @@ const useUserData = () => {
   const user = authState?.user?.data.user;
   const userId = user?.userId;
   const [userData, setUserData] = useState<TUser | null>(null);
+  const [loading, setLoading] = useState(true);
   const baseUrl = getBaseUrl();
 
   const fetchUserData = async () => {
-    if (!user || !userId) return;
+    if (!user || !userId) {
+      setLoading(false);
+      return;
+    }
 
     try {
+      setLoading(true);
       const response = await fetch(`${baseUrl}/user/get-user/${userId}`, {
         method: "GET",
         credentials: "include",
@@ -44,6 +49,8 @@ const useUserData = () => {
       setUserData(data);
     } catch (error) {
       console.error("Error fetching user data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,8 +58,7 @@ const useUserData = () => {
     fetchUserData();
   }, [user, baseUrl]);
 
-  return { userData, setUserData, user, refetchUser: fetchUserData };
+  return { userData, setUserData, user, loading, refetchUser: fetchUserData };
 };
-
 
 export default useUserData;

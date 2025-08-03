@@ -68,9 +68,7 @@ const EventCalendar: React.FC = () => {
       const data = await res.json();
       const eventsData = data?.events || [];
       setEvents(Array.isArray(eventsData) ? eventsData : []);
-    } catch (err) {
-      console.error("Failed to load events:", err);
-      toast.error("Could not load events");
+    } catch (_err) {
       setEvents([]); // Ensure events is always an array
     } finally {
       setLoading(false);

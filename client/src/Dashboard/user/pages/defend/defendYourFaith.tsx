@@ -72,9 +72,9 @@ const QuizzesPage: React.FC = () => {
 
         const data = await response.json();
         setQuizzes(Array.isArray(data.quizzes) ? data.quizzes : []);
-      } catch (error) {
-        console.error("Error fetching quizzes:", error);
-        toast.error("Failed to load quizzes");
+      } catch (_error) {
+        // console.error("Error fetching quizzes:", error);
+        // toast.error("Failed to load quizzes");
         setQuizzes([]);
       }
     };
@@ -97,9 +97,9 @@ const QuizzesPage: React.FC = () => {
 
         const data = await response.json();
         setCompletedQuizzes(Array.isArray(data.results) ? data.results : []);
-      } catch (error) {
-        console.error("Error fetching completed quizzes:", error);
-        toast.error("Failed to load quiz results");
+      } catch (_error) {
+        // console.error("Error fetching completed quizzes:", error);
+        // toast.error("Failed to load quiz results");
         setCompletedQuizzes([]);
       } finally {
         setLoading(false);
