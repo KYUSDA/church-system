@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { authSlice, logout } from "../session/userSlice";
+import { logout } from "../session/userSlice";
 
 export const BASE_URL = "http://localhost:8000/kyusda/v1";
 
