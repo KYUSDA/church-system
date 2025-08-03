@@ -11,6 +11,8 @@ import devotionRoute from "./Router/devotionRoute";
 import prayerRequestRouter from "./Router/prayerRoute";
 import cookieParser from 'cookie-parser';
 import notificationRouter from './Router/notificationRouter';
+import { calendarRouter } from './Router/calendarRoute';
+import { resourceRouter } from './Router/resourceRoute';
 
 const app = express();
 app.use(express.json());
@@ -23,6 +25,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 
+// check if workflow is working
+// check if extraction well
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -53,7 +57,17 @@ app.use("/kyusda/v1/family/", familyRoute);
 app.use("/kyusda/v1/quizzes/",quizzeRoute);
 app.use('/kyusda/v1/devotion/',devotionRoute);
 app.use("/kyusda/v1/prayers/", prayerRequestRouter);
-app.use("/kyusda/v1/notification/", notificationRouter);
+app.use("/kyusda/v1/notification", notificationRouter);
+app.use("/kyusda/v1/calendar",calendarRouter);
+app.use("/kyusda/v1/resource",resourceRouter);
+
+// check cookies
+app.use((req, _res, next) => {
+  console.log("Cookie header:", req.headers.cookie);
+  console.log("Parsed cookies:", req.cookies);
+  next();
+});
+
 
 //test 
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {

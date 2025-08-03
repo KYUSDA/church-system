@@ -7,7 +7,7 @@ const devotionRoute = Router();
 
 devotionRoute.route('/subscribe').post(subscribeDevotion);
 devotionRoute.route('/unsubscribe').post(unsubscribeDevotion);
-devotionRoute.get("/getOneSubscriber", requireAuth, getSubscriberByEmail);
+devotionRoute.get("/getOneSubscriber/:email", getSubscriberByEmail);
 devotionRoute.route("/resubscription").post(resubscribe);
 
 

@@ -7,6 +7,8 @@ import path from "path";
 import { NextFunction, Request,Response } from "express";
 import { fileURLToPath } from "url";
 import ErrorHandler from "../utils/ErrorHandler";
+import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
+import authModel from "../Models/authModel";
 
 
 // Subscribe to Devotions
@@ -141,26 +143,33 @@ export const unsubscribeDevotion = async (req: Request, res: Response): Promise<
 }
 
 // get one subsriber
-export const getSubscriberByEmail = async (req: Request, res: Response, next:NextFunction)=> {
-    try {
-        const email = req.user?.email; // Get email from the authenticated user
+export const getSubscriberByEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Extract email from request parameters
+    const email = req.params.email;
 
-        if (!email) {
-            return next(new ErrorHandler("User email not found",401 ));
-        }
-
-        const subscriber = await devotionModel.findOne({ email });
-
-        if (!subscriber) {
-            res.status(200).json({ subscribed: false });
-        } else {
-            res.status(200).json({ subscribed: true });
-        }
-        
-    } catch (error:any) {
-        return next(new ErrorHandler(error.message, 400)); 
+    // check if email exists
+    const isEmail = await authModel.findOne({email});
+    if (!isEmail) {
+      return next(new ErrorHandler("Email not found", 404));
     }
+
+    if (!email) {
+      return next(new ErrorHandler("Email parameter is required", 400));
+    }
+
+    const subscriber = await devotionModel.findOne({ email });
+
+    res.status(200).json({ subscribed: !!subscriber });
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400));
+  }
 };
+  
 
 
 

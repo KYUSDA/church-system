@@ -3,12 +3,13 @@ import { createNotification, getAllNotifications, updateNotificationState } from
 
 import { Router } from "express";
 import requireAuth, { authorizeRoles } from "../middleware/authmiddleware";
+import { UserRole } from "../Models/authModel";
 
 const notificationRouter = Router();
 
-notificationRouter.post("/create-notification",requireAuth, authorizeRoles("admin"), createNotification);
+notificationRouter.post("/create-notification",requireAuth, authorizeRoles(UserRole.SUPERADMIN), createNotification);
 notificationRouter.get("/getAll-notification",requireAuth, getAllNotifications);
-notificationRouter.patch("/update-notification-state",requireAuth, authorizeRoles("admin"), updateNotificationState);
+notificationRouter.patch("/update-state",requireAuth, updateNotificationState);
 
 
 export default notificationRouter;

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import memberAuth from "../Controlers/authControler";
 import requireAuth from "../middleware/authmiddleware";
 const authRoute = Router();
@@ -11,7 +11,14 @@ authRoute.post("/activate-me",memberAuth.ActivateUser);
 
 authRoute.post("/logout", requireAuth, memberAuth.memberLogout);
 
-authRoute.post("/update-accesstoken", memberAuth.UpdateAccessToken);
+authRoute.get("/validate-session", requireAuth, memberAuth.validateSession);
+  
+
+// authRoute.post(
+//   "/update-accesstoken",
+//   requireRefreshToken,
+//   memberAuth.UpdateAccessToken
+// );
 
 authRoute.route("/resetToken").post(memberAuth.memberResetToken);
 

@@ -10,7 +10,7 @@ const About = () => {
           About <span className="text-blue-500 font-medium">KYUSDA</span>
           <span className="block w-16 h-1 bg-blue-500 mt-1"></span>
         </h1>
-        <p className="text-lg text-gray-600 mt-4">
+        <p className="text-lg text-gray-600 mt-4 px-4">
           Discover who we are and what we stand for as a community of faith.
         </p>
       </header>
@@ -35,7 +35,7 @@ const About = () => {
               className="w-16 h-16 mb-4"
             />
             <h3 className="text-xl font-bold text-gray-800 mb-2">Daily Prayers</h3>
-            <p className="text-gray-600">Join us as we come together daily to seek God’s guidance and blessings through prayer.</p>
+            <p className="text-gray-600">Join us for morning prayers held Monday to Friday from 6:00 AM to 7:00 AM, and on Sundays from 7:00 AM to 8:00 AM. Vespers services take place every Wednesday and Friday. Together, we seek God’s presence, guidance, and blessings in prayer..</p>
           </div>
 
           {/* Community Helpers */}
@@ -57,7 +57,7 @@ const About = () => {
               className="w-16 h-16 mb-4"
             />
             <h3 className="text-xl font-bold text-gray-800 mb-2">Continuous Studying</h3>
-            <p className="text-gray-600">Deepen your understanding of God’s word through consistent study and learning.</p>
+            <p className="text-gray-600">Join our bible study based ministries to deepen your understanding of God’s word through consistent study and learning.</p>
           </div>
 
           {/* Sabbath Worship */}
@@ -68,7 +68,7 @@ const About = () => {
               className="w-16 h-16 mb-4"
             />
             <h3 className="text-xl font-bold text-gray-800 mb-2">Sabbath Worship</h3>
-            <p className="text-gray-600">Experience the joy and peace of worshiping together every Sabbath day.</p>
+            <p className="text-gray-600">Experience the joy and peace of worshiping together every Sabbath day. Usually takes place in the Main Hall from 7:00am to 6:00pm</p>
           </div>
         </div>
       </section>

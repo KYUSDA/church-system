@@ -1,18 +1,27 @@
-# Use Node.js as the base
-FROM node:18
+FROM node:22-alpine
 
-# Set working directory
+
+RUN apk add --no-cache git bash
+
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if exists)
+# Copy and install dependencies
 COPY package.json package-lock.json* ./
 RUN npm install
 
-# Copy the rest of the Sanity code
+# Install globally in container
+RUN npm install -g @sanity/cli  
+
+# Copy project files
 COPY . .
 
-# Expose port 3333 (Sanity Studio’s default port)
+# Build the Sanity Studio
+# Note: Ensure that the Sanity Studio is set up to build correctly
+RUN npm run build
+
+# Expose the port Sanity Studio runs on
 EXPOSE 3333
 
-# Start Sanity Studio
+# Start the Sanity Studio
 CMD ["npm", "run", "start"]

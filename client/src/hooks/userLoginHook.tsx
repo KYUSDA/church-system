@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../store/slices/userSlice";
+import { login } from "../session/userSlice";
 import { useAuthLoginMutation } from "../services/authService";
 import { toast } from "sonner";
 
@@ -13,7 +13,7 @@ interface FormData {
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [authLogin,{isLoading}] = useAuthLoginMutation();
+  const [authLogin, { isLoading }] = useAuthLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,16 +25,10 @@ export const useLogin = () => {
       const resp = await authLogin(values).unwrap(); // ✅ Unwrap to handle errors
 
       if (resp) {
-        const { user, accessToken } = resp;
+        const { user } = resp;
 
         // ✅ Store user data in Redux
-        dispatch(
-          login({
-            user,
-            accessToken,
-            expiresIn: 3600, 
-          })
-        );
+        dispatch(login({user}));
 
         toast.success("Login successful");
 
@@ -53,5 +47,5 @@ export const useLogin = () => {
     }
   };
 
-  return { loginUser, loading, error,isLoading };
+  return { loginUser, loading, error, isLoading };
 };

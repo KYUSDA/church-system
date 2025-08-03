@@ -4,3 +4,4 @@ config.env
 /dist
 /uploads
 
+app.http

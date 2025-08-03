@@ -1,164 +1,140 @@
-
-import { useState, useEffect } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
-
-interface CopyrightProps {
-  sx?: object;
-}
-
-function Copyright(props: CopyrightProps) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="/">Kyusda</Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { useState, useEffect } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { getBaseUrl } from "../services/authService";
+import AuthLayout from "./AuthLayout";
+import { toast } from "sonner";
+import { SyncLoader } from "react-spinners";
 
 const theme = createTheme();
 
 export default function Newpassword() {
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [token, setToken] = useState('');
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(false);
+  const baseUrl = getBaseUrl();
+
   useEffect(() => {
-    const getToken = () => {
-      const tk = localStorage.getItem("Reset token");
-      setToken(tk || '');
-    }
-    getToken();
-  }, [])
-  interface HandleSubmitEvent extends React.FormEvent<HTMLFormElement> {}
+    const tk = localStorage.getItem("Reset token");
+    setToken(tk || "");
+  }, []);
 
-  interface ResetPasswordResponse {
-    status: string;
-    message: string;
-    err?: string;
-  }
-
-  const handleSubmit = async (event: HandleSubmitEvent): Promise<void> => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPassword('');
-    setPasswordConfirm('');
-    const url = `https://kyusdabackend.azurewebsites.net/kyusda/v1/member/resetPassword/${token}`;
-    const resp = await fetch(url, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password, passwordConfirm })
-    });
-    const data: ResetPasswordResponse = await resp.json();
-    if (data.status === 'success') {
-      alert(`${data.message}`);
-    } else {
-      console.log(data.err);
+    setLoading(true);
+
+    try {
+      const url = `${baseUrl}/member/resetPassword/${token}`;
+      const resp = await fetch(url, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password, passwordConfirm }),
+      });
+
+      const data = await resp.json();
+      if (data.status === "success") {
+        toast.success(data.message || "Password updated successfully");
+        setPassword("");
+        setPasswordConfirm("");
+      } else {
+        toast.error(data.err || "Something went wrong");
+      }
+    } catch (error) {
+      toast.error("Network error");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+    <AuthLayout>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+        <Box
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            overflowY: "hidden",
+            px: 4,
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Reset Password
+          </Typography>
+
           <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 1, width: "100%", maxWidth: 400 }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="password"
-                label="New password"
-                name="password"
-                type="password"
-                value={password}
-                autoComplete="password"
-                autoFocus
-                onChange={(e) => { setPassword(e.target.value) }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="passwordConfirm"
-                label="Password Confirmation"
-                type="password"
-                id="passwordConfirm"
-                value={passwordConfirm}
-                autoComplete="current-password"
-                onChange={(e) => { setPasswordConfirm(e.target.value) }}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Update Password
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/signIn" variant="body2">
-                    Login Page
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signUp" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="New Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="passwordConfirm"
+              label="Confirm Password"
+              type="password"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {loading ? (
+                <SyncLoader color="#1c8e90" size={6} />
+              ) : (
+                "Update Password"
+              )}
+            </Button>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Link href="/signIn" variant="body2">
+                Login Page
+              </Link>
+              <Link href="/signUp" variant="body2">
+                Don’t have an account? Sign Up
+              </Link>
             </Box>
           </Box>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+        </Box>
+      </ThemeProvider>
+    </AuthLayout>
   );
 }

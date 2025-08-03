@@ -1,70 +1,44 @@
 import { Response } from "express";
 import { IUser } from "../Models/authModel";
 import { redis } from "./redis";
-import 'dotenv/config';
+import "dotenv/config";
 
-interface TokenOptions {
+export interface TokenOptions {
   expires: Date;
   maxAge: number;
   httpOnly: boolean;
   secure?: boolean;
   sameSite?: "strict" | "lax" | "none";
+  path?: string;
 }
 
-const accessTokenExpires = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "60");
-const refreshTokenExpires = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "7");
-
-export const accessTokenOptions: TokenOptions = {
-  expires: new Date(Date.now() + accessTokenExpires * 60 * 1000),
-  maxAge: accessTokenExpires * 60 * 1000,
-  httpOnly: true,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
-};
-
-// refersh to the access token expiration time in seconds
-export const refreshTokenOptions: TokenOptions = {
-  expires: new Date(Date.now() + refreshTokenExpires * 24 * 60 * 60 * 1000),
-  maxAge: refreshTokenExpires * 24 * 60 * 60 * 1000,
-  httpOnly: true,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
-};
+const ACCESS_TOKEN_MINUTES = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "10");
 
 export const sendToken = async (user: IUser, res: Response) => {
-  const access_token = user.signAccessToken();
-  const refresh_token = user.signRefreshToken();
+  const access_token = user.signAccessToken(); // ≤ 60 min exp claim
 
-  // required fields
-  const userData = {
-    id: user._id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    scores: user.scores,
-    year: user.year,
-    familyLocated: user.familyLocated,
-    role: user.role,
-    birthday: user.birthday,
-    createdAt: user.createdAt,
-    easyNumber: user.easyNumber,
-    mediumNumber: user.mediumNumber,
-    hardNumber: user.hardNumber,
-    avatar: user.avatar?.url || null,
-  };
+  const cookieOptions = {
+    httpOnly: true,
+    path: "/", // every route receives it
+    maxAge: ACCESS_TOKEN_MINUTES * 60 * 1000, // ms
+    expires: new Date(Date.now() + ACCESS_TOKEN_MINUTES * 60 * 1000),
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
+  } as const;
 
-  // Store user session in Redis with expiration time
-  await redis.set(user._id as string, JSON.stringify(userData), "EX", accessTokenExpires * 60);
+  res.cookie("access_token", access_token, cookieOptions);
 
-  // Set the access token cookie
-  res.cookie("access_token", access_token, accessTokenOptions);
-   res.cookie("refresh_token", refresh_token, refreshTokenOptions);
+  // add user in redis
+  const redisExpiration = ACCESS_TOKEN_MINUTES * 60; // seconds
+  await redis.setex(
+    String(user._id),
+    redisExpiration,
+    JSON.stringify({ id: user._id, role: user.role })
+  );
 
-  // Return only necessary user details
-  res.json({
+  res.status(200).json({
     success: true,
-    user: userData,
-    accessToken: access_token,
+    user: { id: user._id, role: user.role },
     message: "Login successful",
   });
 };

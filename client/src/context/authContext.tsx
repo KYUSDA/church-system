@@ -2,7 +2,6 @@
 
 import {createContext,Dispatch,SetStateAction,useContext,useState} from "react";
 
-
 interface IContext {
   activationToken: string | null;
   setActivationToken: Dispatch<SetStateAction<string | null>>;
@@ -13,7 +12,6 @@ export const AppContext = createContext<IContext | undefined>(undefined);
 
 export default function ProviderFunction({children}: {children: React.ReactNode}) {
   const [activationToken, setActivationToken] = useState<string | null>(null);
-
 
 
   return (

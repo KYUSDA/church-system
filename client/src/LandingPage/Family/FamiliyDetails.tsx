@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { client, urlFor } from "../../utils/client";
-import Loader from "../../Dashboard/components/loader";
+import Loader from "../../Dashboard/user/components/utils/loader";
 
 interface Family {
   _id: string;
@@ -13,9 +13,15 @@ interface Family {
 
 const Breadcrumbs = ({ family }: { family: Family }) => (
   <nav className="container mx-auto px-4 py-4 text-gray-600 text-sm">
-    <Link to="/" className="hover:underline">Home</Link> /
-    <Link to="/families" className="hover:underline"> Families</Link> /
-    <span className="text-gray-900 font-semibold"> {family?.title}</span>
+    <Link to="/" className="hover:underline">
+      Home
+    </Link>{" "}
+    /
+    <Link to="/families" className="hover:underline">
+      {" "}
+      Families
+    </Link>{" "}
+    /<span className="text-gray-900 font-semibold"> {family?.title}</span>
   </nav>
 );
 
@@ -26,7 +32,7 @@ const SingleFamily = () => {
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
-}, []);
+  }, []);
 
   useEffect(() => {
     const fetchFamily = async () => {
@@ -44,7 +50,7 @@ const SingleFamily = () => {
   }, [id]);
 
   if (loading) {
-    return <Loader isLoading={loading} text="Get things ready..." />
+    return <Loader isLoading={loading} text="Get things ready..." />;
   }
 
   if (!family) {
@@ -63,8 +69,12 @@ const SingleFamily = () => {
       {/* Header Section */}
       <section className="container mx-auto grid md:grid-cols-2 gap-6 px-4 items-center">
         <div className="text-center md:text-left">
-          <h2 className="text-blue-600 text-4xl font-bold uppercase">{family?.title}</h2>
-          <p className="mt-4 text-gray-600 text-lg leading-relaxed">{family?.description}</p>
+          <h2 className="text-blue-600 text-4xl font-bold uppercase">
+            {family?.title}
+          </h2>
+          <p className="mt-4 text-gray-600 text-lg leading-relaxed">
+            {family?.description}
+          </p>
         </div>
         <div className="flex justify-center">
           <img

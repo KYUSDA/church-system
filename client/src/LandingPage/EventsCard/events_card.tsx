@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaFacebookF, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -10,19 +11,21 @@ interface Event {
   time: string;
   title: string;
   details: string;
+  detailsLink?: string;
 }
 
 const events: Event[] = [
   {
-    date: "Feb 12",
+    date: "Sept 7-13",
     time: "7.00 am",
-    title: "Online Money Challenge Collections for Mission",
+    title: "Camp Meeting at KYUSDA grounds. Welcome all!",
     details: "Event Details",
+    detailsLink: "/donation",
   },
   {
-    date: "Jan 3",
-    time: "8.00 am",
-    title: "Our Sponsorship Meetup Will Be Held Again",
+    date: "versevibe",
+    time: "launching soon",
+    title: "Join our versevibe community to grow your faith",
     details: "Event Details",
   },
 ];
@@ -46,8 +49,21 @@ const EventsCard: React.FC = () => {
                   <span>{event.date}</span>
                   <div className="text-xs font-normal ">{event.time}</div>
                 </div>
-                <h3 className="font-bold text-md mt-8 sm:text-lg">{event.title}</h3>
-                <p className="text-[#12ac8e] mt-2 cursor-pointer font-semibold">{event.details}</p>
+                <h3 className="font-bold text-md mt-8 sm:text-lg">
+                  {event.title}
+                </h3>
+                {event.detailsLink ? (
+                  <Link
+                    to={event.detailsLink}
+                    className="text-[#12ac8e] mt-2 cursor-pointer font-semibold hover:text-[#0e8f71] transition-colors"
+                  >
+                    {event.details}
+                  </Link>
+                ) : (
+                  <p className="text-[#12ac8e] mt-2 cursor-pointer font-semibold">
+                    {event.details}
+                  </p>
+                )}
               </div>
             </SwiperSlide>
           ))}
@@ -64,7 +80,18 @@ const EventsCard: React.FC = () => {
               <div className="text-xs font-normal">{event.time}</div>
             </div>
             <h3 className="font-bold text-lg mt-6">{event.title}</h3>
-            <p className="text-[#12ac8e] mt-2 cursor-pointer font-semibold">{event.details}</p>
+            {event.detailsLink ? (
+              <Link
+                to={event.detailsLink}
+                className="text-[#12ac8e] mt-2 cursor-pointer font-semibold hover:text-[#0e8f71] transition-colors"
+              >
+                {event.details}
+              </Link>
+            ) : (
+              <p className="text-[#12ac8e] mt-2 cursor-pointer font-semibold">
+                {event.details}
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -85,10 +112,10 @@ const EventsCard: React.FC = () => {
         >
           <FaYoutube />
         </a>
-        <a 
-          href="https://www.facebook.com/KyUSDAchurch" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href="https://www.facebook.com/KyUSDAchurch"
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-blue-600 p-3 rounded-full text-white text-xl hover:bg-blue-700 transition"
         >
           <FaFacebookF />

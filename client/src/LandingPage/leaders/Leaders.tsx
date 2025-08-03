@@ -8,7 +8,7 @@ import pastor from "../../assets/pastor.jpg"
 import chriss from "../../assets/chriss.jpg"
 
 const leaders = [
-  { src: pastor, name: "Willis Obegi", role: "Pastor" },
+  { src: pastor, name: "Willis Obegi", role: "Our Pastor" },
 ];
 
 const otherLeaders = [

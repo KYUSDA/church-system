@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { logoutCompletely } from '../hooks/userLogoutHook';
+import { logout } from '../session/userSlice';
 
-const BASE_URL = 'http://localhost:8000/kyusda/v1';
+export const BASE_URL = 'http://localhost:8000/kyusda/v1';
 
 export const getBaseUrl = () => {
     return BASE_URL;
@@ -27,18 +29,8 @@ interface IRegister{
 interface LoginResponse {
     user: {
       id: string;
-      name: string;
-      email: string;
-      firstName: string;
-      lastName: string;
       role: string;
-      birthday:Date;
-      createdAt: string;
-      scores?: string;
-      year: number;
-      familyLocated?: string;
     };
-    accessToken: string;
   }
 
   interface TActivate {
@@ -51,57 +43,130 @@ interface LoginResponse {
     description: string;
   }
 
+  interface TNotification {
+    notifications: {
+      id: string;
+      title: string;
+      decription: string;
+      isRead: boolean;
+      createdAt: string;
+    }
+  }
+
+  interface Upcoming {
+    users: {
+      firstName: string;
+      lastName: string;
+      nextBirthday: string; // ISO string from API
+    };
+  }
+
+  const baseQuery = fetchBaseQuery({
+    baseUrl: BASE_URL,
+    credentials: "include"
+  });
+
+  // Enhanced base query with automatic token refresh
+  const baseQueryWithReauth: typeof baseQuery = async (
+    args,
+    api,
+    extraOptions
+  ) => {
+    
+    let result = await baseQuery(args, api, extraOptions);
+
+    if (result.error?.status === 401) {
+      const errorData = result.error.data as any;
+      console.log("401 error received:", errorData);
+      
+      // Check if it's actually a session/auth error
+      if (errorData?.message?.includes('Session') || 
+          errorData?.message?.includes('Authentication') || 
+          errorData?.message?.includes('Token')) {
+        api.dispatch(logout({ reason: "Session expired", showAlert: true }));
+      }
+    }
+      return result;
+  };
+  
+
 
 export const api = createApi({
-    reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
-    endpoints: (builder) => ({
-        // register
-        authSignup: builder.mutation<IRegister,Omit<IRegister, "activationToken">>({
-            query: (data) => ({
-                url: '/member/signUp',
-                method: 'POST',
-                body: data,
-            }),
+  reducerPath: "api",
+  baseQuery: baseQueryWithReauth,
+  endpoints: (builder) => ({
+    // register
+    authSignup: builder.mutation<IRegister, Omit<IRegister, "activationToken">>(
+      {
+        query: (data) => ({
+          url: "/member/signUp",
+          method: "POST",
+          body: data,
         }),
+      }
+    ),
 
-        // login
-        authLogin: builder.mutation<LoginResponse,ILogin>({
-            query: (data) => ({
-                url: '/member/signIn',
-                method: 'POST',
-                body: data,
-            }),
-        }),
-
-        // logout
-        authLogout: builder.mutation<any, void>({
-            query: () => ({
-                url: '/member/logout',
-                method: 'POST',
-            }),
-        }),
-
-        // activate user
-        activateUser: builder.mutation<LoginResponse, TActivate>({
-            query: ({activation_code, activation_token}) =>({
-                url: "/member/activate-me",
-                method: "POST",
-                body: {activation_code,activation_token}
-            })
-        }),
-
-        // report issue
-        reportIssue: builder.mutation<any, TIssue>({
-            query: (data) => ({
-                url: '/user/report-issue',
-                method: 'POST',
-                body: data,
-            }),
-        }),
-
-
+    // login
+    authLogin: builder.mutation<LoginResponse, ILogin>({
+      query: (data) => ({
+        url: "/member/signIn",
+        method: "POST",
+        body: data,
+      }),
     }),
+
+    // logout
+    authLogout: builder.mutation<any, void>({
+      query: () => ({
+        url: "/member/logout",
+        method: "POST",
+      }),
+    }),
+
+    validateSession: builder.query<
+      { user: { id: string; role: string } },
+      void
+    >({
+      query: () => ({
+        url: "/member/validate-session",
+        method: "GET",
+      }),
+    }),
+
+    // activate user
+    activateUser: builder.mutation<LoginResponse, TActivate>({
+      query: ({ activation_code, activation_token }) => ({
+        url: "/member/activate-me",
+        method: "POST",
+        body: { activation_code, activation_token },
+      }),
+    }),
+
+    // report issue
+    reportIssue: builder.mutation<any, TIssue>({
+      query: (data) => ({
+        url: "/user/report-issue",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // get all notification
+    getAllNotifications: builder.query<TNotification, void>({
+      query: () => ({
+        url: "/notification/getAll-notification",
+        method: "GET",
+      }),
+    }),
+
+    // get upcoming birthdays
+    getBirthdays: builder.query<Upcoming, void>({
+      query: () => ({
+        url: "/user/birthdays",
+        method: "GET",
+      }),
+    }),
+  }),
 });
 
 export const { 
@@ -110,5 +175,8 @@ export const {
     useAuthLogoutMutation,
     useActivateUserMutation,
     useReportIssueMutation,
+    useGetAllNotificationsQuery,
+    useGetBirthdaysQuery,
+    useValidateSessionQuery
 } = api;
 

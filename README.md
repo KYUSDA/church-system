@@ -1,173 +1,205 @@
 
-# KYUSDA CHURCH SYSTEM
+# 📖 KYUSDA CHURCH SYSTEM
 
-Kyusda church project is a MERN stack web application developed to help in church members registration and ensure spiritual growth of members.
+KYUSDA Church System is a full-stack web application built using the **MERN** stack (MongoDB, Express, React, Node.js) along with **Sanity CMS**. It helps manage church member registration, departments, and supports spiritual development and communication within the church.
 
+---
 
-## SECTIONS
+## 📂 Project Structure
 
-- Admin
-- backend-sanity
-- client
-- server
+```
+church-system/
+│
+├── admin        # Admin dashboard (React + Redux)
+├── client       # User/member frontend (React + Context API)
+├── server       # Backend API (Node.js + Express + MongoDB)
+└── backend-sanity # Sanity.io CMS for managing content (e.g., departments, families)
+```
 
+---
 
-## Admin
+## 🛠️ Technologies Used
 
-## Technology used in this section
+* **Frontend**: React.js, Vite, TypeScript, Tailwind CSS, Redux (admin), Context API (client)
+* **Backend**: Node.js, Express.js, TypeScript, MongoDB
+* **CMS**: Sanity.io
+* **State Management**: Redux (Admin), Context API (Client)
 
-  Admin section is a react web app, that uses redux state management to manage the various actions which might change.
+---
 
-## Instruction on how to use
+## 📦 Getting Started
 
-1. Make sure you have Git and Node.js installed on your local machine.
+### 🔄 Clone the Repository
 
-2. Open a terminal and navigate to the directory where you want to clone the repository.
+```bash
+git clone https://github.com/samuelkamotho92/church-system.git
+cd church-system
+```
 
-3. To clone the repository to your local machine use this command.
+---
 
+## ⚙️ Backend (Server)
 
-git clone :  https://github.com/samuelkamotho92/church-system.git
+> Path: `/server`
 
-4. Navigate to the directory of the cloned repository.use this command
+### 💻 Tech Stack
 
-cd admin
+* Node.js
+* Express.js
+* MongoDB
+* TypeScript
 
-5. Install the dependencies of the project. Use
+### 🧪 Setup Instructions
 
-npm install 
-or
+1. Navigate to the server folder:
 
-yarn install 
-if your using yarn package manager
+   ```bash
+   cd server
+   ```
 
-6. Start the React App. Use
+2. Install dependencies:
 
-npm Start
+   ```bash
+   npm install
+   ```
 
-or 
+3. Create a `.env` file:
 
-yarn start
+   ```
+   PORT=5000
+   MONGO_URI=your_mongodb_connection_string
+   ```
 
-if using vite use the following commands bellow
+4. Run the server in development mode:
 
-npm run dev 
-or
+   ```bash
+   npm run dev
+   ```
 
-yarn run dev 
+5. Build for production:
 
+   ```bash
+   npm run build
+   ```
 
-## Backend-sanity
+6. Start the server:
 
-## Technology used in this section
+   ```bash
+   npm start
+   ```
 
-Sanity is a React open-source content management system, that helps users to edit publish,edit and publish data.Provide a easier way to build backend application.
+---
 
-We did use Sanity to manage various departments,families data that we have in our church
-## Instruction on how to use
-1. To get started with Sanity, first install the Sanity CLI
-Run the command below in your terminal.
+## 🧾 Sanity Studio (CMS)
 
-npm install -g @sanity/cli
+> Path: `/backend-sanity`
 
-npx sanity init
+### 💻 Tech Stack
 
-2. Starting sanity content studio
+* Sanity.io (TypeScript CMS)
 
-Run the command below in your terminal.
-sanity start
+### 🧪 Setup Instructions
 
-## Client
+1. Install Sanity CLI globally:
 
+   ```bash
+   npm install -g @sanity/cli
+   ```
 
-## Technology used in this section
+2. Navigate to the Sanity folder:
 
-  Members/users section is a React web app, that uses 
-Context Api which provides a way to pass data through the component tree without having to pass props down manually at every level.
+   ```bash
+   cd backend-sanity
+   ```
 
-This feature has been used in persisting user logged in state
+3. Initialize the studio (if not already set up):
 
-## Instruction on how to use
+   ```bash
+   npx sanity init
+   ```
 
-1. Make sure you have Git and Node.js installed on your local machine.
+4. Start Sanity Studio:
 
-2. Open a terminal and navigate to the directory where you want to clone the repository.
+   ```bash
+   sanity start
+   ```
 
-3. To clone the repository to your local machine use this command.
+---
 
+## 🧑‍💼 Admin Panel
 
-git clone :  https://github.com/samuelkamotho92/church-system.git
+> Path: `/admin`
 
-4. Navigate to the directory of the cloned repository. Use this command
+### 💻 Tech Stack
 
-cd client
+* React + Redux
+* TypeScript
+* Vite
 
-5. Install the dependencies of the project. Use
+### 🧪 Setup Instructions
 
-npm install 
-or
+1. Navigate to the admin folder:
 
-yarn install 
-if your using yarn package manager
+   ```bash
+   cd admin
+   ```
 
-6. Start the React App. Use
+2. Install dependencies:
 
-npm Start
+   ```bash
+   npm install
+   ```
 
-or 
+3. Start the development server:
 
-yarn start
+   ```bash
+   npm run dev
+   ```
 
-if using vite use the following commands bellow
+---
 
-npm run dev 
-or
+## 👥 Client (Member App)
 
-yarn run dev 
+> Path: `/client`
 
+### 💻 Tech Stack
 
-## Server
+* React + Context API
+* Vite
+* TypeScript
+* Tailwind CSS
 
+### 🧪 Setup Instructions
 
-## Technology used in this section
+1. Navigate to the client folder:
 
-Server section is consist of the API, Developed using Node js (Express framework) and Mongodb database for storing our data.
+   ```bash
+   cd client
+   ```
 
-## Instruction on how to use
+2. Install dependencies:
 
-1. Make sure you have Git and Node.js installed on your local machine.
+   ```bash
+   npm install
+   ```
 
-2. Open a terminal and navigate to the directory where you want to clone the repository.
+3. Start the development server:
 
-3. To clone the repository to your local machine use this command.
+   ```bash
+   npm run dev
+   ```
 
+---
 
-git clone :  https://github.com/samuelkamotho92/church-system.git
+## 💡 Notes
 
-4. Navigate to the directory of the cloned repository. Use this command
+* Ensure MongoDB is running before starting the backend server.
+* Environment variables must be set correctly in each section (e.g., API URLs, DB URI).
+* Use different terminals or process managers (e.g., `concurrently`, `pm2`) to run all services simultaneously.
 
-cd server
+---
 
-5. Install the dependencies of the project. Use
+## 🧑‍💻 Author
 
-npm install 
-or
-
-yarn install 
-if your using yarn package manager
-
-6. Start the server. Use
-
-npm Start
-
-or 
-
-yarn start
-
-if using vite use the following commands bellow
-
-npm start
-or
-
-yarn start
-
+**Samuel Kamotho**
+[GitHub: samuelkamotho92](https://github.com/samuelkamotho92)

@@ -118,7 +118,7 @@ export const getAllQuizzes = async (req: Request, res: Response, next: NextFunct
 
 export const getAvailableQuiz = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = req?.user?.id; 
+    const userId = req.user?.id; 
 
     if(!userId){
         return next(new ErrorHandler("Unauthorized: User not logged in", 401));
@@ -155,7 +155,7 @@ export const getAvailableQuiz = async (req: Request, res: Response, next: NextFu
 // return quizzes
 export const getQuizzes = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req?.user?.id;
+        const userId = req.user?.id;
         if (!userId) {
             return next(new ErrorHandler("Unauthorized: User not logged in", 401));
         }
@@ -184,7 +184,7 @@ export const sendQuizResults = catchAsyncErrors(async (req: Request, res: Respon
         const { quizId, correctAnswers, userAnswers } = req.body;
 
         // Check if user is logged in
-        const userId = req?.user?.id;
+        const userId = req.user?.id;
         if (!userId) {
             return next(new ErrorHandler("Unauthorized: User not logged in", 401));
         }
