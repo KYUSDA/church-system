@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../session/userSlice";
 import { useAuthLoginMutation } from "../services/authService";
 import { toast } from "sonner";
+import { getRedirectPath } from "../utils/redirect";
 
 interface FormData {
   email: string;
@@ -22,26 +23,32 @@ export const useLogin = () => {
     setLoading(true);
 
     try {
-      const resp = await authLogin(values).unwrap(); // ✅ Unwrap to handle errors
+      const resp = await authLogin(values).unwrap();
 
       if (resp) {
-        const { user } = resp;
+        const { data } = resp;
 
-        // ✅ Store user data in Redux
-        dispatch(login({user}));
+        dispatch(
+          login({
+            user: {
+              data: {
+                tokens: data.tokens,
+                user: {
+                  userId: data.user.userId,
+                  role: data.user.role,
+                },
+              },
+            },
+          })
+        );
 
         toast.success("Login successful");
-
-        // ✅ Redirect based on role
-        if (user.role === "admin") {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/member/dashboard");
-        }
+        navigate(getRedirectPath(data.user.role));
       }
     } catch (err: any) {
-      setError(err?.data?.message || "Login failed");
-      toast.error(err?.data?.message || "Login failed");
+      const message = err?.data?.message || "Login failed";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

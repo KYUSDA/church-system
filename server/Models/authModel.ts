@@ -4,13 +4,13 @@ import pkg from "validator";
 import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
 const { isEmail } = pkg;
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export enum UserRole {
   MEMBER = "member",
   ELDER = "elder",
   ADMIN = "admin",
-  SUPERADMIN = "superadmin"
+  SUPERADMIN = "superadmin",
 }
 
 export type Roles = `${UserRole}`;
@@ -42,13 +42,15 @@ export interface IUser extends Document {
   role: UserRole;
   familyLocated?: string;
   createdAt: Date;
+  storedRefreshToken?: string;
+  refreshToken?: () => string;
   passwordResetToken?: string;
   resetTokenSetAt?: Date;
   resetTokenExpires?: Date;
   resetToken(): Promise<string>;
   comparePasswords: (password: string) => Promise<boolean>;
   signAccessToken: () => string;
-};
+}
 
 export interface IUserModel extends Model<IUser> {
   login(email: string, password: string): Promise<IUser>;
@@ -129,14 +131,17 @@ const authSchema = new Schema<IUser>(
       default: UserRole.MEMBER, // Default role is MEMBER
     },
     createdAt: { type: Date, default: Date.now },
+    storedRefreshToken: {
+      type: String,
+      default: null,
+    },
     passwordResetToken: String,
     resetTokenSetAt: Date,
     resetTokenExpires: Date,
   },
+
   { timestamps: true }
 );
-
-
 
 //bcrypt hash password
 authSchema.pre<IUser>("save", async function (next) {
@@ -148,30 +153,37 @@ authSchema.pre<IUser>("save", async function (next) {
 });
 
 //compare passwords
-authSchema.methods.comparePasswords = async function(password: string) {
-    return await bcrypt.compare(password, this.password);
-}
-
+authSchema.methods.comparePasswords = async function (password: string) {
+  return await bcrypt.compare(password, this.password);
+};
 
 // reset token
 authSchema.methods.resetToken = async function (): Promise<string> {
   const token = randomBytes(32).toString("hex");
   const saltRounds = 10;
 
-  this.passwordResetToken = await bcrypt.hash(token, saltRounds);  // Hash the token
+  this.passwordResetToken = await bcrypt.hash(token, saltRounds); // Hash the token
   this.resetTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1-hour expiration
 
   console.log("Generated Token (Plain):", token);
   console.log("Stored Hashed Token:", this.passwordResetToken);
 
-  return token;  // Send the plain token in the email
+  return token; // Send the plain token in the email
 };
 
-
 //sign access token
-authSchema.methods.signAccessToken = function(): string {
-  return jwt.sign({id: this.id}, process.env.ACCESS_TOKEN as string, {expiresIn: "10m"})
-}
+authSchema.methods.signAccessToken = function (): string {
+  return jwt.sign({ id: this.id }, process.env.ACCESS_TOKEN as string, {
+    expiresIn: "1h",
+  });
+};
+
+// refresh token
+authSchema.methods.refreshToken = async function (): Promise<string> {
+  return jwt.sign({ id: this.id }, process.env.REFRESH_TOKEN as string, {
+    expiresIn: "7d",
+  });
+};
 
 const authModel = model<IUser, IUserModel>("member", authSchema);
 export default authModel;

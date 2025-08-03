@@ -12,7 +12,11 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import { Visibility, VisibilityOff, LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
+import {
+  Visibility,
+  VisibilityOff,
+  LockOutlined as LockOutlinedIcon,
+} from "@mui/icons-material";
 import { useLogin } from "../hooks/userLoginHook";
 import AuthLayout from "./AuthLayout";
 
@@ -38,10 +42,14 @@ const SignInSide = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await loginUser(values);
-    setEmail("");
-    setPassword("");
-    setTouchedEmail(false);
-    setTouchedPassword(false);
+
+    // Clear inputs after login attempt (optional: only if no error)
+    if (!error) {
+      setEmail("");
+      setPassword("");
+      setTouchedEmail(false);
+      setTouchedPassword(false);
+    }
   };
 
   const isFormValid = email.trim() !== "" && password.trim() !== "";
@@ -57,9 +65,15 @@ const SignInSide = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            {error && <p className="text-red-400 text-md">{error}</p>}
 
             {/* Sign-in Form */}
-            <Box component="form" noValidate onSubmit={handleSubmit} className="w-full mt-4">
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              className="w-full mt-4"
+            >
               <TextField
                 margin="normal"
                 required
@@ -72,7 +86,9 @@ const SignInSide = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => setTouchedEmail(true)} // Mark as touched when leaving the field
                 error={touchedEmail && email.trim() === ""}
-                helperText={touchedEmail && email.trim() === "" ? "Email is required" : ""}
+                helperText={
+                  touchedEmail && email.trim() === "" ? "Email is required" : ""
+                }
               />
 
               <TextField
@@ -87,10 +103,17 @@ const SignInSide = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 onBlur={() => setTouchedPassword(true)} // Mark as touched when leaving the field
                 error={touchedPassword && password.trim() === ""}
-                helperText={touchedPassword && password.trim() === "" ? "Password is required" : ""}
+                helperText={
+                  touchedPassword && password.trim() === ""
+                    ? "Password is required"
+                    : ""
+                }
                 InputProps={{
                   endAdornment: (
-                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   ),
@@ -107,8 +130,6 @@ const SignInSide = () => {
                 }
                 label="Remember me"
               />
-
-              {error && <p className="text-red-400 text-md">{error}</p>}
 
               <Button
                 type="submit"
@@ -130,7 +151,10 @@ const SignInSide = () => {
       </Box>
 
       {/* Loading Spinner (Backdrop) */}
-      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={Boolean(isLoading)}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={Boolean(isLoading)}
+      >
         <CircularProgress color="inherit" size={50} />
         <Typography variant="h6">Signing in...</Typography>
       </Backdrop>

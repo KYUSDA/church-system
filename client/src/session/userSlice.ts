@@ -1,22 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { jwtDecode, JwtPayload } from "jwt-decode";
 interface User {
-  id: string;
-  role: string;
+  data: {
+    tokens: {
+      accessToken: string;
+      refreshToken: string;
+    };
+    user: {
+      userId: string;
+      role: string;
+    };
+  };
 }
 
 interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
-  sessionExpired: boolean;
-  logoutReason: string | null;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
-  sessionExpired: false,
-  logoutReason: null,
 };
 
 
@@ -32,22 +35,12 @@ export const authSlice = createSlice({
     ) => {
       state.user = action.payload.user;
       state.isAuthenticated = true;
-      state.sessionExpired = false;
-      state.logoutReason = null;
     },
     logout: (
-      state,
-      action: PayloadAction<{ reason?: string; showAlert?: boolean }>
+      state
     ) => {
       state.user = null;
       state.isAuthenticated = false;
-      state.sessionExpired = action.payload.showAlert || false;
-      state.logoutReason = action.payload.reason || null;
-    },
-
-    clearSessionAlert: (state) => {
-      state.sessionExpired = false;
-      state.logoutReason = null;
     },
 
     updateTrivias: (
@@ -63,6 +56,6 @@ export const authSlice = createSlice({
     },
   },
 });
-export const { login, logout, updateTrivias,clearSessionAlert } =
+export const { login, logout, updateTrivias } =
   authSlice.actions;
 export default authSlice.reducer;
