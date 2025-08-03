@@ -86,12 +86,12 @@ export const navGroups = [
       { title: "Weekly Quiz", to: "/admin/weekly-quiz", icon: BookOpen },
     ],
   },
-  {
-    label: "General",
-    links: [
-      { title: "Search", to: "/search", icon: Search },
-      { title: "Help", to: "/help", icon: HelpCircle },
-    ],
-  },
+  // {
+  //   label: "General",
+  //   links: [
+  //     { title: "Search", to: "/search", icon: Search },
+  //     { title: "Help", to: "/help", icon: HelpCircle },
+  //   ],
+  // },
 ];
 

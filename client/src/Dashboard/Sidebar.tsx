@@ -53,7 +53,7 @@ export function AppSidebar({ userRole, ...props }: AppSidebarProps) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link to={"/dashboard"} onClick={handleNavClick}>
+              <Link to={"/member/dashboard"} onClick={handleNavClick}>
                 <LayoutDashboard className="!size-5" />
                 <span className="text-base font-semibold">KYUSDA</span>
               </Link>
