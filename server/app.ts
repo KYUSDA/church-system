@@ -31,7 +31,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://jolly-coast-0386d1803.5.azurestaticapps.net",
+  "https://church-system-three.vercel.app",
 ];
 
 app.use(
