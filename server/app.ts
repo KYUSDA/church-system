@@ -32,7 +32,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://church-system-three.vercel.app",
-  "https://www.kyusda.co.ke"
+  "https://www.kyusda.co.ke",
+  "https://kyusda.co.ke"
 ];
 
 app.use(
