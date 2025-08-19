@@ -26,25 +26,26 @@ import { userRegisterSchema } from "../utils/registerSchema";
 import { useContextFunc } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { getApiErrorMessage } from "../utils/Error-handler";
 
 const theme = createTheme();
 
-interface formData{
+interface formData {
   firstName: string;
   lastName: string;
-  email:string;
+  email: string;
   registration: string;
   course: string;
   year: string;
   phoneNumber: string;
-  password:string;
-  policyAccepted: false,
+  password: string;
+  policyAccepted: false;
 }
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [registerUser, { isLoading}] = useAuthSignupMutation();
-  const {setActivationToken} = useContextFunc();
+  const [registerUser, { isLoading }] = useAuthSignupMutation();
+  const { setActivationToken } = useContextFunc();
   const navigate = useNavigate();
 
   // Destructuring Formik
@@ -71,24 +72,24 @@ const SignUp = () => {
       policyAccepted: false,
     },
     validationSchema: userRegisterSchema,
-    onSubmit: async (values:formData) => {
+    onSubmit: async (values: formData) => {
       try {
         const response = await registerUser(values).unwrap();
-        if(response){
-          if(response.activationToken){
-            setActivationToken(response.activationToken); 
-            navigate('/activate-me');
+        if (response) {
+          if (response.activationToken) {
+            setActivationToken(response.activationToken);
+            navigate("/activate-me");
             toast.success("Registration Success");
           }
-        }else{
+        } else {
           toast.error("Registration failed");
         }
-      } catch (err:any) {
-        if (err?.status === 409 || err?.data?.message?.includes("already exists")) {
-          toast.error(err.data.message);
-        } else {
-          toast.error("Registration failed, please try again.");
-        }
+      } catch (err: any) {
+        const message = getApiErrorMessage(
+          err,
+          "Registration failed, please try again."
+        );
+        toast.error(message);
       }
     },
   });
@@ -98,15 +99,27 @@ const SignUp = () => {
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box sx={{ mt: 50, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Box
+            sx={{
+              mt: 50,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlined />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-          
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
               <TextField
                 label="First Name"
                 name="firstName"
@@ -201,14 +214,16 @@ const SignUp = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
               />
-              
+
               <FormControlLabel
                 control={
                   <Checkbox
@@ -225,7 +240,9 @@ const SignUp = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={isLoading || !isValid || !dirty || !values.policyAccepted}
+                disabled={
+                  isLoading || !isValid || !dirty || !values.policyAccepted
+                }
               >
                 Sign Up
               </Button>
@@ -239,7 +256,10 @@ const SignUp = () => {
               </Box>
             </Box>
           </Box>
-          <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={Boolean(isLoading)}>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={Boolean(isLoading)}
+          >
             <CircularProgress color="inherit" size={50} />
             <Typography variant="h6">Creating your account...</Typography>
           </Backdrop>

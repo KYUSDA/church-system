@@ -19,6 +19,8 @@ import {
 } from "@mui/icons-material";
 import { useLogin } from "../hooks/userLoginHook";
 import AuthLayout from "./AuthLayout";
+import { getApiErrorMessage } from "@/utils/Error-handler";
+import { toast } from "sonner";
 
 const SignInSide = () => {
   const [email, setEmail] = useState("");
@@ -41,14 +43,21 @@ const SignInSide = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await loginUser(values);
-
-    // Clear inputs after login attempt (optional: only if no error)
-    if (!error) {
-      setEmail("");
-      setPassword("");
-      setTouchedEmail(false);
-      setTouchedPassword(false);
+    try {
+      await loginUser(values);
+      // Clear inputs after login attempt (optional: only if no error)
+      if (!error) {
+        setEmail("");
+        setPassword("");
+        setTouchedEmail(false);
+        setTouchedPassword(false);
+      }
+    } catch (err: any) {
+      const message = getApiErrorMessage(
+        err,
+        "Login failed, please try again."
+      );
+      toast.error(message);
     }
   };
 
