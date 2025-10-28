@@ -1,6 +1,6 @@
 import { Calendar } from "lucide-react";
 import { useEffect, useCallback, useState } from "react";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { CalendarEvent } from "../components/calendar";
 import { toast } from "sonner";
 

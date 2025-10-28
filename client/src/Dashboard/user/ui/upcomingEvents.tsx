@@ -7,7 +7,7 @@ import {
   Eye,
 } from "lucide-react";
 import { useEffect, useCallback, useState } from "react";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

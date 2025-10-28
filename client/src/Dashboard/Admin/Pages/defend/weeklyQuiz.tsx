@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { getBaseUrl } from '../../../../services/authService';
+import { getBaseUrl } from '@/services/base_query';
 
 interface Option {
   text: string;

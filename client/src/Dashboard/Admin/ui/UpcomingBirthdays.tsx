@@ -6,7 +6,7 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import Modal from "./modal";
 import { toast } from "sonner";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);

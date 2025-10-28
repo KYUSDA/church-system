@@ -1,4 +1,4 @@
-import { BASE_URL, getAuthHeaders } from "@/services/authService";
+import { BASE_URL, getAuthHeaders } from "@/services/base_query";
 
 export const getProgress = () =>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {  TIssue } from "../../../../services/adminService";
 import { ChatBubbleOutline, Reply, Close, Menu } from "@mui/icons-material";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 
 function Messages() {
 

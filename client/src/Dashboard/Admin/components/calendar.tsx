@@ -9,7 +9,7 @@ import {
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "@headlessui/react";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 import { useCreateEventMutation } from "../../../services/adminService";
 

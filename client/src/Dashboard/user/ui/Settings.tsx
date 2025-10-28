@@ -14,7 +14,7 @@ import {
   Lightbulb,
   Palette,
 } from "lucide-react";
-import { getBaseUrl, getAuthHeaders } from "../../../services/authService";
+import { getBaseUrl, getAuthHeaders } from "@/services/base_query";
 import useUserData from "../../../session/authData";
 import { toast } from "sonner";
 import {

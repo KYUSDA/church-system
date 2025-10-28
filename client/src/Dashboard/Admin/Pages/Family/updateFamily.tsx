@@ -6,7 +6,7 @@ import {
   useGetFamiliesQuery,
 } from "../../../../services/adminService";
 import { toast } from "sonner";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 
 const AFamily: React.FC = () => {
   const { id } = useParams();

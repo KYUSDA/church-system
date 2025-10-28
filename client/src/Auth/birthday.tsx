@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBaseUrl } from "../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
