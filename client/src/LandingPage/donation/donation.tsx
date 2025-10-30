@@ -6,14 +6,14 @@ const DonationPage: React.FC = () => {
     // { 
     //   title: "Fundraiser for Our Mission",
     //   badge: "Mission",
-    //   date: "April 27, 2025",
+    //   date: "December, 2025",
     //   description: "Join us in supporting our church mission. Every contribution counts!"
     //  },
      {
-      title: "Camp Meeting",
-      badge: "Camp meeting",
-      date: "Sept 7th-13th, 2025",
-      description: "Our this year's camp meeting is one you want to attend. You can't afford to miss this!"
+      title: "MISSION 2025",
+      badge: "MISSION 2025",
+      date: "December, 2025",
+      description: "We welcome you to join us in spreading the gospel through evangelism. You can't afford to miss this!"
      }
   ];
 
