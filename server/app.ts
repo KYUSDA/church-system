@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 import notificationRouter from './Router/notificationRouter';
 import { calendarRouter } from './Router/calendarRoute';
 import { resourceRouter } from './Router/resourceRoute';
+import { getChannelVideosRSS } from "./youtube"; //changes by Coach Lameck
 
 const app = express();
 app.use(express.json());
@@ -87,6 +88,19 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 app.use("/", (error: any, req: Request, res: Response, next: NextFunction) => {
   res.status(error.statusCode).json({success: false, message: error.message})
 })
+//changes by Coach Lameck
+
+app.get("/api/youtube", async (req, res) => {
+  try {
+    const channelId = "UCe6xeVkEBvG7OD_9HltS1xQ"; // your YouTube channel ID
+    const data = await getChannelVideosRSS(channelId);
+    res.json(data);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch YouTube data" });
+  }
+});
+//end of changes
 
 
 export default app;

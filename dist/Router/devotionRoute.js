@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const devotionController_1 = require("../Controlers/devotionController");
+const express_1 = require("express");
+const devotionRoute = (0, express_1.Router)();
+devotionRoute.route('/subscribe').post(devotionController_1.subscribeDevotion);
+devotionRoute.route('/unsubscribe').post(devotionController_1.unsubscribeDevotion);
+devotionRoute.get("/getOneSubscriber/:email", devotionController_1.getSubscriberByEmail);
+devotionRoute.route("/resubscription").post(devotionController_1.resubscribe);
+exports.default = devotionRoute;

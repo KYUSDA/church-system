@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authControler_1 = __importDefault(require("../Controlers/authControler"));
+const authmiddleware_1 = __importDefault(require("../middleware/authmiddleware"));
+const authRoute = (0, express_1.Router)();
+authRoute.route("/signUp").post(authControler_1.default.memberSignUp);
+authRoute.post("/signIn", authControler_1.default.memberSignIn);
+authRoute.post("/activate-me", authControler_1.default.ActivateUser);
+authRoute.post("/logout", authmiddleware_1.default, authControler_1.default.memberLogout);
+authRoute.get("/validate-session", authmiddleware_1.default, authControler_1.default.validateSession);
+authRoute.post("/update-accesstoken", authControler_1.default.refreshTokens);
+authRoute.route("/resetToken").post(authControler_1.default.memberResetToken);
+authRoute.patch("/resetPassword/:token", authControler_1.default.resetPassword);
+authRoute.patch("/change-password", authmiddleware_1.default, authControler_1.default.changePassword);
+authRoute.patch("/update-birthday", authmiddleware_1.default, authControler_1.default.updateUserBirthday);
+exports.default = authRoute;
