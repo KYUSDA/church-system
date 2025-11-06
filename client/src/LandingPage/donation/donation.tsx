@@ -1,6 +1,4 @@
-// ...existing code...
 import React, { useState } from "react";
-
 const DonationPage: React.FC = () => {
   const events = [
     {
@@ -25,7 +23,7 @@ const DonationPage: React.FC = () => {
     return !Number.isNaN(n) && n > 0;
   };
 
-  const handleStkPush = async (eventId?: string) => {
+const handleStkPush = async (eventId?: string) => {
     if (!validPhone(stkPhone) || !validAmount(stkAmount)) {
       setStkMessage("Enter a valid phone and amount.");
       return;
@@ -33,7 +31,11 @@ const DonationPage: React.FC = () => {
     setStkSubmitting(true);
     setStkMessage(null);
     try {
-      const res = await fetch("/api/stk-push", {
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+      // Use /mpesa/stk-push route
+      const url = apiBase ? `${apiBase}/mpesa/stk-push` : "/mpesa/stk-push";
+
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -42,11 +44,22 @@ const DonationPage: React.FC = () => {
           eventId,
         }),
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body?.message || `Status ${res.status}`);
-      // backend should return something like { checkoutRequestID, message }
-      setStkMessage(body.message || "STK Push sent — check your phone.");
-      // optionally keep modal open to show status, then close after short delay
+      // safe parsing: read text first, then try to parse JSON
+      const text = await res.text();
+      let body: any = null;
+      const ct = (res.headers.get("content-type") || "").toLowerCase();
+      try {
+        body = ct.includes("application/json") ? JSON.parse(text) : { message: text };
+      } catch {
+        body = { message: text || null };
+      }
+
+      if (!res.ok) {
+        const errMsg = body?.message || `Request failed (${res.status})`;
+        throw new Error(errMsg);
+      }
+
+      setStkMessage(body?.message || "STK Push sent — check your phone.");
       setTimeout(() => {
         setShowStkModal(false);
         setStkPhone("");
@@ -58,7 +71,6 @@ const DonationPage: React.FC = () => {
       setStkSubmitting(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center px-2">
       {/* Left Section: Events */}
@@ -118,6 +130,10 @@ const DonationPage: React.FC = () => {
           />
           <div className="bg-white rounded-lg p-6 z-10 w-full max-w-md">
             <h3 className="text-lg font-bold mb-3">Pay with MPesa (STK Push)</h3>
+
+            <p className="text-sm text-red-600 mb-2">
+              Do NOT enter your M-Pesa PIN in this app. You will be prompted to enter it on your phone.
+            </p>
 
             <label className="block text-sm text-gray-600">Phone</label>
             <input
