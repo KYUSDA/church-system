@@ -90,6 +90,7 @@ header{
     font-weight: 200;
     font-size: 18px;
     transition: 0.6s ease;
+    -webkit-user-select: none;
     user-select: none;
 
     display: flex;

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import MainFooter from './MainFooter';
 import Header from '../Navbar/Header';
 

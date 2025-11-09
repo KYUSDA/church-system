@@ -1,0 +1,8 @@
+.yt-list{padding:1rem}
+.yt-list__title{font-size:1.25rem;margin-bottom:.75rem}
+.yt-list__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.yt-card{background:#fff;border:1px solid #eee;border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.yt-card__thumb img{width:100%;height:140px;object-fit:cover;display:block}
+.yt-card__body{padding:.5rem}
+.yt-card__title{display:block;font-weight:600;color:#111;text-decoration:none}
+.yt-card__meta{font-size:.85rem;color:#666;margin-top:.25rem}

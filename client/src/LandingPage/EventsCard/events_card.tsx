@@ -101,6 +101,7 @@ const EventsCard: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#12ac8e] p-3 rounded-full text-white text-xl hover:bg-[#0e8f71] transition"
+          title="Visit our X (Twitter) page"
         >
           <FaXTwitter />
         </a>
@@ -109,6 +110,7 @@ const EventsCard: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="bg-red-600 p-3 rounded-full text-white text-xl hover:bg-red-700 transition"
+          title="Visit our YouTube channel"
         >
           <FaYoutube />
         </a>
@@ -117,6 +119,7 @@ const EventsCard: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="bg-blue-600 p-3 rounded-full text-white text-xl hover:bg-blue-700 transition"
+          title="Visit our Facebook page"
         >
           <FaFacebookF />
         </a>

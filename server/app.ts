@@ -13,7 +13,8 @@ import cookieParser from 'cookie-parser';
 import notificationRouter from './Router/notificationRouter';
 import { calendarRouter } from './Router/calendarRoute';
 import { resourceRouter } from './Router/resourceRoute';
-import { getChannelVideosRSS } from "./youtube"; //changes by Coach Lameck
+import youtubeRoute from "./Router/youtubeRoute";
+import xRoute from "./Router/xRoute";
 
 const app = express();
 app.use(express.json());
@@ -31,6 +32,7 @@ app.use(cookieParser());
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:5174",
   "http://localhost:3000",
   "https://church-system-three.vercel.app",
   "https://www.kyusda.co.ke",
@@ -40,15 +42,23 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) {
+        return callback(null, true);
       }
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      // In development, allow localhost with any port
+      if (process.env.NODE_ENV !== 'production' && origin.match(/^http:\/\/localhost:/)) {
+        return callback(null, true);
+      }
+      callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
     methods: "GET,POST,PUT,DELETE,PATCH",
     allowedHeaders: "Content-Type,Authorization",
+    exposedHeaders: ["Content-Range", "X-Content-Range"],
   })
 );
 
@@ -63,6 +73,8 @@ app.use("/kyusda/v1/prayers/", prayerRequestRouter);
 app.use("/kyusda/v1/notification", notificationRouter);
 app.use("/kyusda/v1/calendar",calendarRouter);
 app.use("/kyusda/v1/resource",resourceRouter);
+app.use("/kyusda/v1/youtube", youtubeRoute);
+app.use("/kyusda/v1/x", xRoute);
 
 // check cookies
 app.use((req, _res, next) => {
@@ -88,19 +100,6 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 app.use("/", (error: any, req: Request, res: Response, next: NextFunction) => {
   res.status(error.statusCode).json({success: false, message: error.message})
 })
-//changes by Coach Lameck
-
-app.get("/api/youtube", async (req, res) => {
-  try {
-    const channelId = "UCe6xeVkEBvG7OD_9HltS1xQ"; // your YouTube channel ID
-    const data = await getChannelVideosRSS(channelId);
-    res.json(data);
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to fetch YouTube data" });
-  }
-});
-//end of changes
 
 
 export default app;

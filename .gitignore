@@ -24,3 +24,11 @@ yarn-error.log*
 # OS-specific
 .DS_Store
 Thumbs.db
+
+# Local caches and temp files
+.cache/
+.fetch-client/
+client/tmp_nitter.xml
+
+# VS Code workspace settings
+.vscode/
