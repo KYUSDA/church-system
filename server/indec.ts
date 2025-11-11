@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { getChannelVideosRSS, getChannelInfoScrape } from "./youtube-public";
+import { getChannelVideosRSS, getChannelInfoScrape } from "./youtube";
+
 
 const app = express();
 app.use(cors()); // allow frontend requests
