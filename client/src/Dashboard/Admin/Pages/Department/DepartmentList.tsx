@@ -7,7 +7,7 @@ import {
 import { PencilLine, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { urlFor } from "../../../../utils/client";
 import { DeleteRounded } from "@mui/icons-material";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 
 const DepartmentList: React.FC = () => {

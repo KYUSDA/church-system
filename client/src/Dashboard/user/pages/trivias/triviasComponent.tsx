@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import useUserData from "../../../../session/authData";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { updateTrivias } from "../../../../session/userSlice";
 import Confetti from "react-confetti";
 

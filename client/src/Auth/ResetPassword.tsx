@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { getBaseUrl } from "../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import AuthLayout from "./AuthLayout";
 import { toast } from "sonner";
 import { SyncLoader } from "react-spinners";

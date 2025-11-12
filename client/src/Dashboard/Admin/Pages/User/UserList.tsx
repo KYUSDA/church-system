@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../../App.css";
 import { TUser, useGetMembersQuery } from "../../../../services/adminService";
 import { PencilLine, Trash2, ChevronUp, ChevronDown } from "lucide-react";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 
 const UserList: React.FC = () => {

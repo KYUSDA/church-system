@@ -9,7 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

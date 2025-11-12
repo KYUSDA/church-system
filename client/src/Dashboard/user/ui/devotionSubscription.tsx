@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Mail, X, Heart, Sparkles, Bell } from "lucide-react";
 import useUserData from "../../../session/authData";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

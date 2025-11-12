@@ -7,7 +7,7 @@ import {
 } from "../../../../services/adminService";
 import { urlFor } from "../../../../utils/client";
 import { toast } from "sonner";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 
 const ADepartment: React.FC = () => {
   const { id } = useParams(); // Get department ID from URL
