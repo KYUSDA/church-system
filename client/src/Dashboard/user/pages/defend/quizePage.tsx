@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import Quizzes from "./Quizzes";
 
 interface Quiz {

@@ -1,6 +1,6 @@
 import { Calendar } from "lucide-react";
 import { useEffect, useCallback, useState } from "react";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { CalendarEvent } from "../components/calendar";
 import { toast } from "sonner";
 
@@ -14,8 +14,9 @@ const UpcomingEvents = () => {
         credentials: "include",
       });
       const data = await res.json();
+      const eventsData = data?.events || [];
       console.log("Fetched events:", data);
-      setEvents(data.events as CalendarEvent[]);
+      setEvents(eventsData as CalendarEvent[]);
     } catch (err) {
       console.error("Failed to load events:", err);
       toast.error("Could not load events");

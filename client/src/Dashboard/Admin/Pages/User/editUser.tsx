@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowBack } from "@mui/icons-material";
 import { TUser, useGetMembersQuery } from "../../../../services/adminService";
 import { toast } from "sonner";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 
 const Users: React.FC = () => {
   const { id } = useParams<{ id: string }>();

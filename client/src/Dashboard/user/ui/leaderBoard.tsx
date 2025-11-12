@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Trophy, Medal, Crown, Zap, TrendingUp } from "lucide-react";
-import { getBaseUrl } from "../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import useUserData from "../../../session/authData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

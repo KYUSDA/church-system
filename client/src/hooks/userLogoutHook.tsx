@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../session/userSlice";
 import { useNavigate } from "react-router-dom";
-import { getBaseUrl } from "../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { store } from "../store/store"; 
 
 export const useLogout = () => {

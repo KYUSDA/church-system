@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 
 interface Option {
   text: string;

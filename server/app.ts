@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 import notificationRouter from './Router/notificationRouter';
 import { calendarRouter } from './Router/calendarRoute';
 import { resourceRouter } from './Router/resourceRoute';
+import { eventsRouter } from './Router/eventsRoute';
 
 const app = express();
 app.use(express.json());
@@ -62,6 +63,7 @@ app.use("/kyusda/v1/prayers/", prayerRequestRouter);
 app.use("/kyusda/v1/notification", notificationRouter);
 app.use("/kyusda/v1/calendar",calendarRouter);
 app.use("/kyusda/v1/resource",resourceRouter);
+app.use("/kyusda/v1/events", eventsRouter);
 
 // check cookies
 app.use((req, _res, next) => {
