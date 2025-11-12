@@ -1,10 +1,10 @@
 
-import Mainga from "../../assets/Mainga last.jpg";
-import charles  from "../../assets/charles.jpg";
-import steve from "../../assets/biko steve``.jpg";
+import Mainga from "../../assets/mainga last.jpg";
+import charles from "../../assets/charles.jpg";
+import steve from "../../assets/Biko steve.jpg";
 import brown from "../../assets/brown.jpg";
-import pastor from "../../assets/pastor.jpg"
-import ben from "../../assets/ben.jpg"
+import pastor from "../../assets/pastor.jpg";
+import ben from "../../assets/ben.jpg";
 
 const leaders = [
   { src: pastor, name: "Willis Obegi", role: "Our Pastor" },
