@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import AuthLayout from './AuthLayout.js';
-import { getBaseUrl } from '../services/authService.js';
+import { getBaseUrl } from '@/services/base_query';
 import { toast } from 'sonner';
 
 const theme = createTheme();

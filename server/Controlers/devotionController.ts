@@ -3,7 +3,7 @@ import {sendMail} from "../utils/mail";
 import cron from "node-cron";
 import fs from 'fs'
 import path from "path";
-// import { getDevotionalForDate } from "../utils/extractDevotional";
+import { getDevotionalForDate } from "../utils/extractDevotional";
 import { NextFunction, Request,Response } from "express";
 import { fileURLToPath } from "url";
 import ErrorHandler from "../utils/ErrorHandler";

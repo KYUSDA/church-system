@@ -6,7 +6,7 @@ import {
 } from "../../../../services/adminService";
 import { urlFor } from "../../../../utils/client";
 import { PencilLine, Trash2, ChevronUp, ChevronDown } from "lucide-react";
-import { getBaseUrl } from "../../../../services/authService";
+import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 
 const FamilyList: React.FC = () => {

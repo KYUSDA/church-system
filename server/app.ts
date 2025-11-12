@@ -15,6 +15,7 @@ import { calendarRouter } from './Router/calendarRoute';
 import { resourceRouter } from './Router/resourceRoute';
 import youtubeRoute from "./Router/youtubeRoute";
 import xRoute from "./Router/xRoute";
+import { eventsRouter } from './Router/eventsRoute';
 
 const app = express();
 app.use(express.json());
@@ -75,6 +76,7 @@ app.use("/kyusda/v1/calendar",calendarRouter);
 app.use("/kyusda/v1/resource",resourceRouter);
 app.use("/kyusda/v1/youtube", youtubeRoute);
 app.use("/kyusda/v1/x", xRoute);
+app.use("/kyusda/v1/events", eventsRouter);
 
 // check cookies
 app.use((req, _res, next) => {
