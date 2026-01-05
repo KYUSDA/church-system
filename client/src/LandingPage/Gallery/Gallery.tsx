@@ -9,7 +9,7 @@ import {
     faCircleXmark
 } from '@fortawesome/free-solid-svg-icons';
 
-import './Gallery.css';
+import '../../components/css/Gallery.css';
 
 interface GalleryProps {
     galleryImages: { img: string }[];

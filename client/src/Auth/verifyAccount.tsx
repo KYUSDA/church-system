@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
-import "../../style.css";
+import "../components/css/verifypage.css";
 import { useContextFunc } from "../context/authContext";
 import { useActivateUserMutation } from "../services/authService";
 import AuthLayout from "./AuthLayout";

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './Footer.css'
+import '../../components/css/Footer.css';
 import { FaTwitter, FaFacebook, FaYoutube } from 'react-icons/fa'
 
 const MainFooter: React.FC = () => {

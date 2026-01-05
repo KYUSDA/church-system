@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import KyuSda from "../../assets/logo-kyusda.jpg";
-import '../../global/global.css';
+import KyuSda from "../../assets/logos/logo-kyusda.jpg";
+import '../../components/css/header.css';
 import { FiMenu } from "react-icons/fi";
 import MobileNavbar from "./MobileNav";
-import './nav_bar.css';
+import '../../components/css/nav_bar.css';
 import useUserData from "../../session/authData";
 
 const Header = () => {
