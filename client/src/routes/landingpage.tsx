@@ -2,10 +2,10 @@ import { Route } from "react-router-dom";
 import Families from "../LandingPage/Family/Families";
 import Departments from "../LandingPage/Department/Departments";
 import DepartmentsDetails from "../LandingPage/Department/DepartmentsDetails";
-import PrivacyPolicy from "../LandingPage/Footer/Policy";
-import Terms from "../LandingPage/Footer/Terms";
+import PrivacyPolicy from "../LandingPage/Policy";
+import Terms from "../LandingPage/Terms";
 import Layout from "../LandingPage/Footer/Layout";
-import DonationPage from "../LandingPage/donation/donation";
+import DonationPage from "../LandingPage/donation";
 import SingleFamily from "../LandingPage/Family/FamiliyDetails";
 import KyuSda from "../LandingPage/Gallery/KyuSdaGallery";
 

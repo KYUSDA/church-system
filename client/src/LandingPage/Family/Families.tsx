@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { client, urlFor } from "../../utils/client";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { ClipLoader } from "react-spinners";
 import Loader from "../../Dashboard/user/components/utils/loader";
+import FamilyFAQ from "../FamilyFAQ";
 
 export const Families = () => {
   const [Families, setFamilies] = useState<Family[]>([]);
@@ -115,6 +115,7 @@ export const Families = () => {
           </div>
         </div>
       )}
+      <FamilyFAQ />
     </div>
   );
 };

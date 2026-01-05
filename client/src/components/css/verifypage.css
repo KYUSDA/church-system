@@ -1,0 +1,64 @@
+
+/* Keyframes for slide-up animation */
+/* Define the slide-up keyframes */
+@keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Create a reusable class for the animation */
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out;
+    animation-fill-mode: forwards; 
+  }
+  
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+  
+    20% {
+      transform: translateX(-2px);
+    }
+  
+    40% {
+      transform: translateX(2px)
+    }
+  
+    60% {
+      transform: translateX(-2px)
+    }
+  
+    80% {
+      transform: translateX(2px);
+    }
+  
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+/* Remove arrows in input:number */
+/* Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}

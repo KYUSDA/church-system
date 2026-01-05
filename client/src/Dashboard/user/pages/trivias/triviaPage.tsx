@@ -1,4 +1,4 @@
-import trivia from "../../../../assets/trivia.jpeg";
+import trivia from "../../../../assets/dashboard/trivia.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 

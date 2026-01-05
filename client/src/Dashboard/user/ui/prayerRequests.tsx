@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { getBaseUrl, getAuthHeaders } from "@/services/base_query";
 import { toast } from "sonner";
-import prayer from "../../../assets/prayer.jpg";
+import prayer from "../../../assets/landing/dua-hands_84660.png";
 import {
   Card,
   CardContent,

@@ -1,12 +1,11 @@
 import React from "react";
 import Navbar from "./LandingPage/Navbar/Navbar";
-import About from "./LandingPage/About/About";
-import Leaders from "./LandingPage/leaders/Leaders";
+import About from "./LandingPage/About";
+import Leaders from "./LandingPage/Leaders";
 import Announcement from "./LandingPage/Announcements/Announcement";
 import MainFooter from "./LandingPage/Footer/MainFooter";
-import "../App.scss";
-import Banner from "./LandingPage/Header/Banner";
-import Testimonial from "./LandingPage/Testimonials/Testimonials";
+import Banner from "./LandingPage/Banner";
+import Testimonial from "./LandingPage/Testimonials";
 
 
 const App: React.FC = () => (
