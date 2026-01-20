@@ -57,9 +57,22 @@ feature/database/add-sermons-table
 ## Teams
 
 - Frontend Team (3 members)
+  
+  - James Karis
+  - Sherrif Korir
+  - Faith Muchina
 
 - Backend Team (2 members)
 
+   - Charles Mbugua
+   - Samuel Mwangi
+
 - Design Team (1 member)
 
+    - Llyod Brown
+
 - Content Management System (3 members)
+
+    - Kelvin Korir
+    - Lamech Wafula
+    - Emillio Muriithi
