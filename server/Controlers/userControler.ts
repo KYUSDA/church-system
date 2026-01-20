@@ -244,8 +244,9 @@ export const sendBirthdayWishes = catchAsyncErrors(async (req: Request, res: Res
         name: user.firstName,
         birthday: user.birthday,
         email: user.email,
-        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s',
-        dashboardUrl:`${process.env.FRONTEND_URL}/member/dashboard`,
+        imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
+        dashboardUrl: `${process.env.CLIENT_URL}/member/dashboard`,
       };
 
       await sendMail({

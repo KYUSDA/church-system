@@ -367,7 +367,7 @@ export const memberResetToken = catchAsyncErrors(
     const tokenGen = await getMember.resetToken();
     await getMember.save({ validateBeforeSave: false });
 
-    const resetUrl = `${process.env.FRONTEND_URL}/resetPassword/${tokenGen}`;
+    const resetUrl = `${process.env.CLIENT_URL}/resetPassword/${tokenGen}`;
     const message = `Forgotten password? Don't worry, click here to reset it:`;
 
     const data = {
