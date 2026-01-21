@@ -108,7 +108,6 @@ export const memberSignUp = catchAsyncErrors(
         password,
         imageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
-        dashboardUrl: "http://localhost:3000/dashboard",
         activationCode,
       };
 
