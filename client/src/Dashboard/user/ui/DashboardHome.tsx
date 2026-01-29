@@ -4,7 +4,6 @@ import PersonalGoals from "./PersonalGoals";
 import useUserData from "../../../session/authData";
 import LeaderboardSection from "./leaderBoard";
 import ProfileStats from "./profileStats";
-import DevotionSubscriptionFloat from "./devotionSubscription";
 import BirthdayModal from "../../../Auth/birthday";
 import CalendarSection from "./upcomingEvents";
 import { Card, CardContent } from "@/components/ui/card";
@@ -101,9 +100,6 @@ const DashboardHome: React.FC = () => {
   return (
     <div className="px-4">
       <BirthdayModal isOpen={showModal} onClose={handleCloseModal} />
-
-      {/* Floating devotion subscription for non-subscribers */}
-      <DevotionSubscriptionFloat />
 
       <div className="w-full">
         <ProfileStats user={userData} />

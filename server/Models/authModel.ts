@@ -25,23 +25,12 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber: string;
   registration: string;
   course: string;
   year: number;
-  phoneNumber: string;
-  birthday?: Date;
-  scores?: number;
-  easyNumber?: number;
-  mediumNumber?: number;
-  hardNumber?: number;
-  avatar?: {
-    public_id: String;
-    url: String;
-  };
   password: string;
   role: UserRole;
-  familyLocated?: string;
-  createdAt: Date;
   storedRefreshToken?: string;
   refreshToken?: () => string;
   passwordResetToken?: string;
@@ -50,6 +39,7 @@ export interface IUser extends Document {
   resetToken(): Promise<string>;
   comparePasswords: (password: string) => Promise<boolean>;
   signAccessToken: () => string;
+  createdAt: Date;
 }
 
 export interface IUserModel extends Model<IUser> {
@@ -83,37 +73,13 @@ const authSchema = new Schema<IUser>(
       type: String,
       required: [true, "please enter your course"],
     },
-    avatar: {
-      public_id: String,
-      url: String,
-    },
     year: {
       type: Number,
       required: [true, "please enter year of study"],
     },
     phoneNumber: {
       type: String,
-      required: [true, "please enter your phone number"],
-    },
-    birthday: {
-      type: Date,
-      default: null,
-    },
-    scores: {
-      type: Number,
-      default: 0,
-    },
-    easyNumber: {
-      type: Number,
-      default: 0,
-    },
-    mediumNumber: {
-      type: Number,
-      default: 0,
-    },
-    hardNumber: {
-      type: Number,
-      default: 0,
+      required: [true, "Please enter phone number"]
     },
     password: {
       type: String,
@@ -121,10 +87,6 @@ const authSchema = new Schema<IUser>(
       minlength: [8, "please enter 8 or more characters"],
     },
 
-    familyLocated: {
-      type: String,
-      default: "not yet assigned",
-    },
     role: {
       type: String,
       enum: Object.values(UserRole),
