@@ -5,12 +5,41 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useGetUpcomingEventsQuery } from "@/services/eventsService";
+import { client } from "@/utils/client";
+
+interface TEvent {
+  title: string;
+  description: string;
+  imgUrl: string;
+  location: string;
+  start_date: string;
+  end_date: string;
+  links?: string[];
+}
+
 
 const EventsCard: React.FC = () => {
-  const { data } = useGetUpcomingEventsQuery();
 
-  const events = data?.data || [];
+  const [events, setEvents] = React.useState<TEvent[]>([]);
+
+  React.useEffect(() => {
+    const fetchEvents = async () => {
+      const query = `*[_type == "events" && end_date >= now()] | order(start_date asc){
+        title,
+        description,
+        imgUrl,
+        location,
+        start_date,
+        end_date,
+        links
+      }`;
+      const data = await client.fetch(query);
+      setEvents(data);
+    };
+
+    fetchEvents();
+  }, []);
+
 
   return (
     <div className="relative flex flex-col justify-center items-center py-8 w-full">

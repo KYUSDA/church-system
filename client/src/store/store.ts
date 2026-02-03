@@ -15,7 +15,6 @@ import {
 
 import storage from "redux-persist/lib/storage";
 import { adminApi } from "../services/adminService";
-import { createEvent } from "@/services/eventsService";
 
 const persistConfig = {
   key: "auth",
@@ -29,8 +28,7 @@ export const store = configureStore({
   reducer: {
     auth: persistAuthReducer,
     [api.reducerPath]: api.reducer,
-    [adminApi.reducerPath]: adminApi.reducer,
-    [createEvent.reducerPath]: createEvent.reducer,
+    [adminApi.reducerPath]: adminApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -40,7 +38,6 @@ export const store = configureStore({
     })
       .concat(api.middleware)
       .concat(adminApi.middleware)
-      .concat(createEvent.middleware),
 });
 
 export let persistor = persistStore(store);
