@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { client, urlFor } from "../../utils/client";
+import { useParams } from "react-router-dom";
+import { getDepartmentById } from "../../utils/queries/sanity_query";
 import Loader from "../../Dashboard/user/components/utils/loader";
+import Hero from "./sections/Hero";
+import About from "./sections/About";
+import Activities from "./sections/Acitivities";
+import Leaders from "./sections/Leaders";
 
 interface Department {
   _id: string;
   title: string;
   description?: string;
   imgUrl?: string;
+  sections?: Array<{
+    _type: string;
+    _key: string;
+    [key: string]: any;
+  }>;
 }
-
-const Breadcrumbs = ({ department }: { department: Department }) => (
-  <nav className="container mx-auto px-4 py-4 text-gray-600 text-sm">
-    <Link to="/" className="hover:underline">
-      Home
-    </Link>{" "}
-    /
-    <Link to="/departments" className="hover:underline">
-      {" "}
-      Departments
-    </Link>{" "}
-    /<span className="text-gray-900 font-semibold"> {department?.title}</span>
-  </nav>
-);
 
 const DepartmentsDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,13 +25,8 @@ const DepartmentsDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
-
-  useEffect(() => {
     if (id) {
-      const query = `*[_type == "departments" && _id == "${id}"][0]`;
-      client.fetch(query).then((data) => {
+      getDepartmentById(id).then((data) => {
         setDepartment(data);
         setLoading(false);
       });
@@ -52,30 +42,22 @@ const DepartmentsDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12">
-      {/* Breadcrumbs */}
-      <Breadcrumbs department={department} />
-
-      {/* Header Section */}
-      <section className="container mx-auto grid md:grid-cols-2 gap-6 px-4 items-center">
-        <div className="text-center md:text-left">
-          <h2 className="text-blue-600 text-4xl font-bold uppercase">
-            {department.title}
-          </h2>
-          <p className="mt-4 text-gray-600 text-lg leading-relaxed">
-            {department.description}
-          </p>
-        </div>
-        {department.imgUrl && (
-          <div className="flex justify-center">
-            <img
-              src={urlFor(department.imgUrl).url()}
-              alt="Department"
-              className="w-full max-w-md rounded-lg shadow-xl"
-            />
-          </div>
-        )}
-      </section>
+    <div className="min-h-screen bg-gray-50">
+      {department.sections?.map((section: any, index: number) => {
+        switch (section._type) {
+          case "heroSection":
+            return <Hero key={section._key || index} data={section} />;
+          case "aboutSection":
+            return <About key={section._key || index} data={section} />;
+          case "activitiesSection":
+            return <Activities key={section._key || index} data={section} />;
+          case "leadersSection":
+            return <Leaders key={section._key || index} data={section} />;
+          // Add other section components here
+          default:
+            return null;
+        }
+      })}
     </div>
   );
 };
