@@ -19,10 +19,7 @@ interface IRegisterUser {
   course: string;
   year: string;
   phoneNumber: string;
-  scores: number;
   password: string;
-  familyLocated?: string;
-  avatar?: string;
 }
 
 // const createJWT = (id: string, rememberMe: boolean): string => {
@@ -108,7 +105,6 @@ export const memberSignUp = catchAsyncErrors(
         password,
         imageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtQVCYDri-bQmVrsKUsdNFYFBfL9dVZG8Cw&s",
-        dashboardUrl: "http://localhost:3000/dashboard",
         activationCode,
       };
 
@@ -471,43 +467,6 @@ export const changePassword = catchAsyncErrors(
   }
 );
 
-export const updateUserBirthday = catchAsyncErrors(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { birthday } = req.body;
-
-      console.log(birthday);
-
-      if (!birthday) return next(new ErrorHandler("Birthday is required", 400));
-
-      // Validate birthday
-      const today = new Date();
-      const birthDate = new Date(birthday);
-      if (birthDate > today) {
-        return next(
-          new ErrorHandler("Please enter a valid date of birth", 400)
-        );
-      }
-
-      const user = await memberAuth.findByIdAndUpdate(
-        req.user?.id,
-        { birthday },
-        { new: true }
-      );
-
-      if (!user) return next(new ErrorHandler("User not found", 404));
-
-      res.status(200).json({
-        status: "success",
-        message: "Birthday updated successfully",
-        user,
-      });
-    } catch (error) {
-      return next(new ErrorHandler("Error fetching quizzes", 500));
-    }
-  }
-);
-
 export default {
   memberSignUp,
   memberSignIn,
@@ -515,7 +474,6 @@ export default {
   ActivateUser,
   memberLogout,
   changePassword,
-  updateUserBirthday,
   memberResetToken,
   resetPassword,
   validateSession,

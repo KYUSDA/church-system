@@ -4,5 +4,6 @@ config.env
 /dist
 /uploads
 /request
+/reqs
 
 app.http

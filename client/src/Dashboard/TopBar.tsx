@@ -13,16 +13,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import useUserData from "@/session/authData";
-import { authSlice } from "@/session/userSlice";
+import { useLogout } from "@/hooks/userLogoutHook";
 
 function Topbar() {
   const { userData } = useUserData();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    authSlice.actions.logout();
-    navigate("/signIn");
-  };
+   const { handleLogout } = useLogout();
 
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">

@@ -2,17 +2,12 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import memberRoute from "./Router/authRoute";
-import departmentRoute from "./Router/departMentRoute";
 import userRoute from "./Router/userRouter";
-import familyRoute from "./Router/familiesRouter";
 import quizzeRoute from "./Router/quizzeRoute";
-import devotionRoute from "./Router/devotionRoute";
 import prayerRequestRouter from "./Router/prayerRoute";
 import cookieParser from "cookie-parser";
 import notificationRouter from "./Router/notificationRouter";
-import { calendarRouter } from "./Router/calendarRoute";
-import { resourceRouter } from "./Router/resourceRoute";
-import { eventsRouter } from "./Router/eventsRoute";
+import { profileRouter } from "./Router/profileRoute";
 
 const app = express();
 app.use(express.json());
@@ -42,16 +37,11 @@ app.use(
 );
 
 app.use("/kyusda/v1/member/", memberRoute);
-app.use("/kyusda/v1/department/", departmentRoute);
+app.use("/kyusda/v1/profile/", profileRouter);
 app.use("/kyusda/v1/user", userRoute);
-app.use("/kyusda/v1/family/", familyRoute);
-app.use("/kyusda/v1/quizzes/", quizzeRoute);
-app.use("/kyusda/v1/devotion/", devotionRoute);
 app.use("/kyusda/v1/prayers/", prayerRequestRouter);
 app.use("/kyusda/v1/notification", notificationRouter);
-app.use("/kyusda/v1/calendar", calendarRouter);
-app.use("/kyusda/v1/resource", resourceRouter);
-app.use("/kyusda/v1/events", eventsRouter);
+app.use("/kyusda/v1/quizzes/", quizzeRoute);
 
 // check cookies
 app.use((req, _res, next) => {

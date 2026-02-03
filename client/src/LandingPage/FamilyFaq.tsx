@@ -3,10 +3,10 @@ import { faQuestions } from "../Dummy/FAQ";
 
 const FamilyFAQ = () => {
   // State to track which FAQ is open
-  const [openFAQ, setOpenFAQ] = useState(null);
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   // Function to toggle FAQ visibility
-  const toggleFAQ = (id) => {
+  const toggleFAQ = (id: number | null) => {
     setOpenFAQ((prevOpen) => (prevOpen === id ? null : id));
   };
 

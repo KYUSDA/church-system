@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import memberAuth from "../Controlers/authControler";
 import requireAuth from "../middleware/authmiddleware";
 const authRoute = Router();
@@ -24,7 +24,5 @@ authRoute.route("/resetToken").post(memberAuth.memberResetToken);
 authRoute.patch("/resetPassword/:token", memberAuth.resetPassword);
 
 authRoute.patch("/change-password", requireAuth, memberAuth.changePassword);
-
-authRoute.patch("/update-birthday", requireAuth, memberAuth.updateUserBirthday);
 
 export default authRoute;

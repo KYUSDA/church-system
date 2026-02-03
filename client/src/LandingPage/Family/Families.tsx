@@ -4,7 +4,7 @@ import { client, urlFor } from "../../utils/client";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Loader from "../../Dashboard/user/components/utils/loader";
-import FamilyFAQ from "../FamilyFAQ";
+import FamilyFAQ from "../FamilyFaq";
 
 export const Families = () => {
   const [Families, setFamilies] = useState<Family[]>([]);
