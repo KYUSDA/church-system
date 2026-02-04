@@ -90,7 +90,7 @@ const Settings = () => {
     try {
       setLoading(true);
       if (user) {
-        const uploadUrl = `${baseUrl}/user/update-avatar/${user?.userId}`;
+        const uploadUrl = `${baseUrl}/profile/update-avatar`;
 
         const response = await fetch(uploadUrl, {
           method: "PUT",
@@ -319,15 +319,6 @@ const Settings = () => {
                     id="email"
                     type="email"
                     value={userData?.email || ""}
-                    disabled
-                    className="bg-muted"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role">Role</Label>
-                  <Input
-                    id="role"
-                    value={userData?.role || "Member"}
                     disabled
                     className="bg-muted"
                   />

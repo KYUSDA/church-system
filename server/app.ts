@@ -66,7 +66,11 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 
 //404 page
 app.use("/", (error: any, req: Request, res: Response, next: NextFunction) => {
-  res.status(error.statusCode).json({ success: false, message: error.message });
+  const statusCode = error.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
+    message: error.message || "Internal Server Error",
+  });
 });
 
 export default app;

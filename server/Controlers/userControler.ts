@@ -20,7 +20,7 @@ export const getAll = catchAsyncErrors(
 
     res.status(200).json({
       status: "success",
-      users,
+      data: users,
       message: "All registered users with profiles retrieved successfully",
     });
   },
@@ -33,10 +33,6 @@ export const getOne = catchAsyncErrors(
     const user = await authModel
       .findById(req.params.id)
       .select("-password")
-      .populate({
-        path: "profile",
-        model: "Profile",
-      });
 
     if (!user) {
       return next(new ErrorHandler("User not found", 404));
@@ -44,7 +40,7 @@ export const getOne = catchAsyncErrors(
 
     res.status(200).json({
       status: "success",
-      user,
+      data: user,
     });
   },
 );

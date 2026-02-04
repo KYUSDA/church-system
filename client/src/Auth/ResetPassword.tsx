@@ -13,45 +13,46 @@ import Box from "@mui/material/Box";
 import { getBaseUrl } from "@/services/base_query";
 import AuthLayout from "./AuthLayout";
 import { toast } from "sonner";
-import { SyncLoader } from "react-spinners";
+import { useParams } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function Newpassword() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [token, setToken] = useState("");
+  const { token } = useParams<{ token: string }>();
   const [loading, setLoading] = useState(false);
   const baseUrl = getBaseUrl();
 
-  useEffect(() => {
-    const tk = localStorage.getItem("Reset token");
-    setToken(tk || "");
-  }, []);
+  if (!token) {
+    return <p>Invalid or missing reset token</p>;
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
 
     try {
-      const url = `${baseUrl}/member/resetPassword/${token}`;
-      const resp = await fetch(url, {
+      const resp = await fetch(`${baseUrl}/member/resetPassword/${token}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password, passwordConfirm }),
       });
 
       const data = await resp.json();
+
       if (data.status === "success") {
-        toast.success(data.message || "Password updated successfully");
+        toast.success("Password updated successfully");
         setPassword("");
         setPasswordConfirm("");
+        // redirect to login
+        window.location.href = "/signIn";
       } else {
         toast.error(data.err || "Something went wrong");
       }
-    } catch (error) {
+    } catch (err) {
       toast.error("Network error");
-      console.error(error);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -117,11 +118,7 @@ export default function Newpassword() {
               disabled={loading}
               sx={{ mt: 3, mb: 2 }}
             >
-              {loading ? (
-                <SyncLoader color="#1c8e90" size={6} />
-              ) : (
-                "Update Password"
-              )}
+              {loading ? "Updating..." : "Update Password"}
             </Button>
 
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
