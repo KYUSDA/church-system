@@ -45,17 +45,10 @@ const SignInSide = () => {
     event.preventDefault();
     try {
       await loginUser(values);
-      // Clear inputs after login attempt (optional: only if no error)
-      if (!error) {
-        setEmail("");
-        setPassword("");
-        setTouchedEmail(false);
-        setTouchedPassword(false);
-      }
     } catch (err: any) {
       const message = getApiErrorMessage(
         err,
-        "Login failed, please try again."
+        "Login failed, please try again.",
       );
       toast.error(message);
     }

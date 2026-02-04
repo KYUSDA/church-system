@@ -3,13 +3,10 @@ import {
   Calendar as CalendarIcon,
   Clock,
   MapPin,
-  Users,
-  BookOpen,
   Music,
   Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
-import { getBaseUrl } from "@/services/base_query";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -21,59 +18,53 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import dayjs from "dayjs";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { client } from "@/utils/client";
 
-export interface CalendarEvent {
-  _id?: string;
+interface CalendarEvent {
+  _id: string;
   title: string;
-  date: string; // YYYY‑MM‑DD
-  theme: string;
-  verses: string[];
-  hymn: string;
-  isHighWeek: boolean;
-  wednesdayVespers: string[];
-  fridayVespers: string[];
-  sabbathService: string[];
-  details: {
-    department: string[];
-    choristers: string[];
-    deacons: string[];
-  };
-  color: string; // hex or rgb
+  eventType: "once" | "weekly";
+  date?: string; // for once
+  days?: string[]; // for weekly e.g. ["Sunday", "Wednesday"]
+  time: string; // HH:mm
+  theme?: string;
+  hymn?: string;
+  isHighWeek?: boolean;
+  isActive: boolean;
 }
 
 const EventCalendar: React.FC = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState(true);
-  const baseUrl = getBaseUrl();
-  const authState = useSelector((state: RootState) => state.auth);
-  const token = authState?.user?.data?.tokens?.accessToken;
 
   const fetchEvents = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${baseUrl}/calendar/events`, {
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-      });
+      const query = `
+                *[_type == "calendar" && isActive == true] | order(date asc) {
+                  _id,
+                  title,
+                  eventType,
+                  date,
+                  days,
+                  time,
+                  theme,
+                  hymn,
+                  isHighWeek
+                }
+              `;
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
-      const eventsData = data?.events || [];
+      const eventsData = await client.fetch(query);
       setEvents(Array.isArray(eventsData) ? eventsData : []);
-    } catch (_err) {
-      setEvents([]); // Ensure events is always an array
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      toast.error("Failed to load calendar events");
+      setEvents([]);
     } finally {
       setLoading(false);
     }
-  }, [baseUrl, token]);
+  }, []);
 
   useEffect(() => {
     fetchEvents();
@@ -83,14 +74,44 @@ const EventCalendar: React.FC = () => {
   const getEventsForDate = (date: Date) => {
     if (!Array.isArray(events)) return [];
     const dateStr = dayjs(date).format("YYYY-MM-DD");
-    return events.filter(
-      (event) => event && dayjs(event.date).format("YYYY-MM-DD") === dateStr
-    );
+    const dayOfWeek = dayjs(date).format("dddd").toLowerCase();
+
+    return events.filter((event) => {
+      if (!event) return false;
+
+      // For 'once' events, match the specific date
+      if (event.eventType === "once" && event.date) {
+        return dayjs(event.date).format("YYYY-MM-DD") === dateStr;
+      }
+
+      // For 'weekly' events, match the day of week
+      if (event.eventType === "weekly" && event.days) {
+        return event.days.some((day) => day.toLowerCase() === dayOfWeek);
+      }
+
+      return false;
+    });
   };
 
   // Get all event dates for highlighting
   const eventDates = Array.isArray(events)
-    ? events.map((event) => new Date(event.date))
+    ? events.reduce((dates: Date[], event) => {
+        if (event.eventType === "once" && event.date) {
+          dates.push(new Date(event.date));
+        } else if (event.eventType === "weekly" && event.days) {
+          // For weekly events, highlight the next 90 days that match
+          const today = new Date();
+          for (let i = 0; i < 90; i++) {
+            const futureDate = new Date(today);
+            futureDate.setDate(today.getDate() + i);
+            const dayOfWeek = dayjs(futureDate).format("dddd").toLowerCase();
+            if (event.days.some((day) => day.toLowerCase() === dayOfWeek)) {
+              dates.push(new Date(futureDate));
+            }
+          }
+        }
+        return dates;
+      }, [])
     : [];
 
   // Check if a date has events
@@ -101,8 +122,13 @@ const EventCalendar: React.FC = () => {
   // Get the selected date's events
   const selectedDateEvents = getEventsForDate(selectedDate);
 
-  const formatEventDate = (dateString: string) => {
-    return dayjs(dateString).format("dddd, MMMM D, YYYY");
+  const formatEventDate = (event: CalendarEvent) => {
+    if (event.eventType === "once" && event.date) {
+      return dayjs(event.date).format("dddd, MMMM D, YYYY");
+    } else if (event.eventType === "weekly" && event.days) {
+      return `Every ${event.days.join(", ")} at ${event.time}`;
+    }
+    return "";
   };
 
   const EventCard = ({ event }: { event: CalendarEvent }) => (
@@ -112,7 +138,7 @@ const EventCalendar: React.FC = () => {
           <h4 className="font-semibold text-sm leading-tight">{event.title}</h4>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <Clock className="h-3 w-3" />
-            <span>{formatEventDate(event.date)}</span>
+            <span>{formatEventDate(event)}</span>
           </div>
         </div>
         {event.isHighWeek && (
@@ -140,69 +166,6 @@ const EventCalendar: React.FC = () => {
             <span>Hymn</span>
           </div>
           <p className="text-sm text-muted-foreground pl-4">{event.hymn}</p>
-        </div>
-      )}
-
-      {event.verses && event.verses.length > 0 && (
-        <div className="space-y-1">
-          <div className="flex items-center gap-1 text-xs font-medium">
-            <BookOpen className="h-3 w-3" />
-            <span>Scripture</span>
-          </div>
-          <div className="pl-4 space-y-1">
-            {event.verses.map((verse, idx) => (
-              <p key={idx} className="text-sm text-muted-foreground">
-                {verse}
-              </p>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {(event.details.department.length > 0 ||
-        event.details.choristers.length > 0 ||
-        event.details.deacons.length > 0) && (
-        <div className="space-y-2">
-          <div className="flex items-center gap-1 text-xs font-medium">
-            <Users className="h-3 w-3" />
-            <span>Participants</span>
-          </div>
-          <div className="pl-4 space-y-1">
-            {event.details.department.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                <span className="text-xs text-muted-foreground">
-                  Departments:
-                </span>
-                {event.details.department.map((dept, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">
-                    {dept}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            {event.details.choristers.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                <span className="text-xs text-muted-foreground">
-                  Choristers:
-                </span>
-                {event.details.choristers.map((chorister, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">
-                    {chorister}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            {event.details.deacons.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                <span className="text-xs text-muted-foreground">Deacons:</span>
-                {event.details.deacons.map((deacon, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">
-                    {deacon}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

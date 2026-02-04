@@ -16,20 +16,50 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
+interface ProfileUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+interface BirthdayProfile {
+  userId: ProfileUser;
+  birthday: string; // ISO string from API
+  family?: string;
+  department?: string;
+}
+
 interface Upcoming {
   firstName: string;
   lastName: string;
-  nextBirthday: string; // ISO string from API
+  nextBirthday: string;
 }
 
 const BirthdayCard: React.FC = () => {
   const { data, isLoading, isError } = useGetBirthdaysQuery();
 
-  const birthdays: Upcoming[] = Array.isArray(data?.users)
-    ? data.users
-    : data?.users
-    ? [data.users]
+  // Transform backend data to frontend format
+  const transformedBirthdays: Upcoming[] = Array.isArray(data?.profiles)
+    ? data.profiles.map((profile: BirthdayProfile) => {
+        // Calculate next birthday occurrence
+        const birthday = dayjs(profile.birthday);
+        const currentYear = dayjs().year();
+        let nextBirthday = birthday.year(currentYear);
+
+        // If birthday has passed this year, use next year
+        if (nextBirthday.isBefore(dayjs(), "day")) {
+          nextBirthday = nextBirthday.year(currentYear + 1);
+        }
+
+        return {
+          firstName: profile.userId?.firstName || "Unknown",
+          lastName: profile.userId?.lastName || "User",
+          nextBirthday: nextBirthday.toISOString(),
+        };
+      })
     : [];
+
+  const birthdays = transformedBirthdays;
 
   // Group birthdays by date proximity
   const getDateCategory = (birthdayDate: string) => {
@@ -55,7 +85,7 @@ const BirthdayCard: React.FC = () => {
 
   const todayBirthdays = sortedBirthdays.filter((b) => b.category === "today");
   const upcomingBirthdays = sortedBirthdays.filter(
-    (b) => b.category !== "today"
+    (b) => b.category !== "today",
   );
 
   if (isLoading) {
@@ -83,7 +113,7 @@ const BirthdayCard: React.FC = () => {
     );
   }
 
-  if (isError || !data?.users) {
+  if (isError || !data?.profiles) {
     return (
       <Card className="h-fit">
         <CardContent className="flex flex-col items-center justify-center py-8 text-center">
@@ -182,7 +212,7 @@ const BirthdayCard: React.FC = () => {
                   {upcomingBirthdays.slice(0, 4).map((birthday, i) => {
                     const daysUntil = dayjs(birthday.nextBirthday).diff(
                       dayjs(),
-                      "day"
+                      "day",
                     );
                     const isThisWeek = daysUntil <= 7;
 
