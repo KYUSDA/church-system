@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getDepartmentById } from "../../utils/queries/sanity_query";
+import { getDepartmentById } from "../../utils/sanity_query";
 import Loader from "../../Dashboard/user/components/utils/loader";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
 import Activities from "./sections/Acitivities";
 import Leaders from "./sections/Leaders";
+import Videos from "./sections/Videos";
+import Products from "./sections/Products";
+import Images from "./sections/Images";
+import Events from "./sections/Events";
+import Resources from "./sections/Resources";
+import Services from "./sections/Services";
+import Theme from "./sections/Theme";
 
 interface Department {
   _id: string;
@@ -53,6 +60,20 @@ const DepartmentsDetails = () => {
             return <Activities key={section._key || index} data={section} />;
           case "leadersSection":
             return <Leaders key={section._key || index} data={section} />;
+          case "videosSection":
+            return <Videos key={section._key || index} data={section} />;
+          case "productsSection":
+            return <Products key={section._key || index} data={section} />;
+          case "imagesSection":
+            return <Images key={section._key || index} data={section} />;
+          case "eventsSection":
+            return <Events key={section._key || index} data={section} />;
+          case "resourcesSection":
+            return <Resources key={section._key || index} data={section} />;
+          case "servicesSection":
+            return <Services key={section._key || index} data={section} />;
+            case "themesSection":
+              return <Theme key={section._key || index} data={section} />;
           // Add other section components here
           default:
             return null;

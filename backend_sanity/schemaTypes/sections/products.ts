@@ -3,6 +3,7 @@ import {defineType, defineField} from 'sanity'
         title: string
         description: string
         products:{
+        description: string
         image: image
         price: number
         tags: array of strings
@@ -36,6 +37,11 @@ export const productsSection = defineType({
           title: 'Product',
           type: 'object',
           fields: [
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'string',
+            }),
             defineField({
               name: 'image',
               title: 'Image',

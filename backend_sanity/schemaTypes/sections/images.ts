@@ -40,9 +40,11 @@ export const imagesSection = defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'url',
-              title: 'Image URL',
-              type: 'string',
+              name: 'imageurl',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
             }),
             defineField({
               name: 'altText',

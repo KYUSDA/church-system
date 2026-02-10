@@ -22,7 +22,8 @@ const Departments = () => {
   function findUniqueById(dataArray: Department[]): Department[] {
     return dataArray.filter(
       (item, index, array) =>
-        array.findIndex((otherItem) => otherItem.title === item.title) === index
+        array.findIndex((otherItem) => otherItem.title === item.title) ===
+        index,
     );
   }
 
@@ -85,9 +86,16 @@ const Departments = () => {
 
                   {/* Tags */}
                   {department.tags.length > 0 && (
-                    <span className="mt-4 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded self-start">
-                      {department.tags[0]}
-                    </span>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {department.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   )}
 
                   {/* See More Button */}

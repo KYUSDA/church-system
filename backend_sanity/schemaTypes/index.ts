@@ -17,7 +17,7 @@ import { videosSection } from './sections/videos'
 import { productsSection } from './sections/products'
 import { leadersSSection } from './sections/leaders'
 import { activitiesSection } from './sections/activities'
-import { themeSection } from './objects/texttheme'
+import { themesSection, themeArticle } from './sections/text'
 
 
 export const schemaTypes = [
@@ -37,7 +37,8 @@ export const schemaTypes = [
   servicesSection,
   activitiesSection,
   leadersSSection,
-  themeSection,
+  themesSection,
+  themeArticle,
   eventsSection,
   resourcesSection,
   imagesSection,

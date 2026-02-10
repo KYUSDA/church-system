@@ -2,8 +2,34 @@ import {defineType, defineField} from 'sanity'
 
 export const themeArticle = defineType({
   name: 'themeArticle',
-  title: 'Article',
-  type: 'document',
+  title: 'Theme Article',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Section Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'points',
+      title: 'Bullet Points',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'point',
+          type: 'string',
+        }),
+      ],
+    }),
+  ],
+})
+
+export const themesSection = defineType({
+  name: 'themesSection',
+  title: 'Themes Section',
+  type: 'object',
   fields: [
     defineField({
       name: 'title',
@@ -48,20 +74,13 @@ export const themeArticle = defineType({
       name: 'sections',
       title: 'Content Sections',
       type: 'array',
-      of: [{type: 'themeSection'}],
+      of: [{type: 'themeArticle'}],
     }),
 
     defineField({
       name: 'closing',
       title: 'Closing Paragraph',
       type: 'text',
-    }),
-
-    defineField({
-      name: 'coreValues',
-      title: 'Core Values',
-      type: 'array',
-      of: [{type: 'string'}],
     }),
   ],
 })
