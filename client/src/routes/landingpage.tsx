@@ -7,7 +7,7 @@ import Terms from "../LandingPage/Terms";
 import Layout from "../LandingPage/Footer/Layout";
 import DonationPage from "../LandingPage/donation";
 import SingleFamily from "../LandingPage/Family/FamiliyDetails";
-import KyuSda from "../LandingPage/Gallery/KyuSdaGallery";
+import Memories from "@/LandingPage/Memories";
 
 export const Landingpage = (
   <>
@@ -57,7 +57,7 @@ export const Landingpage = (
       path="/church-gallery"
       element={
         <Layout>
-          <KyuSda />
+          <Memories />
         </Layout>
       }
     />

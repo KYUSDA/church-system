@@ -58,7 +58,7 @@ function Hero({ data }: HeroProps) {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24 text-center">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold text-white leading-tight mb-6 md:mb-8 uppercase tracking-wide">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold text-white leading-tight mb-6 md:mb-8 uppercase tracking-wide">
           {renderTitle()}
         </h1>
 

@@ -48,7 +48,7 @@ function Images({ data }: ImagesProps) {
             {currentImages[0] && (
               <div className="md:row-span-2">
                 <img
-                  src={currentImages[0].url}
+                  src={currentImages[0].imageurl}
                   alt={currentImages[0].altText}
                   className="w-full h-full object-cover rounded-3xl"
                   style={{ minHeight: "500px", maxHeight: "600px" }}
@@ -62,7 +62,7 @@ function Images({ data }: ImagesProps) {
               {currentImages[1] && (
                 <div>
                   <img
-                    src={currentImages[1].url}
+                    src={currentImages[1].imageurl}
                     alt={currentImages[1].altText}
                     className="w-full h-full object-cover rounded-3xl"
                     style={{ aspectRatio: "16/10" }}
@@ -74,7 +74,7 @@ function Images({ data }: ImagesProps) {
               {currentImages[2] && (
                 <div>
                   <img
-                    src={currentImages[2].url}
+                    src={currentImages[2].imageurl}
                     alt={currentImages[2].altText}
                     className="w-full h-full object-cover rounded-3xl"
                     style={{ aspectRatio: "1/1" }}
@@ -86,7 +86,7 @@ function Images({ data }: ImagesProps) {
               {currentImages[3] && (
                 <div>
                   <img
-                    src={currentImages[3].url}
+                    src={currentImages[3].imageurl}
                     alt={currentImages[3].altText}
                     className="w-full h-full object-cover rounded-3xl"
                     style={{ aspectRatio: "3/4" }}
@@ -98,7 +98,7 @@ function Images({ data }: ImagesProps) {
               {currentImages[4] && (
                 <div>
                   <img
-                    src={currentImages[4].url}
+                    src={currentImages[4].imageurl}
                     alt={currentImages[4].altText}
                     className="w-full h-full object-cover rounded-3xl"
                     style={{ aspectRatio: "3/4" }}
@@ -113,7 +113,7 @@ function Images({ data }: ImagesProps) {
             {currentImages[5] && (
               <div>
                 <img
-                  src={currentImages[5].url}
+                  src={currentImages[5].imageurl}
                   alt={currentImages[5].altText}
                   className="w-full h-full object-cover rounded-3xl"
                   style={{ aspectRatio: "16/9" }}
@@ -124,7 +124,7 @@ function Images({ data }: ImagesProps) {
             {currentImages[6] && (
               <div>
                 <img
-                  src={currentImages[6].url}
+                  src={currentImages[6].imageurl}
                   alt={currentImages[6].altText}
                   className="w-full h-full object-cover rounded-3xl"
                   style={{ aspectRatio: "16/9" }}

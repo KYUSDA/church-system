@@ -46,9 +46,9 @@ export interface VideosSection {
   videos: Video[];
 }
 
-// images 
+// images
 export interface Image {
-  url: string;
+  imageurl: string;
   altText: string;
 }
 
@@ -73,7 +73,6 @@ export interface ProductsSection {
   description: string;
   products: Product[];
 }
-
 
 // events
 export interface Event {
@@ -106,8 +105,7 @@ export interface ResourcesSection {
   resources: Resource[];
 }
 
-
-// CTA 
+// CTA
 interface CTAButton {
   text: string;
   link: string;
@@ -131,7 +129,6 @@ export interface ServicesSection {
   title: string;
   services: Service[];
 }
-
 
 // theme
 export interface ThemeSection {

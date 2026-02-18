@@ -18,6 +18,7 @@ import { productsSection } from './sections/products'
 import { leadersSSection } from './sections/leaders'
 import { activitiesSection } from './sections/activities'
 import { themesSection, themeArticle } from './sections/text'
+import { gallery } from './gallery'
 
 
 export const schemaTypes = [
@@ -30,6 +31,7 @@ export const schemaTypes = [
   testimonials,
   events,
   calendar,
+  gallery,
 
   // all section types
   heroSection,
