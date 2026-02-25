@@ -91,7 +91,9 @@ export const getDepartmentById = (id: string) => {
           title,
           description,
           link,
-          image
+          image,
+          file,
+          tag
         }
       },
       _type == "servicesSection" => {

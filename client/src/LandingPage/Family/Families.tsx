@@ -10,6 +10,7 @@ export interface Family {
   description: string;
   imgUrl: string;
   tags: string[];
+  locationUrl?: string;
 }
 
 function findUniqueById(dataArray: Family[]): Family[] {
@@ -19,7 +20,7 @@ function findUniqueById(dataArray: Family[]): Family[] {
   );
 }
 
-/*  Skeleton Card */
+/* ─── Skeleton Card ─────────────────────────────────────────────────── */
 const SkeletonCard = () => (
   <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
     <div className="w-full h-52 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 animate-pulse" />
@@ -36,9 +37,7 @@ const SkeletonCard = () => (
   </div>
 );
 
-
-
-/* Main Component */
+/* ─── Main Component ─────────────────────────────────────────────────── */
 const Families = () => {
   const [families, setFamilies] = useState<Family[]>([]);
   const [loading, setLoading] = useState(true);
@@ -65,7 +64,7 @@ const Families = () => {
       : families.filter((f) => f.tags.includes(filter));
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#f8f6f1]">
       {/* ── Page Section ── */}
       <div className="py-16 sm:py-20 lg:py-24">
         {/* ── Header ── */}

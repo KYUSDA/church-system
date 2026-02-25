@@ -5,10 +5,12 @@ title: string
 description: string
 
 resources:{
+tag: string
 image: Image
 title: string
 description: string
 link: string
+file: // .pdf .docx .etc
 }
 
 */
@@ -44,6 +46,11 @@ export const resourcesSection = defineType({
           type: 'object',
           fields: [
             defineField({
+              name: 'tag',
+              title: 'Tag',
+              type: 'string',
+            }),
+            defineField({
               name: 'image',
               title: 'Image',
               type: 'image',
@@ -65,6 +72,11 @@ export const resourcesSection = defineType({
               name: 'link',
               title: 'Link',
               type: 'string',
+            }),
+            defineField({
+              name: 'file',
+              title: 'File',
+              type: 'file',
             }),
           ],
         }),

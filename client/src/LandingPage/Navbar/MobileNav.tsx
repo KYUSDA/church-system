@@ -47,9 +47,17 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ menuOpen, setMenuOpen }) =>
             Departments
           </Link>
         </li>
-        <Link to="/church-gallery" className="nav-link underline-transition">
-          Gallery
-        </Link>
+        <li>
+          <Link to="/resources" className="nav-link underline-transition">
+            Resources
+          </Link>
+        </li>
+        <li>
+          <Link to="/church-gallery" className="nav-link underline-transition">
+            Gallery
+          </Link>
+        </li>
+    
 
         {/* Auth Buttons */}
         {user ? (

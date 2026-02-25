@@ -8,6 +8,7 @@ import Layout from "../LandingPage/Footer/Layout";
 import DonationPage from "../LandingPage/donation";
 import SingleFamily from "../LandingPage/Family/FamiliyDetails";
 import Memories from "@/LandingPage/Memories";
+import Resources from "@/LandingPage/Resources";
 
 export const Landingpage = (
   <>
@@ -42,6 +43,14 @@ export const Landingpage = (
       element={
         <Layout>
           <DepartmentsDetails />
+        </Layout>
+      }
+    />
+    <Route
+      path="/resources"
+      element={
+        <Layout>
+          <Resources />
         </Layout>
       }
     />

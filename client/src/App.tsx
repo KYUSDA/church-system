@@ -2,10 +2,10 @@ import React from "react";
 import Navbar from "./LandingPage/Navbar/Navbar";
 import About from "./LandingPage/About";
 import Leaders from "./LandingPage/Leaders";
-import Announcement from "./LandingPage/Announcements/Announcement";
 import MainFooter from "./LandingPage/Footer/MainFooter";
 import Banner from "./LandingPage/Banner";
 import Testimonial from "./LandingPage/Testimonials";
+import Posts from "./LandingPage/Posts";
 
 
 const App: React.FC = () => (
@@ -14,7 +14,7 @@ const App: React.FC = () => (
     <Banner />
     <About />
     <Leaders />
-    <Announcement />
+    <Posts />
     <Testimonial />
     <MainFooter />
   </div>

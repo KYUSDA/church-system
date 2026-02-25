@@ -33,10 +33,10 @@ export const getOne = catchAsyncErrors(
     const user = await authModel
       .findById(req.params.id)
       .select("-password")
-      .populate({
-        path: "profile",
-        model: "Profile",
-      });
+      // .populate({
+      //   path: "profile",
+      //   model: "Profile",
+      // });
 
     if (!user) {
       return next(new ErrorHandler("User not found", 404));

@@ -92,14 +92,23 @@ export interface EventsSection {
 }
 
 // resources
-interface Resource {
+export interface Resource {
+  _id?: string;
+  tag: string;
   image: string;
   title: string;
   description: string;
-  link: string;
+  link?: string;
+  file?:{
+    asset: {
+      url: string;
+    };
+  }
 }
 
 export interface ResourcesSection {
+  _id?: string;
+  tag: string;
   title: string;
   description: string;
   resources: Resource[];
