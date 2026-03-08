@@ -27,16 +27,17 @@ import AdminCalendar from "../Dashboard/Admin/components/calendar";
 import NewResource from "../Dashboard/Admin/Pages/resources/newResource";
 
 // Import Member Components
-import DashboardHome from "../Dashboard/user/ui/DashboardHome";
-import Settings from "../Dashboard/user/ui/Settings";
+import DashboardHome from "../Dashboard/user/pages/DashboardHome";
+import Settings from "../Dashboard/user/pages/Settings";
 import QuizzesPage from "../Dashboard/user/pages/defend/defendYourFaith";
 import QuizDetail from "../Dashboard/user/pages/defend/quizePage";
-import TriviaPage from "../Dashboard/user/pages/trivias/triviaPage";
-import TriviaProps from "../Dashboard/user/pages/trivias/triviasProp";
-import PrayerRequests from "../Dashboard/user/ui/prayerRequests";
-import EventCalendar from "../Dashboard/user/ui/calendarEvents";
-import ResourceCenter from "../Dashboard/user/ui/ResourceCenter";
+import PrayerRequests from "../Dashboard/user/pages/prayerRequests";
+import EventCalendar from "../Dashboard/user/pages/calendarEvents";
+import ResourceCenter from "../Dashboard/user/pages/ResourceCenter";
 import BibleApp from "../Dashboard/user/pages/bible";
+import InboxPage from "@/Dashboard/user/pages/Inbox";
+import Help from "@/Dashboard/user/pages/Help";
+import Tithes from "@/Dashboard/user/pages/Tithes";
 
 export const DashboardRoutes = (
   <>
@@ -344,46 +345,6 @@ export const DashboardRoutes = (
       }
     />
     <Route
-      path="/member/bibleTrivia"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaPage />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia/trivia/beginner"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaProps level={"easy"} />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia/trivia/intermediate"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaProps level={"medium"} />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia/trivia/advanced"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaProps level={"hard"} />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
       path="/member/submit-prayer-request"
       element={
         <MemberRoute>
@@ -399,6 +360,36 @@ export const DashboardRoutes = (
         <MemberRoute>
           <UnifiedDashboard>
             <EventCalendar />
+          </UnifiedDashboard>
+        </MemberRoute>
+      }
+    />
+    <Route
+      path="/member/inbox"
+      element={
+        <MemberRoute>
+          <UnifiedDashboard>
+            <InboxPage />
+          </UnifiedDashboard>
+        </MemberRoute>
+      }
+    />
+    <Route
+      path="/member/tithes-offerings"
+      element={
+        <MemberRoute>
+          <UnifiedDashboard>
+            <Tithes />
+          </UnifiedDashboard>
+        </MemberRoute>
+      }
+    />
+    <Route
+      path="/help"
+      element={
+        <MemberRoute>
+          <UnifiedDashboard>
+            <Help />
           </UnifiedDashboard>
         </MemberRoute>
       }

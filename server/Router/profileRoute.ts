@@ -8,12 +8,15 @@ import {
   sendBirthdayWishes,
     getUpcomingBirthdays,
   updateAvatar,
+  getProfile,
 } from "../Controlers/profileController";
+import requireAuth from "../middleware/authmiddleware";
 
 // Routes
-profileRouter.post("/create", createProfile);
-profileRouter.put("/update/:id", updateProfile);
-profileRouter.put("/update-avatar", updateAvatar);
+profileRouter.post("/create", requireAuth , createProfile);
+profileRouter.get("/me", requireAuth, getProfile);
+profileRouter.put("/update/:id", requireAuth, updateProfile);
+profileRouter.put("/update-avatar", requireAuth, updateAvatar);
 profileRouter.get("/upcoming-birthdays", getUpcomingBirthdays);
 
 // Export the function to start the cron job

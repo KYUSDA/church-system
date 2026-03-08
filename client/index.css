@@ -121,3 +121,20 @@ code {
   scrollbar-width: thin;
   scrollbar-color: rgba(100, 116, 139, 0.4) transparent;
 }
+
+
+.event-day {
+  position: relative;
+}
+
+.event-day::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 0%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: rgb(172, 125, 6);
+}

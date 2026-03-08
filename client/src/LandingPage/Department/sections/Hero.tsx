@@ -1,18 +1,17 @@
 import { urlFor } from "@/utils/client";
 import { Link } from "react-router-dom";
 import { HeroSection } from "./department";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface HeroProps {
   data: HeroSection;
 }
 
 function Hero({ data }: HeroProps) {
-  if (!data) {
-    return null;
-  }
+  if (!data) return null;
+
   const { title, description, image, buttons } = data;
 
-  // Helper function to get button styles based on style type
   const getButtonClasses = (style?: string) => {
     const baseClasses =
       "px-8 py-3.5 rounded-full font-semibold transition-all duration-300 text-center inline-block text-base md:text-lg";
@@ -26,7 +25,6 @@ function Hero({ data }: HeroProps) {
     }
   };
 
-  // Split title by lines if it contains "and"
   const renderTitle = () => {
     if (title.includes(" and ") && !title.includes("\n")) {
       const parts = title.split(" and ");
@@ -43,21 +41,21 @@ function Hero({ data }: HeroProps) {
 
   return (
     <section className="relative overflow-hidden min-h-[600px] md:min-h-[700px] flex items-center justify-center">
-      {/* Background Image with Overlay */}
+      {/* Lazy-loaded background image */}
       {image && (
         <>
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${urlFor(image).width(1920).quality(80).url()})`,
-            }}
+          <img
+            src={urlFor(image).width(1920).quality(80).url()}
+            alt={title || "Hero background"}
+            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+            loading="eager"
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/60 z-10" />
         </>
       )}
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 md:py-24 text-center">
+      <div className="relative z-20 container mx-auto px-4 py-16 md:py-24 text-center">
         <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold text-white leading-tight mb-6 md:mb-8 uppercase tracking-wide">
           {renderTitle()}
         </h1>
@@ -66,7 +64,6 @@ function Hero({ data }: HeroProps) {
           {description}
         </p>
 
-        {/* Buttons */}
         {buttons && buttons.length > 0 && (
           <div className="flex flex-wrap gap-4 justify-center">
             {buttons.map((button, index) => (

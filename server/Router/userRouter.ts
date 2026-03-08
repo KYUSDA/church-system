@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getAll,
   getOne,
+  verseOfTheDay,
 } from "../Controlers/userControler";
 import requireAuth, { authorizeRoles } from "../middleware/authmiddleware";
 import { createIssue, getIssue, getIssues, updateIssue } from "../Controlers/issueController";
@@ -24,6 +25,7 @@ userRouter.patch("/update-issue/:id",updateIssue);
 /* Reading progress */
 userRouter.get("/progress", requireAuth, getReadingProgress);
 userRouter.post("/toggle", requireAuth, toggleChapter);
+userRouter.get("/votd", verseOfTheDay);
 
 /* Streak */
 userRouter.get("/streak", requireAuth, getUserStreak);

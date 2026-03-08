@@ -116,14 +116,14 @@ const DonationPage = () => {
     {
       name: "YouTube",
       icon: Youtube,
-      url: "https://youtube.com/@kyusda",
+      url: "http://www.youtube.com/@kyusdachurch",
       handle: "@kyusda",
       color: "text-red-600",
     },
     {
       name: "X (Twitter)",
       icon: FaXTwitter,
-      url: "https://x.com/kyusda",
+      url: "https://x.com/kyusdachurch?s=09",
       handle: "@kyusda",
       color: "text-slate-900",
     },
@@ -137,7 +137,16 @@ const DonationPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8f6f1]">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: `url('/back5.svg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
       {/* Programs Grid */}
       <section className="py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-8">

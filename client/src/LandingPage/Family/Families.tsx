@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { client } from "../../utils/client";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import FamilyFAQ from "../FamilyFaq";
@@ -20,6 +21,11 @@ function findUniqueById(dataArray: Family[]): Family[] {
   );
 }
 
+const fetchFamilies = async (): Promise<Family[]> => {
+  const data = await client.fetch('*[_type == "families"]');
+  return findUniqueById(data);
+};
+
 /* ─── Skeleton Card ─────────────────────────────────────────────────── */
 const SkeletonCard = () => (
   <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
@@ -39,24 +45,20 @@ const SkeletonCard = () => (
 
 /* ─── Main Component ─────────────────────────────────────────────────── */
 const Families = () => {
-  const [families, setFamilies] = useState<Family[]>([]);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("All");
-  const [allTags, setAllTags] = useState<string[]>([]);
 
-  useEffect(() => {
-    const query = '*[_type == "families"]';
-    client.fetch(query).then((data: Family[]) => {
-      const unique = findUniqueById(data);
-      setFamilies(unique);
-      const tags = Array.from(new Set(unique.flatMap((f) => f.tags))).slice(
-        0,
-        6,
-      );
-      setAllTags(["All", ...tags]);
-      setLoading(false);
-    });
-  }, []);
+  const { data: families = [], isLoading } = useQuery({
+    queryKey: ["families"],
+    queryFn: fetchFamilies,
+  });
+
+  const allTags = useMemo(() => {
+    const tags = Array.from(new Set(families.flatMap((f) => f.tags))).slice(
+      0,
+      6,
+    );
+    return ["All", ...tags];
+  }, [families]);
 
   const filtered =
     filter === "All"
@@ -64,12 +66,18 @@ const Families = () => {
       : families.filter((f) => f.tags.includes(filter));
 
   return (
-    <div className="min-h-screen bg-[#f8f6f1]">
-      {/* ── Page Section ── */}
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: `url('/back5.svg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
       <div className="py-16 sm:py-20 lg:py-24">
-        {/* ── Header ── */}
         <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
-          {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-5">
             <span className="block w-7 h-0.5 bg-blue-600 rounded-full" />
             <span className="text-[11px] font-semibold tracking-[0.12em] uppercase text-blue-600">
@@ -77,21 +85,17 @@ const Families = () => {
             </span>
           </div>
 
-          {/* Headline */}
           <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] tracking-tight text-slate-900 mb-4">
             Meet our <em className="italic text-blue-600">Families</em>
           </h2>
 
-          {/* Subheading */}
           <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-lg">
             Every family has a story worth sharing. Discover the people and
             communities that make us who we are.
           </p>
 
-          {/* Divider + Filters + Count */}
-          {!loading && (
+          {!isLoading && (
             <div className="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-stone-200">
-              {/* Filter Pills */}
               {allTags.length > 1 && (
                 <div className="flex flex-wrap gap-2">
                   {allTags.map((tag) => (
@@ -111,8 +115,6 @@ const Families = () => {
                   ))}
                 </div>
               )}
-
-              {/* Result Count */}
               <span className="text-sm text-slate-400 ml-auto">
                 {filtered.length}{" "}
                 {filtered.length !== 1 ? "families" : "family"}
@@ -121,22 +123,18 @@ const Families = () => {
           )}
         </div>
 
-        {/* ── Card Grid ── */}
         <div className="max-w-[1300px] mx-auto px-4 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Skeleton Loading State */}
-            {loading &&
+            {isLoading &&
               Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
 
-            {/* Populated Cards */}
-            {!loading &&
+            {!isLoading &&
               filtered.length > 0 &&
               filtered.map((family, i) => (
                 <FamilyCard key={family._id} family={family} index={i} />
               ))}
 
-            {/* Empty State */}
-            {!loading && filtered.length === 0 && (
+            {!isLoading && filtered.length === 0 && (
               <div className="col-span-full flex flex-col items-center justify-center py-24 text-slate-400">
                 <svg
                   className="mb-5 opacity-30"
@@ -169,7 +167,6 @@ const Families = () => {
         </div>
       </div>
 
-      {/* ── FAQ Section ── */}
       <FamilyFAQ />
     </div>
   );

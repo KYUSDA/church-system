@@ -1,19 +1,5 @@
 import { useState } from "react";
-import {
-  User,
-  Lock,
-  Bell,
-  AlertTriangle,
-  Camera,
-  Save,
-  Eye,
-  EyeOff,
-  Mail,
-  MailOpen,
-  Bug,
-  Lightbulb,
-  Palette,
-} from "lucide-react";
+import { User, Lock, Camera, Save, Eye, EyeOff } from "lucide-react";
 import { getBaseUrl, getAuthHeaders } from "@/services/base_query";
 import useUserData from "../../../session/authData";
 import { toast } from "sonner";
@@ -27,24 +13,51 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Switch } from "@/components/ui/switch";
-import {
-  useGetAllNotificationsQuery,
-  useReportIssueMutation,
-} from "../../../services/authService";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
-interface Notification {
-  id: string;
-  title: string;
-  description: string;
-  isRead: boolean;
-  createdAt: string;
+interface TProfile {
+  userId?: string;
+  birthday: Date;
+  baptized: boolean;
+  family?: string;
+  department?: string;
 }
+
+const families = [
+  "Upper Kutus",
+  "Around School A",
+  "Around School B",
+  "Waterfall",
+  "Garden Estate",
+  "Diaspora A",
+  "Diaspora B",
+  "Ngomongo",
+  "Kibugi",
+  "Kanjata",
+  "Elegant",
+  "ACK",
+  "Mjini",
+];
+
+const departments = [
+  "Stewardship",
+  "Welfare",
+  "MasterGuide",
+  "VOP",
+  "Welfare",
+  "Publishing",
+  "Health",
+  "Chaplaincy",
+  "NRR",
+  "Music",
+  "Communication",
+  "Deaconary",
+  "Sabbath School",
+];
 
 const Settings = () => {
   const { userData, user, setUserData, refetchUser } = useUserData();
@@ -57,21 +70,56 @@ const Settings = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Notification states
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [pushNotifications, setPushNotifications] = useState(true);
-
-  // Issue reporting states
-  const [issueType, setIssueType] = useState<"bug" | "feature" | "ui">("bug");
-  const [issueTitle, setIssueTitle] = useState("");
-  const [issueDescription, setIssueDescription] = useState("");
-
-  const [reportIssueMutation] = useReportIssueMutation();
-
-  // Notifications query
-  const { data: notificationsData } = useGetAllNotificationsQuery();
-
   const baseUrl = getBaseUrl();
+
+  const [formData, setFormData] = useState<TProfile>({
+      birthday: new Date(),
+      baptized: false,
+      family: "",
+      department: ""
+    });
+     const authState = useSelector((state: RootState) => state.auth);
+      const token = authState?.user?.data.tokens.accessToken;
+  
+    if (!open) return null;
+  
+    const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    ) => {
+      const { name, value, type } = e.target;
+  
+      setFormData((prev) => ({
+        ...prev,
+        [name]:
+          type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+      }));
+    };
+  
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
+  
+      try {
+        const res = await fetch(`${baseUrl}/profile/create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            ...formData,
+            birthday: new Date(formData.birthday),
+          }),
+        });
+  
+        if (!res.ok) throw new Error("Failed to create profile");
+      } catch (error) {
+        console.error(error);
+        toast("Failed to save profile");
+      } finally {
+        setLoading(false);
+      }
+    };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -170,50 +218,13 @@ const Settings = () => {
     }
   };
 
-  const handleReportIssue = async () => {
-    if (!issueTitle.trim() || !issueDescription.trim()) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-
-    try {
-      const res = await reportIssueMutation({
-        title: issueTitle,
-        description: issueDescription,
-      });
-
-      if (res) {
-        toast.success("Issue reported successfully! 🐛", {
-          description: "Our team will review it shortly.",
-        });
-        setIssueTitle("");
-        setIssueDescription("");
-        setIssueType("bug");
-      } else {
-        toast.error("Failed to report issue");
-      }
-    } catch (error) {
-      toast.error("Failed to report issue");
-    }
-  };
-
-  // Process notifications data
-  const notificationsArray: Notification[] = Array.isArray(
-    notificationsData?.notifications
-  )
-    ? notificationsData.notifications
-    : [];
-  const unreadNotifications = notificationsArray.filter(
-    (n) => !n.isRead
-  ).length;
-
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       {/* Header */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">
-          Manage your account settings, notifications, and preferences.
+          Manage your account settings, and preferences.
         </p>
       </div>
 
@@ -226,22 +237,6 @@ const Settings = () => {
           <TabsTrigger value="security" className="gap-2">
             <Lock className="h-4 w-4" />
             Security
-          </TabsTrigger>
-          <TabsTrigger value="notifications" className="gap-2">
-            <Bell className="h-4 w-4" />
-            Notifications
-            {unreadNotifications > 0 && (
-              <Badge
-                variant="destructive"
-                className="ml-1 h-5 w-5 rounded-full p-0 text-xs"
-              >
-                {unreadNotifications}
-              </Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="support" className="gap-2">
-            <AlertTriangle className="h-4 w-4" />
-            Support
           </TabsTrigger>
         </TabsList>
 
@@ -332,7 +327,49 @@ const Settings = () => {
                     className="bg-muted"
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="birthday">Birthday</Label>
+                  <Input
+                    id="birthday"
+                    type="date"
+                    required
+                    value={formData.birthday || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="family">Family</Label>
+                  <Input
+                    id="Family"
+                    value={formData.family || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="family">Department</Label>
+                  <Input
+                    id="department"
+                    value={formData.department || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    name="baptized"
+                    onChange={handleChange}
+                    className="h-5 w-5 text-blue-600"
+                  />
+                  <label className="text-sm font-medium">I am baptized</label>
+                </div>
               </div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition disabled:opacity-60"
+              >
+                {loading ? "Saving..." : "Save Profile"}
+              </button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -447,227 +484,6 @@ const Settings = () => {
                   </>
                 )}
               </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Notifications Tab */}
-        <TabsContent value="notifications" className="space-y-6">
-          <div className="grid gap-6">
-            {/* Notification Preferences */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bell className="h-5 w-5" />
-                  Notification Preferences
-                </CardTitle>
-                <CardDescription>
-                  Configure how you want to receive notifications.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <Label>Email Notifications</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Receive notifications via email
-                    </p>
-                  </div>
-                  <Switch
-                    checked={emailNotifications}
-                    onCheckedChange={setEmailNotifications}
-                  />
-                </div>
-                <Separator />
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <Label>Push Notifications</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Receive push notifications in your browser
-                    </p>
-                  </div>
-                  <Switch
-                    checked={pushNotifications}
-                    onCheckedChange={setPushNotifications}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Recent Notifications */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Mail className="h-5 w-5" />
-                  Recent Notifications
-                  {unreadNotifications > 0 && (
-                    <Badge variant="secondary">
-                      {unreadNotifications} unread
-                    </Badge>
-                  )}
-                </CardTitle>
-                <CardDescription>
-                  Your latest notifications and updates.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {notificationsArray.length > 0 ? (
-                    notificationsArray.slice(0, 5).map((notification) => (
-                      <div
-                        key={notification.id}
-                        className="flex items-start space-x-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="mt-1">
-                          {notification.isRead ? (
-                            <MailOpen className="h-4 w-4 text-muted-foreground" />
-                          ) : (
-                            <Mail className="h-4 w-4 text-primary" />
-                          )}
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <p className="text-sm font-medium">
-                            {notification.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground line-clamp-2">
-                            {notification.description}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(
-                              notification.createdAt
-                            ).toLocaleDateString()}
-                          </p>
-                        </div>
-                        {!notification.isRead && (
-                          <Badge
-                            variant="secondary"
-                            className="h-2 w-2 rounded-full p-0"
-                          />
-                        )}
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-6">
-                      <Mail className="h-12 w-12 mx-auto text-muted-foreground opacity-50" />
-                      <p className="text-muted-foreground mt-2">
-                        No notifications yet
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Support Tab */}
-        <TabsContent value="support" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5" />
-                Report an Issue
-              </CardTitle>
-              <CardDescription>
-                Found a bug or have a suggestion? Let us know!
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Issue Type */}
-              <div className="grid grid-cols-3 gap-2">
-                <Button
-                  variant={issueType === "bug" ? "default" : "outline"}
-                  onClick={() => setIssueType("bug")}
-                  className="gap-2"
-                >
-                  <Bug className="h-4 w-4" />
-                  Bug
-                </Button>
-                <Button
-                  variant={issueType === "feature" ? "default" : "outline"}
-                  onClick={() => setIssueType("feature")}
-                  className="gap-2"
-                >
-                  <Lightbulb className="h-4 w-4" />
-                  Feature
-                </Button>
-                <Button
-                  variant={issueType === "ui" ? "default" : "outline"}
-                  onClick={() => setIssueType("ui")}
-                  className="gap-2"
-                >
-                  <Palette className="h-4 w-4" />
-                  UI/UX
-                </Button>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="issueTitle">Issue Title</Label>
-                <Input
-                  id="issueTitle"
-                  value={issueTitle}
-                  onChange={(e) => setIssueTitle(e.target.value)}
-                  placeholder="Brief description of the issue"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="issueDescription">Description</Label>
-                <Textarea
-                  id="issueDescription"
-                  value={issueDescription}
-                  onChange={(e) => setIssueDescription(e.target.value)}
-                  placeholder="Provide detailed information about the issue..."
-                  className="min-h-[100px]"
-                />
-              </div>
-
-              <Button
-                onClick={handleReportIssue}
-                disabled={!issueTitle.trim() || !issueDescription.trim()}
-                className="w-full gap-2"
-              >
-                <AlertTriangle className="h-4 w-4" />
-                Submit Report
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Help Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Need Help?</CardTitle>
-              <CardDescription>
-                Common issues and helpful resources.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="grid gap-2">
-                <p className="text-sm font-medium">Common Issue Types:</p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Bug className="h-4 w-4 text-red-500" />
-                    <span>
-                      <strong>Bugs:</strong> Technical issues, crashes, or
-                      unexpected behavior
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Lightbulb className="h-4 w-4 text-yellow-500" />
-                    <span>
-                      <strong>Features:</strong> Missing functionality or
-                      enhancement requests
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Palette className="h-4 w-4 text-blue-500" />
-                    <span>
-                      <strong>UI/UX:</strong> Design improvements or usability
-                      issues
-                    </span>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>

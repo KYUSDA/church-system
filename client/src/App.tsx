@@ -6,6 +6,7 @@ import MainFooter from "./LandingPage/Footer/MainFooter";
 import Banner from "./LandingPage/Banner";
 import Testimonial from "./LandingPage/Testimonials";
 import Posts from "./LandingPage/Posts";
+import DonationsCTA from "./LandingPage/DonationCta";
 
 
 const App: React.FC = () => (
@@ -16,6 +17,7 @@ const App: React.FC = () => (
     <Leaders />
     <Posts />
     <Testimonial />
+    <DonationsCTA />
     <MainFooter />
   </div>
 );

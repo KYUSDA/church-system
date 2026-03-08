@@ -1,9 +1,9 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import React from "react";
-import { AppSidebar } from "./Sidebar";
 import Topbar from "./TopBar";
 import useUserData from "@/session/authData";
 import { Role } from "@/utils/roles-nav";
+import { AppSidebar } from "./Sidebar";
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useUserData();

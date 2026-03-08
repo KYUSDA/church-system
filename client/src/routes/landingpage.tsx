@@ -8,7 +8,8 @@ import Layout from "../LandingPage/Footer/Layout";
 import DonationPage from "../LandingPage/donation";
 import SingleFamily from "../LandingPage/Family/FamiliyDetails";
 import Memories from "@/LandingPage/Memories";
-import Resources from "@/LandingPage/Resources";
+import Resources from "@/LandingPage/Resources/Resources";
+import Magazine from "@/LandingPage/Magazine";
 
 export const Landingpage = (
   <>
@@ -51,6 +52,14 @@ export const Landingpage = (
       element={
         <Layout>
           <Resources />
+        </Layout>
+      }
+    />
+    <Route
+      path="/kyusda-magazine"
+      element={
+        <Layout>
+          <Magazine />
         </Layout>
       }
     />

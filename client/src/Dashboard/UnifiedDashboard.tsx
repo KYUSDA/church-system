@@ -5,16 +5,16 @@ import { TUser } from "../session/authData";
 import { Role } from "../utils/roles-nav";
 import Layout from "./Layout";
 import AdminDashboard from "./Admin/components/dash";
-import DashboardHome from "./user/ui/DashboardHome";
+import DashboardHome from "./user/pages/DashboardHome";
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const UnifiedDashboard: React.FC<Props> = ({ children }) => {
- const authState = useSelector((state: RootState) => state.auth.user);
- const user = authState?.data.user;
- const userId = user?.userId;
+  const authState = useSelector((state: RootState) => state.auth.user);
+  const user = authState?.data.user;
+  const userId = user?.userId;
 
   if (!user?.role) {
     return <Layout>Unauthorized</Layout>;

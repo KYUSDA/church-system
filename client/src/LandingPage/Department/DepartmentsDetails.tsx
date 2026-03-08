@@ -7,7 +7,7 @@ import About from "./sections/About";
 import Activities from "./sections/Acitivities";
 import Leaders from "./sections/Leaders";
 import Videos from "./sections/Videos";
-import Products from "./sections/Products";
+// import Products from "./sections/Products";
 import Images from "./sections/Images";
 import Events from "./sections/Events";
 import Resources from "./sections/Resources";
@@ -62,8 +62,8 @@ const DepartmentsDetails = () => {
             return <Leaders key={section._key || index} data={section} />;
           case "videosSection":
             return <Videos key={section._key || index} data={section} />;
-          case "productsSection":
-            return <Products key={section._key || index} data={section} />;
+          // case "productsSection":
+          //   return <Products key={section._key || index} data={section} />;
           case "imagesSection":
             return <Images key={section._key || index} data={section} />;
           case "eventsSection":

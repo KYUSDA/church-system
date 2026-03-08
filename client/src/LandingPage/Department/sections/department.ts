@@ -101,7 +101,7 @@ export interface Resource {
   link?: string;
   file?:{
     asset: {
-      url: string;
+      _ref: string;
     };
   }
 }

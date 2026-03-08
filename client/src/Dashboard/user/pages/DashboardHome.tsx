@@ -1,40 +1,18 @@
-import React, { useEffect, useState } from "react";
-import BirthdayCard from "./birthdayCard";
-import PersonalGoals from "./PersonalGoals";
+import React, { useEffect } from "react";
+import BirthdayCard from "../components/birthdayCard";
+import PersonalGoals from "../components/PersonalGoals";
 import useUserData from "../../../session/authData";
-import LeaderboardSection from "./leaderBoard";
-import ProfileStats from "./profileStats";
-import BirthdayModal from "../../../Auth/birthday";
-import CalendarSection from "./upcomingEvents";
+import ProfileStats from "../components/profileStats";
+import CalendarSection from "../components/upcomingEvents";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 
 const DashboardHome: React.FC = () => {
   const { userData, user, loading } = useUserData();
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (!user || !userData) return;
-
-    const hasSeenBirthdayModal = localStorage.getItem("birthdayModalSeen");
-
-    // ✅ Check if birthday is null, undefined, or an invalid date
-    const isBirthdayValid =
-      userData.birthday && !isNaN(new Date(userData.birthday).getTime());
-
-    if (!isBirthdayValid) {
-      if (!hasSeenBirthdayModal || hasSeenBirthdayModal === "false") {
-        setShowModal(true);
-      }
-    } else {
-      localStorage.setItem("birthdayModalSeen", "true"); // Prevent future pop-ups
-    }
   }, [userData, user]);
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    localStorage.setItem("birthdayModalSeen", "true");
-  };
 
   // Show loading state while user data is being fetched
   if (loading || !userData) {
@@ -99,8 +77,6 @@ const DashboardHome: React.FC = () => {
 
   return (
     <div className="px-4">
-      <BirthdayModal isOpen={showModal} onClose={handleCloseModal} />
-
       <div className="w-full">
         <ProfileStats user={userData} />
 
@@ -112,7 +88,6 @@ const DashboardHome: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <PersonalGoals />
-          <LeaderboardSection />
         </div>
       </div>
     </div>

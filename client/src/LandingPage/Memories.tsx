@@ -3,6 +3,7 @@ import { client } from "@/utils/client";
 import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useQuery } from "@tanstack/react-query";
 
 interface Image {
   imageurl: string;
@@ -21,35 +22,98 @@ const SkeletonCard = () => (
   />
 );
 
+/* Helper function to determine image orientation */
+const getImageOrientation = (
+  url: string,
+): Promise<"portrait" | "landscape" | "square"> => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      if (img.width > img.height) {
+        resolve("landscape");
+      } else if (img.height > img.width) {
+        resolve("portrait");
+      } else {
+        resolve("square");
+      }
+    };
+    img.onerror = () => resolve("square"); // Default to square on error
+    img.src = url;
+  });
+};
+
+/* Image Component with dynamic orientation */
+const DynamicImage = ({
+  image,
+  onClick,
+  className = "",
+  style = {},
+}: {
+  image: Image;
+  onClick: () => void;
+  className?: string;
+  style?: React.CSSProperties;
+}) => {
+  const [orientation, setOrientation] = useState<
+    "portrait" | "landscape" | "square"
+  >("square");
+
+  useEffect(() => {
+    getImageOrientation(image.imageurl).then(setOrientation);
+  }, [image.imageurl]);
+
+  const getAspectRatio = () => {
+    switch (orientation) {
+      case "portrait":
+        return "3/4";
+      case "landscape":
+        return "4/3";
+      default:
+        return "1/1";
+    }
+  };
+
+  return (
+    <div className={`cursor-pointer group ${className}`} onClick={onClick}>
+      <div className="relative overflow-hidden rounded-3xl h-full w-full">
+        <LazyLoadImage
+          src={image.imageurl}
+          alt={image.altText}
+          effect="blur"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          style={{
+            aspectRatio: getAspectRatio(),
+            ...style,
+          }}
+        />
+        <div className="absolute inset-0 bg-black opacity-0" />
+      </div>
+    </div>
+  );
+};
+
+const fetchGallery = async (): Promise<GalleryData> => {
+  const data = await client.fetch(`*[_type == "gallery"]{
+    images[]{
+      "imageurl": imageurl.asset->url,
+      altText
+    }
+  }`);
+  return data[0];
+};
+
 function Memories() {
-  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [slideNumber, setSlideNumber] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const imagesPerPage = 15;
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const query = `*[_type == "gallery"]{
-      images[]{
-        "imageurl": imageurl.asset->url,
-        altText
-      }
-    }`;
+ const { data: galleryData = null, isLoading } = useQuery({
+   queryKey: ["gallery"],
+   queryFn: fetchGallery,
+ });
 
-    client
-      .fetch(query)
-      .then((data) => {
-        setGalleryData(data[0]);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching gallery data:", error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <section className="bg-gray-50 py-16 px-6">
         <div className="max-w-7xl mx-auto">
@@ -135,94 +199,51 @@ function Memories() {
   const renderImageGrid = () => {
     return (
       <div className="space-y-4 mb-8">
-        {/* First Row: Large portrait + 6 mixed sizes */}
+        {/* First Row: Large portrait area + 6 images in 3 columns */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* Large Portrait Image */}
+          {/* Large Portrait Area - first image takes full height */}
           {currentImages[0] && (
-            <div
-              className="md:row-span-2 cursor-pointer group"
+            <DynamicImage
+              image={currentImages[0]}
               onClick={() => handleOpenModal(0)}
-            >
-              <div className="relative overflow-hidden rounded-3xl h-full">
-                <LazyLoadImage
-                  src={currentImages[0].imageurl}
-                  alt={currentImages[0].altText}
-                  effect="blur"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  style={{ minHeight: "500px", maxHeight: "600px" }}
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity" />
-              </div>
-            </div>
+              className="md:row-span-2"
+            />
           )}
 
-          {/* Top Right Section - 3 columns */}
+          {/* Top Right Section - 3 columns with 2 rows */}
           <div className="md:col-span-3 grid grid-cols-3 gap-4">
             {currentImages.slice(1, 7).map((image, idx) => (
-              <div
+              <DynamicImage
                 key={idx}
-                className="cursor-pointer group"
+                image={image}
                 onClick={() => handleOpenModal(idx + 1)}
-              >
-                <div className="relative overflow-hidden rounded-3xl h-full">
-                  <LazyLoadImage
-                    src={image.imageurl}
-                    alt={image.altText}
-                    effect="blur"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    style={{
-                      aspectRatio:
-                        idx === 0 ? "16/10" : idx === 1 ? "1/1" : "3/4",
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity" />
-                </div>
-              </div>
+                className="h-full"
+              />
             ))}
           </div>
         </div>
 
-        {/* Second Row: 3 wide landscape images */}
+        {/* Second Row: 3 images in landscape-friendly container */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {currentImages.slice(7, 10).map((image, idx) => (
-            <div
+            <DynamicImage
               key={idx}
-              className="cursor-pointer group"
+              image={image}
               onClick={() => handleOpenModal(idx + 7)}
-            >
-              <div className="relative overflow-hidden rounded-3xl h-full">
-                <LazyLoadImage
-                  src={image.imageurl}
-                  alt={image.altText}
-                  effect="blur"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  style={{ aspectRatio: "16/9" }}
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity" />
-              </div>
-            </div>
+              className="h-full"
+            />
           ))}
         </div>
 
-        {/* Third Row: 5 mixed images */}
+        {/* Third Row: 5 images in flexible grid */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {currentImages.slice(10, 15).map((image, idx) => (
-            <div
+            <DynamicImage
               key={idx}
-              className="cursor-pointer group"
+              image={image}
               onClick={() => handleOpenModal(idx + 10)}
-            >
-              <div className="relative overflow-hidden rounded-3xl h-full">
-                <LazyLoadImage
-                  src={image.imageurl}
-                  alt={image.altText}
-                  effect="blur"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  style={{ aspectRatio: idx % 2 === 0 ? "1/1" : "3/4" }}
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity" />
-              </div>
-            </div>
+              className="h-full"
+            />
           ))}
         </div>
       </div>
@@ -236,7 +257,7 @@ function Memories() {
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-90 z-50 p-4">
           <button
             onClick={handleCloseModal}
-            className="absolute top-5 right-5 text-white hover:text-gray-300 transition-colors"
+            className="absolute top-5 right-5 text-white hover:text-gray-300 transition-colors z-10"
             aria-label="Close modal"
           >
             <X className="h-8 w-8" />
@@ -244,7 +265,7 @@ function Memories() {
 
           <button
             onClick={prevSlide}
-            className="absolute left-5 text-white hover:text-gray-300 transition-colors"
+            className="absolute left-5 text-white hover:text-gray-300 transition-colors z-10"
             aria-label="Previous image"
           >
             <ChevronLeft className="h-10 w-10" />
@@ -252,18 +273,18 @@ function Memories() {
 
           <button
             onClick={nextSlide}
-            className="absolute right-5 text-white hover:text-gray-300 transition-colors"
+            className="absolute right-5 text-white hover:text-gray-300 transition-colors z-10"
             aria-label="Next image"
           >
             <ChevronRight className="h-10 w-10" />
           </button>
 
-          <div className="max-w-4xl max-h-[80vh] flex justify-center items-center">
+          <div className="max-w-6xl max-h-[85vh] w-full flex justify-center items-center">
             <LazyLoadImage
               src={allImages[slideNumber].imageurl}
               alt={allImages[slideNumber].altText}
               effect="blur"
-              className="object-contain w-full h-full"
+              className="object-contain max-w-full max-h-[85vh] w-auto h-auto"
             />
           </div>
 
@@ -275,40 +296,63 @@ function Memories() {
       )}
 
       {/* Main Section */}
-      <section className="bg-gray-50 py-16 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section
+        className="py-16 px-6 relative"
+        style={{
+          backgroundImage: `url('/back5.svg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        {/* Optional overlay for better readability */}
+        <div className="absolute inset-0 bg-white/50" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
           {/* Header */}
-          <div className="text-center space-y-3 mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-              Memories
+          <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
+            {/* Eyebrow */}
+            <div className="flex items-center gap-3 mb-5">
+              <span className="block w-7 h-0.5 bg-blue-600 rounded-full" />
+              <span className="text-[11px] font-semibold tracking-[0.12em] uppercase text-blue-600">
+                Gallery
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] tracking-tight text-slate-900 mb-4">
+              Explore our <em className="italic text-blue-600">Gallery</em>
             </h2>
-            <p className="text-gray-500 text-sm max-w-2xl mx-auto leading-relaxed">
-              Cherish the moments we've shared together as a community
+
+            {/* Subheading */}
+            <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-lg">
+              Memories - Cherish the moments we've shared together as a
+              community
             </p>
           </div>
 
-          {/* Masonry Grid Layout */}
+          {/* Dynamic Masonry Grid Layout */}
           {renderImageGrid()}
-
           {/* Navigation Arrows */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-6 pt-4">
               <button
                 onClick={handlePrevious}
-                className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+                className="p-3 rounded-full hover:bg-black/5 transition-colors"
                 aria-label="Previous page"
               >
-                <ChevronLeft className="h-5 w-5 text-gray-600" />
+                <ChevronLeft className="h-5 w-5 text-gray-700" />
               </button>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-700 font-medium">
                 {currentPage + 1} / {totalPages}
               </span>
               <button
                 onClick={handleNext}
-                className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+                className="p-3 rounded-full hover:bg-black/5 transition-colors"
                 aria-label="Next page"
               >
-                <ChevronRight className="h-5 w-5 text-gray-600" />
+                <ChevronRight className="h-5 w-5 text-gray-700" />
               </button>
             </div>
           )}

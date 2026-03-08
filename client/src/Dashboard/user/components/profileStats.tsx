@@ -13,7 +13,10 @@ import {
 
 const ProfileStats = ({ user }: { user: TUser }) => {
   const [badges, setBadges] = useState(0);
-  const [yearsActive, setYearsActive] = useState(0);
+  const [yearsActive, setYearsActive] = useState<{
+    years: number;
+    days: number;
+  } | null>(null);
 
   useEffect(() => {
     // Calculate badges based on scores (1 badge for every 100 points)
@@ -24,8 +27,20 @@ const ProfileStats = ({ user }: { user: TUser }) => {
 
     // Calculate years since registration
     if (user?.createdAt) {
-      const years = dayjs().diff(dayjs(user.createdAt), "year");
-      setYearsActive(years);
+      const created = dayjs(user.createdAt);
+      const now = dayjs();
+
+      const totalDays = now.diff(created, "day");
+      const years = now.diff(created, "year");
+
+      if (years < 1) {
+        setYearsActive({ years: 0, days: totalDays });
+      } else {
+        const afterYears = created.add(years, "year");
+        const remainingDays = now.diff(afterYears, "day");
+
+        setYearsActive({ years, days: remainingDays });
+      }
     }
   }, [user]);
 
@@ -102,21 +117,30 @@ const ProfileStats = ({ user }: { user: TUser }) => {
         <Card className="hover:shadow-lg transition-shadow duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Years Active
+              Days/Years Active
             </CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold mb-2">
-              {yearsActive} {yearsActive === 1 ? "year" : "years"}
+              {yearsActive
+                ? yearsActive.years < 1
+                  ? `Active ${yearsActive.days} day${yearsActive.days !== 1 ? "s" : ""}`
+                  : `Active ${yearsActive.years} year${yearsActive.years !== 1 ? "s" : ""}${
+                      yearsActive.days > 0
+                        ? ` ${yearsActive.days} day${yearsActive.days !== 1 ? "s" : ""}`
+                        : ""
+                    }`
+                : "Active 0 days"}
             </div>
+
             <div className="flex items-center gap-2">
-              {yearsActive >= 1 && (
+              {yearsActive && yearsActive.years >= 1 && (
                 <Badge
-                  variant={yearsActive >= 5 ? "default" : "secondary"}
+                  variant={yearsActive.years >= 5 ? "default" : "secondary"}
                   className="text-xs"
                 >
-                  {yearsActive >= 5 ? "Veteran Member" : "Active Member"}
+                  {yearsActive.years >= 5 ? "Veteran Member" : "Active Member"}
                 </Badge>
               )}
             </div>

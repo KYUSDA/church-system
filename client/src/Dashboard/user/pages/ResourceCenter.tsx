@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { client } from "../utils/client";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import ResourceCard from "./ResourceCard";
-import { Resource } from "./Department/sections/department";
+import ResourceCard from "@/LandingPage/Resources/ResourceCard";
+import { Resource } from "@/LandingPage/Department/sections/department";
+import { client } from "@/utils/client";
 
 function findUniqueBytitle(dataArray: Resource[]): Resource[] {
   return dataArray.filter(
@@ -12,20 +12,85 @@ function findUniqueBytitle(dataArray: Resource[]): Resource[] {
 }
 
 /* Skeleton Card */
-const SkeletonCard = () => (
-  <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-    <div className="w-full h-52 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 animate-pulse" />
-    <div className="p-6 flex flex-col gap-3">
-      <div className="h-5 w-2/3 rounded-full bg-stone-200 animate-pulse" />
+const SkeletonCard = ({ key }: { key: number }) => (
+  <div
+    className="group flex flex-col overflow-hidden w-full sm:w-1/2 md:w-1/3 lg:w-1/4 cursor-pointer"
+    style={{ animationDelay: `${key * 80}ms` }}
+  >
+    {/* Image Placeholder */}
+    <div className="relative w-full aspect-[3/4] overflow-hidden">
+      <div className="w-full h-full bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 animate-pulse transition-transform duration-700 ease-out group-hover:scale-105" />
+    </div>
+
+    {/* Title Placeholder */}
+    <div className="px-4 py-3 text-center flex flex-col gap-2">
+      <div className="h-5 w-2/3 mx-auto rounded-full bg-stone-200 animate-pulse" />
       <div className="h-3 w-full rounded-full bg-stone-100 animate-pulse" />
       <div className="h-3 w-full rounded-full bg-stone-100 animate-pulse" />
-      <div className="h-3 w-1/2 rounded-full bg-stone-100 animate-pulse" />
-      <div className="flex gap-2 mt-2">
-        <div className="h-5 w-14 rounded-full bg-blue-100 animate-pulse" />
-      </div>
+      <div className="h-3 w-1/2 mx-auto rounded-full bg-stone-100 animate-pulse" />
     </div>
   </div>
 );
+
+/* Pagination Component */
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}) => {
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex justify-center items-center gap-2 mt-12">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+          ${
+            currentPage === 1
+              ? "bg-stone-100 text-stone-400 cursor-not-allowed"
+              : "bg-white border border-stone-300 text-slate-600 hover:border-blue-500 hover:text-blue-600 hover:shadow-sm"
+          }`}
+      >
+        Previous
+      </button>
+
+      <div className="flex gap-1">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => onPageChange(page)}
+            className={`w-10 h-10 rounded-lg text-sm font-medium transition-all duration-200
+              ${
+                currentPage === page
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "bg-white border border-stone-300 text-slate-600 hover:border-blue-500 hover:text-blue-600"
+              }`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+          ${
+            currentPage === totalPages
+              ? "bg-stone-100 text-stone-400 cursor-not-allowed"
+              : "bg-white border border-stone-300 text-slate-600 hover:border-blue-500 hover:text-blue-600 hover:shadow-sm"
+          }`}
+      >
+        Next
+      </button>
+    </div>
+  );
+};
 
 /* ─── Main Component ─────────────────────────────────────────────────── */
 const Resources = () => {
@@ -33,6 +98,8 @@ const Resources = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("All");
   const [allTags, setAllTags] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const CARDS_PER_PAGE = 9;
 
   useEffect(() => {
     const query = `
@@ -62,16 +129,35 @@ const Resources = () => {
       setAllTags(["All", ...tags]);
       setLoading(false);
     });
-
   }, []);
+
+  // Reset to first page when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
 
   const filtered =
     filter === "All" ? resources : resources.filter((r) => r.tag === filter);
 
+  // Pagination calculations
+  const totalPages = Math.ceil(filtered.length / CARDS_PER_PAGE);
+  const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
+  const endIndex = startIndex + CARDS_PER_PAGE;
+  const currentResources = filtered.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Smooth scroll to top of the grid
+    window.scrollTo({
+      top: document.getElementById("resources-grid")?.offsetTop || 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="min-h-screen py-16 sm:py-20 lg:py-24">
+    <div className="min-h-screen py-12 sm:py-20 lg:py-24">
       {/* ── Page Header ── */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
         {/* Eyebrow */}
         <div className="flex items-center gap-3 mb-5">
           <span className="block w-7 h-0.5 bg-blue-600 rounded-full" />
@@ -124,16 +210,19 @@ const Resources = () => {
       </div>
 
       {/* ── Card Grid ── */}
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        id="resources-grid"
+        className="max-w-[1300px] mx-auto px-4 sm:px-8 lg:px-12"
+      >
+        <div className="flex flex-wrap justify-center gap-6">
           {/* Skeleton Loading State */}
           {loading &&
             Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
 
           {/* Populated Cards */}
           {!loading &&
-            filtered.length > 0 &&
-            filtered.map((resource, i) => (
+            currentResources.length > 0 &&
+            currentResources.map((resource, i) => (
               <ResourceCard key={resource._id} resource={resource} index={i} />
             ))}
 
@@ -168,6 +257,15 @@ const Resources = () => {
             </div>
           )}
         </div>
+
+        {/* Pagination */}
+        {!loading && filtered.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

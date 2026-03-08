@@ -51,6 +51,9 @@ const Header = () => {
           <Link to="/resources" className="nav-link underline-transition">
             Resources
           </Link>
+          <Link to="/kyusda-magazine" className="nav-link underline-transition">
+            Magazine
+          </Link>
           <Link to="/church-gallery" className="nav-link underline-transition">
             Gallery
           </Link>

@@ -39,6 +39,7 @@ interface TActivate {
 }
 
 interface TIssue {
+  type: string;
   title: string;
   description: string;
 }
@@ -141,7 +142,7 @@ export const api = createApi({
     // get upcoming birthdays
     getBirthdays: builder.query<Upcoming, void>({
       query: () => ({
-        url: "/user/birthdays",
+        url: "/profile/upcoming-birthdays",
         method: "GET",
       }),
     }),

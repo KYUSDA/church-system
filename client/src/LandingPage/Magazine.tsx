@@ -1,0 +1,17 @@
+function Magazine() {
+  return (
+    <iframe
+      src="https://heyzine.com/flip-book/9e88631672.html?embed=true"
+      style={{
+        width: "100%",
+        height: "90vh",
+        border: "none",
+        overflow: "hidden",
+      }}
+      allowFullScreen
+      title="Magazine Flipbook"
+    ></iframe>
+  );
+}
+
+export default Magazine;
