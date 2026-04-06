@@ -1,4 +1,5 @@
 import { Blog } from "@/hooks/use-blogs";
+import { getBasePath } from "@/lib/getBasePath";
 import { Link } from "react-router-dom";
 
 // Portable Text → plain string
@@ -21,11 +22,12 @@ function getPlainText(blocks: any[]): string {
 
 export default function BlogCard({ blog }: { blog: Blog }) {
   const excerpt = getPlainText(blog.content ?? []).slice(0, 120);
+  const basePath = getBasePath();
 
   return (
     <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
       {/* IMAGE */}
-      <Link to={`/blogs/${blog.slug.current}`}>
+      <Link to={`${basePath}/${blog.slug.current}`}>
         <div className="overflow-hidden">
           <img
             src={blog.thumbnail}
@@ -58,7 +60,7 @@ export default function BlogCard({ blog }: { blog: Blog }) {
 
         {/* CTA */}
         <Link
-          to={`/blogs/${blog.slug.current}`}
+          to={`${basePath}/${blog.slug.current}`}
           className="
             mt-4 inline-flex items-center text-sm font-medium
             text-blue-600 hover:text-blue-800

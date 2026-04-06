@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useBlogs, useRelatedBlogs } from "@/hooks/use-blogs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getBasePath } from "@/lib/getBasePath";
 
 interface RelatedBlogsProps {
   categoryId: string;
@@ -26,6 +27,7 @@ export default function RelatedBlogs({
   excludeId,
 }: RelatedBlogsProps) {
   const { data: blogs, isLoading } = useBlogs();
+  const basePath = getBasePath();
 
   if (isLoading) {
     return (
@@ -47,7 +49,7 @@ export default function RelatedBlogs({
         {blogs.slice(0, 3).map((blog) => (
           <div key={blog._id} className="border-b pb-3 last:border-b-0">
             <Link
-              to={`/blogs/${blog.slug.current}`}
+              to={`${basePath}/${blog.slug.current}`}
               className="block hover:text-blue-400 transition"
             >
               <h4 className="font-semibold text-sm">

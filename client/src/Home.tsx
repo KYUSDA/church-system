@@ -5,6 +5,11 @@ import { Landingpage } from "./routes/landingpage";
 import { DashboardRoutes } from "./routes/dashboard";
 
 const Home = () => {
+  const hostname = window.location.hostname;
+
+ if (hostname.startsWith("blogs.") && window.location.pathname === "/") {
+   window.history.replaceState({}, "", "/blogs");
+ }
   return (
     <Routes>
       <Route path="/" element={<MainPage />}></Route>

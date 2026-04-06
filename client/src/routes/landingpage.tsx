@@ -93,6 +93,7 @@ export const Landingpage = (
     />
     <Route path="/blogs" element={<BlogsPage />} />
     <Route path="/blogs/:slug" element={<BlogDetail />} />
+    <Route path="/:slug" element={<BlogDetail />} />
     <Route
       path="/kirinyaga-adventist-privacy-policy"
       element={
