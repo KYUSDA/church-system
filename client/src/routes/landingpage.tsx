@@ -11,8 +11,6 @@ import Memories from "@/LandingPage/Memories";
 import Resources from "@/LandingPage/Resources/Resources";
 import Magazine from "@/LandingPage/Magazine";
 import About from "@/LandingPage/AboutPage";
-import BlogsPage from "@/blogs/blog";
-import BlogDetail from "@/blogs/blogDetail";
 
 export const Landingpage = (
   <>
@@ -91,9 +89,6 @@ export const Landingpage = (
         </Layout>
       }
     />
-    <Route path="/blogs" element={<BlogsPage />} />
-    <Route path="/blogs/:slug" element={<BlogDetail />} />
-    <Route path="/:slug" element={<BlogDetail />} />
     <Route
       path="/kirinyaga-adventist-privacy-policy"
       element={
