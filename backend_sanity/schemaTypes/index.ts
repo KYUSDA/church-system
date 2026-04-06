@@ -19,6 +19,7 @@ import { leadersSSection } from './sections/leaders'
 import { activitiesSection } from './sections/activities'
 import { themesSection, themeArticle } from './sections/text'
 import { gallery } from './gallery'
+import {blogs, author, category} from './blogs'
 
 
 export const schemaTypes = [
@@ -32,6 +33,9 @@ export const schemaTypes = [
   events,
   calendar,
   gallery,
+  blogs,
+  author,
+  category,
 
   // all section types
   heroSection,

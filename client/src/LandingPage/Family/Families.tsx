@@ -4,6 +4,7 @@ import { client } from "../../utils/client";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import FamilyFAQ from "../FamilyFaq";
 import FamilyCard from "./FamilyCard";
+import SEO from "@/components/SEO";
 
 export interface Family {
   _id: string;
@@ -76,6 +77,7 @@ const Families = () => {
         backgroundAttachment: "fixed",
       }}
     >
+      <SEO title="Our Families" description="Discover the stories and communities that make up our church family." />
       <div className="py-16 sm:py-20 lg:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
           <div className="flex items-center gap-3 mb-5">

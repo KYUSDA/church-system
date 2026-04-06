@@ -7,10 +7,12 @@ import Banner from "./LandingPage/Banner";
 import Testimonial from "./LandingPage/Testimonials";
 import Posts from "./LandingPage/Posts";
 import DonationsCTA from "./LandingPage/DonationCta";
+import SEO from "./components/SEO";
 
 
 const App: React.FC = () => (
   <div className="app">
+    <SEO title="Welcome to KYUSDA" description="Discover our mission, connect with our community, and explore our latest news and events." />
     <Navbar />
     <Banner />
     <About />

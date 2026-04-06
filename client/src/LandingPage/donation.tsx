@@ -13,6 +13,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
+import SEO from "@/components/SEO";
 
 interface Program {
   id: string;
@@ -147,6 +148,7 @@ const DonationPage = () => {
         backgroundAttachment: "fixed",
       }}
     >
+      <SEO title="Donate" description="Support our mission and programs through your generous donations." />
       {/* Programs Grid */}
       <section className="py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-8">

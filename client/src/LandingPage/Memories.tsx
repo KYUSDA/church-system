@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
 
 interface Image {
   imageurl: string;
@@ -306,6 +307,7 @@ function Memories() {
           backgroundAttachment: "fixed",
         }}
       >
+      <SEO title="Our Gallery" description="Memories - Cherish the moments we've shared together as a community" />
         {/* Optional overlay for better readability */}
         <div className="absolute inset-0 bg-white/50" />
 

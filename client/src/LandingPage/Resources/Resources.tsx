@@ -4,6 +4,7 @@ import { client } from "../../utils/client";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import ResourceCard from "./ResourceCard";
 import { Resource } from "../Department/sections/department";
+import SEO from "@/components/SEO";
 
 const CARDS_PER_PAGE = 9;
 
@@ -167,6 +168,7 @@ const Resources = () => {
         backgroundAttachment: "fixed",
       }}
     >
+    <SEO title="Our Resources" description="Access valuable materials, guides, and tools to support your spiritual growth and engagement with our community." />
       {/* ── Page Header ── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
         <div className="flex items-center gap-3 mb-5">

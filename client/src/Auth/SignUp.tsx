@@ -27,6 +27,7 @@ import { useContextFunc } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { getApiErrorMessage } from "../utils/Error-handler";
+import SEO from "@/components/SEO.js";
 
 const theme = createTheme();
 
@@ -96,6 +97,7 @@ const SignUp = () => {
 
   return (
     <AuthLayout>
+      <SEO title="Sign Up" description="Create a new account to access exclusive features." />
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

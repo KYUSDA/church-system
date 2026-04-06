@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { client } from "../../utils/client";
 import DeptCard from "./DeptCard";
 import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
 
 export interface Department {
   _id: string;
@@ -79,6 +80,7 @@ const Departments = () => {
         backgroundAttachment: "fixed",
       }}
     >
+    <SEO title="Our Departments" description="Discover the various departments that drive our church's mission and community engagement." />
       {/* ── Page Header ── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
         {/* Eyebrow */}

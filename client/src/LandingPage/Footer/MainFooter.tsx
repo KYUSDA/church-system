@@ -43,7 +43,7 @@ const MainFooter: React.FC = () => {
             <i className="ri-map-pin-2-fill"></i> Kirinyaga University, Kutus, Kirinyaga
           </p>
           <p><i className="ri-mail-fill"></i> kyusdachurch@gmail.com</p>
-          <p><i className="ri-phone-fill"></i>  (+254) 797 138885</p>
+          <p><i className="ri-phone-fill"></i>  (+254) 745 528 795</p>
         </div>
       </div>
       

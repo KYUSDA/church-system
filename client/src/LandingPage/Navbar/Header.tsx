@@ -42,6 +42,9 @@ const Header = () => {
           <Link to="/" className="nav-link underline-transition">
             Home
           </Link>
+          <Link to="/about" className="nav-link underline-transition">
+            About
+          </Link>
           <Link to="/families" className="nav-link underline-transition">
             Families
           </Link>
