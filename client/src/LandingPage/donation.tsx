@@ -49,7 +49,7 @@ const DonationPage = () => {
       date: "September",
       description:
         "Join us for our annual camp meeting - a week of spiritual renewal, fellowship, and worship. Experience powerful messages, inspiring music, and connect with believers from across the region.",
-      hashtag: "CAMPMEETING",
+      hashtag: "VIBANDA",
     },
     {
       id: "mission",

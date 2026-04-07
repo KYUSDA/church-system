@@ -1,10 +1,10 @@
-import { Route } from "react-router-dom";
+import { Outlet, Route } from "react-router-dom";
 import Families from "../LandingPage/Family/Families";
 import Departments from "../LandingPage/Department/Departments";
 import DepartmentsDetails from "../LandingPage/Department/DepartmentsDetails";
 import PrivacyPolicy from "../LandingPage/Policy";
 import Terms from "../LandingPage/Terms";
-import Layout from "../LandingPage/Footer/Layout";
+import Layout from "../LandingPage/Layout";
 import DonationPage from "../LandingPage/donation";
 import SingleFamily from "../LandingPage/Family/FamiliyDetails";
 import Memories from "@/LandingPage/Memories";
@@ -13,97 +13,32 @@ import Magazine from "@/LandingPage/Magazine";
 import About from "@/LandingPage/AboutPage";
 
 export const Landingpage = (
-  <>
-    <Route
-      path="/about"
-      element={
-        <Layout>
-          <About />
-        </Layout>
-      }
-    />
+  <Route
+    element={
+      <Layout>
+        <Outlet />
+      </Layout>
+    }
+  >
+    <Route path="/about" element={<About />} />
 
-    <Route
-      path="/families"
-      element={
-        <Layout>
-          <Families />
-        </Layout>
-      }
-    />
+    <Route path="/families" element={<Families />} />
 
-    <Route
-      path="/families/:id"
-      element={
-        <Layout>
-          <SingleFamily />
-        </Layout>
-      }
-    />
+    <Route path="/families/:id" element={<SingleFamily />} />
 
-    <Route
-      path="/Departments"
-      element={
-        <Layout>
-          <Departments />
-        </Layout>
-      }
-    />
-    <Route
-      path="/Departments/:id"
-      element={
-        <Layout>
-          <DepartmentsDetails />
-        </Layout>
-      }
-    />
-    <Route
-      path="/resources"
-      element={
-        <Layout>
-          <Resources />
-        </Layout>
-      }
-    />
-    <Route
-      path="/kyusda-magazine"
-      element={
-        <Layout>
-          <Magazine />
-        </Layout>
-      }
-    />
-    <Route
-      path="/donation"
-      element={
-        <Layout>
-          <DonationPage />
-        </Layout>
-      }
-    />
-    <Route
-      path="/church-gallery"
-      element={
-        <Layout>
-          <Memories />
-        </Layout>
-      }
-    />
+    <Route path="/Departments" element={<Departments />} />
+    <Route path="/Departments/:id" element={<DepartmentsDetails />} />
+    <Route path="/resources" element={<Resources />} />
+    <Route path="/kyusda-magazine" element={<Magazine />} />
+    <Route path="/donation" element={<DonationPage />} />
+    <Route path="/church-gallery" element={<Memories />} />
     <Route
       path="/kirinyaga-adventist-privacy-policy"
-      element={
-        <Layout>
-          <PrivacyPolicy />
-        </Layout>
-      }
+      element={<PrivacyPolicy />}
     />
     <Route
       path="/kirinyaga-adventist-terms-and-conditions"
-      element={
-        <Layout>
-          <Terms />
-        </Layout>
-      }
+      element={<Terms />}
     />
-  </>
+  </Route>
 );

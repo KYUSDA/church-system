@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import Testimonial from "./Testimonials";
 
 /* ── Types ── */
 interface DayEvent {
@@ -317,6 +318,9 @@ export default function About() {
           </table>
         </div>
       </Section>
+
+      {/* testimonials */}
+       <Testimonial />
 
       {/* ══ WHERE TO FIND US ══ */}
       <Section id="location" className="bg-white/60 backdrop-blur-sm">

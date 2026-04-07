@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { FiX } from "react-icons/fi";
 import { useLogout } from "../../hooks/userLogoutHook";
@@ -9,14 +8,16 @@ interface MobileNavbarProps {
   setMenuOpen: (open: boolean) => void;
 }
 
-const MobileNavbar: React.FC<MobileNavbarProps> = ({ menuOpen, setMenuOpen }) => {
-
+const MobileNavbar: React.FC<MobileNavbarProps> = ({
+  menuOpen,
+  setMenuOpen,
+}) => {
   const { handleLogout } = useLogout();
   const { user } = useUserData();
 
   const handleLogOut = () => {
     handleLogout();
-    setMenuOpen(false); 
+    setMenuOpen(false);
   };
 
   return (
@@ -57,7 +58,16 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ menuOpen, setMenuOpen }) =>
             Gallery
           </Link>
         </li>
-    
+        <li>
+          <a
+            href="https://blogs.kyusda.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link underline-transition"
+          >
+            Blogs
+          </a>
+        </li>
 
         {/* Auth Buttons */}
         {user ? (

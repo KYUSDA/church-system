@@ -1,13 +1,6 @@
 {
     "rewrites": [
-      { "source": "/(.*)", "destination": "/" },
-      {
-      "source": "/",
-      "has": [
-        { "type": "host", "value": "blogs.kyusda.org" }
-      ],
-      "destination": "/blogs"
-    }
+      { "source": "/(.*)", "destination": "/" }
     ]
   }
   

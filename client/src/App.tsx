@@ -1,24 +1,23 @@
-import React from "react";
-import Navbar from "./LandingPage/Navbar/Navbar";
 import About from "./LandingPage/About";
 import Leaders from "./LandingPage/Leaders";
-import MainFooter from "./LandingPage/Footer/MainFooter";
+import MainFooter from "./LandingPage/MainFooter";
 import Banner from "./LandingPage/Banner";
-import Testimonial from "./LandingPage/Testimonials";
 import Posts from "./LandingPage/Posts";
 import DonationsCTA from "./LandingPage/DonationCta";
 import SEO from "./components/SEO";
+import Header from "./LandingPage/Navbar/Header";
 
-
-const App: React.FC = () => (
+const App = () => (
   <div className="app">
-    <SEO title="Welcome to KYUSDA" description="Discover our mission, connect with our community, and explore our latest news and events." />
-    <Navbar />
+    <SEO
+      title="Welcome to KYUSDA"
+      description="Discover our mission, connect with our community, and explore our latest news and events."
+    />
+    <Header />
     <Banner />
     <About />
     <Leaders />
     <Posts />
-    <Testimonial />
     <DonationsCTA />
     <MainFooter />
   </div>
