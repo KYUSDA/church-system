@@ -10,10 +10,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Link, useLocation } from "react-router-dom";
-
 import { LayoutDashboard } from "lucide-react";
-import { checkRole, navGroups, Role } from "../utils/roles-nav";
 import { useLogout } from "@/hooks/userLogoutHook";
+import { checkRole, Role, navGroups } from "@/utils/roles-nav";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   userRole: Role;
@@ -77,9 +76,7 @@ export function AppSidebar({ userRole, ...props }: AppSidebarProps) {
                     onClick={handleNavClick}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-200
     ${
-      pathname === item.to
-        ? "bg-gray-200  font-semibold"
-        : "hover:bg-gray-100 "
+      pathname === item.to ? "bg-gray-200  font-semibold" : "hover:bg-gray-100 "
     }`}
                   >
                     <item.icon className="h-4 w-4" />

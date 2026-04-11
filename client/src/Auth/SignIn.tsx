@@ -21,6 +21,7 @@ import { useLogin } from "../hooks/userLoginHook";
 import AuthLayout from "./AuthLayout";
 import { getApiErrorMessage } from "@/utils/Error-handler";
 import { toast } from "sonner";
+import SEO from "@/components/SEO";
 
 const SignInSide = () => {
   const [email, setEmail] = useState("");
@@ -58,6 +59,7 @@ const SignInSide = () => {
 
   return (
     <AuthLayout>
+      <SEO title="Sign In" description="Access your account by signing in." />
       <Box className="w-full flex items-center justify-center h-screen">
         <Box className="bg-white rounded-md shadow-md shadow-gray-400 max-w-md w-full p-6 max-md:py-4 max-500:p-2 mx-2">
           <Box className="flex flex-col items-center">

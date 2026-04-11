@@ -46,7 +46,7 @@ const useUserData = () => {
       }
 
       const data = await response.json();
-      setUserData(data.data);
+      setUserData(data.user);
     } catch (error) {
       console.error("Error fetching user data:", error);
     } finally {

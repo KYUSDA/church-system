@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Outlet } from "react-router-dom";
 import {
   AdminRoute,
   MemberRoute,
@@ -27,16 +27,17 @@ import AdminCalendar from "../Dashboard/Admin/components/calendar";
 import NewResource from "../Dashboard/Admin/Pages/resources/newResource";
 
 // Import Member Components
-import DashboardHome from "../Dashboard/user/ui/DashboardHome";
-import Settings from "../Dashboard/user/ui/Settings";
+import DashboardHome from "../Dashboard/user/pages/DashboardHome";
+import Settings from "../Dashboard/user/pages/Settings";
 import QuizzesPage from "../Dashboard/user/pages/defend/defendYourFaith";
 import QuizDetail from "../Dashboard/user/pages/defend/quizePage";
-import TriviaPage from "../Dashboard/user/pages/trivias/triviaPage";
-import TriviaProps from "../Dashboard/user/pages/trivias/triviasProp";
-import PrayerRequests from "../Dashboard/user/ui/prayerRequests";
-import EventCalendar from "../Dashboard/user/ui/calendarEvents";
-import ResourceCenter from "../Dashboard/user/ui/ResourceCenter";
+import PrayerRequests from "../Dashboard/user/pages/prayerRequests";
+import EventCalendar from "../Dashboard/user/pages/calendarEvents";
+import ResourceCenter from "../Dashboard/user/pages/ResourceCenter";
 import BibleApp from "../Dashboard/user/pages/bible";
+import InboxPage from "@/Dashboard/user/pages/Inbox";
+import Help from "@/Dashboard/user/pages/Help";
+import Tithes from "@/Dashboard/user/pages/Tithes";
 
 export const DashboardRoutes = (
   <>
@@ -52,366 +53,57 @@ export const DashboardRoutes = (
 
     {/* Admin Routes */}
     <Route
-      path="/dashboard/admin"
+      path="/admin"
       element={
         <AdminRoute>
           <UnifiedDashboard>
-            <AdminDashboard />
+            <Outlet />
           </UnifiedDashboard>
         </AdminRoute>
       }
-    />
-    <Route
-      path="/admin/users"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <UserList />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/users/:id"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <Users />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/users/new"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NewUser />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/departments"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <DepartmentList />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/departments/:id"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <ADepartment />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/departments/new"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NewDepartment />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/families"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <FamilyList />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/families/:id"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <AFamily />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/family/:id"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <AFamily />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/newFamily"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NewFamily />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/families/new"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NewFamily />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/calendar"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <AdminCalendar />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/messages"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <Messages />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/create-notifications"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NotificationPage />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/create-notification"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NotificationPage />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/prayer-requests"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <Prayers />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/prayers"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <Prayers />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/weekly-quiz"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <QuizAdminPanel />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/profile"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <AdminProfile />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/admin-profile"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <AdminProfile />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/resources/new"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NewResource />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
-    <Route
-      path="/admin/newResource"
-      element={
-        <AdminRoute>
-          <UnifiedDashboard>
-            <NewResource />
-          </UnifiedDashboard>
-        </AdminRoute>
-      }
-    />
+    >
+      <Route index element={<AdminDashboard />} />
+      <Route path="users" element={<UserList />} />
+      <Route path="users/:id" element={<Users />} />
+      <Route path="users/new" element={<NewUser />} />
+      <Route path="departments" element={<DepartmentList />} />
+      <Route path="departments/:id" element={<ADepartment />} />
+      <Route path="departments/new" element={<NewDepartment />} />
+      <Route path="families" element={<FamilyList />} />
+      <Route path="families/:id" element={<AFamily />} />
+      <Route path="families/new" element={<NewFamily />} />
+      <Route path="calendar" element={<AdminCalendar />} />
+      <Route path="messages" element={<Messages />} />
+      <Route path="create-notifications" element={<NotificationPage />} />
+      <Route path="prayer-requests" element={<Prayers />} />
+      <Route path="weekly-quiz" element={<QuizAdminPanel />} />
+      <Route path="profile" element={<AdminProfile />} />
+      <Route path="resources/new" element={<NewResource />} />
+    </Route>
 
     {/* Member Routes */}
     <Route
-      path="/member/dashboard"
+      path="/member"
       element={
         <MemberRoute>
           <UnifiedDashboard>
-            <DashboardHome />
+            <Outlet />
           </UnifiedDashboard>
         </MemberRoute>
       }
-    />
-    <Route
-      path="/member/resources"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <ResourceCenter />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/settings"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <Settings />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/defend-your-faith"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <QuizzesPage />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/defend-your-faith/quizze/:id"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <QuizDetail />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bible-app"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <BibleApp />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaPage />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia/trivia/beginner"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaProps level={"easy"} />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia/trivia/intermediate"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaProps level={"medium"} />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/bibleTrivia/trivia/advanced"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <TriviaProps level={"hard"} />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/submit-prayer-request"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <PrayerRequests />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/my-calendar"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <EventCalendar />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
-    <Route
-      path="/member/profile"
-      element={
-        <MemberRoute>
-          <UnifiedDashboard>
-            <Settings />
-          </UnifiedDashboard>
-        </MemberRoute>
-      }
-    />
+    >
+      <Route path="dashboard" element={<DashboardHome />} />
+      <Route path="resources" element={<ResourceCenter />} />
+      <Route path="settings" element={<Settings />} />
+      <Route path="defend-your-faith" element={<QuizzesPage />} />
+      <Route path="defend-your-faith/quizze/:id" element={<QuizDetail />} />
+      <Route path="bible-app" element={<BibleApp />} />
+      <Route path="submit-prayer-request" element={<PrayerRequests />} />
+      <Route path="my-calendar" element={<EventCalendar />} />
+      <Route path="inbox" element={<InboxPage />} />
+      <Route path="tithes-offerings" element={<Tithes />} />
+      <Route path="profile" element={<Settings />} />
+      <Route path="help" element={<Help />} />
+    </Route>
   </>
 );

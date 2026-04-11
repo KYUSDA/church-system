@@ -1,120 +1,174 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { client, urlFor } from "../../utils/client";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { client } from "../../utils/client";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import Loader from "../../Dashboard/user/components/utils/loader";
 import FamilyFAQ from "../FamilyFaq";
+import FamilyCard from "./FamilyCard";
+import SEO from "@/components/SEO";
 
-export const Families = () => {
-  const [Families, setFamilies] = useState<Family[]>([]);
-  const [loading, setLoading] = useState(true);
+export interface Family {
+  _id: string;
+  title: string;
+  description: string;
+  imgUrl: string;
+  tags: string[];
+  locationUrl?: string;
+}
 
-  interface Family {
-    _id: string;
-    title: string;
-    description: string;
-    imgUrl: string;
-    tags: string[];
-  }
+function findUniqueById(dataArray: Family[]): Family[] {
+  return dataArray.filter(
+    (item, index, array) =>
+      array.findIndex((other) => other.title === item.title) === index,
+  );
+}
 
-  function findUniqueById(dataArray: Family[]): Family[] {
-    return dataArray.filter((item, index, array) => {
-      return (
-        array.findIndex((otherItem) => otherItem.title === item.title) === index
-      );
-    });
-  }
+const fetchFamilies = async (): Promise<Family[]> => {
+  const data = await client.fetch('*[_type == "families"]');
+  return findUniqueById(data);
+};
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
+/* ─── Skeleton Card ─────────────────────────────────────────────────── */
+const SkeletonCard = () => (
+  <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
+    <div className="w-full h-52 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 animate-pulse" />
+    <div className="p-6 flex flex-col gap-3">
+      <div className="h-5 w-2/3 rounded-full bg-stone-200 animate-pulse" />
+      <div className="h-3 w-full rounded-full bg-stone-100 animate-pulse" />
+      <div className="h-3 w-full rounded-full bg-stone-100 animate-pulse" />
+      <div className="h-3 w-1/2 rounded-full bg-stone-100 animate-pulse" />
+      <div className="flex gap-2 mt-2">
+        <div className="h-5 w-14 rounded-full bg-blue-100 animate-pulse" />
+        <div className="h-5 w-14 rounded-full bg-blue-100 animate-pulse" />
+      </div>
+    </div>
+  </div>
+);
 
-  useEffect(() => {
-    const query = '*[_type == "families"]';
-    client.fetch(query).then((data) => {
-      const familyData = findUniqueById(data);
-      setFamilies(familyData);
-      setLoading(false); // Stop loading after fetching data
-    });
-  }, []);
+/* ─── Main Component ─────────────────────────────────────────────────── */
+const Families = () => {
+  const [filter, setFilter] = useState<string>("All");
+
+  const { data: families = [], isLoading } = useQuery({
+    queryKey: ["families"],
+    queryFn: fetchFamilies,
+  });
+
+  const allTags = useMemo(() => {
+    const tags = Array.from(new Set(families.flatMap((f) => f.tags))).slice(
+      0,
+      6,
+    );
+    return ["All", ...tags];
+  }, [families]);
+
+  const filtered =
+    filter === "All"
+      ? families
+      : families.filter((f) => f.tags.includes(filter));
 
   return (
-    <div>
-      <h2 className="text-center text-2xl md:text-4xl font-bold my-8 md:mt-12 md:mb-16">
-        Our <span className="text-blue-500">Families</span> Section
-      </h2>
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: `url('/back5.svg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <SEO title="Our Families" description="Discover the stories and communities that make up our church family." />
+      <div className="py-16 sm:py-20 lg:py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="block w-7 h-0.5 bg-blue-600 rounded-full" />
+            <span className="text-[11px] font-semibold tracking-[0.12em] uppercase text-blue-600">
+              Our Community
+            </span>
+          </div>
 
-      {/* ClipLoader Spinner */}
-      {loading && <Loader isLoading={loading} text="Get things ready..." />}
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] tracking-tight text-slate-900 mb-4">
+            Meet our <em className="italic text-blue-600">Families</em>
+          </h2>
 
-      {/* Families List */}
-      {!loading && (
-        <div className="mx-auto px-12 mb-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Families.map((family, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col bg-white shadow-md rounded-lg overflow-hidden transition-shadow duration-300 hover:shadow-lg h-[350px]"
-              >
-                {/* Image Section */}
-                <div
-                  className="bg-white shadow-lg shadow-gray-300 overflow-hidden"
-                  style={{ height: "42%" }}
-                >
-                  <LazyLoadImage
-                    src={urlFor(family.imgUrl).url()}
-                    alt={family.title}
-                    effect="blur"
-                    className="w-full object-cover"
-                  />
-                </div>
+          <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-lg">
+            Every family has a story worth sharing. Discover the people and
+            communities that make us who we are.
+          </p>
 
-                {/* Content Section */}
-                <div className="relative z-10 flex flex-col flex-grow p-4 bg-white">
-                  <h4 className="text-lg font-semibold mb-2 text-center">
-                    {family.title}
-                  </h4>
-                  <p className="text-sm text-gray-600 overflow-hidden line-clamp-3">
-                    {family.description}
-                  </p>
-
-                  {/* Tags */}
-                  {family.tags.length > 0 && (
-                    <span className="mt-4 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded self-start">
-                      {family.tags[0]}
-                    </span>
-                  )}
-
-                  {/* See More Button */}
-                  <Link
-                    to={`/families/${family._id}`}
-                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 group flex items-center gap-2 text-sm font-semibold text-indigo-600 transition-all duration-500"
-                  >
-                    Read More
-                    <svg
-                      className="transition-all duration-500 group-hover:translate-x-1"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+          {!isLoading && (
+            <div className="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-stone-200">
+              {allTags.length > 1 && (
+                <div className="flex flex-wrap gap-2">
+                  {allTags.map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => setFilter(tag)}
+                      className={`px-4 py-1.5 rounded-full border text-[13px] font-medium
+                                  transition-all duration-200 cursor-pointer
+                                  ${
+                                    filter === tag
+                                      ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+                                      : "bg-transparent border-stone-300 text-slate-500 hover:border-blue-500 hover:text-blue-600"
+                                  }`}
                     >
-                      <path
-                        d="M2.25 9L14.25 9M10.5 13.5L14.4697 9.53033C14.7197 9.28033 14.8447 9.15533 14.8447 9C14.8447 8.84467 14.7197 8.71967 14.4697 8.46967L10.5 4.5"
-                        stroke="#4F46E5"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
-                  </Link>
+                      {tag}
+                    </button>
+                  ))}
                 </div>
+              )}
+              <span className="text-sm text-slate-400 ml-auto">
+                {filtered.length}{" "}
+                {filtered.length !== 1 ? "families" : "family"}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {isLoading &&
+              Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+
+            {!isLoading &&
+              filtered.length > 0 &&
+              filtered.map((family, i) => (
+                <FamilyCard key={family._id} family={family} index={i} />
+              ))}
+
+            {!isLoading && filtered.length === 0 && (
+              <div className="col-span-full flex flex-col items-center justify-center py-24 text-slate-400">
+                <svg
+                  className="mb-5 opacity-30"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  fill="none"
+                >
+                  <circle
+                    cx="24"
+                    cy="24"
+                    r="20"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M16 24h16M24 16v16"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <h4 className="font-serif text-2xl text-slate-700 font-normal mb-2">
+                  No families found
+                </h4>
+                <p className="text-sm">Try selecting a different filter</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
-      )}
+      </div>
+
       <FamilyFAQ />
     </div>
   );

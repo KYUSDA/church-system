@@ -1,125 +1,186 @@
-import { useState, useEffect } from "react";
-import { client, urlFor } from "../../utils/client";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
-import "react-lazy-load-image-component/src/effects/blur.css";
-import Loader from "../../Dashboard/user/components/utils/loader";
+import { useState, useMemo } from "react";
+import { client } from "../../utils/client";
+import DeptCard from "./DeptCard";
+import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
+
+export interface Department {
+  _id: string;
+  title: string;
+  description: string;
+  imgUrl: string;
+  tags: string[];
+  sections?: Array<{
+    _type: string;
+    _key: string;
+    [key: string]: any;
+  }>;
+}
+
+function findUniqueById(dataArray: Department[]): Department[] {
+  return dataArray.filter(
+    (item, index, array) =>
+      array.findIndex((other) => other.title === item.title) === index,
+  );
+}
+
+/* ─── Skeleton Card ─────────────────────────────────────────────────── */
+const SkeletonCard = () => (
+  <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
+    <div className="w-full h-52 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 animate-pulse" />
+    <div className="p-6 flex flex-col gap-3">
+      <div className="h-5 w-2/3 rounded-full bg-stone-200 animate-pulse" />
+      <div className="h-3 w-full rounded-full bg-stone-100 animate-pulse" />
+      <div className="h-3 w-full rounded-full bg-stone-100 animate-pulse" />
+      <div className="h-3 w-1/2 rounded-full bg-stone-100 animate-pulse" />
+      <div className="flex gap-2 mt-2">
+        <div className="h-5 w-14 rounded-full bg-blue-100 animate-pulse" />
+        <div className="h-5 w-14 rounded-full bg-blue-100 animate-pulse" />
+      </div>
+    </div>
+  </div>
+);
+
+/* ─── Main Component ─────────────────────────────────────────────────── */
+const fetchDepartments = async (): Promise<Department[]> => {
+  const data = await client.fetch('*[_type == "departments"]');
+  return findUniqueById(data);
+};
+
 
 const Departments = () => {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<string>("All");
 
-  // Function to find unique departments by title
-  interface Department {
-    _id: string;
-    title: string;
-    description: string;
-    imgUrl: string;
-    tags: string[];
-  }
+  const { data: departments = [], isLoading } = useQuery({
+    queryKey: ["departments"],
+    queryFn: fetchDepartments,
+  });
 
-  function findUniqueById(dataArray: Department[]): Department[] {
-    return dataArray.filter(
-      (item, index, array) =>
-        array.findIndex((otherItem) => otherItem.title === item.title) === index
+  const allTags = useMemo(() => {
+    const tags = Array.from(new Set(departments.flatMap((d) => d.tags))).slice(
+      0,
+      6,
     );
-  }
+    return ["All", ...tags];
+  }, [departments]);
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
-
-  // Fetch departments data on mount
-  useEffect(() => {
-    const query = '*[_type == "departments"]';
-    client.fetch(query).then((data) => {
-      const familyData = findUniqueById(data);
-      setDepartments(familyData);
-      setLoading(false);
-    });
-  }, []);
+  const filtered =
+    filter === "All"
+      ? departments
+      : departments.filter((d) => d.tags.includes(filter));
 
   return (
-    <>
-      {/* Header Section */}
-      <h2 className="text-center text-2xl md:text-4xl font-bold my-8 md:mt-12 md:mb-16">
-        Our <span className="text-blue-500">Departments</span> Section
-      </h2>
-
-      {/* Loader */}
-      {loading ? (
-        <Loader isLoading={loading} text="Get things ready..." />
-      ) : (
-        <div className="mx-auto px-12 mb-12">
-          {/* Grid layout for the cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {departments.map((department, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col bg-white shadow-md rounded-lg overflow-hidden transition-shadow duration-300 hover:shadow-lg h-[350px]"
-              >
-                {/* Image Section */}
-                <div
-                  className="bg-white shadow-lg shadow-gray-300 overflow-hidden"
-                  style={{ height: "42%" }}
-                >
-                  <LazyLoadImage
-                    src={urlFor(department.imgUrl).url()}
-                    alt={department.title}
-                    effect="blur"
-                    className="w-full object-cover"
-                  />
-                </div>
-
-                {/* Content Section */}
-                <div className="relative z-10 flex flex-col flex-grow p-4 bg-white">
-                  <h4 className="text-lg font-semibold mb-2 text-center">
-                    {department.title}
-                  </h4>
-
-                  {/* Description */}
-                  <p className="text-sm line-clamp-3 text-gray-600 overflow-hidden sm:line-clamp-3">
-                    {department.description}
-                  </p>
-
-                  {/* Tags */}
-                  {department.tags.length > 0 && (
-                    <span className="mt-4 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded self-start">
-                      {department.tags[0]}
-                    </span>
-                  )}
-
-                  {/* See More Button */}
-                  <Link
-                    to={`/Departments/${department._id}`}
-                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 group flex items-center gap-2 text-sm font-semibold text-indigo-600 transition-all duration-500 "
-                  >
-                    Read More{" "}
-                    <svg
-                      className="transition-all duration-500  group-hover:translate-x-1"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2.25 9L14.25 9M10.5 13.5L14.4697 9.53033C14.7197 9.28033 14.8447 9.15533 14.8447 9C14.8447 8.84467 14.7197 8.71967 14.4697 8.46967L10.5 4.5"
-                        stroke="#4F46E5"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+    <div
+      className="min-h-screen py-16 sm:py-20 lg:py-24"
+      style={{
+        backgroundImage: `url('/back5.svg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
+    <SEO title="Our Departments" description="Discover the various departments that drive our church's mission and community engagement." />
+      {/* ── Page Header ── */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 mb-12 lg:mb-16">
+        {/* Eyebrow */}
+        <div className="flex items-center gap-3 mb-5">
+          <span className="block w-7 h-0.5 bg-blue-600 rounded-full" />
+          <span className="text-[11px] font-semibold tracking-[0.12em] uppercase text-blue-600">
+            Our Organisation
+          </span>
         </div>
-      )}
-    </>
+
+        {/* Headline */}
+        <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] tracking-tight text-slate-900 mb-4">
+          Explore our <em className="italic text-blue-600">Departments</em>
+        </h2>
+
+        {/* Subheading */}
+        <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-lg">
+          Each department is dedicated to serving with excellence. Discover the
+          teams that drive our mission forward.
+        </p>
+
+        {/* Divider + Filters + Count */}
+        {!isLoading && (
+          <div className="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-stone-200">
+            {/* Filter Pills */}
+            {allTags.length > 1 && (
+              <div className="flex flex-wrap gap-2">
+                {allTags.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => setFilter(tag)}
+                    className={`px-4 py-1.5 rounded-full border text-[13px] font-medium
+                                transition-all duration-200 cursor-pointer
+                                ${
+                                  filter === tag
+                                    ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+                                    : "bg-transparent border-stone-300 text-slate-500 hover:border-blue-500 hover:text-blue-600"
+                                }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Result Count */}
+            <span className="text-sm text-slate-400 ml-auto">
+              {filtered.length} department{filtered.length !== 1 ? "s" : ""}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* ── Card Grid ── */}
+      <div className="max-w-[1300px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Skeleton Loading State */}
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+
+          {/* Populated Cards */}
+          {!isLoading &&
+            filtered.length > 0 &&
+            filtered.map((dept, i) => (
+              <DeptCard key={dept._id} department={dept} index={i} />
+            ))}
+
+          {/* Empty State */}
+          {!isLoading && filtered.length === 0 && (
+            <div className="col-span-full flex flex-col items-center justify-center py-24 text-slate-400">
+              <svg
+                className="mb-5 opacity-30"
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+              >
+                <circle
+                  cx="24"
+                  cy="24"
+                  r="20"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M16 24h16M24 16v16"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <h4 className="font-serif text-2xl text-slate-700 font-normal mb-2">
+                No departments found
+              </h4>
+              <p className="text-sm">Try selecting a different filter</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

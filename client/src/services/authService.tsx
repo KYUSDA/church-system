@@ -39,6 +39,7 @@ interface TActivate {
 }
 
 interface TIssue {
+  type: string;
   title: string;
   description: string;
 }

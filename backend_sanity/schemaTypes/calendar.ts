@@ -26,12 +26,26 @@ export const calendar = defineType({
       initialValue: 'once',
     }),
 
-    // Used ONLY when eventType === "once"
     defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'date',
-      hidden: ({parent}) => parent?.eventType !== 'once',
+      name: 'startDate',
+      title: 'Start Date',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+        timeFormat: 'HH:MM',
+      },
+    }),
+
+    defineField({
+      name: 'endDate',
+      title: 'End Date',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+        timeFormat: 'HH:MM',
+      },
     }),
 
     // Used ONLY when eventType === "weekly"
@@ -59,14 +73,6 @@ export const calendar = defineType({
             ? 'Select at least one day'
             : true
         }),
-    }),
-
-    defineField({
-      name: 'time',
-      title: 'Time',
-      type: 'string',
-      description: '24h format (HH:MM)',
-      validation: (Rule) => Rule.regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
     }),
 
     defineField({

@@ -1,21 +1,22 @@
-import React from "react";
-import Navbar from "./LandingPage/Navbar/Navbar";
-import About from "./LandingPage/About";
 import Leaders from "./LandingPage/Leaders";
-import Announcement from "./LandingPage/Announcements/Announcement";
-import MainFooter from "./LandingPage/Footer/MainFooter";
+import MainFooter from "./LandingPage/MainFooter";
 import Banner from "./LandingPage/Banner";
-import Testimonial from "./LandingPage/Testimonials";
+import Posts from "./LandingPage/Posts";
+import DonationsCTA from "./LandingPage/DonationCta";
+import SEO from "./components/SEO";
+import Header from "./LandingPage/Navbar/Header";
 
-
-const App: React.FC = () => (
-  <div className="app">
-    <Navbar />
+const App = () => (
+  <div>
+    <SEO
+      title="Welcome to KYUSDA"
+      description="Discover our mission, connect with our community, and explore our latest news and events."
+    />
+    <Header />
     <Banner />
-    <About />
+    <Posts />
     <Leaders />
-    <Announcement />
-    <Testimonial />
+    <DonationsCTA />
     <MainFooter />
   </div>
 );

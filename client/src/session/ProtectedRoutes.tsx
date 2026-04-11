@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Role } from "../utils/roles-nav";
 import { getRedirectPath } from "../utils/redirect";
-import { TUser } from "../session/authData";
 
 interface Props {
   children: React.ReactNode;

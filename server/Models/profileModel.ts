@@ -7,39 +7,52 @@ interface TProfile {
     url: string;
   };
   birthday: Date;
-  family: string;
-  department: string;
+  family?: string;
+  department?: TDepartment;
+  baptized: boolean;
   createdAt: Date;
 }
 
-const profileSchema = new Schema<TProfile>({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-    unique: true,
+interface TDepartment {
+  name: string;
+  position?: string;
+  joinedAt: Date;
+  updatedAt: Date;
+}
+
+const profileSchema = new Schema<TProfile>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,
+    },
+    avatar: {
+      public_id: String,
+      url: String,
+    },
+    birthday: {
+      type: Date,
+      required: [true, "Please enter birthday"],
+    },
+    family: {
+      type: String,
+    },
+    department: {
+      type: Object,
+    },
+    baptized: {
+      type: Boolean,
+      required: [true, "Please specify if baptized"],
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  avatar: {
-    public_id: String,
-    url: String,
-  },
-  birthday: {
-    type: Date,
-    required: [true, "Please enter birthday"],
-  },
-  family: {
-    type: String,
-    required: [true, "Please enter family name"],
-  },
-  department: {
-    type: String,
-    required: [true, "Please enter department name"],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-},{timestamps: true});
+  { timestamps: true },
+);
 
 // model
 const profileModel = model("profile", profileSchema);

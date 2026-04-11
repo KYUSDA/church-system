@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import KyuSda from "../../assets/logos/logo-kyusda.jpg";
-import '../../components/css/header.css';
-import { FiMenu } from "react-icons/fi";
+import "../../components/css/header.css";
+import { FiMenu, FiChevronDown } from "react-icons/fi";
 import MobileNavbar from "./MobileNav";
-import '../../components/css/nav_bar.css';
+import "../../components/css/nav_bar.css";
 import useUserData from "../../session/authData";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = useUserData();
-
 
   return (
     <header className="bg-color main-header flex justify-between items-center px-6 py-2 md:px-12 relative">
@@ -42,15 +41,48 @@ const Header = () => {
           <Link to="/" className="nav-link underline-transition">
             Home
           </Link>
+          <Link to="/about" className="nav-link underline-transition">
+            About
+          </Link>
           <Link to="/families" className="nav-link underline-transition">
             Families
           </Link>
           <Link to="/departments" className="nav-link underline-transition">
             Departments
           </Link>
-          <Link to="/church-gallery" className="nav-link underline-transition">
-            Gallery
+          <Link to="/resources" className="nav-link underline-transition">
+            Resources
           </Link>
+          <Link to="/kyusda-magazine" className="nav-link underline-transition">
+            Magazine
+          </Link>
+          <div className="relative group">
+            <Link
+              to="#"
+              className="nav-link underline-transition !inline-flex items-center gap-1"
+            >
+              <p>More</p>
+              <FiChevronDown className="mt-[2px]" />
+            </Link>
+
+            <div className="absolute top-full left-0 bg-color text-white rounded shadow-lg hidden group-hover:block z-10 min-w-[160px] py-2">
+              <Link
+                to="/church-gallery"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#05453f] whitespace-nowrap"
+              >
+                Gallery
+              </Link>
+
+              <a
+                href="https://blogs.kyusda.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#05453f] whitespace-nowrap"
+              >
+                Blogs
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Auth Buttons and Donate on the Right */}

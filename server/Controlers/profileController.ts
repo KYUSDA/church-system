@@ -18,7 +18,7 @@ import cloudinary from "cloudinary";
 
 // create user profile
 export const createProfile = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
-  const { birthday, family, department } = req.body;
+  const { birthday, baptized } = req.body;
 
     const user = req.user;
     const id = user?.id;
@@ -36,14 +36,34 @@ export const createProfile = catchAsyncErrors(async (req: Request, res: Response
   const profile = await profileModel.create({
     userId,
     birthday,
-    family,
-    department,
+    baptized
   });
 
   res.status(201).json({
     status: "success",
     profile,
     message: "Profile created successfully",
+  });
+});
+
+// get user profile
+export const getProfile = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.user?.id;
+
+  if (!userId) {
+    return next(new ErrorHandler("User ID not found in request", 400));
+  }
+
+  const profile = await profileModel.findOne({ userId });
+
+  if (!profile) {
+    return next(new ErrorHandler("Profile not found for this user", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    profile,
+    message: "Profile retrieved successfully",
   });
 });
 
@@ -71,7 +91,7 @@ export const updateProfile = catchAsyncErrors(async (req: Request, res: Response
 export const updateAvatar = catchAsyncErrors(async (req: Request, res: Response, next: NextFunction) => {
     try {
          const { avatar } = req.body;
-         const userId = req.user?._id as string;
+         const userId = req.user?.id as string;
          const user = await profileModel.findById(userId);
          if (!user) {
            return next(

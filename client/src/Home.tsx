@@ -7,12 +7,10 @@ import { DashboardRoutes } from "./routes/dashboard";
 const Home = () => {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />}></Route>
-      {/* authentication */}
+      <Route path="/" element={<MainPage />} />
+      {/* OTHER ROUTES */}
       {AuthRoutes}
-      {/* landing page */}
       {Landingpage}
-      {/* unified dashboard routes */}
       {DashboardRoutes}
     </Routes>
   );

@@ -1,68 +1,122 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { faQuestions } from "../Dummy/FAQ";
 
 const FamilyFAQ = () => {
-  // State to track which FAQ is open
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
-  // Function to toggle FAQ visibility
-  const toggleFAQ = (id: number | null) => {
-    setOpenFAQ((prevOpen) => (prevOpen === id ? null : id));
+  const toggleFAQ = (id: number) => {
+    setOpenFAQ((prev) => (prev === id ? null : id));
   };
 
   return (
-    <div>
-      <section className="bg-[#255760] bg-center bg-no-repeat bg-cover pb-12 relative">
-        <div className="mx-auto h-auto pb-5">
-          <h2 className="text-center font-bold text-[32px] md:text-4xl text-white pt-5 mb-5">
-            Most Asked Questions
+    <section className="bg-gray-100 py-16 sm:py-20 lg:py-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12">
+        {/* ── Header ── */}
+        <div className="mb-12 lg:mb-16">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="block w-7 h-0.5 bg-blue-600 rounded-full" />
+            <span className="text-[11px] font-semibold tracking-[0.12em] uppercase text-blue-600">
+              Got Questions?
+            </span>
+          </div>
+          <h2 className="font-serif text-4xl sm:text-5xl font-normal leading-[1.1] tracking-tight text-slate-900 mb-4">
+            Frequently Asked <em className="italic text-blue-600">Questions</em>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mx-4 lg:mx-8">
-            {faQuestions.map((faq) => (
+          <p className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-lg">
+            Everything you need to know. Can't find what you're looking for?{" "}
+            <a
+              href="/contact"
+              className="text-blue-600 font-medium hover:underline"
+            >
+              Reach out to us.
+            </a>
+          </p>
+        </div>
+
+        {/* ── FAQ List ── */}
+        <div className="flex flex-col gap-3">
+          {faQuestions.map((faq, index) => {
+            const isOpen = openFAQ === faq.id;
+            return (
               <div
-                className="shadow-[3px_13px_24px_-1px_rgba(20,20,20,0.75)] pb-4 cursor-pointer rounded-xl overflow-hidden"
                 key={faq.id}
+                className={`group rounded-2xl border bg-white overflow-hidden
+                            transition-all duration-300 ease-out
+                            ${
+                              isOpen
+                                ? "border-blue-200 shadow-[0_8px_30px_-6px_rgba(37,99,235,0.12)]"
+                                : "border-stone-200 hover:border-blue-100 hover:shadow-sm"
+                            }`}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
-                {/* Question Section */}
-                <div
-                  className="flex justify-between items-center bg-[var(--fourth-color)] p-4 text-[#0e2125] cursor-pointer"
+                {/* Question Row */}
+                <button
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer"
                   onClick={() => toggleFAQ(faq.id)}
+                  aria-expanded={isOpen}
                 >
-                  <h3 className="text-base md:text-lg font-bold text-slate-200">
-                    {faq.id}. {faq.question}
-                  </h3>
-                  <svg
-                    width="15"
-                    height="10"
-                    viewBox="0 0 42 25"
-                    className={`transition-transform duration-300 flex-shrink-0 ml-2 ${
-                      openFAQ === faq.id ? "rotate-180" : "rotate-0"
-                    }`}
+                  {/* Number + Question */}
+                  <div className="flex items-center gap-4 min-w-0">
+                    <span
+                      className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full
+                                  text-[12px] font-bold transition-colors duration-300
+                                  ${
+                                    isOpen
+                                      ? "bg-blue-600 text-white"
+                                      : "bg-stone-100 text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500"
+                                  }`}
+                    >
+                      {String(faq.id).padStart(2, "0")}
+                    </span>
+                    <h3
+                      className={`text-base sm:text-lg font-semibold leading-snug transition-colors duration-200
+                                  ${isOpen ? "text-blue-600" : "text-slate-800 group-hover:text-slate-900"}`}
+                    >
+                      {faq.question}
+                    </h3>
+                  </div>
+
+                  {/* Chevron Icon */}
+                  <span
+                    className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full
+                                transition-all duration-300
+                                ${
+                                  isOpen
+                                    ? "bg-blue-600 text-white rotate-180"
+                                    : "bg-stone-100 text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500 rotate-0"
+                                }`}
                   >
-                    <path
-                      d="M3 3L21 21L39 3"
-                      stroke="white"
-                      strokeWidth="7"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                {/* Answer Section */}
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path
+                        d="M2 5l5 5 5-5"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+
+                {/* Answer */}
                 <div
-                  className={`overflow-hidden transition-all duration-300 ease-out rounded-md mt-1 text-gray-200 text-sm md:text-base leading-relaxed ${
-                    openFAQ === faq.id
-                      ? "max-h-[300px] opacity-100 px-4 py-2.5"
-                      : "max-h-0 opacity-0 px-4 py-0"
-                  }`}
+                  className={`transition-all duration-300 ease-out overflow-hidden
+                              ${isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
                 >
-                  <p className="pt-4 leading-relaxed">{faq.answer}</p>
+                  <div className="px-6 pb-6">
+                    {/* Divider */}
+                    <div className="w-full h-px bg-stone-100 mb-4" />
+                    <p className="text-sm sm:text-base leading-relaxed text-slate-500 pl-12">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

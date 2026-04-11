@@ -8,14 +8,14 @@ import {
 import {
   BookOpen,
   Calendar,
-  HelpCircle,
   Home,
   Icon,
   Mail,
-  Search,
   Send,
   ShieldCheck,
   User,
+  StoreIcon,
+  HelpCircle,
 } from "lucide-react";
 
 // routes for dashboard
@@ -57,7 +57,22 @@ export const navGroups = [
         to: "/member/submit-prayer-request",
         icon: Send,
       },
+      {
+        title: "Tithes & Offerings",
+        to: "/member/tithes-offerings",
+        icon: StoreIcon,
+      },
+      {
+        title: "Inbox",
+        to: "/member/inbox",
+        icon: Mail,
+      },
       { title: "Profile", to: "/member/profile", icon: User },
+      // {
+      //   title: "Settings",
+      //   to: "/member/settings",
+      //   icon: Icon,
+      // },
     ],
   },
   {
@@ -86,12 +101,10 @@ export const navGroups = [
       { title: "Weekly Quiz", to: "/admin/weekly-quiz", icon: BookOpen },
     ],
   },
-  // {
-  //   label: "General",
-  //   links: [
-  //     { title: "Search", to: "/search", icon: Search },
-  //     { title: "Help", to: "/help", icon: HelpCircle },
-  //   ],
-  // },
+  {
+    label: "General",
+    links: [
+      { title: "Help & Support", to: "/help", icon: HelpCircle },
+    ],
+  },
 ];
-

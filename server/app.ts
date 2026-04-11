@@ -55,22 +55,26 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ success: true, message: "API working correctly" });
 });
 
-//unknown routes
+// Unknown routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-  const error = new Error(
-    `The route: ${req.originalUrl} does not exist`,
-  ) as any;
+  const error: any = new Error(
+    `The route: ${req.originalUrl} does not exist`
+  );
   error.statusCode = 404;
   next(error);
 });
 
-//404 page
-app.use("/", (error: any, req: Request, res: Response, next: NextFunction) => {
-  const statusCode = error.statusCode || 500;
-  res.status(statusCode).json({
-    success: false,
-    message: error.message || "Internal Server Error",
-  });
-});
+// Global error handler
+app.use(
+  (error: any, req: Request, res: Response, next: NextFunction) => {
+    const statusCode =
+      typeof error.statusCode === "number" ? error.statusCode : 500;
+
+    res.status(statusCode).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+);
 
 export default app;
