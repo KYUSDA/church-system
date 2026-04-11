@@ -10,7 +10,7 @@ import SingleFamily from "../LandingPage/Family/FamiliyDetails";
 import Memories from "@/LandingPage/Memories";
 import Resources from "@/LandingPage/Resources/Resources";
 import Magazine from "@/LandingPage/Magazine";
-import About from "@/LandingPage/AboutPage";
+import About from "@/LandingPage/About";
 
 export const Landingpage = (
   <Route
@@ -32,13 +32,7 @@ export const Landingpage = (
     <Route path="/kyusda-magazine" element={<Magazine />} />
     <Route path="/donation" element={<DonationPage />} />
     <Route path="/church-gallery" element={<Memories />} />
-    <Route
-      path="/kirinyaga-adventist-privacy-policy"
-      element={<PrivacyPolicy />}
-    />
-    <Route
-      path="/kirinyaga-adventist-terms-and-conditions"
-      element={<Terms />}
-    />
+    <Route path="/policy" element={<PrivacyPolicy />} />
+    <Route path="/terms" element={<Terms />} />
   </Route>
 );

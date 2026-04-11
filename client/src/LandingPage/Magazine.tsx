@@ -8,7 +8,7 @@ function Magazine() {
         description="Browse our latest magazine and stay updated with the latest news and events from our church."
       />
       <iframe
-        src="https://heyzine.com/flip-book/9e88631672.html?embed=true"
+        src="https://heyzine.com/flip-book/a2acd7b922.html?embed=true"
         style={{
           width: "100%",
           height: "90vh",

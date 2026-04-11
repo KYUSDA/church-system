@@ -4,7 +4,7 @@ import { MapPin, Mail, Phone } from "lucide-react";
 
 const MainFooter = () => {
   return (
-    <footer className="bg-[#e9f7f7] w-full">
+    <footer className="bg-[#e9f7f7] w-full mt-auto">
       {/* Main grid */}
       <div className="max-w-[1200px] mx-auto px-4 py-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[400px_repeat(3,1fr)]">
         {/* Brand col */}
@@ -28,8 +28,8 @@ const MainFooter = () => {
             About Us
           </h4>
           {[
-            { label: "Home", href: "#home" },
-            { label: "About Us", href: "#about" },
+            { label: "Home", href: "/" },
+            { label: "About Us", href: "/about" },
             { label: "Our Ministries", href: "#ministries" },
             { label: "Upcoming Events", href: "#events" },
           ].map(({ label, href }) => (
@@ -44,7 +44,7 @@ const MainFooter = () => {
           ))}
           <p className="mb-4">
             <Link
-              to="/kirinyaga-adventist-terms-and-conditions"
+              to="/terms"
               target="_blank"
               className="text-[#333333] transition-colors hover:text-[#071112]"
             >
@@ -60,9 +60,9 @@ const MainFooter = () => {
           </h4>
           {[
             { label: "Sermons", href: "#sermons" },
-            { label: "Bible Study", href: "#bible-study" },
+            { label: "Bible Study", href: "/resources" },
             { label: "Volunteer Opportunities", href: "#volunteer" },
-            { label: "Make a Donation", href: "#donations" },
+            { label: "Make a Donation", href: "/donations" },
           ].map(({ label, href }) => (
             <p key={label} className="mb-4">
               <a
@@ -75,7 +75,7 @@ const MainFooter = () => {
           ))}
           <p className="mb-4">
             <Link
-              to="/kirinyaga-adventist-privacy-policy"
+              to="/policy"
               target="_blank"
               className="text-[#333333] transition-colors hover:text-[#071112]"
             >

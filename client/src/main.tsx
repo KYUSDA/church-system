@@ -44,6 +44,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </PersistGate>
       </Provider>
     </BrowserRouter>
-    ,
   </HelmetProvider>,
 );

@@ -12,7 +12,7 @@ const VIDEOS = [
 
 function VideoCard({ video }: { video: (typeof VIDEOS)[0] }) {
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className=" bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
       <div className="relative w-full aspect-video">
         <iframe
           src={`https://www.youtube.com/embed/${video.videoId}`}
@@ -27,7 +27,7 @@ function VideoCard({ video }: { video: (typeof VIDEOS)[0] }) {
 
 function Posts() {
   return (
-    <section className="text-center mb-12">
+    <section className="text-center my-12 min-h-[60vh] px-4">
       <header>
         <h1 className="text-3xl font-semibold text-gray-900 relative inline-block">
           Our Recent <span className="text-blue-500 font-medium">POSTS</span>
