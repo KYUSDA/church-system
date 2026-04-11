@@ -3,6 +3,7 @@ import { getBaseUrl } from "@/services/base_query";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import useUserData from "@/session/authData";
 
 interface BirthdayModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export default function BirthdayModal({ isOpen, onClose }: BirthdayModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const baseUrl = getBaseUrl();
+  const {user} = useUserData();
     const authState = useSelector((state: RootState) => state.auth);
     const token = authState?.user?.data.tokens.accessToken;
 
@@ -30,17 +32,20 @@ export default function BirthdayModal({ isOpen, onClose }: BirthdayModalProps) {
     setError("");
   
     try {
-      const url = `${baseUrl}/member/update-birthday`;
-  
+      const url = `${baseUrl}/profile/update/${user?.userId}`;
+    
       const response = await fetch(url, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-        body: JSON.stringify({ birthday }),
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      body: JSON.stringify({ 
+        birthday,
+        userId: user?.userId 
+      }),
       });
-  
+    
       if (!response.ok) {
         throw new Error("Failed to update birthday");
       }

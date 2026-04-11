@@ -18,7 +18,7 @@ export const getAll = catchAsyncErrors(
 
     res.status(200).json({
       status: "success",
-      users,
+      data: users,
       message: "All registered users with profiles retrieved successfully",
     });
   },

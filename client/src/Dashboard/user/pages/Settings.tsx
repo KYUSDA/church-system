@@ -138,7 +138,7 @@ const Settings = () => {
     try {
       setLoading(true);
       if (user) {
-        const uploadUrl = `${baseUrl}/user/update-avatar/${user?.userId}`;
+        const uploadUrl = `${baseUrl}/profile/update-avatar`;
 
         const response = await fetch(uploadUrl, {
           method: "PUT",

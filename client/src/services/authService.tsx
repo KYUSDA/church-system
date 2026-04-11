@@ -55,13 +55,19 @@ interface TNotification {
 }
 
 interface Upcoming {
-  users: {
+  profiles: {
     firstName: string;
     lastName: string;
     nextBirthday: string; // ISO string from API
   };
 }
 
+export interface TProfile {
+  userId: string;
+  birthday: string; // ISO string from API
+  family?: string;
+  department?: string;
+}
 
 export const api = createApi({
   reducerPath: "api",
@@ -75,7 +81,7 @@ export const api = createApi({
           method: "POST",
           body: data,
         }),
-      }
+      },
     ),
 
     // login
