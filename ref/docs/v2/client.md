@@ -1,3 +1,8 @@
+---
+title: Client Structure Guide
+description: Overview of the frontend application structure, folders, components, and development tips
+---
+
 # KYUSDA Website v2 - Client Structure
 
 ## Overview

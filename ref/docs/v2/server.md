@@ -1,3 +1,8 @@
+---
+title: Server Structure Guide
+description: Overview of the backend API structure, controllers, models, routes, and development tips
+---
+
 # KYUSDA Website v2 - Server Structure
 
 ## Overview

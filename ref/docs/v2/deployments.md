@@ -1,3 +1,8 @@
+---
+title: Deployments & Hosting
+description: Deployment setup, service ownership, and infrastructure configuration for KYUSDA
+---
+
 # KYUSDA Website v2 - Deployment & Hosting
 
 ## Deployment Overview

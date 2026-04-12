@@ -1,3 +1,8 @@
+---
+title: Features & Work In Progress
+description: Completed features, in-progress tasks, and roadmap for v2
+---
+
 # KYUSDA Website v2 - Features & Work In Progress
 
 ## ✅ Completed / Released

@@ -1,3 +1,8 @@
+---
+title: Sanity CMS Structure Guide
+description: Overview of the Sanity backend structure, schemas, configuration, and content management
+---
+
 # KYUSDA Website v2 - Sanity Structure
 
 ## Overview
