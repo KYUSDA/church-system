@@ -1,4 +1,4 @@
-## Development
+# Development
 
 To contribute:
 
@@ -6,29 +6,27 @@ To contribute:
 
 git pull origin `v2-staging`
 
+1. Create a feature branch:
 
-2. Create a feature branch:
+git checkout -b feature/`<team>`/`<description>`
 
-git checkout -b feature/<team>/<description>
+1. Work on the task  
+2. Push and submit PR into `v2-staging`  
 
+3. Request a review from a teammate.
 
-3. Work on the task  
-4. Push and submit PR into `v2-staging`  
-
-5. Request a review from a teammate.
-
-6. Merge after approval.
-
+4. Merge after approval.
 
 ## 📌 Branch Strategy
 
-### Main branches:
+### Main branches
+
 - `main` → main branch
 - `v2-staging` →development branch
 
-### Create feature branches:
-feature/<team>/<short-description>
+### Create feature branches
 
+feature/`<team>`/`<short-description>`
 
 Examples:
 feature/frontend/navbar
@@ -52,8 +50,6 @@ feature/database/add-sermons-table
 - No secrets or credentials in commits
 - No unreviewed schema changes
 
-
-
 ## Teams
 
 - Frontend Team (3 members)
@@ -64,15 +60,15 @@ feature/database/add-sermons-table
 
 - Backend Team (2 members)
 
-   - Charles Mbugua
-   - Samuel Mwangi
+  - Charles Mbugua
+  - Samuel Mwangi
 
 - Design Team (1 member)
 
-    - Llyod Brown
+  - Llyod Brown
 
 - Content Management System (3 members)
 
-    - Kelvin Korir
-    - Lamech Wafula
-    - Emillio Muriithi
+  - Kelvin Korir
+  - Lamech Wafula
+  - Emillio Muriithi
