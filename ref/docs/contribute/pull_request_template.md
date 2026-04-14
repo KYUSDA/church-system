@@ -1,7 +1,9 @@
-## Summary
+# Summary
+
 Describe what this PR does in 2–4 sentences.
 
 ## Changes Included
+
 - [ ] New feature  
 - [ ] Bug fix  
 - [ ] Refactor  
@@ -15,9 +17,11 @@ Describe what this PR does in 2–4 sentences.
 -
 
 ## Screenshots (Frontend Only)
+
 If UI changed, include before/after images.
 
 ## How to Test
+
 Step-by-step instructions:
 
 1.  
@@ -25,10 +29,11 @@ Step-by-step instructions:
 3.  
 
 ## Related Issues / Tasks
+
 Link any GitHub issues or Kanban cards:
+
 - Closes #  
 
 ## Reviewer Notes
+
 Anything special the reviewer should check.
-
-
