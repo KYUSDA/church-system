@@ -2,14 +2,14 @@
 
 Welcome to KYUSDA documentation hub. This site is built with **VitePress** to provide a fast, accessible, and easy-to-use reference for the project team.
 
-## 🚀 What’s Here
+## What’s Here
 
 - **Project history and release notes** for `v0`, `v1`, and `v2`
 - **Architecture and folder guides** for `client`, `server`, and `backend_sanity`
 - **Deployment and hosting details** for Render, Vercel, Sanity, and cloud services
 - **Feature status** to track completed work, ongoing items, and future priorities
 
-## 📚 Quick Links
+## Quick Links
 
 - [V0 Release Notes](./v0/v0.1.md)
 - [V1 Release Notes](./v1/v1.2.md)
@@ -20,7 +20,7 @@ Welcome to KYUSDA documentation hub. This site is built with **VitePress** to pr
 - [V2 Feature Status](./v2/feats.md)
 - [V2 Deployments](./v2/deployments.md)
 
-## ♿ Accessibility First
+## Accessibility First
 
 This documentation is designed to be accessible for all team members and contributors.
 
@@ -40,14 +40,14 @@ This documentation is designed to be accessible for all team members and contrib
 - Keep paragraphs short and use bullets for lists.
 - Use high contrast text and avoid color-only meaning in diagrams or notes.
 
-## 🛠 How to Use This Site
+## How to Use This Site
 
 1. Start at this page to understand the overall structure.
 2. Use the sidebar or quick links to jump to the version guide you need.
 3. Read the project structure guides before making changes in `client/`, `server/`, or `backend_sanity/`.
 4. Update or add new docs when services, deployment steps, or feature scope changes.
 
-## 🤝 Contributing
+## Contributing
 
 - Add new docs under the appropriate `v*` folder.
 - Keep documentation current with code and deployment updates.

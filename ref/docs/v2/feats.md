@@ -45,7 +45,7 @@ description: Completed features, in-progress tasks, and roadmap for v2
 - Add more detailed descriptions for each department.
 - Include contact information and leadership profiles where applicable.
 
-## 📌 Notes for the Team
+## Notes for the Team
 
 - Prioritize finishing the admin dashboard access controls before adding new admin-only pages.
 - Separate the store into two sub-sections: **books** and **health remedies**.
