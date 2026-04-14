@@ -17,7 +17,7 @@ git checkout -b feature/`<team>`/`<description>`
 
 4. Merge after approval.
 
-## 📌 Branch Strategy
+## Branch Strategy
 
 ### Main branches
 
@@ -33,7 +33,7 @@ feature/frontend/navbar
 feature/backend/auth-update
 feature/database/add-sermons-table
 
-## ✔️ Pull Request Requirements
+## Pull Request Requirements
 
 - Small PRs (50–200 lines ideal)
 - Clear description  
