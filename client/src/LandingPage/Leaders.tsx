@@ -1,21 +1,24 @@
+import charles from "../assets/elders/charles.jpeg"
+import lameck from "../assets/elders/lameck.jpeg"
+import kones from "../assets/elders/kones.jpeg"
+import mwanga from "../assets/elders/shadrack.jpeg"
+import genesis from "../assets/elders/og.jpeg"
+import pastor from "../assets/elders/pastor.png"
 
-import Mainga from "../assets/elders/mainga.jpg";
-import charles  from "../assets/elders/charles.jpg";
-import steve from "../assets/elders/Bikosteve.jpg";
-import brown from "../assets/elders/brown.jpg";
-import pastor from "../assets/elders/pastor.jpg"
-import ben from "../assets/elders/ben.jpg"
+
+
+
 
 const leaders = [
-  { src: pastor, name: "Willis Obegi", role: "Our Pastor" },
+  { src: pastor, name: "Robert Odhiambo", role: "Our Pastor" },
 ];
 
 const otherLeaders = [
-  { src: steve, name: "Steve Biko", role: "First Elder" },
-  { src: Mainga, name: "Samuel Mainga", role: "Elder" },
-  { src: ben, name: "Ben Samoita", role: "Elder" },
-  { src: brown, name: "Lloyd  Brown", role: "Elder" },
-  { src: charles, name: "Charles Mbugua", role: "Elder" },
+  { src: charles, name: "Charles Mbugua", role: "First Elder" },
+  { src: lameck, name: "Lameck Wafula", role: "Elder" },
+  { src: kones, name: "Mordecai Kones", role: "Elder" },
+  { src: mwanga, name: "Shadrack Mwanga", role: "Elder" },
+  { src: genesis, name: "Genesis Otieno", role: "Elder" },
 ];
 
 function Leaders() {
