@@ -11,6 +11,7 @@ import Memories from "@/LandingPage/Memories";
 import Resources from "@/LandingPage/Resources/Resources";
 import Magazine from "@/LandingPage/Magazine";
 import About from "@/LandingPage/About";
+import CampMeeting from "@/LandingPage/Resources/Camp-meeting";
 
 export const Landingpage = (
   <Route
@@ -30,6 +31,7 @@ export const Landingpage = (
     <Route path="/Departments/:id" element={<DepartmentsDetails />} />
     <Route path="/resources" element={<Resources />} />
     <Route path="/kyusda-magazine" element={<Magazine />} />
+    <Route path="/camp-meeting" element={<CampMeeting />} />
     <Route path="/donation" element={<DonationPage />} />
     <Route path="/church-gallery" element={<Memories />} />
     <Route path="/policy" element={<PrivacyPolicy />} />

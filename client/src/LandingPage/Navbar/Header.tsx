@@ -56,6 +56,9 @@ const Header = () => {
           <Link to="/kyusda-magazine" className="nav-link underline-transition">
             Magazine
           </Link>
+          <Link to="/camp-meeting" className="nav-link underline-transition">
+            Camp-Meeting
+          </Link>
           <div className="relative group">
             <Link
               to="#"
