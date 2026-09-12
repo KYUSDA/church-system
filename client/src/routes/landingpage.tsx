@@ -11,7 +11,7 @@ import Memories from "@/LandingPage/Memories";
 import Resources from "@/LandingPage/Resources/Resources";
 import Magazine from "@/LandingPage/Magazine";
 import About from "@/LandingPage/About";
-import CampMeeting from "@/LandingPage/Resources/Camp-meeting";
+import CampMeeting from "@/LandingPage/Camp-meeting";
 
 export const Landingpage = (
   <Route
